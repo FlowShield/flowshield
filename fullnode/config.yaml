@@ -1,0 +1,40 @@
+#APP ENV
+app:
+  env: "release" # dev,release
+  sysname: "cloudslit"
+  port: 8080
+  domain: DOMAIN
+
+#Mysql
+mysql:
+  dbname: "zta"
+  prefix: "zta_"
+  pool:
+    pool-min-cap: 10
+    pool-ex-cap: 5
+    pool-max-cap: 40
+    pool-idle-timeout: 3600
+    pool-wait-count: 1000
+    pool-wai-timeout: 30
+  write:
+    host: "CS_MYSQL_HOST"
+    port: 23306
+    user: "CS_MYSQL_USER"
+    password: "CS_MYSQL_PASSWORD"
+
+p2p:
+  enable: true
+  account: "CS_ACCOUNT"
+  service-discovery-id: "ztalab/provider"
+  service-discovery-mode: "advertise" # advertise or announce
+  service-metadata-topic: "ztalab_provider_metadata" # advertise or announce
+
+web3:
+  private-key: "CS_PRIVATE_KEY"
+  contract:
+    token: "CS_CONTRACT_TOKEN"
+  w3s:
+    token: "CS_W3S_TOKEN"
+  eth:
+    url: "CS_ETH_URL"
+    projectid: "CS_ETH_PROJECTID"

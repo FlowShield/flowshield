@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    {{- range $key, $value := .Values.ingress.annotations }}
+    {{ $key }}: {{ tpl $value $ | quote }}
+    {{- end }}
+  labels:
+    app: zaportal
+  name: zaportal
+spec:
+  rules:
+  - host: {{ .Values.ingress.host }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: zaportal
+          servicePort: 80
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: zaportal-tls

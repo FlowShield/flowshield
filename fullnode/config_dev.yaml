@@ -1,0 +1,57 @@
+#APP ENV
+app:
+  env: "dev" # dev,release
+  sysname: "ZAManager"
+  port: 80
+  domain: http://192.168.2.80:9534
+
+#Mysql
+mysql:
+  dbname: "zta"
+  prefix: "zta_"
+  pool:
+    pool-min-cap: 10
+    pool-ex-cap: 5
+    pool-max-cap: 40
+    pool-idle-timeout: 3600
+    pool-wait-count: 1000
+    pool-wai-timeout: 30
+  write:
+    host: "127.0.0.1"
+    port: 23306
+    user: "root"
+    password: "123456"
+#  write:
+#    host: "192.168.2.80"
+#    port: 3306
+#    user: "root"
+#    password: "123456"
+
+#Redis
+redis:
+  addr: "192.168.2.80:6379"
+
+#CA
+ca:
+  base-url: "http://192.168.2.80:8382"
+  sign-url: "https://192.168.2.80:8681"
+  ocsp-url: "http://192.168.2.80:8383"
+  version: "/api/v1"
+  auth-key: "0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134"
+
+p2p:
+  enable: false
+  account: "CS_ACCOUNT"
+  service-discovery-id: "ztalab/provider"
+  service-discovery-mode: "advertise" # advertise or announce
+  service-metadata-topic: "ztalab_provider_metadata" # advertise or announce
+
+web3:
+  private-key: "CS_PRIVATE_KEY"
+  contract:
+    token: "0x4E9bfAB50AE5aA47838921450BBc1b12a81798ba"
+  w3s:
+    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U"
+  eth:
+    url: "https://ropsten.infura.io/v3"
+    projectid: "45630f96f9d841679dc200a7c97763d2"

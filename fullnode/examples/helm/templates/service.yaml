@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: zaportal
+  name: zaportal
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: zaportal
