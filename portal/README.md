@@ -1,9 +1,3 @@
-<p align="center">
-<img 
-    src="https://res.cloudinary.com/malloc/image/upload/v1656912975/cloudslit/cloudslit_kaj9ce.png" 
-    height="90" border="0" alt="IceFireDB">
-</p>
-
 🌈 _**Portal** is a user-friendly UI portal that provides users with a control interface with low thresholds._ 🌈
 ---
 
