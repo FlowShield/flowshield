@@ -1,14 +1,14 @@
 <p align="center">
 <img src="https://user-images.githubusercontent.com/52234994/165200623-c60e956b-5805-4088-bf58-f97ebd8ae8b4.png" 
-    width="40%" border="0" alt="ZACA">
+    width="40%" border="0" alt="CA">
 </p>
 
-# ZACA
+# CA
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  [![GoDoc](https://godoc.org/github.com/cloudflare/cfssl?status.svg)](https://github.com/cloudSlit/cloudslit/ca)
 
-ZACA is a PKI developed based on cloudflare cfssl,Public key infrastructure (PKI) governs the issuance of digital certificates to protect sensitive data, provide unique digital identities for users, devices and applications and secure end-to-end communications.
+CA is a PKI developed based on cloudflare cfssl,Public key infrastructure (PKI) governs the issuance of digital certificates to protect sensitive data, provide unique digital identities for users, devices and applications and secure end-to-end communications.
 
-Zaca includes the following components：
+CA includes the following components：
 
 1. TLS service, as the CA center, is used for certificate issuance, revocation, signature and other operations.
 2. API services, as some API services for certificate management.
@@ -37,7 +37,7 @@ Since each CA has a certificate of its own, layers of trust get created through 
 
 <img src="https://user-images.githubusercontent.com/52234994/165200520-842ecf88-bfea-441b-a1af-53260ce4085f.png" alt="image-20220425164028072" style="width:50%;" />
 
-## ZACA overall architecture and working mode
+## CA overall architecture and working mode
 
 ![image-20220425165623191](https://user-images.githubusercontent.com/52234994/165200574-ac647d20-1044-4580-8378-862d4fd4af9e.png)
 
@@ -46,8 +46,8 @@ Since each CA has a certificate of its own, layers of trust get created through 
 Building cfssl requires a [working Go 1.12+ installation](http://golang.org/doc/install).
 
 ```
-$ git clone git@github.com:ztalab/ZACA.git
-$ cd ZACA
+$ git clone git@github.com:ztalab/CA.git
+$ cd CA
 $ make
 ```
 
@@ -58,12 +58,12 @@ The resulting binaries will be in the bin folder:
 ```
 $ tree bin
 bin
-├── zaca
+├── CA
 ```
 
 ## Configuration reference
 
-When ZACA starts each service, it needs to rely on some configurations, and the dependent configuration information has two configuration methods:
+When CA starts each service, it needs to rely on some configurations, and the dependent configuration information has two configuration methods:
 
 **configuration file:**
 
@@ -87,19 +87,19 @@ TLS service is used to issue certificates through control`IS_KEYMANAGER_SELF_SIG
 - Started as root CA, TLS service will self sign certificate.
 - When starting as an intermediate CA, the TLS service needs to request the root CA signing certificate as its own CA certificate.
 
-Start command：`zaca tls`，Default listening port 8081
+Start command：`CA tls`，Default listening port 8081
 
 ### OCSP service
 
 OCSP online certificate status is used to query the certificate status information. OCSP returns the certificate online status information to quickly check whether the certificate has expired, whether it has been revoked and so on.
 
-Start command：`zaca ocsp`，Default listening port 8082
+Start command：`CA ocsp`，Default listening port 8082
 
 ### API service
 
 Provide CA center API service, which can be accessed after the service is started`http://localhost:8080/swagger/index.html`，View API documentation.
 
-Start command：`zaca api`，Default listening port 8080
+Start command：`CA api`，Default listening port 8080
 
 
 
@@ -109,7 +109,7 @@ Start command：`zaca api`，Default listening port 8080
 $ go get github.com/cloudSlit/cloudslit/casdk
 ```
 
-The classic usage of the ZACA SDK is that the client and the server use the certificate issued by the CA center for encrypted communication. The following is the usage of the sdk between the client and the server.
+The classic usage of the CA SDK is that the client and the server use the certificate issued by the CA center for encrypted communication. The following is the usage of the sdk between the client and the server.
 
 See：[Demo](https://github.com/cloudSlit/cloudslit/casdk/tree/master/caclient/examples)
 
