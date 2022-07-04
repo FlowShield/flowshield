@@ -6,15 +6,15 @@ import (
 	"net/http"
 	"time"
 
-	influx_client "github.com/cloudSlit/cloudslit/ca/pkg/influxdb/influxdb-client/v2"
+	influx_client "github.com/cloudslit/cloudslit/ca/pkg/influxdb/influxdb-client/v2"
 	vaultAPI "github.com/hashicorp/vault/api"
 	"github.com/pkg/errors"
 	mysqlDriver "gorm.io/driver/mysql"
 	"gorm.io/gorm"
 
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql"
-	"github.com/cloudSlit/cloudslit/ca/pkg/influxdb"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/database/mysql"
+	"github.com/cloudslit/cloudslit/ca/pkg/influxdb"
 )
 
 func mysqlDialer(config *core.Config, logger *core.Logger) (*gorm.DB, error) {

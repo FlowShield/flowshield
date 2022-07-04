@@ -5,7 +5,7 @@ import (
 
 	cfssl_client "github.com/ztalab/cfssl/api/client"
 
-	"github.com/cloudSlit/cloudslit/ca/ca/keymanager"
+	"github.com/cloudslit/cloudslit/ca/ca/keymanager"
 )
 
 func ProxyRequest(f func(host string) error) error {

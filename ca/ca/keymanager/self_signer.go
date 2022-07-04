@@ -1,7 +1,7 @@
 package keymanager
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"github.com/ztalab/cfssl/initca"
 )
 

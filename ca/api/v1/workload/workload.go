@@ -5,18 +5,18 @@ import (
 	"time"
 
 	"github.com/araddon/dateparse"
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"github.com/pkg/errors"
 	"github.com/tal-tech/go-zero/core/fx"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 
-	"github.com/cloudSlit/cloudslit/ca/api/helper"
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/dao"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/model"
-	"github.com/cloudSlit/cloudslit/ca/logic/schema"
-	logic "github.com/cloudSlit/cloudslit/ca/logic/workload"
+	"github.com/cloudslit/cloudslit/ca/api/helper"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/dao"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/model"
+	"github.com/cloudslit/cloudslit/ca/logic/schema"
+	logic "github.com/cloudslit/cloudslit/ca/logic/workload"
 )
 
 type API struct {

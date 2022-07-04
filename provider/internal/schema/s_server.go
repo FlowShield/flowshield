@@ -1,6 +1,6 @@
 package schema
 
-import "github.com/cloudSlit/cloudslit/provider/pkg/util/json"
+import "github.com/cloudslit/cloudslit/provider/pkg/util/json"
 
 type ServerType string
 

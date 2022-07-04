@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/cloudSlit/cloudslit/provider/pkg/logger"
+	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"io/ioutil"
 	"runtime"
 )

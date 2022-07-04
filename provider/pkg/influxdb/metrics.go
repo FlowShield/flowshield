@@ -3,7 +3,7 @@ package influxdb
 import (
 	"errors"
 	"fmt"
-	"github.com/cloudSlit/cloudslit/provider/pkg/influxdb/client/v2"
+	"github.com/cloudslit/cloudslit/provider/pkg/influxdb/client/v2"
 	"io"
 	"strings"
 	"sync"

@@ -8,9 +8,9 @@ import (
 	"github.com/ztalab/cfssl/ocsp"
 	"gorm.io/gorm"
 
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/dao"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/model"
-	"github.com/cloudSlit/cloudslit/ca/logic/events"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/dao"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/model"
+	"github.com/cloudslit/cloudslit/ca/logic/events"
 )
 
 type RevokeCertsParams struct {

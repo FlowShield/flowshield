@@ -6,8 +6,8 @@ import (
 
 	"github.com/ztalab/cfssl/certinfo"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/caclient"
-	"github.com/cloudSlit/cloudslit/ca/pkg/spiffe"
+	"github.com/cloudslit/cloudslit/ca/pkg/caclient"
+	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
 )
 
 // SampleCert Certificate list cert

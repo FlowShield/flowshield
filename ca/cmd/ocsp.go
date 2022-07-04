@@ -2,10 +2,10 @@ package cmd
 
 import (
 	"context"
-	ocsp_responder "github.com/cloudSlit/cloudslit/ca/ca/ocsp"
-	"github.com/cloudSlit/cloudslit/ca/ca/singleca"
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	ocsp_responder "github.com/cloudslit/cloudslit/ca/ca/ocsp"
+	"github.com/cloudslit/cloudslit/ca/ca/singleca"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/ztalab/cfssl/ocsp"
 	"net/http"

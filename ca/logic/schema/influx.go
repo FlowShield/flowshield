@@ -4,7 +4,7 @@ import (
 	"net"
 	"net/url"
 
-	"github.com/cloudSlit/cloudslit/ca/core/config"
+	"github.com/cloudslit/cloudslit/ca/core/config"
 )
 
 const (

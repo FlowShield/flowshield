@@ -12,13 +12,13 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"github.com/pkg/errors"
 	"github.com/ztalab/cfssl/csr"
 	"github.com/ztalab/cfssl/helpers"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/keygen"
-	"github.com/cloudSlit/cloudslit/ca/pkg/spiffe"
+	"github.com/cloudslit/cloudslit/ca/pkg/keygen"
+	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
 )
 
 const (

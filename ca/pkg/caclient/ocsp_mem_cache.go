@@ -10,7 +10,7 @@ import (
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/ocsp"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/memorycacher"
+	"github.com/cloudslit/cloudslit/ca/pkg/memorycacher"
 	"go.uber.org/zap"
 )
 

@@ -1,6 +1,6 @@
 // Package client implements a now-deprecated client for InfluxDB;
 // use gitlab.oneitfarm.com/bifrost/influxdata/influxdb1-client/v2 instead.
-package client // import "github.com/cloudSlit/cloudslit/ca/pkg/influxdb/influxdb-client"
+package client // import "github.com/cloudslit/cloudslit/ca/pkg/influxdb/influxdb-client"
 
 import (
 	"bytes"
@@ -19,7 +19,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/influxdb/influxdb-client/models"
+	"github.com/cloudslit/cloudslit/ca/pkg/influxdb/influxdb-client/models"
 )
 
 const (

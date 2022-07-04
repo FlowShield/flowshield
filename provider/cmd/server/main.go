@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	cli1 "github.com/cloudSlit/cloudslit/provider/cmd/server/cli"
+	cli1 "github.com/cloudslit/cloudslit/provider/cmd/server/cli"
 	"os"
 
-	"github.com/cloudSlit/cloudslit/provider/pkg/logger"
+	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/urfave/cli/v2"
 )
 

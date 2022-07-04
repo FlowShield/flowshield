@@ -1,10 +1,10 @@
 package certleaf
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"go.uber.org/zap"
 
-	logic "github.com/cloudSlit/cloudslit/ca/logic/certleaf"
+	logic "github.com/cloudslit/cloudslit/ca/logic/certleaf"
 )
 
 type API struct {

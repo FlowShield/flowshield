@@ -16,9 +16,9 @@ import (
 	cf_csr "github.com/ztalab/cfssl/csr"
 	"github.com/ztalab/cfssl/helpers"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/pkiutil"
-	"github.com/cloudSlit/cloudslit/ca/pkg/spiffe"
-	"github.com/cloudSlit/cloudslit/ca/util"
+	"github.com/cloudslit/cloudslit/ca/pkg/pkiutil"
+	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
+	"github.com/cloudslit/cloudslit/ca/util"
 )
 
 type SupportedSignatureAlgorithms string

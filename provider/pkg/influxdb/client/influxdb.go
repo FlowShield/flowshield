@@ -1,6 +1,6 @@
 // Package client implements a now-deprecated client for InfluxDB;
-// use github.com/cloudSlit/cloudslit/provider/pkg/influxdb/client/v2 instead.
-package client // import "github.com/cloudSlit/cloudslit/provider/pkg/influxdb/client"
+// use github.com/cloudslit/cloudslit/provider/pkg/influxdb/client/v2 instead.
+package client // import "github.com/cloudslit/cloudslit/provider/pkg/influxdb/client"
 
 import (
 	"bytes"
@@ -19,7 +19,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cloudSlit/cloudslit/provider/pkg/influxdb/client/models"
+	"github.com/cloudslit/cloudslit/provider/pkg/influxdb/client/models"
 )
 
 const (

@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/attrmgr"
-	"github.com/cloudSlit/cloudslit/ca/pkg/spiffe"
+	"github.com/cloudslit/cloudslit/ca/pkg/attrmgr"
+	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
 )
 
 var (

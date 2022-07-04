@@ -8,9 +8,9 @@ import (
 	"github.com/ztalab/cfssl/helpers"
 	"gorm.io/gorm"
 
-	"github.com/cloudSlit/cloudslit/ca/ca/keymanager"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/model"
-	"github.com/cloudSlit/cloudslit/ca/logic/schema"
+	"github.com/cloudslit/cloudslit/ca/ca/keymanager"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/model"
+	"github.com/cloudslit/cloudslit/ca/logic/schema"
 )
 
 type LeafCert struct {

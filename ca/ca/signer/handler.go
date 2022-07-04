@@ -16,10 +16,10 @@ import (
 	"github.com/ztalab/cfssl/log"
 	"github.com/ztalab/cfssl/signer"
 
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/dao"
-	"github.com/cloudSlit/cloudslit/ca/logic/events"
-	"github.com/cloudSlit/cloudslit/ca/pkg/spiffe"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/dao"
+	"github.com/cloudslit/cloudslit/ca/logic/events"
+	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
 )
 
 // NoBundlerMessage is used to alert the user that the server does not have a bundler initialized.

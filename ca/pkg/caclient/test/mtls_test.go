@@ -3,8 +3,8 @@ package test
 import (
 	"crypto/tls"
 	"fmt"
-	"github.com/cloudSlit/cloudslit/ca/pkg/caclient"
-	"github.com/cloudSlit/cloudslit/ca/pkg/spiffe"
+	"github.com/cloudslit/cloudslit/ca/pkg/caclient"
+	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
 	"github.com/valyala/fasthttp"
 	"github.com/ztalab/cfssl/helpers"
 	cflog "github.com/ztalab/cfssl/log"

@@ -1,4 +1,4 @@
-module github.com/cloudSlit/cloudslit/provider
+module github.com/cloudslit/cloudslit/provider
 
 go 1.16
 

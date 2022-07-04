@@ -9,7 +9,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/signature"
+	"github.com/cloudslit/cloudslit/ca/pkg/signature"
 	jsoniter "github.com/json-iterator/go"
 )
 

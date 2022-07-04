@@ -1,7 +1,7 @@
 package keymanager
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/core"
 	"github.com/ztalab/cfssl/csr"
 )
 

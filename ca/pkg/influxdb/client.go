@@ -1,9 +1,9 @@
 package influxdb
 
 import (
-	_ "github.com/cloudSlit/cloudslit/ca/pkg/influxdb/influxdb-client" // this is important because of the bug in go mod
-	client "github.com/cloudSlit/cloudslit/ca/pkg/influxdb/influxdb-client/v2"
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	_ "github.com/cloudslit/cloudslit/ca/pkg/influxdb/influxdb-client" // this is important because of the bug in go mod
+	client "github.com/cloudslit/cloudslit/ca/pkg/influxdb/influxdb-client/v2"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 )
 
 // UDPClient UDP Client

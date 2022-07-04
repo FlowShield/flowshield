@@ -1,8 +1,8 @@
 package initer
 
 import (
-	"github.com/cloudSlit/cloudslit/provider/internal/config"
-	"github.com/cloudSlit/cloudslit/provider/pkg/util/uuid"
+	"github.com/cloudslit/cloudslit/provider/internal/config"
+	"github.com/cloudslit/cloudslit/provider/pkg/util/uuid"
 )
 
 // InitMachine initialize the machine id

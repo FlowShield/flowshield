@@ -3,10 +3,10 @@ package certleaf
 import (
 	"errors"
 
-	"github.com/cloudSlit/cloudslit/ca/api/helper"
-	caLogic "github.com/cloudSlit/cloudslit/ca/logic/ca"
-	logic "github.com/cloudSlit/cloudslit/ca/logic/certleaf"
-	"github.com/cloudSlit/cloudslit/ca/logic/schema"
+	"github.com/cloudslit/cloudslit/ca/api/helper"
+	caLogic "github.com/cloudslit/cloudslit/ca/logic/ca"
+	logic "github.com/cloudslit/cloudslit/ca/logic/certleaf"
+	"github.com/cloudslit/cloudslit/ca/logic/schema"
 )
 
 // CertChain Certificate chain

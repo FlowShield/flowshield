@@ -1,18 +1,18 @@
 package initer
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/ca/datastore"
-	"github.com/cloudSlit/cloudslit/ca/ca/keymanager"
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
-	"github.com/cloudSlit/cloudslit/ca/pkg/vaultsecret"
+	"github.com/cloudslit/cloudslit/ca/ca/datastore"
+	"github.com/cloudslit/cloudslit/ca/ca/keymanager"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/vaultsecret"
 	"github.com/urfave/cli"
 	"github.com/ztalab/cfssl/hook"
 	"log"
 	"os"
 
 	// ...
-	_ "github.com/cloudSlit/cloudslit/ca/util"
+	_ "github.com/cloudslit/cloudslit/ca/util"
 )
 
 // Init Initialization

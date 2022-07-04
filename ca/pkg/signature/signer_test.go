@@ -3,7 +3,7 @@ package signature
 import (
 	"crypto/ecdsa"
 	"fmt"
-	"github.com/cloudSlit/cloudslit/ca/pkg/keygen"
+	"github.com/cloudslit/cloudslit/ca/pkg/keygen"
 	"testing"
 )
 

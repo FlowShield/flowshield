@@ -1,8 +1,8 @@
 package schema
 
 import (
-	"github.com/cloudSlit/cloudslit/provider/pkg/errors"
-	"github.com/cloudSlit/cloudslit/provider/pkg/util/json"
+	"github.com/cloudslit/cloudslit/provider/pkg/errors"
+	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 	"net/url"
 	"sort"
 	"strings"

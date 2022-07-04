@@ -1,7 +1,7 @@
 package vaultsecret
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"strings"
 
 	vaultAPI "github.com/hashicorp/vault/api"

@@ -3,11 +3,11 @@ package datastore
 
 import (
 	"errors"
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/model"
-	"github.com/cloudSlit/cloudslit/ca/pkg/vaultsecret"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/model"
+	"github.com/cloudslit/cloudslit/ca/pkg/vaultsecret"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )

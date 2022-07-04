@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
-	"github.com/cloudSlit/cloudslit/ca/pkg/memorycacher"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/memorycacher"
 	"github.com/pkg/errors"
 	"github.com/ztalab/cfssl/helpers"
 	"github.com/ztalab/cfssl/hook"
@@ -16,9 +16,9 @@ import (
 	stdocsp "golang.org/x/crypto/ocsp"
 	"gorm.io/gorm"
 
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/model"
-	"github.com/cloudSlit/cloudslit/ca/logic/events"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/model"
+	"github.com/cloudslit/cloudslit/ca/logic/events"
 )
 
 const (

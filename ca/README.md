@@ -4,7 +4,7 @@
 </p>
 
 # CA
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  [![GoDoc](https://godoc.org/github.com/cloudflare/cfssl?status.svg)](https://github.com/cloudSlit/cloudslit/ca)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  [![GoDoc](https://godoc.org/github.com/cloudflare/cfssl?status.svg)](https://github.com/cloudslit/cloudslit/ca)
 
 CA is a PKI developed based on cloudflare cfssl,Public key infrastructure (PKI) governs the issuance of digital certificates to protect sensitive data, provide unique digital identities for users, devices and applications and secure end-to-end communications.
 
@@ -106,10 +106,10 @@ Start command：`CA api`，Default listening port 8080
 ### SDK Installation
 
 ```
-$ go get github.com/cloudSlit/cloudslit/casdk
+$ go get github.com/cloudslit/cloudslit/casdk
 ```
 
 The classic usage of the CA SDK is that the client and the server use the certificate issued by the CA center for encrypted communication. The following is the usage of the sdk between the client and the server.
 
-See：[Demo](https://github.com/cloudSlit/cloudslit/casdk/tree/master/caclient/examples)
+See：[Demo](https://github.com/cloudslit/cloudslit/casdk/tree/master/caclient/examples)
 

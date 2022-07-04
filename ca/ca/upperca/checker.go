@@ -6,15 +6,15 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"github.com/go-resty/resty/v2"
 	"github.com/ztalab/cfssl/api/client"
 	"go.uber.org/zap"
 
-	"github.com/cloudSlit/cloudslit/ca/ca/keymanager"
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/logic/schema"
-	"github.com/cloudSlit/cloudslit/ca/pkg/influxdb"
+	"github.com/cloudslit/cloudslit/ca/ca/keymanager"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/logic/schema"
+	"github.com/cloudslit/cloudslit/ca/pkg/influxdb"
 )
 
 const CfsslHealthApi = "/api/v1/cfssl/health"

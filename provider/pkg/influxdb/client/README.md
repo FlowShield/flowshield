@@ -5,16 +5,16 @@ InfluxDB is an open-source distributed time series database, find more about [In
 
 ## Usage
 To import into your Go project, run the following command in your terminal:
-`go get github.com/cloudSlit/cloudslit/provider/pkg/influxdb/client/v2`
+`go get github.com/cloudslit/cloudslit/provider/pkg/influxdb/client/v2`
 Then, in your import declaration section of your Go file, paste the following:
-`import "github.com/cloudSlit/cloudslit/provider/pkg/influxdb/client/v2"`
+`import "github.com/cloudslit/cloudslit/provider/pkg/influxdb/client/v2"`
 
-If you get the error `build github.com/user/influx: cannot find module for path github.com/cloudSlit/cloudslit/provider/pkg/influxdb/client/v2` when trying to build:
+If you get the error `build github.com/user/influx: cannot find module for path github.com/cloudslit/cloudslit/provider/pkg/influxdb/client/v2` when trying to build:
 change your import to:
 ```go
 import(
-	_ "github.com/cloudSlit/cloudslit/provider/pkg/influxdb/client" // this is important because of the bug in go mod
-	client "github.com/cloudSlit/cloudslit/provider/pkg/influxdb/client/v2"
+	_ "github.com/cloudslit/cloudslit/provider/pkg/influxdb/client" // this is important because of the bug in go mod
+	client "github.com/cloudslit/cloudslit/provider/pkg/influxdb/client/v2"
 )
 ```
 

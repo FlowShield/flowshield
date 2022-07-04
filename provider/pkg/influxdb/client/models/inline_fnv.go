@@ -1,4 +1,4 @@
-package models // import "github.com/cloudSlit/cloudslit/provider/pkg/influxdb/client/models"
+package models // import "github.com/cloudslit/cloudslit/provider/pkg/influxdb/client/models"
 
 // from stdlib hash/fnv/fnv.go
 const (

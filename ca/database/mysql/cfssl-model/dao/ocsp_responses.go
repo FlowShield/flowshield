@@ -9,7 +9,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 	"gorm.io/gorm"
 
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/model"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/model"
 )
 
 var (

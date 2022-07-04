@@ -4,13 +4,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 
-	"github.com/cloudSlit/cloudslit/ca/api/helper"
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/model"
+	"github.com/cloudslit/cloudslit/ca/api/helper"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/model"
 )
 
 type OverallCertsCountItem struct {

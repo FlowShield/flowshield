@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/cloudSlit/cloudslit/provider/pkg/influxdb"
-	"github.com/cloudSlit/cloudslit/provider/pkg/util/json"
+	"github.com/cloudslit/cloudslit/provider/pkg/influxdb"
+	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 	"net/http"
 	"os"
 	"strconv"

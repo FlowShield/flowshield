@@ -1,4 +1,4 @@
-package models // import "github.com/cloudSlit/cloudslit/ca/pkg/influxdb/influxdb-client/models"
+package models // import "github.com/cloudslit/cloudslit/ca/pkg/influxdb/influxdb-client/models"
 
 import (
 	"reflect"

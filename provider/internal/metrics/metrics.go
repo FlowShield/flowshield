@@ -2,10 +2,10 @@ package metrics
 
 import (
 	"context"
-	"github.com/cloudSlit/cloudslit/provider/internal/config"
-	"github.com/cloudSlit/cloudslit/provider/pkg/errors"
-	"github.com/cloudSlit/cloudslit/provider/pkg/influxdb"
-	"github.com/cloudSlit/cloudslit/provider/pkg/logger"
+	"github.com/cloudslit/cloudslit/provider/internal/config"
+	"github.com/cloudslit/cloudslit/provider/pkg/errors"
+	"github.com/cloudslit/cloudslit/provider/pkg/influxdb"
+	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 )
 
 const (

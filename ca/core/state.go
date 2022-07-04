@@ -3,10 +3,10 @@ package core
 import (
 	"context"
 
-	"github.com/cloudSlit/cloudslit/ca/core/config"
-	"github.com/cloudSlit/cloudslit/ca/pkg/influxdb"
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
-	"github.com/cloudSlit/cloudslit/ca/pkg/vaultsecret"
+	"github.com/cloudslit/cloudslit/ca/core/config"
+	"github.com/cloudslit/cloudslit/ca/pkg/influxdb"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/vaultsecret"
 	vaultAPI "github.com/hashicorp/vault/api"
 	"gorm.io/gorm"
 )

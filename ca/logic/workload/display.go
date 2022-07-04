@@ -7,9 +7,9 @@ import (
 
 	"github.com/araddon/dateparse"
 
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/dao"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/model"
-	"github.com/cloudSlit/cloudslit/ca/logic/schema"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/dao"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/model"
+	"github.com/cloudslit/cloudslit/ca/logic/schema"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )

@@ -2,9 +2,9 @@ package cli
 
 import (
 	"context"
-	"github.com/cloudSlit/cloudslit/provider/cmd/client/cli/up"
-	"github.com/cloudSlit/cloudslit/provider/internal"
-	"github.com/cloudSlit/cloudslit/provider/pkg/logger"
+	"github.com/cloudslit/cloudslit/provider/cmd/client/cli/up"
+	"github.com/cloudslit/cloudslit/provider/internal"
+	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/urfave/cli/v2"
 	"os"
 	"os/signal"

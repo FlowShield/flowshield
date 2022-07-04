@@ -1,4 +1,4 @@
-module github.com/cloudSlit/cloudslit/ca
+module github.com/cloudslit/cloudslit/ca
 
 go 1.16
 

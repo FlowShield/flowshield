@@ -10,9 +10,9 @@ import (
 	"github.com/spf13/viper"
 	cfssl_config "github.com/ztalab/cfssl/config"
 
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/core/config"
-	"github.com/cloudSlit/cloudslit/ca/pkg/influxdb"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/core/config"
+	"github.com/cloudslit/cloudslit/ca/pkg/influxdb"
 )
 
 const (

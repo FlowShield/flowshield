@@ -1,9 +1,9 @@
 package caclient
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/pkg/keyprovider"
-	"github.com/cloudSlit/cloudslit/ca/pkg/spiffe"
 	"github.com/cloudflare/backoff"
+	"github.com/cloudslit/cloudslit/ca/pkg/keyprovider"
+	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
 	"github.com/pkg/errors"
 	"github.com/ztalab/cfssl/hook"
 	"github.com/ztalab/cfssl/transport"

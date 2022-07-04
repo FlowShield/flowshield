@@ -1,14 +1,14 @@
 package keymanager
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	jsoniter "github.com/json-iterator/go"
 	cfssl_client "github.com/ztalab/cfssl/api/client"
 	"github.com/ztalab/cfssl/cli/genkey"
 	"github.com/ztalab/cfssl/csr"
 	"github.com/ztalab/cfssl/signer"
 
-	"github.com/cloudSlit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/core"
 )
 
 // RemoteSigner ...

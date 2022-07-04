@@ -4,9 +4,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/logic/schema"
-	"github.com/cloudSlit/cloudslit/ca/pkg/influxdb"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/logic/schema"
+	"github.com/cloudslit/cloudslit/ca/pkg/influxdb"
 )
 
 var (

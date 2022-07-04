@@ -1,7 +1,7 @@
 package workload
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/dao"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/dao"
 )
 
 type UnitsForbidQueryParams struct {

@@ -4,14 +4,14 @@ import (
 	"crypto/tls"
 	"net/url"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"github.com/pkg/errors"
 	"github.com/ztalab/cfssl/api/client"
 	"github.com/ztalab/cfssl/auth"
 	"go.uber.org/multierr"
 	"go.uber.org/zap"
 
-	"github.com/cloudSlit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/core"
 )
 
 type UpperClients interface {

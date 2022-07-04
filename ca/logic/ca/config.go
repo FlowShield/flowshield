@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/ztalab/cfssl/config"
 
-	"github.com/cloudSlit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/core"
 )
 
 type RoleProfile struct {

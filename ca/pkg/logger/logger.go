@@ -1,7 +1,7 @@
 package logger
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger/redis_hook"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger/redis_hook"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

@@ -23,10 +23,10 @@ import (
 	"github.com/ztalab/cfssl/signer"
 	"github.com/ztalab/cfssl/signer/local"
 
-	"github.com/cloudSlit/cloudslit/ca/ca/keymanager"
-	ocsp_responder "github.com/cloudSlit/cloudslit/ca/ca/ocsp"
-	"github.com/cloudSlit/cloudslit/ca/ca/upperca"
-	"github.com/cloudSlit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/ca/keymanager"
+	ocsp_responder "github.com/cloudslit/cloudslit/ca/ca/ocsp"
+	"github.com/cloudslit/cloudslit/ca/ca/upperca"
+	"github.com/cloudslit/cloudslit/ca/core"
 )
 
 var (

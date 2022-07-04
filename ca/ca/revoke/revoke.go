@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"github.com/ztalab/cfssl/api"
 	"github.com/ztalab/cfssl/certdb"
 	cf_err "github.com/ztalab/cfssl/errors"
@@ -16,11 +16,11 @@ import (
 	"github.com/ztalab/cfssl/ocsp"
 	"gorm.io/gorm"
 
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/model"
-	"github.com/cloudSlit/cloudslit/ca/logic/events"
-	"github.com/cloudSlit/cloudslit/ca/pkg/signature"
-	"github.com/cloudSlit/cloudslit/ca/util"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/model"
+	"github.com/cloudslit/cloudslit/ca/logic/events"
+	"github.com/cloudslit/cloudslit/ca/pkg/signature"
+	"github.com/cloudslit/cloudslit/ca/util"
 )
 
 // A Handler accepts requests with a serial number parameter

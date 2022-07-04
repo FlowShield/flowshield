@@ -1,8 +1,8 @@
 package ca
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/api/helper"
-	logic "github.com/cloudSlit/cloudslit/ca/logic/ca"
+	"github.com/cloudslit/cloudslit/ca/api/helper"
+	logic "github.com/cloudslit/cloudslit/ca/logic/ca"
 )
 
 func init() {

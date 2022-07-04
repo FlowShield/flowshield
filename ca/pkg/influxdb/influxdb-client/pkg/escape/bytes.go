@@ -1,6 +1,6 @@
 // Package escape contains utilities for escaping parts of InfluxQL
 // and InfluxDB line protocol.
-package escape // import "github.com/cloudSlit/cloudslit/ca/pkg/influxdb/influxdb-client/pkg/escape"
+package escape // import "github.com/cloudslit/cloudslit/ca/pkg/influxdb/influxdb-client/pkg/escape"
 
 import (
 	"bytes"

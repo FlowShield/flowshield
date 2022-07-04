@@ -3,7 +3,7 @@ package caclient
 import (
 	"log"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"go.uber.org/zap"
 )
 

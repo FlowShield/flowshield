@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/cloudSlit/cloudslit/ca/api/helper"
-	"github.com/cloudSlit/cloudslit/ca/ca/keymanager"
-	"github.com/cloudSlit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/api/helper"
+	"github.com/cloudslit/cloudslit/ca/ca/keymanager"
+	"github.com/cloudslit/cloudslit/ca/core"
 	cfClient "github.com/ztalab/cfssl/api/client"
 )
 

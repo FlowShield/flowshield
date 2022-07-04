@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"context"
-	"github.com/cloudSlit/cloudslit/ca/api"
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/api"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"net/http"
 	"os"
 	"os/signal"

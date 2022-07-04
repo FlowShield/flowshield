@@ -1,5 +1,5 @@
 // Package models implements basic objects used throughout the TICK stack.
-package models // import "github.com/cloudSlit/cloudslit/ca/pkg/influxdb/influxdb-client/models"
+package models // import "github.com/cloudslit/cloudslit/ca/pkg/influxdb/influxdb-client/models"
 
 import (
 	"bytes"
@@ -15,7 +15,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/influxdb/influxdb-client/pkg/escape"
+	"github.com/cloudslit/cloudslit/ca/pkg/influxdb/influxdb-client/pkg/escape"
 )
 
 type escapeSet struct {

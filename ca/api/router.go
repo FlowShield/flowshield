@@ -1,13 +1,13 @@
 package api
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/api/helper"
-	"github.com/cloudSlit/cloudslit/ca/api/v1/ca"
-	"github.com/cloudSlit/cloudslit/ca/api/v1/certleaf"
-	"github.com/cloudSlit/cloudslit/ca/api/v1/health"
-	"github.com/cloudSlit/cloudslit/ca/api/v1/workload"
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/docs"
+	"github.com/cloudslit/cloudslit/ca/api/helper"
+	"github.com/cloudslit/cloudslit/ca/api/v1/ca"
+	"github.com/cloudslit/cloudslit/ca/api/v1/certleaf"
+	"github.com/cloudslit/cloudslit/ca/api/v1/health"
+	"github.com/cloudslit/cloudslit/ca/api/v1/workload"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/docs"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"

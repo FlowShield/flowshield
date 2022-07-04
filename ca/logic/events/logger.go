@@ -3,7 +3,7 @@ package events
 import (
 	"fmt"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	jsoniter "github.com/json-iterator/go"
 )
 

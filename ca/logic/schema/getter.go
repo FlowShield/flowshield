@@ -10,9 +10,9 @@ import (
 	cfCertInfo "github.com/ztalab/cfssl/certinfo"
 	"github.com/ztalab/cfssl/helpers"
 
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/model"
-	"github.com/cloudSlit/cloudslit/ca/pkg/caclient"
-	"github.com/cloudSlit/cloudslit/ca/pkg/spiffe"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/model"
+	"github.com/cloudslit/cloudslit/ca/pkg/caclient"
+	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
 )
 
 func GetFullCertByX509Cert(cert *x509.Certificate) *FullCert {

@@ -3,7 +3,7 @@ package config
 import (
 	cfssl_config "github.com/ztalab/cfssl/config"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/influxdb"
+	"github.com/cloudslit/cloudslit/ca/pkg/influxdb"
 )
 
 const (

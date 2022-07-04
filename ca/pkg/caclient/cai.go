@@ -1,10 +1,10 @@
 package caclient
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"time"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/keygen"
+	"github.com/cloudslit/cloudslit/ca/pkg/keygen"
 	"github.com/ztalab/cfssl/csr"
 	"github.com/ztalab/cfssl/transport/core"
 	"go.uber.org/zap"

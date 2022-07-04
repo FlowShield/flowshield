@@ -10,11 +10,11 @@ import (
 	"github.com/ztalab/cfssl/helpers"
 	"gorm.io/gorm"
 
-	"github.com/cloudSlit/cloudslit/ca/ca/upperca"
-	"github.com/cloudSlit/cloudslit/ca/core"
-	"github.com/cloudSlit/cloudslit/ca/database/mysql/cfssl-model/dao"
-	"github.com/cloudSlit/cloudslit/ca/logic/schema"
-	"github.com/cloudSlit/cloudslit/ca/pkg/caclient"
+	"github.com/cloudslit/cloudslit/ca/ca/upperca"
+	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/dao"
+	"github.com/cloudslit/cloudslit/ca/logic/schema"
+	"github.com/cloudslit/cloudslit/ca/pkg/caclient"
 )
 
 const (

@@ -1,15 +1,15 @@
 package initer
 
 import (
-	"github.com/cloudSlit/cloudslit/provider/internal/config"
-	"github.com/cloudSlit/cloudslit/provider/pkg/logger"
+	"github.com/cloudslit/cloudslit/provider/internal/config"
+	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"os"
 	"path/filepath"
 
 	"github.com/sirupsen/logrus"
 
-	loggerhook "github.com/cloudSlit/cloudslit/provider/pkg/logger/hook"
-	loggerredishook "github.com/cloudSlit/cloudslit/provider/pkg/logger/hook/redis"
+	loggerhook "github.com/cloudslit/cloudslit/provider/pkg/logger/hook"
+	loggerredishook "github.com/cloudslit/cloudslit/provider/pkg/logger/hook/redis"
 )
 
 // InitLogger initialize the log module

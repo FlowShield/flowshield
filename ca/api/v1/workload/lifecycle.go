@@ -2,8 +2,8 @@
 package workload
 
 import (
-	"github.com/cloudSlit/cloudslit/ca/api/helper"
-	logic "github.com/cloudSlit/cloudslit/ca/logic/workload"
+	"github.com/cloudslit/cloudslit/ca/api/helper"
+	logic "github.com/cloudslit/cloudslit/ca/logic/workload"
 )
 
 // RevokeCerts revoked certificate

@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/cloudSlit/cloudslit/ca/pkg/logger"
+	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"github.com/ztalab/cfssl/api"
 	"github.com/ztalab/cfssl/api/bundle"
 	"github.com/ztalab/cfssl/api/certinfo"
@@ -21,9 +21,9 @@ import (
 	"github.com/ztalab/cfssl/api/signhandler"
 	certsql "github.com/ztalab/cfssl/certdb/sql"
 
-	"github.com/cloudSlit/cloudslit/ca/ca/keymanager"
-	"github.com/cloudSlit/cloudslit/ca/ca/revoke"
-	"github.com/cloudSlit/cloudslit/ca/ca/signer"
+	"github.com/cloudslit/cloudslit/ca/ca/keymanager"
+	"github.com/cloudslit/cloudslit/ca/ca/revoke"
+	"github.com/cloudslit/cloudslit/ca/ca/signer"
 )
 
 // V1APIPrefix is the prefix of all CFSSL V1 API Endpoints.

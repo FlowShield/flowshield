@@ -2,8 +2,8 @@ package test
 
 import (
 	"fmt"
-	"github.com/cloudSlit/cloudslit/ca/pkg/caclient"
-	"github.com/cloudSlit/cloudslit/ca/pkg/spiffe"
+	"github.com/cloudslit/cloudslit/ca/pkg/caclient"
+	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
 	"github.com/ztalab/cfssl/helpers"
 	"github.com/ztalab/cfssl/hook"
 	cflog "github.com/ztalab/cfssl/log"
