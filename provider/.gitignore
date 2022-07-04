@@ -1,0 +1,7 @@
+.idea
+cert
+.vscode
+bin
+.DS_store
+.history
+vendor

@@ -1,0 +1,52 @@
+# mode(debug,test,release)
+RunMode = "release"
+
+# Whether to print configuration parameters at startup
+PrintConfig = true
+
+# Information about themselves
+[Common]
+UniqueId = "za-sentinel"
+AppName = "za-sentinel"
+PeerAddress = "0x1B4b827703dc3545089fcee70F0e6e732BFF4413"
+LocalAddr = "server.com"
+LocalPort = 5091
+
+# p2p config
+[P2p]
+Enable = true
+ServiceDiscoveryID = "ztalab/provider"
+ServiceDiscoverMode = "advertise" # advertise or announce
+ServiceMetadataTopic = "ztalab_provider_metadata"
+
+[Influxdb]
+Enabled = false
+Address = "192.168.2.80"
+Port = 18086
+Username = "username"
+Password = "password"
+Database = "msp"
+Precision = "ms"
+MaxIdleConns = 30
+MaxIdleConnsPerHost = 30
+FlushTime = 20
+FlushSize = 10
+
+[Log]
+# level(1:fatal,2:error,3:warn,4:info,5:debug,6:trace)
+Level = 4
+# text、json
+Format = "text"
+# stdout、stderr、file
+Output = "stdout"
+OutputFile = "data/logger.log"
+EnableHook = false
+HookLevels = ["info", "warn", "error"]
+# gorm、redis
+Hook = "redis"
+HookMaxThread = 1
+HookMaxBuffer = 512
+
+[LogRedisHook]
+Addr = "192.168.2.80:6379"
+Key = "msp"
