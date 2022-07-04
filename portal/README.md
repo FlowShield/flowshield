@@ -18,7 +18,7 @@
 ---
 
 <p float="left">
-<img height="100" alt="image" src="https://user-images.githubusercontent.com/9459488/165663549-ff4bbb5d-db8c-4bee-9eaa-0c49bba54aa1.png">
+<img height="100" alt="image" src="https://user-images.githubusercontent.com/34047788/177100998-698293d2-b305-468c-b2f6-64c19e416430.png">
 
 <img height="100" alt="image" src="https://user-images.githubusercontent.com/9459488/165663563-5888b2d4-054b-466f-a974-29da8f935552.png">
     
