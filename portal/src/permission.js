@@ -6,7 +6,7 @@ const whiteList = ['login', 'home'] // skip login
 
 router.beforeEach(async(to, from, next) => {
   EventBus.$emit('app.loading', true)
-  document.title = to?.meta?.title || 'ZAPortal'
+  document.title = to?.meta?.title || 'CloudSlit Portal'
 
   // goto login if needed
   try {
