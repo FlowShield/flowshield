@@ -1,10 +1,3 @@
-<!--
- * @Author: gitsrc
- * @Date: 2022-07-04 01:58:04
- * @LastEditors: gitsrc
- * @LastEditTime: 2022-07-04 02:31:49
- * @FilePath: /cloudslit/portal/README.md
--->
 <p align="center">
 <img 
     src="https://res.cloudinary.com/malloc/image/upload/v1656912975/cloudslit/cloudslit_kaj9ce.png" 
@@ -17,17 +10,7 @@
 
 ---
 
-<p float="left">
-<img height="100" alt="image" src="https://user-images.githubusercontent.com/34047788/177100998-698293d2-b305-468c-b2f6-64c19e416430.png">
-
-<img height="100" alt="image" src="https://user-images.githubusercontent.com/9459488/165663563-5888b2d4-054b-466f-a974-29da8f935552.png">
-    
-<img height="100" alt="image" src="https://user-images.githubusercontent.com/9459488/165664165-95a3b07b-0626-4dd1-aa01-3a98429a4569.png">
-
-<img height="100" alt="image" src="https://user-images.githubusercontent.com/9459488/165664296-e1c35514-2add-4322-b4e9-fdf0080997bd.png">
-
-<img height="100" alt="image" src="https://user-images.githubusercontent.com/9459488/165664198-1cd4a4c4-fba8-4151-9b51-f3a3798fd23b.png">
-</p>
+<img width="1764" alt="page1" src="https://user-images.githubusercontent.com/34047788/177101157-767c6072-d4b5-424d-9993-3298d2865b2f.png">
 
 ## 💪🏻 Start
 
