@@ -33,6 +33,11 @@ const routes = [
     path: '/relay',
     name: 'relay',
     component: () => import('@/views/relay')
+  },
+  {
+    path: '/nodes',
+    name: 'nodes',
+    component: () => import('@/views/nodes')
   }
 ]
 
