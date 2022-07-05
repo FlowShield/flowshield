@@ -10,9 +10,9 @@ type Relay struct {
 	Host      string `json:"host"`
 	Port      int    `json:"port"`
 	OutPort   int    `json:"out_port"`
-	CaPem     string `json:"ca_pem"`
-	CertPem   string `json:"cert_pem"`
-	KeyPem    string `json:"key_pem"`
+	//CaPem     string `json:"ca_pem"`
+	//CertPem   string `json:"cert_pem"`
+	//KeyPem    string `json:"key_pem"`
 }
 
 func (Relay) TableName() string {

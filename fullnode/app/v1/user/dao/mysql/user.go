@@ -23,11 +23,11 @@ func NewUser(c *gin.Context) *User {
 	}
 }
 
-func (p *User) FirstOrCreateUser(data *mmysql.User) (err error) {
-	var info *mmysql.User
+func (p *User) FirstOrCreateUser(data *mmysql.User) (info *mmysql.User, err error) {
 	orm := p.GetOrm()
 	err = orm.Table(p.TableName).Where(fmt.Sprintf("email = '%s'", data.Email)).First(&info).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
+		err = nil
 		// 执行插入
 		sql := orm.ToSQL(func(tx *gorm.DB) *gorm.DB {
 			return tx.Table(p.TableName).Create(&data)
@@ -35,7 +35,17 @@ func (p *User) FirstOrCreateUser(data *mmysql.User) (err error) {
 		err = orm.Exec(sql).Error
 		if err != nil {
 			logger.Errorf(p.c, "FirstOrCreateUser err : %v", err)
+			return
 		}
+		info = &mmysql.User{
+			Email:     data.Email,
+			AvatarUrl: data.AvatarUrl,
+			UUID:      data.UUID,
+		}
+		return
+	}
+	if err != nil {
+		logger.Errorf(p.c, "FirstOrCreateUser err : %v", err)
 		return
 	}
 	//err = orm.Where(mmysql.User{Email: data.Email}).Attrs(mmysql.User{UUID: uuid.NewString(), AvatarUrl: data.AvatarUrl}).FirstOrCreate(&data).Error

@@ -43,7 +43,7 @@ func runP2P() error {
 }
 
 func startEventHandler(ps *p2p.PubSub) {
-	ticker := time.NewTicker(time.Second)
+	ticker := time.NewTicker(time.Second * 10)
 	defer ticker.Stop()
 	info := NewServerInfo(ps.Host)
 	for {

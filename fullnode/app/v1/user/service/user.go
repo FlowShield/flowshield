@@ -48,7 +48,7 @@ func GetRedirectURL(c *gin.Context, company string) (redirectURL string, code in
 }
 
 func Oauth2Callback(c *gin.Context, session sessions.Session, company, oauth2Code string) {
-	var user *mmysql.User
+	var userInfo *mmysql.User
 	// 查询对应的配置
 	info, err := mysql.NewOauth2(c).GetOauth2ByCompany(company)
 	if err != nil {
@@ -71,12 +71,12 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, company, oauth2Cod
 			c.AbortWithError(http.StatusInternalServerError, errors.New("oauth error"))
 			return
 		}
-		user = &mmysql.User{
+		user := &mmysql.User{
 			Email:     fmt.Sprintf("%s@github.com", *githubUser.Login),
 			AvatarUrl: *githubUser.AvatarURL,
 			UUID:      uuid.NewString(),
 		}
-		if err = userDao.NewUser(c).FirstOrCreateUser(user); err != nil {
+		if userInfo, err = userDao.NewUser(c).FirstOrCreateUser(user); err != nil {
 			c.AbortWithError(http.StatusInternalServerError, errors.New("oauth error"))
 			return
 		}
@@ -87,7 +87,7 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, company, oauth2Cod
 	default:
 
 	}
-	userBytes, _ := json.Marshal(user)
+	userBytes, _ := json.Marshal(userInfo)
 	session.Set("user", userBytes)
 	session.Save()
 	// 判断是否有机器鉴权

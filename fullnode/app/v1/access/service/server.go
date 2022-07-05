@@ -2,9 +2,9 @@ package service
 
 import (
 	"strings"
-	"time"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/dao/api"
+	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
+
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/dao/mysql"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mapi"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mmysql"
@@ -51,22 +51,25 @@ func AddServer(c *gin.Context, param *mparam.AddServer) (code int, data *mmysql.
 		// 判断传递的资源ID是否合法以及是否存在
 		resource, err := mysql.NewResource(c).GetResourceByIDSli(resourceIDSli)
 		if err != nil {
+			logger.Errorf(c, "Mysql GetResourceByIDSli err : %v", err)
 			return pconst.CODE_COMMON_DATA_NOT_EXIST, nil
 		}
 		if len(resourceIDSli) != len(resource) {
 			return pconst.CODE_COMMON_DATA_NOT_EXIST, nil
 		}
 		attrs["resource"] = resource
-		sentinelSign, err := api.ApplySign(c, attrs, "zero-access", "zero-access", data.Host, time.Now().AddDate(0, 0, 90))
-		if err != nil {
-			return pconst.CODE_COMMON_SERVER_BUSY, nil
-		}
-		data.CaPem = sentinelSign.CaPEM
-		data.CertPem = sentinelSign.CertPEM
-		data.KeyPem = sentinelSign.KeyPEM
+		//sentinelSign, err := api.ApplySign(c, attrs, "zero-access", "zero-access", data.Host, time.Now().AddDate(0, 0, 90))
+		//if err != nil {
+		//	logger.Errorf(c, "api.ApplySign err : %v", err)
+		//	return pconst.CODE_COMMON_SERVER_BUSY, nil
+		//}
+		//data.CaPem = sentinelSign.CaPEM
+		//data.CertPem = sentinelSign.CertPEM
+		//data.KeyPem = sentinelSign.KeyPEM
 	}
 	err := mysql.NewServer(c).AddServer(data)
 	if err != nil {
+		logger.Errorf(c, "Mysql AddServer err : %v", err)
 		return pconst.CODE_COMMON_SERVER_BUSY, nil
 	}
 	return
@@ -107,18 +110,18 @@ func EditServer(c *gin.Context, param *mparam.EditServer) (code int) {
 			return
 		}
 		attrs["resource"] = resource
-		sentinelSign, err := api.ApplySign(c, attrs, "zero-access", "zero-access", info.Host, time.Now().AddDate(0, 0, 90))
-		if err != nil {
-			code = pconst.CODE_COMMON_SERVER_BUSY
-			return
-		}
-		info.CaPem = sentinelSign.CaPEM
-		info.CertPem = sentinelSign.CertPEM
-		info.KeyPem = sentinelSign.KeyPEM
+		//sentinelSign, err := api.ApplySign(c, attrs, "zero-access", "zero-access", info.Host, time.Now().AddDate(0, 0, 90))
+		//if err != nil {
+		//	code = pconst.CODE_COMMON_SERVER_BUSY
+		//	return
+		//}
+		//info.CaPem = sentinelSign.CaPEM
+		//info.CertPem = sentinelSign.CertPEM
+		//info.KeyPem = sentinelSign.KeyPEM
 	} else {
-		info.CaPem = ""
-		info.CertPem = ""
-		info.KeyPem = ""
+		//info.CaPem = ""
+		//info.CertPem = ""
+		//info.KeyPem = ""
 	}
 	err = mysql.NewServer(c).EditServer(info)
 	if err != nil {

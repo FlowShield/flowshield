@@ -7,8 +7,6 @@ import (
 
 type Server struct {
 	ID         uint   `gorm:"primarykey"`
-	CreatedAt  int64  `gorm:"autoCreateTime"`
-	UpdatedAt  int64  `gorm:"autoUpdateTime"`
 	ResourceID string `json:"resource_id"`
 	UserUUID   string `json:"user_uuid" gorm:"user_uuid"`
 	Name       string `json:"name"`
@@ -16,9 +14,11 @@ type Server struct {
 	Host       string `json:"host"`
 	Port       int    `json:"port"`
 	OutPort    int    `json:"out_port"`
-	CaPem      string `json:"ca_pem"`
-	CertPem    string `json:"cert_pem"`
-	KeyPem     string `json:"key_pem"`
+	//CaPem      string `json:"ca_pem"`
+	//CertPem    string `json:"cert_pem"`
+	//KeyPem     string `json:"key_pem"`
+	CreatedAt int64 `gorm:"autoCreateTime"`
+	UpdatedAt int64 `gorm:"autoUpdateTime"`
 }
 
 func (Server) TableName() string {
