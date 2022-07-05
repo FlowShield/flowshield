@@ -109,6 +109,7 @@ services:
       - cloudslit
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./portal_source:/usr/share/nginx/html
 
   icefiresqlite:
     image: taosheng205054/icefire-sqlite:latest
@@ -122,10 +123,10 @@ services:
     networks:
       - cloudslit
     volumes:
-      - ./sqlite.db:/app/sqlite.db
+      - ./db/sqlite.db:/app/db/sqlite.db
 
   cloudslit-backend:
-    image: taosheng205054/cloudslit:v0.0.4
+    image: taosheng205054/cloudslit:v0.0.10
     restart: always
     environment:
       DOMAIN: 'dash.cloudslit.xyz'
@@ -133,7 +134,7 @@ services:
       CS_MYSQL_HOST: 'icefiresqlite'
       CS_MYSQL_USER: 'root'
       CS_MYSQL_PASSWORD: '123456'
-      CS_CA_SIGN_URL: 'https://root-ca-tls:8083'
+      CS_CA_SIGN_URL: 'https://zaca-tls:8081'
       CS_CA_AUTH_KEY: '0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134'
       CS_ACCOUNT: '0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d'
       CS_PRIVATE_KEY: 'xxx'

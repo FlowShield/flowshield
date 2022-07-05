@@ -18,10 +18,10 @@ type Client struct {
 	Relay     Relays       `json:"relay"`
 	Server    ServerAttr   `json:"server"`
 	Target    ClientTarget `json:"target"`
-	CaPem     string       `json:"ca_pem"`
-	CertPem   string       `json:"cert_pem"`
-	KeyPem    string       `json:"key_pem"`
-	Cid       string       `json:"cid"`
+	//CaPem     string       `json:"ca_pem"`
+	//CertPem   string       `json:"cert_pem"`
+	//KeyPem    string       `json:"key_pem"`
+	Cid string `json:"cid"`
 }
 
 func (Client) TableName() string {

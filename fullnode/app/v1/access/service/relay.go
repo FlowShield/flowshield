@@ -1,9 +1,6 @@
 package service
 
 import (
-	"time"
-
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/dao/api"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/dao/mysql"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mapi"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mmysql"
@@ -36,22 +33,22 @@ func AddRelay(c *gin.Context, param *mparam.AddRelay) (code int, data *mmysql.Re
 		OutPort: param.OutPort,
 		UUID:    uuid.NewString(),
 	}
-	attrs := map[string]interface{}{
-		"type":     "relay",
-		"name":     data.Name,
-		"host":     data.Host,
-		"port":     data.Port,
-		"out_port": data.OutPort,
-		"uuid":     data.UUID,
-	}
-	sentinelSign, err := api.ApplySign(c, attrs, "zero-access", "zero-access", data.Host, time.Now().AddDate(0, 0, 90))
-	if err != nil {
-		return pconst.CODE_COMMON_SERVER_BUSY, nil
-	}
-	data.CaPem = sentinelSign.CaPEM
-	data.CertPem = sentinelSign.CertPEM
-	data.KeyPem = sentinelSign.KeyPEM
-	err = mysql.NewRelay(c).AddRelay(data)
+	//attrs := map[string]interface{}{
+	//	"type":     "relay",
+	//	"name":     data.Name,
+	//	"host":     data.Host,
+	//	"port":     data.Port,
+	//	"out_port": data.OutPort,
+	//	"uuid":     data.UUID,
+	//}
+	//sentinelSign, err := api.ApplySign(c, attrs, "zero-access", "zero-access", data.Host, time.Now().AddDate(0, 0, 90))
+	//if err != nil {
+	//	return pconst.CODE_COMMON_SERVER_BUSY, nil
+	//}
+	//data.CaPem = sentinelSign.CaPEM
+	//data.CertPem = sentinelSign.CertPEM
+	//data.KeyPem = sentinelSign.KeyPEM
+	err := mysql.NewRelay(c).AddRelay(data)
 	if err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY, nil
 	}
@@ -72,22 +69,22 @@ func EditRelay(c *gin.Context, param *mparam.EditRelay) (code int) {
 	info.Host = param.Host
 	info.Port = param.Port
 	info.OutPort = param.OutPort
-	attrs := map[string]interface{}{
-		"type":     "relay",
-		"name":     info.Name,
-		"host":     info.Host,
-		"port":     info.Port,
-		"out_port": info.OutPort,
-		"uuid":     info.UUID,
-	}
-	sentinelSign, err := api.ApplySign(c, attrs, "zero-access", "zero-access", info.Host, time.Now().AddDate(0, 0, 90))
-	if err != nil {
-		code = pconst.CODE_COMMON_SERVER_BUSY
-		return
-	}
-	info.CaPem = sentinelSign.CaPEM
-	info.CertPem = sentinelSign.CertPEM
-	info.KeyPem = sentinelSign.KeyPEM
+	//attrs := map[string]interface{}{
+	//	"type":     "relay",
+	//	"name":     info.Name,
+	//	"host":     info.Host,
+	//	"port":     info.Port,
+	//	"out_port": info.OutPort,
+	//	"uuid":     info.UUID,
+	//}
+	//sentinelSign, err := api.ApplySign(c, attrs, "zero-access", "zero-access", info.Host, time.Now().AddDate(0, 0, 90))
+	//if err != nil {
+	//	code = pconst.CODE_COMMON_SERVER_BUSY
+	//	return
+	//}
+	//info.CaPem = sentinelSign.CaPEM
+	//info.CertPem = sentinelSign.CertPEM
+	//info.KeyPem = sentinelSign.KeyPEM
 	err = mysql.NewRelay(c).EditRelay(info)
 	if err != nil {
 		code = pconst.CODE_COMMON_SERVER_BUSY
