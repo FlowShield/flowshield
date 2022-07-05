@@ -1,0 +1,8 @@
+apiVersion: v1
+description: ZTALAB
+kubeVersion: '>=1.16.0-0'
+maintainers:
+- email: taosheng205054@gmail.com
+  name: TS
+name: ztalab
+version: 0.0.1

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: zaportal
+  name: zaportal
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: zaportal
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: zaportal
+    spec:
+      volumes:
+      - name: zaportal-nginx
+        configMap:
+          name: zaportal-nginx
+      containers:
+      - image: {{ .Values.deployment.zaportal.repository }}:{{ .Values.deployment.zaportal.tag }}
+        name: zaportal
+        ports:
+          - name: http
+            containerPort: 80
+        resources:
+          {{- toYaml .Values.deployment.zaportal.resources | nindent 10 }}
+        volumeMounts:
+        - name: zaportal-nginx
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
+      - image: {{ .Values.deployment.zamanager.repository }}:{{ .Values.deployment.zamanager.tag }}
+        name: zamanager
+        resources:
+          {{- toYaml .Values.deployment.zamanager.resources | nindent 10 }}
+        env:
+        {{- range $key, $value := .Values.deployment.zamanager.env }}
+          - name: {{ $key }}
+            value: "{{ $value }}"
+        {{- end }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

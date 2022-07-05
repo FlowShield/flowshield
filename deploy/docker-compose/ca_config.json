@@ -1,0 +1,40 @@
+{
+  "auth_keys": {
+    "intermediate": {
+      "type": "standard",
+      "key": "52abb3ac91971bb72bce17e7a289cd04476490b19e0d8eb7810dc42d4ac16c41"
+    },
+    "default": {
+      "type": "standard",
+      "key": "0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134"
+    }
+  },
+  "signing": {
+    "profiles": {
+      "default": {
+        "usages": [
+          "signing",
+          "key encipherment",
+          "server auth",
+          "client auth"
+        ],
+        "expiry": "1440h",
+        "copy_extensions": true,
+        "auth_key": "default"
+      },
+      "intermediate": {
+        "usages": [
+          "digital signature",
+          "cert sign",
+          "crl sign"
+        ],
+        "expiry": "17520h",
+        "copy_extensions": true,
+        "auth_key": "intermediate",
+        "ca_constraint": {
+          "is_ca": true
+        }
+      }
+    }
+  }
+}

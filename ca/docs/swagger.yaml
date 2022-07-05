@@ -1,0 +1,1021 @@
+definitions:
+  ca.IntermediateObject:
+    properties:
+      certs:
+        items:
+          $ref: '#/definitions/schema.FullCert'
+        type: array
+      children:
+        items:
+          $ref: '#/definitions/ca.IntermediateObject'
+        type: array
+      current:
+        type: boolean
+      metadata:
+        $ref: '#/definitions/schema.CaMetadata'
+    type: object
+  ca.OverallCertsCountItem:
+    properties:
+      role:
+        type: string
+      total:
+        description: Total number of certificates
+        type: integer
+      units_count:
+        description: number of services
+        type: integer
+    type: object
+  ca.OverallCertsCountResponse:
+    properties:
+      certs:
+        items:
+          $ref: '#/definitions/ca.OverallCertsCountItem'
+        type: array
+      total:
+        type: integer
+    type: object
+  ca.OverallExpiryCertsResponse:
+    properties:
+      expiry_certs:
+        items:
+          $ref: '#/definitions/ca.OverallExpiryGroup'
+        type: array
+      expiry_total:
+        type: integer
+    type: object
+  ca.OverallExpiryGroup:
+    properties:
+      count:
+        type: integer
+      name:
+        type: string
+    type: object
+  ca.OverallUnitsEnableItem:
+    properties:
+      certs_count:
+        type: integer
+      units_count:
+        type: integer
+    type: object
+  ca.OverallUnitsEnableStatus:
+    properties:
+      disable:
+        $ref: '#/definitions/ca.OverallUnitsEnableItem'
+      enable:
+        $ref: '#/definitions/ca.OverallUnitsEnableItem'
+    type: object
+  ca.RoleProfile:
+    properties:
+      auth_key:
+        type: string
+      expiry_duration:
+        type: string
+      expiry_string:
+        type: string
+      is_ca:
+        type: boolean
+      name:
+        type: string
+      usages:
+        items:
+          type: string
+        type: array
+    type: object
+  ca.WorkloadUnit:
+    properties:
+      first_issued_at:
+        description: Date of first issuance of certificate
+        type: string
+      forbidden:
+        description: Is it prohibited
+        type: boolean
+      role:
+        type: string
+      unique_id:
+        type: string
+      valid_num:
+        description: Number of valid certificates
+        type: integer
+    type: object
+  certleaf.LeafCert:
+    properties:
+      aki:
+        type: string
+      cert_info:
+        $ref: '#/definitions/schema.Certificate'
+      cert_str:
+        description: Show certificate details
+        type: string
+      cn:
+        type: string
+      expiry:
+        type: string
+      issued_at:
+        type: string
+      issuer_cert:
+        $ref: '#/definitions/certleaf.LeafCert'
+      not_before:
+        type: string
+      o:
+        type: string
+      ou:
+        type: string
+      revoked_at:
+        type: string
+      role:
+        type: string
+      sn:
+        type: string
+      status:
+        example: good
+        type: string
+      unique_id:
+        type: string
+    type: object
+  certleaf.RootCertChains:
+    properties:
+      root:
+        $ref: '#/definitions/ca.IntermediateObject'
+    type: object
+  helper.HTTPWrapErrorResponse:
+    properties:
+      errCode:
+        type: string
+      msg:
+        type: string
+    type: object
+  helper.MSPNormalizeHTTPResponseBody:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  helper.MSPNormalizeList:
+    properties:
+      list: {}
+      paginate:
+        $ref: '#/definitions/helper.MSPNormalizePaginate'
+    type: object
+  helper.MSPNormalizePaginate:
+    properties:
+      current:
+        type: integer
+      pageSize:
+        type: integer
+      total:
+        type: integer
+    type: object
+  schema.CaMetadata:
+    properties:
+      o:
+        type: string
+      ou:
+        type: string
+      spiffe_id:
+        $ref: '#/definitions/spiffe.IDGIdentity'
+    type: object
+  schema.Certificate:
+    properties:
+      authority_key_id:
+        type: string
+      issuer:
+        type: object
+      not_after:
+        type: string
+      not_before:
+        type: string
+      sans:
+        items:
+          type: string
+        type: array
+      serial_number:
+        type: string
+      sigalg:
+        type: string
+      subject:
+        type: object
+      subject_key_id:
+        type: string
+    type: object
+  schema.FullCert:
+    properties:
+      aki:
+        type: string
+      cert_info:
+        $ref: '#/definitions/schema.Certificate'
+      cert_str:
+        description: Show certificate details
+        type: string
+      cn:
+        type: string
+      expiry:
+        type: string
+      issued_at:
+        type: string
+      not_before:
+        type: string
+      o:
+        type: string
+      ou:
+        type: string
+      revoked_at:
+        type: string
+      role:
+        type: string
+      sn:
+        type: string
+      status:
+        example: good
+        type: string
+      unique_id:
+        type: string
+    type: object
+  schema.SampleCert:
+    properties:
+      aki:
+        type: string
+      cn:
+        type: string
+      expiry:
+        type: string
+      issued_at:
+        type: string
+      not_before:
+        type: string
+      o:
+        type: string
+      ou:
+        type: string
+      revoked_at:
+        type: string
+      role:
+        type: string
+      sn:
+        type: string
+      status:
+        example: good
+        type: string
+      unique_id:
+        type: string
+    type: object
+  spiffe.IDGIdentity:
+    properties:
+      cluster_id:
+        type: string
+      site_id:
+        type: string
+      unique_id:
+        type: string
+    type: object
+  workload.ForbidNewCertsParams:
+    properties:
+      unique_ids:
+        items:
+          type: string
+        type: array
+    type: object
+  workload.ForbidUnitParams:
+    properties:
+      unique_id:
+        type: string
+    required:
+    - unique_id
+    type: object
+  workload.RecoverCertsParams:
+    properties:
+      aki:
+        type: string
+      sn:
+        type: string
+      unique_id:
+        type: string
+    type: object
+  workload.RevokeCertsParams:
+    properties:
+      aki:
+        type: string
+      sn:
+        type: string
+      unique_id:
+        type: string
+    type: object
+  workload.UnitForbidQueryItem:
+    properties:
+      forbid:
+        type: boolean
+      unique_id:
+        type: string
+    type: object
+  workload.UnitsCertsItem:
+    properties:
+      certs:
+        items:
+          $ref: '#/definitions/schema.FullCert'
+        type: array
+      forbidden:
+        type: boolean
+      unique_id:
+        type: string
+    type: object
+  workload.UnitsForbidQueryResult:
+    properties:
+      status:
+        additionalProperties:
+          $ref: '#/definitions/workload.UnitForbidQueryItem'
+        type: object
+    type: object
+  workload.UnitsStatusReq:
+    properties:
+      unique_ids:
+        items:
+          type: string
+        type: array
+    required:
+    - unique_ids
+    type: object
+info:
+  contact: {}
+paths:
+  /ca/intermediate_topology:
+    get:
+      description: Sub-CA topology
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/ca.IntermediateObject'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: Sub-CA topology
+      tags:
+      - CA
+  /ca/overall_certs_count:
+    get:
+      description: Total number of certificates, number by classification, number
+        of corresponding services
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/ca.OverallCertsCountResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p2)Certificate classification
+      tags:
+      - CA
+  /ca/overall_expiry_certs:
+    get:
+      description: 'Number of certificates expired: within one week, within 1/3 months
+        and after 3 months'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/ca.OverallExpiryCertsResponse'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p2)Certificate validity
+      tags:
+      - CA
+  /ca/overall_units_enable_status:
+    get:
+      description: Total enabled, total disabled, corresponding services
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/ca.OverallUnitsEnableStatus'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p2)Enabling condition
+      tags:
+      - CA
+  /ca/role_profiles:
+    get:
+      description: Environmental isolation type
+      parameters:
+      - description: Only a list of types is returned for search criteria
+        in: query
+        name: short
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  items:
+                    type: string
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p1)Environmental isolation type
+      tags:
+      - CA
+  /ca/upper_ca_intermediate_topology:
+    get:
+      description: Upper CA topology
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/ca.IntermediateObject'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: Upper CA topology
+      tags:
+      - CA
+  /ca/workload_units:
+    get:
+      description: CA Units
+      parameters:
+      - description: Number of pages, default 1
+        in: query
+        name: page
+        type: integer
+      - description: Page limit, default 20
+        in: query
+        name: limit_num
+        type: integer
+      - description: UniqueID Query
+        in: query
+        name: unique_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/helper.MSPNormalizeList'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/ca.WorkloadUnit'
+                        type: array
+                    type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p1)Service unit
+      tags:
+      - CA
+  /certleaf/cert_chain:
+    get:
+      description: Get certificate chain information
+      parameters:
+      - description: Show CA's own certificate chain
+        in: query
+        name: self_cert
+        type: boolean
+      - description: SN+AKI Query the specified certificate
+        in: query
+        name: sn
+        type: string
+      - description: SN+AKI Query the specified certificate
+        in: query
+        name: aki
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/certleaf.LeafCert'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p1)CertChain
+      tags:
+      - certleaf
+  /certleaf/cert_chain_from_root:
+    get:
+      description: All certificate chains from the root Perspective
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/certleaf.RootCertChains'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p1)Root view certificate chain
+      tags:
+      - certleaf
+  /workload/cert:
+    get:
+      description: Certificate details
+      parameters:
+      - description: Certificate sn
+        in: query
+        name: sn
+        required: true
+        type: string
+      - description: Certificate aki
+        in: query
+        name: aki
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/schema.FullCert'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: Detail
+      tags:
+      - Workload
+  /workload/certs:
+    get:
+      description: Certificate list
+      parameters:
+      - description: Certificate type default
+        in: query
+        name: role
+        type: string
+      - description: Query by unique ID
+        in: query
+        name: unique_id
+        type: string
+      - description: Query by certificate serial number
+        in: query
+        name: cert_sn
+        type: string
+      - description: Certificate status good/revoked
+        in: query
+        name: status
+        type: string
+      - description: Sort, default issued_at desc
+        in: query
+        name: order
+        type: string
+      - description: Expiration, starting point
+        in: query
+        name: expiry_start_time
+        type: string
+      - description: Expiration, end time point
+        in: query
+        name: expiry_end_time
+        type: string
+      - description: Paging parameters, default 20
+        in: query
+        name: limit_num
+        type: integer
+      - description: Number of pages, default 1
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/helper.MSPNormalizeList'
+                  - properties:
+                      list:
+                        items:
+                          $ref: '#/definitions/schema.SampleCert'
+                        type: array
+                    type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p3)List
+      tags:
+      - Workload
+  /workload/lifecycle/forbid_new_certs:
+    post:
+      description: Prohibit a uniqueID from requesting a certificate
+      parameters:
+      - description: ' '
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/workload.ForbidNewCertsParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: Application for certificate is prohibited
+      tags:
+      - Workload
+  /workload/lifecycle/forbid_unit:
+    post:
+      description: Revoke and prohibit service certificates
+      parameters:
+      - description: ' '
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/workload.ForbidUnitParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p1)Revoke and prohibit service certificates
+      tags:
+      - Workload
+  /workload/lifecycle/recover:
+    post:
+      description: Restore certificate
+      parameters:
+      - description: sn+aki / unique_id either-or
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/workload.RecoverCertsParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p3)Recover
+      tags:
+      - Workload
+  /workload/lifecycle/recover_forbid_new_certs:
+    post:
+      description: Recovery allows a uniqueID to request a certificate
+      parameters:
+      - description: ' '
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/workload.ForbidNewCertsParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: Resume application certificate
+      tags:
+      - Workload
+  /workload/lifecycle/recover_unit:
+    post:
+      description: Restore and allow service certificates
+      parameters:
+      - description: ' '
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/workload.ForbidUnitParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p1)Restore and allow service certificates
+      tags:
+      - Workload
+  /workload/lifecycle/revoke:
+    post:
+      description: revoked certificate
+      parameters:
+      - description: sn+aki / unique_id pick one of two
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/workload.RevokeCertsParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p3)Revoke
+      tags:
+      - Workload
+  /workload/units_certs_list:
+    get:
+      description: List of service certificates
+      parameters:
+      - description: Query unique_id
+        in: query
+        name: unique_id
+        type: string
+      - description: Certificate type
+        in: query
+        name: role
+        type: string
+      - description: Expiration, starting point
+        in: query
+        name: expiry_start_time
+        type: string
+      - description: Expiration, end time point
+        in: query
+        name: expiry_end_time
+        type: string
+      - description: Disable, 1 disable, 2 enable
+        in: query
+        name: is_forbid
+        type: integer
+      - description: Paging parameters, default 20
+        in: query
+        name: limit_num
+        type: integer
+      - description: Number of pages, default 1
+        in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/workload.UnitsCertsItem'
+                  type: array
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p1)List of service certificates
+      tags:
+      - Workload
+  /workload/units_forbid_query:
+    get:
+      description: Query unique_id Is it forbidden to apply for certificate
+      parameters:
+      - collectionFormat: multi
+        description: Query unique_ID array
+        in: query
+        items:
+          type: string
+        name: unique_ids
+        required: true
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  $ref: '#/definitions/workload.UnitsForbidQueryResult'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: Prohibit applying for certificate query
+      tags:
+      - Workload
+  /workload/units_status:
+    post:
+      description: Service corresponding status query
+      parameters:
+      - description: Query unique_ID array
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/workload.UnitsStatusReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ' '
+          schema:
+            allOf:
+            - $ref: '#/definitions/helper.MSPNormalizeHTTPResponseBody'
+            - properties:
+                data:
+                  type: object
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.HTTPWrapErrorResponse'
+      summary: (p1)Service corresponding status query
+      tags:
+      - Workload
+swagger: "2.0"

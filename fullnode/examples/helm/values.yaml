@@ -1,0 +1,40 @@
+deployment:
+  zaportal:
+    repository: rovast/za-portal
+    tag: latest
+    resources:
+      requests:
+        cpu: 50m
+        memory: 50Mi
+      limits:
+        cpu: 1
+        memory: 200Mi
+  zamanager:
+    repository: taosheng205054/zamanager
+    tag: latest
+    resources:
+      requests:
+        cpu: 50m
+        memory: 50Mi
+      limits:
+        cpu: 1
+        memory: 200Mi
+    env:
+      DOMAIN: 'https://net.ztalab.xyz'
+      ZTA_REDIS_ADDR: 'redis:6379'
+      ZTA_MYSQL_HOST: 'mysql'
+      ZTA_MYSQL_USER: 'root'
+      ZTA_MYSQL_PASSWORD: 'root'
+      ZTA_CA_SIGN_URL: 'https://root-ca-tls:8083'
+      ZTA_CA_AUTH_KEY: '0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134'
+
+replicas: 3
+
+ingress:
+  host: net.ztalab.xyz
+  annotations:
+
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

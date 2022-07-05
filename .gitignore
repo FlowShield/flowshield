@@ -1,0 +1,13 @@
+# ---> Go
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+.idea
+
+fullnode/.idea
+fullnode/.DS_Store
+fullnode/.vscode
+fullnode/.docs
+
+fullnode/fullnode
+fullnode/logs
+fullnode/release_bin
+fullnode/bin

@@ -1,0 +1,1 @@
+DROP TABLE IF EXISTS self_keypair;
