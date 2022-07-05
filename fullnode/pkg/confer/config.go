@@ -13,7 +13,7 @@ type ServerConfig struct {
 	Mysql Mysql `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
 	CA    CA    `mapstructure:"ca" json:"ca" yaml:"ca"`
 	P2P   P2P   `mapstructure:"p2p" json:"p2p" yaml:"p2p"`
-	Web3  Web3  `mapstructure:"w3s" json:"w3s" yaml:"w3s"`
+	Web3  Web3  `mapstructure:"web3" json:"web3" yaml:"web3"`
 	sync.RWMutex
 }
 
@@ -67,17 +67,23 @@ type P2P struct {
 }
 
 type Web3 struct {
-	PrivateKey string `mapstructure:"private-key" json:"private_key" yaml:"private-key"`
-	Contract   struct {
-		Token string `mapstructure:"token" json:"token" yaml:"token"`
-	} `mapstructure:"contract" json:"contract" yaml:"contract"`
-	W3S struct {
-		Token string `mapstructure:"token" json:"token" yaml:"token"`
-	} `mapstructure:"w3s" json:"w3s" yaml:"w3s"`
-	ETH struct {
-		URL       string `mapstructure:"url" json:"url" yaml:"url"`
-		ProjectID string `mapstructure:"projectid" json:"projectid" yaml:"projectid"`
-	} `mapstructure:"eth" json:"eth" yaml:"eth"`
+	PrivateKey string   `mapstructure:"private-key" json:"private_key" yaml:"private-key"`
+	Contract   Contract `mapstructure:"contract" json:"contract" yaml:"contract"`
+	W3S        W3S      `mapstructure:"w3s" json:"w3s" yaml:"w3s"`
+	ETH        ETH      `mapstructure:"eth" json:"eth" yaml:"eth"`
+}
+
+type Contract struct {
+	Token string `mapstructure:"token" json:"token" yaml:"token"`
+}
+
+type W3S struct {
+	Token string `mapstructure:"token" json:"token" yaml:"token"`
+}
+
+type ETH struct {
+	URL       string `mapstructure:"url" json:"url" yaml:"url"`
+	ProjectID string `mapstructure:"projectid" json:"projectid" yaml:"projectid"`
 }
 
 func (w *Web3) EthAddress() string {

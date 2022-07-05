@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/web3-storage/go-w3s-client"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"github.com/web3-storage/go-w3s-client"
 )
 
 var client w3s.Client

@@ -6,11 +6,12 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/google/uuid"
+
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/controlplane/dao/redis"
 
 	"github.com/gin-gonic/contrib/sessions"
 
-	"github.com/gin-gonic/gin"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/system/dao/mysql"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/system/service"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/dao/api"
@@ -18,6 +19,7 @@ import (
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/model/mmysql"
 	"github.com/cloudslit/cloudslit/fullnode/pconst"
 	oauth2Help "github.com/cloudslit/cloudslit/fullnode/pkg/oauth2"
+	"github.com/gin-gonic/gin"
 	"golang.org/x/oauth2/facebook"
 	"golang.org/x/oauth2/google"
 )
@@ -69,7 +71,11 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, company, oauth2Cod
 			c.AbortWithError(http.StatusInternalServerError, errors.New("oauth error"))
 			return
 		}
-		user = &mmysql.User{Email: fmt.Sprintf("%s@github.com", *githubUser.Login), AvatarUrl: *githubUser.AvatarURL}
+		user = &mmysql.User{
+			Email:     fmt.Sprintf("%s@github.com", *githubUser.Login),
+			AvatarUrl: *githubUser.AvatarURL,
+			UUID:      uuid.NewString(),
+		}
 		if err = userDao.NewUser(c).FirstOrCreateUser(user); err != nil {
 			c.AbortWithError(http.StatusInternalServerError, errors.New("oauth error"))
 			return

@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"github.com/gin-gonic/gin"
 )
 
 func Welcome(c *gin.Context) {

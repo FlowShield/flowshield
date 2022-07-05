@@ -1,13 +1,13 @@
 package server
 
 import (
-	"github.com/urfave/cli"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/mysql"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/redis"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/eth"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/w3s"
+	"github.com/urfave/cli"
 )
 
 func InitService(c *cli.Context) (err error) {
@@ -22,15 +22,19 @@ func InitService(c *cli.Context) (err error) {
 		Development: confer.ConfigEnvIsDev(),
 	})
 	if err = redis.Init(&cfg.Redis); err != nil {
+		logger.Errorf(nil, "redis init error : %v", err)
 		return
 	}
 	if err = mysql.Init(&cfg.Mysql); err != nil {
+		logger.Errorf(nil, "mysql init error : %v", err)
 		return
 	}
 	if err = w3s.Init(&cfg.Web3); err != nil {
+		logger.Errorf(nil, "w3s init error : %v", err)
 		return
 	}
 	if err = eth.Init(&cfg.Web3); err != nil {
+		logger.Errorf(nil, "eth init error : %v", err)
 		return
 	}
 	//if err = mysql.SqlMigrate(); err != nil {

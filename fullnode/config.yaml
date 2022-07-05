@@ -22,6 +22,18 @@ mysql:
     user: "CS_MYSQL_USER"
     password: "CS_MYSQL_PASSWORD"
 
+#Redis
+redis:
+  addr: "CS_REDIS_ADDR"
+
+#CA
+ca:
+  base-url: "CS_CA_BASE_URL"
+  sign-url: "CS_CA_SIGN_URL"
+  ocsp-url: "CS_CA_OCSP_URL"
+  version: "/api/v1"
+  auth-key: "CS_CA_AUTH_KEY"
+
 p2p:
   enable: true
   account: "CS_ACCOUNT"
