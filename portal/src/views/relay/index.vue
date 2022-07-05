@@ -11,6 +11,12 @@
         class="elevation-2 mt-15"
         @update:items-per-page="handleCount"
     >
+      <template v-slot:item.CreatedAt="{ item }">
+        <span>{{ new Date(item.CreatedAt * 1000).toLocaleString() }}</span>
+      </template>
+      <template v-slot:item.UpdatedAt="{ item }">
+        <span>{{ new Date(item.UpdatedAt * 1000).toLocaleString() }}</span>
+      </template>
       <template v-slot:top>
         <v-toolbar flat>
           <v-text-field

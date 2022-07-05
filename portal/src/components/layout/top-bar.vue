@@ -10,7 +10,7 @@
         />
         <v-btn
             rounded
-            v-for="(v,k) in ['nodes','clients', 'servers', 'resources', 'relay']"
+            v-for="(v,k) in ['nodes','clients', 'servers', 'resources']"
             :key="k"
             class="font-weight-regular text-subtitle-1 text-capitalize mr-5"
             :to="{name: v}"
