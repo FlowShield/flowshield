@@ -9,7 +9,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     networks:
-      - zta
+      - cloudslit
     volumes:
       - ./init.sql:/data/application/init.sql
       - mysql-data:/var/lib/mysql
@@ -19,13 +19,13 @@ services:
     ports:
       - '6379:6379'
     networks:
-      - zta
+      - cloudslit
     volumes:
       - redis-data:/data
 
   root-ca-tls:
     image: zhangshuainbb/zaca:0.0.2
-    command: ["./zaca", "tls"]
+    command: [ "./zaca", "tls" ]
     volumes:
       - "./root_ca_config.json:/etc/zaca/config.json"
     environment:
@@ -38,12 +38,12 @@ services:
     depends_on:
       - mysql
     networks:
-      - zta
+      - cloudslit
     restart: always
 
   zaca-tls:
     image: zhangshuainbb/zaca:0.0.2
-    command: ["./zaca", "tls"]
+    command: [ "./zaca", "tls" ]
     ports:
       - "8081:8081"
     volumes:
@@ -58,12 +58,12 @@ services:
       - mysql
       - root-ca-tls
     networks:
-      - zta
+      - cloudslit
     restart: always
 
   zaca-ocsp:
     image: zhangshuainbb/zaca:0.0.2
-    command: ["./zaca", "ocsp"]
+    command: [ "./zaca", "ocsp" ]
     ports:
       - "8082:8082"
     volumes:
@@ -77,12 +77,12 @@ services:
       - mysql
       - root-ca-tls
     networks:
-      - zta
+      - cloudslit
     restart: always
 
   zaca-api:
     image: zhangshuainbb/zaca:0.0.2
-    command: ["./zaca", "api"]
+    command: [ "./zaca", "api" ]
     ports:
       - "8080:8080"
     volumes:
@@ -96,39 +96,56 @@ services:
       - mysql
       - root-ca-tls
     networks:
-      - zta
+      - cloudslit
     restart: always
 
   zta-portal:
     image: rovast/za-portal
     restart: always
     ports:
-      - '80:80'
-      - '443:443'
+      - '180:80'
+#      - '443:443'
     networks:
-      - zta
+      - cloudslit
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
 
-  zta-backend:
-    image: taosheng205054/zamanager:latest
+  icefiresqlite:
+    image: taosheng205054/icefire-sqlite:latest
+    restart: always
+    ports:
+      - "23306:23306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "127.0.0.1", "-P", "23306","-uroot","-p123456" ]
+      timeout: 20s
+      retries: 10
+    networks:
+      - cloudslit
+    volumes:
+      - ./sqlite.db:/app/sqlite.db
+
+  cloudslit-backend:
+    image: taosheng205054/cloudslit:latest
     restart: always
     environment:
-      DOMAIN: ''
-      ZTA_REDIS_ADDR: 'redis:6379'
-      ZTA_MYSQL_HOST: 'mysql'
-      ZTA_MYSQL_USER: 'root'
-      ZTA_MYSQL_PASSWORD: 'root'
-      ZTA_CA_SIGN_URL: 'https://root-ca-tls:8083'
-      ZTA_CA_AUTH_KEY: '0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134'
+      DOMAIN: 'dash.cloudslit.xyz'
+      CS_MYSQL_HOST: 'icefiresqlite'
+      CS_MYSQL_USER: 'root'
+      CS_MYSQL_PASSWORD: '123456'
+      CS_ACCOUNT: '0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d'
+      CS_PRIVATE_KEY: 'xxx'
+      CS_CONTRACT_TOKEN: 'xxx'
+      CS_W3S_TOKEN: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U'
+      CS_ETH_URL: 'https://ropsten.infura.io/v3'
+      CS_ETH_PROJECTID: '45630f96f9d841679dc200a7c97763d2'
     depends_on:
-      - mysql
-      - redis
+      icefiresqlite:
+        condition: "service_healthy"
     networks:
-      - zta
+      - cloudslit
 
 networks:
-  zta:
+  cloudslit:
     driver: bridge
 
 volumes:
