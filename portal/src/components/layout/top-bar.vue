@@ -10,7 +10,7 @@
         />
         <v-btn
             rounded
-            v-for="(v,k) in ['clients', 'servers', 'resources', 'relay']"
+            v-for="(v,k) in ['nodes','clients', 'servers', 'resources', 'relay']"
             :key="k"
             class="font-weight-regular text-subtitle-1 text-capitalize mr-5"
             :to="{name: v}"
@@ -22,14 +22,14 @@
         <v-btn href="https://github.com/ztalab/ZASentinel" target="_blank" text>
           <span class="font-weight-regular text-capitalize text-caption">Download</span>
         </v-btn>
-        <v-btn href="https://www.ztalab.xyz" target="_blank" text>
+        <v-btn href="#" target="_blank" text>
           <span class="font-weight-regular text-capitalize text-caption">Setup Guide</span>
         </v-btn>
         <v-btn :to="{name: 'login'}" text v-if="!isLogin">
           <span class="font-weight-regular text-capitalize text-caption">Sign in</span>
         </v-btn>
         <v-btn icon
-               href="https://github.com/ztalab"
+               href="https://github.com/CloudSlit/cloudslit"
                target="_blank"
                :color="$vuetify.theme.dark ? 'white' : 'black'">
           <v-icon>mdi-github</v-icon>
