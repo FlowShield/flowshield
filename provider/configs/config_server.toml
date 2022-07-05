@@ -6,10 +6,14 @@ PrintConfig = true
 
 # Information about themselves
 [Common]
-UniqueId = "za-sentinel"
-AppName = "za-sentinel"
-PeerAddress = "0x1B4b827703dc3545089fcee70F0e6e732BFF4413"
+# Self information
+UniqueId = "provider"
+AppName = "provider"
+# Wallet address
+PeerId = "0x1B4b827703dc3545089fcee70F0e6e732BFF4413"
+# External service address
 LocalAddr = "server.com"
+# External service port
 LocalPort = 5091
 
 # p2p config

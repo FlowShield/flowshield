@@ -1,6 +1,5 @@
 .PHONY: start build
 
-APP 			= zero-access
 SERVER_BIN  	= ./bin/backend
 GIT_COUNT 		= $(shell git rev-list --all --count)
 GIT_HASH        = $(shell git rev-parse --short HEAD)
