@@ -11,6 +11,17 @@
         class="elevation-2 mt-15"
         @update:items-per-page="handleCount"
     >
+      <template v-slot:item.peer_id="{ item }">
+        <div style="width: 210px; word-break: break-all;">
+          <span>{{ item.peer_id }}</span>
+        </div>
+      </template>
+      <template v-slot:item.CreatedAt="{ item }">
+        <span>{{ new Date(item.CreatedAt * 1000).toLocaleString() }}</span>
+      </template>
+      <template v-slot:item.UpdatedAt="{ item }">
+        <span>{{ new Date(item.UpdatedAt * 1000).toLocaleString() }}</span>
+      </template>
       <template v-slot:top>
         <v-toolbar flat>
           <v-text-field
@@ -21,29 +32,17 @@
               @keydown.enter="handleSearch"
           ></v-text-field>
           <v-spacer></v-spacer>
-          <form-dialog @on-success="handleSearch"/>
         </v-toolbar>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-      </template>
-      <template v-slot:item.action="{ item }">
-        <pem-dialog :data="item"/>
-        <confirm-dialog @on-confirm="handleDelete" :data="item"/>
       </template>
       <template v-slot:no-data>No data</template>
     </v-data-table>
   </div>
 </template>
 <script>
-import PemDialog from '@/components/pem-dialog'
-import ConfirmDialog from '@/components/confirm-dialog'
-import FormDialog from './components/form-dialog'
-import { deleteZeroAccessRelay, fetchZeroAccessRelays } from '@/api'
+import { fetchZeroAccessNodes } from '@/api'
 
 export default {
-  components: { PemDialog, FormDialog, ConfirmDialog },
+  components: { },
   data: () => ({
     loading: false,
     query: {
@@ -52,14 +51,16 @@ export default {
       limit_num: 15
     },
     tableHeaders: [
-      { text: 'Name', align: 'start', value: 'name' },
+      { text: 'Wallet', value: 'peer_id', width: '210px' },
+      { text: 'Type', value: 'type' },
+      { text: 'Loc', value: 'loc' },
+      { text: 'IP', align: 'start', value: 'ip' },
+      { text: 'Addr', value: 'addr' },
       { text: 'Listen port', value: 'port' },
-      { text: 'Expose port', value: 'out_port' },
-      { text: 'Host', value: 'host' },
-      { text: 'UUID', value: 'uuid' },
+      { text: 'Colo', value: 'colo' },
+      { text: 'Gas', value: 'gas_price' },
       { text: 'Created at', value: 'CreatedAt' },
-      { text: 'Updated at', value: 'UpdatedAt' },
-      { text: 'Action', value: 'action' }
+      { text: 'Updated at', value: 'UpdatedAt' }
     ],
     tableItems: [],
     total: 0
@@ -74,7 +75,7 @@ export default {
     },
     getTableItems() {
       this.loading = true
-      fetchZeroAccessRelays(this.query).then(res => {
+      fetchZeroAccessNodes(this.query).then(res => {
         this.tableItems = res.data.list || []
         this.total = res.data.paginate.total
       }).finally(() => {
@@ -84,15 +85,6 @@ export default {
     handleCount(v) {
       this.query.limit_num = v
       this.handleSearch()
-    },
-    handleDelete(ref) {
-      const item = ref.data
-
-      deleteZeroAccessRelay(item.ID).then(_ => {
-        ref.$close()
-      }).finally(() => {
-        this.handleSearch()
-      })
     }
   }
 }
