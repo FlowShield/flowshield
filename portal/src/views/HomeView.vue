@@ -8,7 +8,7 @@
     <p > Against the giants of web2, we adhere to the principle of "less trust, more truth", so that human beings can truly master their own security link status and network access data. With this dream in mind, we embark on the journey of building a web3 global zero-trust security network. </p>
 
     <div class="mt-15">
-      <v-btn x-large color="primary" href="https://www.ztalab.xyz/" target="_blank">
+      <v-btn x-large color="primary" href="https://dash.cloudslit.xyz/" target="_blank">
         <v-icon class="mr-5">mdi-home</v-icon>
         Website
       </v-btn>
