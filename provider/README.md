@@ -2,7 +2,7 @@
 
 As a service network provider program, miners can deploy network services through this program to obtain rewards.
 
-The program automatically finds through P 2p networking and uses PubSub mode to share its own data.
+The program automatically finds through P2P networking and uses PubSub mode to share its own data.
 
 Currently, websocket traffic transmission is supported.
 
