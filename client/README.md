@@ -1,10 +1,8 @@
-# [Cloudslit Provider]
+# [CloudSlit Client]
 
-As a service network provider program, miners can deploy network services through this program to obtain rewards.
+This is the cloudslit client program.
 
-The program automatically finds through P2P networking and uses PubSub mode to share its own data.
-
-Currently, websocket traffic transmission is supported.
+You need to communicate with the whole node through this program to obtain the configuration and zero trust edge calculation rules. Communicate with network providers through this program.
 
 ## How does it work?
 
@@ -22,20 +20,18 @@ You only need to modify the following contents, and other configurations can be 
 ```yaml
 # Information about themselves
 [Common]
-  # Wallet address
-  PeerId = "0x1B4b827703dc3545089fcee70F0e6e732BFF4413"
-  # Price - Price of services provided, unit: CSD/h, CSD It's our token
-  Price = 5000
-  # External service address
-  LocalAddr = ""
-  # External service port
-  LocalPort = 5091
+  # Listening address
+  LocalAddr = "0.0.0.0"
+  # Listening port
+  LocalPort = 5092
+  # Control end address， "Used to obtain configuration or rule information"
+  ControHost = "https://dash.cloudslit.xyz"
 ```
 
 ### Quickstart
 ```shell
 $ make
-$ ./bin/provider -c ./configs/config.yaml
+$ ./bin/client -c ./configs/config.yaml
 ```
 
 ## License

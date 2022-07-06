@@ -4,12 +4,12 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"github.com/cloudslit/cloudslit/provider/internal/config"
-	"github.com/cloudslit/cloudslit/provider/internal/initer"
-	"github.com/cloudslit/cloudslit/provider/pkg/influxdb"
-	influx_client "github.com/cloudslit/cloudslit/provider/pkg/influxdb/client/v2"
-	"github.com/cloudslit/cloudslit/provider/pkg/logger"
-	"github.com/cloudslit/cloudslit/provider/pkg/util/structure"
+	"github.com/cloudslit/cloudslit/client/internal/config"
+	"github.com/cloudslit/cloudslit/client/internal/initer"
+	"github.com/cloudslit/cloudslit/client/pkg/influxdb"
+	influx_client "github.com/cloudslit/cloudslit/client/pkg/influxdb/client/v2"
+	"github.com/cloudslit/cloudslit/client/pkg/logger"
+	"github.com/cloudslit/cloudslit/client/pkg/util/structure"
 	"net/http"
 	"os"
 	"os/signal"
@@ -64,8 +64,16 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	if err != nil {
 		return nil, err
 	}
+	// initialize Cert
+	err = initer.InitSelfCert()
+	if err != nil {
+		return nil, err
+	}
+	// initialize Http Client
 	InitHttpClient()
-	InitProviderServer(ctx)
+	// start client server
+	InitClientServer(ctx)
+
 	return func() {
 		loggerCleanFunc()
 	}, nil

@@ -1,0 +1,33 @@
+# mode(debug,test,release)
+RunMode = "release"
+
+# Whether to print configuration parameters at startup
+PrintConfig = true
+
+# Information about themselves
+[Common]
+# Listening address
+LocalAddr = "0.0.0.0"
+# Listening port
+LocalPort = 5092
+# Control end address， "Used to obtain configuration or rule information"
+ControHost = "https://net.ztalab.xyz"
+
+[Log]
+# level(1:fatal,2:error,3:warn,4:info,5:debug,6:trace)
+Level = 4
+# text、json
+Format = "text"
+# stdout、stderr、file
+Output = "stdout"
+OutputFile = "data/logger.log"
+EnableHook = false
+HookLevels = ["info", "warn", "error"]
+# gorm、redis
+Hook = "redis"
+HookMaxThread = 1
+HookMaxBuffer = 512
+
+[LogRedisHook]
+Addr = "192.168.2.80:6379"
+Key = "msp"

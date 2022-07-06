@@ -1,8 +1,8 @@
 package config
 
 import (
-	"github.com/cloudslit/cloudslit/provider/pkg/influxdb"
-	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
+	"github.com/cloudslit/cloudslit/client/pkg/influxdb"
+	"github.com/cloudslit/cloudslit/client/pkg/util/json"
 	"net/http"
 	"os"
 	"strconv"
@@ -64,6 +64,9 @@ func ParseConfigByEnv() error {
 	if v := os.Getenv("LOCAL_PORT"); v != "" {
 		p, _ := strconv.Atoi(v)
 		C.Common.LocalPort = p
+	}
+	if v := os.Getenv("CONTRO_HOST"); v != "" {
+		C.Common.ControHost = v
 	}
 	if v := os.Getenv("LOG_HOOK_ENABLED"); v == "true" {
 		C.Log.EnableHook = true
@@ -167,15 +170,14 @@ type LogRedisHook struct {
 
 // Common Configuration parameters
 type Common struct {
-	UniqueID   string
-	AppName    string
-	Hostname   string
-	PodIP      string
-	PeerId     string
-	Price      int
-	LocalAddr  string
-	LocalPort  int
-	ControHost string
+	UniqueID    string
+	AppName     string
+	Hostname    string
+	PodIP       string
+	PeerAddress string
+	LocalAddr   string
+	LocalPort   int
+	ControHost  string
 }
 
 // P2p Configuration parameters
