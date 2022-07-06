@@ -10,7 +10,7 @@ FROM ubuntu:20.04
 WORKDIR /root
 
 COPY --from=builder /build/client .
-COPY --from=builder /build/configs/config.toml .
+COPY --from=builder /build/configs .
 RUN chmod +x client
 
-CMD ["./client", "-c", "config.toml"]
+CMD ["./client", "-c", "./configs/config.toml"]

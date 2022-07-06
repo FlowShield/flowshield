@@ -13,7 +13,7 @@ Price = 5000
 # External service address
 LocalAddr = ""
 # External service port
-LocalPort = 5091
+LocalPort = 5092
 ## Cert Path
 #CertPath = "./configs/fullchain.crt"
 ## Key Path
@@ -42,5 +42,5 @@ HookMaxThread = 1
 HookMaxBuffer = 512
 
 [LogRedisHook]
-Addr = "192.168.2.80:6379"
-Key = "msp"
+Addr = "127.0.0.1:6379"
+Key = "log_key"

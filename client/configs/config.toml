@@ -11,7 +11,7 @@ LocalAddr = "0.0.0.0"
 # Listening port
 LocalPort = 5092
 # Control end address， "Used to obtain configuration or rule information"
-ControHost = "https://net.ztalab.xyz"
+ControHost = "https://dash.cloudslit.xyz"
 
 [Log]
 # level(1:fatal,2:error,3:warn,4:info,5:debug,6:trace)
@@ -29,5 +29,6 @@ HookMaxThread = 1
 HookMaxBuffer = 512
 
 [LogRedisHook]
-Addr = "192.168.2.80:6379"
-Key = "msp"
+Addr = "127.0.0.1:6379"
+Key = "log_key"
+
