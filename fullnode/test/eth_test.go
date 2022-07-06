@@ -48,7 +48,7 @@ func TestETH3(t *testing.T) {
 	// 根据client获取chanid
 	chanID, err := client.ChainID(context.Background())
 	// 智能合约地址
-	address := common.HexToAddress("0x6B743495593e2EF82e77a23B222f856eDF5B0259")
+	address := common.HexToAddress("0xAc0A5A821d7b818f7495062e2a2FD38cEe207397")
 	instance, err := contract.NewSlit(address, client)
 	if err != nil {
 		log.Fatal(err)

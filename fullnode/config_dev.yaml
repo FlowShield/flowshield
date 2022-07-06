@@ -46,9 +46,9 @@ oauth2:
 p2p:
   enable: false
   account: "0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d"
-  service-discovery-id: "ztalab/provider"
+  service-discovery-id: "cloudslit/provider"
   service-discovery-mode: "advertise" # advertise or announce
-  service-metadata-topic: "ztalab_provider_metadata" # advertise or announce
+  service-metadata-topic: "cloudslit_provider_metadata" # advertise or announce
 
 web3:
   private-key: "8829b5d74cdfa86ae17b11d2df83f627a888fab3b86a139c6d442ef7d0e9dd76"

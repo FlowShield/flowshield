@@ -26,14 +26,14 @@ func ListNode(c *gin.Context, param mparam.ListNode) (code int, nodeList mapi.No
 
 func AddNode(c *gin.Context, server *schema.ServerInfo) (code int) {
 	node := &mmysql.Node{
-		PeerId:   server.PeerId,
-		Addr:     server.Addr,
-		Port:     server.Port,
-		IP:       server.MetaData.Ip,
-		Loc:      server.MetaData.Loc,
-		Colo:     server.MetaData.Colo,
-		GasPrice: server.GasPrice,
-		Type:     string(server.Type),
+		PeerId: server.PeerId,
+		Addr:   server.Addr,
+		Port:   server.Port,
+		IP:     server.MetaData.Ip,
+		Loc:    server.MetaData.Loc,
+		Colo:   server.MetaData.Colo,
+		Price:  server.Price,
+		Type:   string(server.Type),
 	}
 	// 判断服务端哨兵是否存在
 	data, err := mysql.NewNode(c).GetNodeByPeerId(node.PeerId)

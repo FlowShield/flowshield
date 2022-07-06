@@ -11,7 +11,7 @@ type ServerInfo struct {
 	Addr     string     `json:"addr"`
 	Port     int        `json:"port"`
 	MetaData MetaData   `json:"meta_data"`
-	GasPrice int        `json:"gas_price"`
+	Price    int        `json:"price"`
 	Type     ServerType `json:"type"`
 }
 

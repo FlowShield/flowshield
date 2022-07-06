@@ -7,10 +7,10 @@ import (
 
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/node/model/mparam"
 
-	"github.com/gin-gonic/gin"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/node/model/mmysql"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/mysql"
+	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
 
@@ -27,7 +27,7 @@ func NewNode(c *gin.Context) *Node {
 }
 
 func (p *Node) ListNode(param mparam.ListNode) (total int64, list []mmysql.Node, err error) {
-	query := p.GetOrm().DB
+	query := p.GetOrm().DB.Where(fmt.Sprintf("updated_at >= %d", time.Now().Add(-time.Minute*10).Unix()))
 	if len(param.PeerId) > 0 {
 		query = query.Where(fmt.Sprintf("peer_id = '%s'", param.PeerId))
 	}
@@ -47,8 +47,8 @@ func (p *Node) ListNode(param mparam.ListNode) (total int64, list []mmysql.Node,
 	if len(param.Colo) > 0 {
 		query = query.Where(fmt.Sprintf("colo = '%s'", param.Colo))
 	}
-	if param.GasPrice > 0 {
-		query = query.Where(fmt.Sprintf("gas_price = %d", param.GasPrice))
+	if param.Price > 0 {
+		query = query.Where(fmt.Sprintf("price = %d", param.Price))
 	}
 	if len(param.Type) > 0 {
 		query = query.Where(fmt.Sprintf("`type` = '%s'", param.Type))
@@ -57,6 +57,7 @@ func (p *Node) ListNode(param mparam.ListNode) (total int64, list []mmysql.Node,
 	if total > 0 {
 		offset := param.GetOffset()
 		err = query.Limit(param.LimitNum).Offset(offset).
+			Order("`type` asc").
 			Order("updated_at desc").
 			Find(&list).Error
 	}
@@ -85,10 +86,10 @@ func (p *Node) AddNode(data *mmysql.Node) (err error) {
 	data.CreatedAt = time.Now().Unix()
 	data.UpdatedAt = data.CreatedAt
 	query := fmt.Sprintf("%d,%d,'%s','%s','%d','%s','%s','%s','%d','%s'", data.CreatedAt, data.UpdatedAt,
-		data.PeerId, data.Addr, data.Port, data.IP, data.Loc, data.Colo, data.GasPrice, data.Type)
+		data.PeerId, data.Addr, data.Port, data.IP, data.Loc, data.Colo, data.Price, data.Type)
 	err = p.GetOrm().Exec("INSERT INTO `zta_node` (`created_at`," +
 		"`updated_at`,`peer_id`,`addr`,`port`,`ip`,`loc`," +
-		"`colo`,`gas_price`,`type`) VALUES " +
+		"`colo`,`price`,`type`) VALUES " +
 		"(" + query + ")").Error
 	if err != nil {
 		logger.Errorf(p.c, "AddNode err : %v", err)
@@ -99,8 +100,8 @@ func (p *Node) AddNode(data *mmysql.Node) (err error) {
 func (p *Node) EditNode(data *mmysql.Node) (err error) {
 	sql := fmt.Sprintf("UPDATE `zta_node` SET "+
 		"`updated_at`=%d,`addr`='%s',`port`=%d,`ip`='%s',`loc`='%s',`colo`='%s',"+
-		"`gas_price`=%d,`type`='%s' WHERE `peer_id`='%s'", time.Now().Unix(), data.Addr, data.Port, data.IP, data.Loc, data.Colo,
-		data.GasPrice, data.Type, data.PeerId)
+		"`price`=%d,`type`='%s' WHERE `peer_id`='%s'", time.Now().Unix(), data.Addr, data.Port, data.IP, data.Loc, data.Colo,
+		data.Price, data.Type, data.PeerId)
 	err = p.GetOrm().Exec(sql).Error
 	if err != nil {
 		logger.Errorf(p.c, "EditNode err : %v", err)

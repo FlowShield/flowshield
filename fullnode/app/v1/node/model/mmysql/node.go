@@ -12,12 +12,11 @@ type Node struct {
 	PeerId    string `json:"peer_id"`
 	Addr      string `json:"addr"`
 	Port      int    `json:"port"`
-	//MetaData       MetaData `json:"meta_data"`
-	IP       string `json:"ip"`
-	Loc      string `json:"loc"`
-	Colo     string `json:"colo"`
-	GasPrice int    `json:"gas_price"`
-	Type     string `json:"type"`
+	IP        string `json:"ip"`
+	Loc       string `json:"loc"`
+	Colo      string `json:"colo"`
+	Price     int    `json:"price"`
+	Type      string `json:"type"`
 }
 
 func (Node) TableName() string {
