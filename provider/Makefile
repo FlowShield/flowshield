@@ -1,11 +1,11 @@
 .PHONY: start build
 
-SERVER_BIN  	= ./bin/backend
+SERVER_BIN  	= ./bin/provider
 GIT_COUNT 		= $(shell git rev-list --all --count)
 GIT_HASH        = $(shell git rev-parse --short HEAD)
 RELEASE_TAG     = $(GIT_COUNT).$(GIT_HASH)
 
-GOPROXY=https://goproxy.oneitfarm.com,https://goproxy.cn,direct
+GOPROXY=https://goproxy.cn,direct
 
 CFLAGS = -ldflags "-w -s -X main.VERSION=$(RELEASE_TAG)" -o $(SERVER_BIN)
 
@@ -21,10 +21,10 @@ server:
 	if [ ! -d "./bin/" ]; then \
 	mkdir bin; \
 	fi
-	GOPROXY=$(GOPROXY) CGO_ENABLED=0 go build $(CFLAGS) ./cmd/server
+	GOPROXY=$(GOPROXY) CGO_ENABLED=0 go build $(CFLAGS) ./cmd
 
 release:
 	if [ ! -d "./bin/" ]; then \
 	mkdir bin; \
 	fi
-	GOPROXY=$(GOPROXY) CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build $(CFLAGS) ./cmd/server
+	GOPROXY=$(GOPROXY) CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build $(CFLAGS) ./cmd

@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/cloudslit/cloudslit/provider/pkg/influxdb"
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 	"net/http"
 	"os"
@@ -21,7 +20,6 @@ var (
 
 // I ...
 type I struct {
-	Metrics    *influxdb.Metrics
 	HttpClient *http.Client
 }
 
@@ -53,11 +51,6 @@ func MustLoad(fpaths ...string) {
 }
 
 func ParseConfigByEnv() error {
-	hostname, err := os.Hostname()
-	if err != nil {
-		hostname = ""
-	}
-	C.Common.Hostname = hostname
 	if v := os.Getenv("LOCAL_ADDR"); v != "" {
 		C.Common.LocalAddr = v
 	}
@@ -73,32 +66,6 @@ func ParseConfigByEnv() error {
 	}
 	if v := os.Getenv("LOG_REDIS_KEY"); v != "" {
 		C.LogRedisHook.Key = v
-	}
-	// influxdb
-	if v := os.Getenv("INFLUXDB_ENABLED"); v == "true" {
-		C.Influxdb.Enabled = true
-	}
-	if v := os.Getenv("INFLUXDB_ADDRESS"); v != "" {
-		C.Influxdb.Address = v
-	}
-	if v := os.Getenv("INFLUXDB_PORT"); v != "" {
-		cv, err := strconv.Atoi(v)
-		if err != nil {
-			return err
-		}
-		C.Influxdb.Port = cv
-	}
-	if v := os.Getenv("INFLUXDB_USERNAME"); v != "" {
-		C.Influxdb.Username = v
-	}
-	if v := os.Getenv("INFLUXDB_PASSWORD"); v != "" {
-		C.Influxdb.Password = v
-	}
-	if v := os.Getenv("INFLUXDB_DATABASE"); v != "" {
-		C.Influxdb.Database = v
-	}
-	if v := os.Getenv("INFLUXDB_PRECISION"); v != "" {
-		C.Influxdb.Precision = v
 	}
 	return nil
 }
@@ -119,11 +86,9 @@ type Config struct {
 	PrintConfig  bool
 	Common       Common
 	P2p          P2p
-	Machine      Machine
 	Log          Log
 	LogRedisHook LogRedisHook
 	Certificate  Certificate
-	Influxdb     Influxdb
 }
 
 func (c *Config) IsDebugMode() bool {
@@ -167,10 +132,6 @@ type LogRedisHook struct {
 
 // Common Configuration parameters
 type Common struct {
-	UniqueID   string
-	AppName    string
-	Hostname   string
-	PodIP      string
 	PeerId     string
 	Price      int
 	LocalAddr  string
@@ -195,62 +156,4 @@ type Certificate struct {
 	CertPemPath string
 	CaPemPath   string
 	KeyPemPath  string
-}
-
-type Influxdb struct {
-	Enabled             bool
-	Address             string
-	Port                int
-	Username            string
-	Password            string
-	Database            string
-	Precision           string
-	MaxIdleConns        int
-	MaxIdleConnsPerHost int
-	FlushTime           int
-	FlushSize           int
-}
-
-// Machine
-type Machine struct {
-	MachineId string
-	Cookie    string
-}
-
-const lockPath = "./machine.lock"
-
-func (a *Machine) SetMachineId(macid string) {
-	C.Machine.MachineId = macid
-	a.MachineId = macid
-}
-
-func (a *Machine) SetCookie(cookie string) {
-	C.Machine.Cookie = cookie
-	a.Cookie = cookie
-}
-
-func (a *Machine) Write() error {
-	b, err := json.Marshal(a)
-	if err != nil {
-		return err
-	}
-	// Write lock to filesystem to indicate an existing running daemon.
-	err = os.WriteFile(lockPath, b, os.ModePerm)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func (a *Machine) Read() (*Machine, error) {
-	in, err := os.ReadFile(lockPath)
-	if err != nil {
-		return nil, err
-	}
-	var result Machine
-	err = json.Unmarshal(in, &result)
-	if err != nil {
-		return nil, err
-	}
-	return &result, nil
 }

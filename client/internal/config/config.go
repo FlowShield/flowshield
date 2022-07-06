@@ -53,11 +53,6 @@ func MustLoad(fpaths ...string) {
 }
 
 func ParseConfigByEnv() error {
-	hostname, err := os.Hostname()
-	if err != nil {
-		hostname = ""
-	}
-	C.Common.Hostname = hostname
 	if v := os.Getenv("LOCAL_ADDR"); v != "" {
 		C.Common.LocalAddr = v
 	}
@@ -76,32 +71,6 @@ func ParseConfigByEnv() error {
 	}
 	if v := os.Getenv("LOG_REDIS_KEY"); v != "" {
 		C.LogRedisHook.Key = v
-	}
-	// influxdb
-	if v := os.Getenv("INFLUXDB_ENABLED"); v == "true" {
-		C.Influxdb.Enabled = true
-	}
-	if v := os.Getenv("INFLUXDB_ADDRESS"); v != "" {
-		C.Influxdb.Address = v
-	}
-	if v := os.Getenv("INFLUXDB_PORT"); v != "" {
-		cv, err := strconv.Atoi(v)
-		if err != nil {
-			return err
-		}
-		C.Influxdb.Port = cv
-	}
-	if v := os.Getenv("INFLUXDB_USERNAME"); v != "" {
-		C.Influxdb.Username = v
-	}
-	if v := os.Getenv("INFLUXDB_PASSWORD"); v != "" {
-		C.Influxdb.Password = v
-	}
-	if v := os.Getenv("INFLUXDB_DATABASE"); v != "" {
-		C.Influxdb.Database = v
-	}
-	if v := os.Getenv("INFLUXDB_PRECISION"); v != "" {
-		C.Influxdb.Precision = v
 	}
 	return nil
 }
@@ -126,7 +95,6 @@ type Config struct {
 	Log          Log
 	LogRedisHook LogRedisHook
 	Certificate  Certificate
-	Influxdb     Influxdb
 }
 
 func (c *Config) IsDebugMode() bool {
@@ -170,10 +138,6 @@ type LogRedisHook struct {
 
 // Common Configuration parameters
 type Common struct {
-	UniqueID    string
-	AppName     string
-	Hostname    string
-	PodIP       string
 	PeerAddress string
 	LocalAddr   string
 	LocalPort   int
@@ -197,20 +161,6 @@ type Certificate struct {
 	CertPemPath string
 	CaPemPath   string
 	KeyPemPath  string
-}
-
-type Influxdb struct {
-	Enabled             bool
-	Address             string
-	Port                int
-	Username            string
-	Password            string
-	Database            string
-	Precision           string
-	MaxIdleConns        int
-	MaxIdleConnsPerHost int
-	FlushTime           int
-	FlushSize           int
 }
 
 // Machine

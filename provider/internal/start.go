@@ -6,7 +6,6 @@ import (
 	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"github.com/cloudslit/cloudslit/provider/internal/initer"
 	"github.com/cloudslit/cloudslit/provider/internal/schema"
-	"github.com/cloudslit/cloudslit/provider/pkg/errors"
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/cloudslit/cloudslit/provider/pkg/p2p"
 	"github.com/sirupsen/logrus"
@@ -84,7 +83,7 @@ func (a *Up) starteventhandler(ps *p2p.PubSub) {
 
 		case <-refreshticker.C:
 			// publish
-			logger.Infof("Send Msg:%s ", ps.Host.Host.ID().String())
+			logger.Infof("I'm:%s ", ps.Host.Host.ID().String())
 			ps.Outbound <- a.server.String()
 		}
 	}
@@ -142,30 +141,4 @@ func (a *Up) GetCftrace() (*CfTrace, error) {
 		}
 	}
 	return result, err
-}
-
-// httpControDo
-func (a *Up) httpControDo(req *http.Request) ([]byte, error) {
-	// Add request header
-	req.Header.Add("Content-type", "application/json;charset=utf-8")
-	// Add cookie
-	cookie := &http.Cookie{
-		Name:  "zta",
-		Value: config.C.Machine.Cookie,
-	}
-	req.AddCookie(cookie)
-	// Send request
-	resp, err := config.Is.HttpClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode == http.StatusUnauthorized {
-		return nil, errors.NewWithStack(resp.Status)
-	}
-	defer resp.Body.Close()
-	b, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
 }
