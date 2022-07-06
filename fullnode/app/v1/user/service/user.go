@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
 
@@ -32,11 +33,14 @@ import (
 func GetRedirectURL(c *gin.Context) (redirectURL string, code int) {
 	cfg := confer.GlobalConfig().Oauth2
 	domain := confer.ConfigAppGetString("domain", "http://localhost:8080")
+	if len(os.Getenv(domain)) > 0 {
+		domain = os.Getenv(domain)
+	}
 	config := &oauth2.Config{
 		ClientID:     cfg.ClientID,
 		ClientSecret: cfg.ClientSecret,
 		Endpoint:     github.Endpoint,
-		RedirectURL:  domain + "/v1/user/oauth2/callback",
+		RedirectURL:  domain + "/api/v1/user/oauth2/callback",
 		Scopes:       []string{"user"},
 	}
 	redirectURL, err := oauth2Help.GetOauth2RedirectURL(c, config)
@@ -51,11 +55,14 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, oauth2Code string)
 	var userInfo *mmysql.User
 	cfg := confer.GlobalConfig().Oauth2
 	domain := confer.ConfigAppGetString("domain", "http://localhost:8080")
+	if len(os.Getenv(domain)) > 0 {
+		domain = os.Getenv(domain)
+	}
 	config := &oauth2.Config{
 		ClientID:     cfg.ClientID,
 		ClientSecret: cfg.ClientSecret,
 		Endpoint:     github.Endpoint,
-		RedirectURL:  domain + "/v1/user/oauth2/callback",
+		RedirectURL:  domain + "/api/v1/user/oauth2/callback",
 		Scopes:       []string{"user"},
 	}
 	githubUser, err := api.GetGithubUser(c, config, oauth2Code)
@@ -104,5 +111,10 @@ func UserBindWallet(c *gin.Context, param *mparam.BindWallet) (code int) {
 	if err = userDao.NewUser(c).UpdateUser(user); err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
+	// 绑定成功，刷新session
+	session := sessions.Default(c)
+	userBytes, _ := json.Marshal(user)
+	session.Set("user", userBytes)
+	session.Save()
 	return
 }

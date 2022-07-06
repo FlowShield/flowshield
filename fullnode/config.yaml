@@ -46,6 +46,7 @@ p2p:
   service-metadata-topic: "cloudslit_provider_metadata" # advertise or announce
 
 web3:
+  register: "CS_WEB3_REGIST"
   private-key: "CS_PRIVATE_KEY"
   contract:
     token: "CS_CONTRACT_TOKEN"

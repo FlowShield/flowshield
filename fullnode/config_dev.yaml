@@ -51,9 +51,10 @@ p2p:
   service-metadata-topic: "cloudslit_provider_metadata" # advertise or announce
 
 web3:
+  register: "asda"
   private-key: "8829b5d74cdfa86ae17b11d2df83f627a888fab3b86a139c6d442ef7d0e9dd76"
   contract:
-    token: "0xC24810e64B563c4c21d1f00eB301C3162467Bbe8"
+    token: "0x87f7Ad09AF04c634702c784E68989f459D32D0C8"
   w3s:
     token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U"
   eth:

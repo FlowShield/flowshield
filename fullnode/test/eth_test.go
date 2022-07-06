@@ -10,9 +10,7 @@ import (
 	"testing"
 
 	"github.com/cloudslit/cloudslit/fullnode/pkg/contract"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
@@ -46,7 +44,7 @@ func TestETH2(t *testing.T) {
 
 func TestETH3(t *testing.T) {
 	// 根据client获取chanid
-	chanID, err := client.ChainID(context.Background())
+	//chanID, err := client.ChainID(context.Background())
 	// 智能合约地址
 	address := common.HexToAddress("0xAc0A5A821d7b818f7495062e2a2FD38cEe207397")
 	instance, err := contract.NewSlit(address, client)
@@ -56,14 +54,14 @@ func TestETH3(t *testing.T) {
 	bal, err := instance.BalanceOf(nil, common.HexToAddress("0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d"))
 	fmt.Println(bal, err)
 
-	privateKey, err := crypto.HexToECDSA("8829b5d74cdfa86ae17b11d2df83f627a888fab3b86a139c6d442ef7d0e9dd76")
-	auth, err := bind.NewKeyedTransactorWithChainID(privateKey, chanID)
-	trc, err := instance.Stake(auth)
-	fmt.Println(trc, err, "********************")
-	//trc, err := instance.Transfer(auth, common.HexToAddress("0x1623c4E373f80fa7B3d5E46c2F71bc50708bA5A9"), big.NewInt(7000))
-	fmt.Println(trc.Hash().String(), err)
-	isStack, err := instance.IsStake(&bind.CallOpts{
-		From: auth.From,
-	})
-	fmt.Println(isStack, err, "++++++++++")
+	//privateKey, err := crypto.HexToECDSA("8829b5d74cdfa86ae17b11d2df83f627a888fab3b86a139c6d442ef7d0e9dd76")
+	//auth, err := bind.NewKeyedTransactorWithChainID(privateKey, chanID)
+	//trc, err := instance.Stake(auth)
+	//fmt.Println(trc, err, "********************")
+	////trc, err := instance.Transfer(auth, common.HexToAddress("0x1623c4E373f80fa7B3d5E46c2F71bc50708bA5A9"), big.NewInt(7000))
+	//fmt.Println(trc.Hash().String(), err)
+	//isStack, err := instance.IsStake(&bind.CallOpts{
+	//	From: auth.From,
+	//})
+	//fmt.Println(isStack, err, "++++++++++")
 }

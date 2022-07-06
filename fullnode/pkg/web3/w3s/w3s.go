@@ -3,9 +3,12 @@ package w3s
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"io/fs"
 	"os"
 
 	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"github.com/ipfs/go-cid"
 	"github.com/web3-storage/go-w3s-client"
 )
 
@@ -30,6 +33,33 @@ func Put(ctx context.Context, data interface{}) (cid string, err error) {
 		return
 	}
 	return cidObj.String(), nil
+}
+
+func Get(ctx context.Context, cidStr string) (data []byte, err error) {
+	cidObj, err := cid.Decode(cidStr)
+	if err != nil {
+		return nil, err
+	}
+	res, err := client.Get(ctx, cidObj)
+	if err != nil {
+		return nil, err
+	}
+	f, fsys, err := res.Files()
+	if err != nil {
+		return nil, err
+	}
+	if d, ok := f.(fs.ReadDirFile); ok {
+		ents, _ := d.ReadDir(0)
+		for _, ent := range ents {
+			fmt.Println(ent.Name())
+		}
+	}
+	fs.WalkDir(fsys, "/", func(path string, d fs.DirEntry, err error) error {
+		info, _ := d.Info()
+		fmt.Printf("%s (%d bytes)\n", path, info.Size())
+		return err
+	})
+	return
 }
 
 func dataToFile(data interface{}) (file *os.File, err error) {

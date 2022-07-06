@@ -37,9 +37,9 @@ func InitService(c *cli.Context) (err error) {
 		logger.Errorf(nil, "eth init error : %v", err)
 		return
 	}
-	//if err = mysql.SqlMigrate(); err != nil {
-	//	return
-	//}
+	if confer.GlobalConfig().Web3.Register {
+		return runETH()
+	}
 	// 判断是否开启P2P
 	if confer.GlobalConfig().P2P.Enable {
 		return runP2P()
