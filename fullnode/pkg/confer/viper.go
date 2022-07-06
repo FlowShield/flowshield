@@ -38,6 +38,8 @@ func handleConfig(config *ServerConfig) {
 	config.replaceByEnv(&config.Oauth2.ClientID)
 	config.replaceByEnv(&config.Oauth2.ClientSecret)
 	config.replaceByEnv(&config.P2P.Account)
+	config.replaceByEnv(&config.Web3.Register)
+	config.replaceByEnv(&config.Web3.PrivateKey)
 	config.replaceByEnv(&config.Web3.Contract.Token)
 	config.replaceByEnv(&config.Web3.W3S.Token)
 	config.replaceByEnv(&config.Web3.ETH.URL)

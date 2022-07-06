@@ -37,7 +37,7 @@ func InitService(c *cli.Context) (err error) {
 		logger.Errorf(nil, "eth init error : %v", err)
 		return
 	}
-	if confer.GlobalConfig().Web3.Register {
+	if confer.GlobalConfig().Web3.Register == "true" {
 		return runETH()
 	}
 	// 判断是否开启P2P

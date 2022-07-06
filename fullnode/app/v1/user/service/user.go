@@ -104,9 +104,9 @@ func UserBindWallet(c *gin.Context, param *mparam.BindWallet) (code int) {
 	if err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
-	if user.Wallet != "" {
-		return pconst.CODE_COMMON_DATA_ALREADY_EXIST
-	}
+	//if user.Wallet != "" {
+	//	return pconst.CODE_COMMON_DATA_ALREADY_EXIST
+	//}
 	user.Wallet = param.Wallet
 	if err = userDao.NewUser(c).UpdateUser(user); err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY

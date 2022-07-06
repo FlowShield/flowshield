@@ -73,7 +73,7 @@ type Oauth2 struct {
 }
 
 type Web3 struct {
-	Register   bool     `mapstructure:"register" json:"register" yaml:"register"`
+	Register   string   `mapstructure:"register" json:"register" yaml:"register"`
 	PrivateKey string   `mapstructure:"private-key" json:"private_key" yaml:"private-key"`
 	Contract   Contract `mapstructure:"contract" json:"contract" yaml:"contract"`
 	W3S        W3S      `mapstructure:"w3s" json:"w3s" yaml:"w3s"`

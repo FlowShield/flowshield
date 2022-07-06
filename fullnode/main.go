@@ -10,14 +10,14 @@ import (
 	_ "go.uber.org/automaxprocs"
 )
 
-// @title ZAManager API
+// @title FullNode API
 // @version 1.0.0
-// @description This is ZAManager api list.
+// @description This is FullNode api list.
 // @host 127.0.0.1:80
 // @BasePath /api/v1
 func main() {
 	app := cli.NewApp()
-	app.Name = "ZAManager"
+	app.Name = "FullNode"
 	app.Author = "TS"
 	app.Flags = []cli.Flag{
 		cli.StringFlag{

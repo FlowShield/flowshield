@@ -38,7 +38,7 @@ services:
       - ./db/sqlite.db:/app/db/sqlite.db
 
   cloudslit-backend:
-    image: taosheng205054/cloudslit:v0.0.12
+    image: taosheng205054/cloudslit:v0.0.17
     restart: always
     environment:
       DOMAIN: 'https://dash.cloudslit.xyz'
@@ -56,6 +56,7 @@ services:
       CS_W3S_TOKEN: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U'
       CS_ETH_URL: 'https://ropsten.infura.io/v3'
       CS_ETH_PROJECTID: '45630f96f9d841679dc200a7c97763d2'
+      CS_WEB3_REGIST: 'false'
     depends_on:
       icefiresqlite:
         condition: "service_healthy"

@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 
+	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
+
 	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/contract"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
@@ -15,6 +17,7 @@ import (
 const FullNode = 1
 
 func runETH() error {
+	logger.Infof("starting run deposit process...")
 	ctx := context.Background()
 	cfg := confer.GlobalConfig().Web3
 	client, err := ethclient.Dial(cfg.EthAddress())
@@ -32,6 +35,10 @@ func runETH() error {
 	}
 	privateKey, err := crypto.HexToECDSA(cfg.PrivateKey)
 	auth, err := bind.NewKeyedTransactorWithChainID(privateKey, chanID)
+	if err != nil {
+		return err
+	}
+	logger.Infof("checking if deposited or not...")
 	isDeposit, err := instance.IsDeposit(&bind.CallOpts{
 		From: auth.From,
 	}, FullNode)
@@ -39,8 +46,10 @@ func runETH() error {
 		return err
 	}
 	if isDeposit {
+		logger.Infof("you have deposited!")
 		return nil
 	}
+	logger.Infof("you have not deposited! trying to deposit...")
 	// 尝试质押
 	tra, err := instance.Deposit(auth, FullNode)
 	if err != nil {
