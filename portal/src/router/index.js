@@ -38,6 +38,11 @@ const routes = [
     path: '/nodes',
     name: 'nodes',
     component: () => import('@/views/nodes')
+  },
+  {
+    path: '/wallet',
+    name: 'wallet',
+    component: () => import('@/views/wallet')
   }
 ]
 

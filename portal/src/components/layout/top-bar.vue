@@ -66,6 +66,9 @@
               <v-list-item link>
                 <v-list-item-content @click="handleLogout">Logout</v-list-item-content>
               </v-list-item>
+               <v-list-item link>
+                <v-list-item-content @click="handlewallet">Wallet</v-list-item-content>
+              </v-list-item>
             </v-list>
           </v-menu>
         </template>
@@ -96,6 +99,9 @@ export default {
     handleLogout() {
       cookie.remove('zta')
       window.location.href = '/'
+    },
+    handlewallet() {
+      window.location.href = '/wallet'
     },
     handleToggleTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
