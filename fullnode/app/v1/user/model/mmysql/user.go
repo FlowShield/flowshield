@@ -7,6 +7,7 @@ type User struct {
 	Email     string `json:"email"`
 	AvatarUrl string `json:"avatar_url"`
 	UUID      string `json:"uuid" gorm:"column:uuid"`
+	Wallet    string `json:"wallet"`
 }
 
 func (User) TableName() string {

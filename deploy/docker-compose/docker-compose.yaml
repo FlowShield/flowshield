@@ -1,103 +1,13 @@
 version: '3.3'
 services:
-  mysql:
-    image: mysql:5.7
-    restart: always
-    ports:
-      - "3306:3306"
-    command: --init-file /data/application/init.sql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-    networks:
-      - cloudslit
-    volumes:
-      - ./init.sql:/data/application/init.sql
-      - mysql-data:/var/lib/mysql
-
   redis:
     image: redis:6.2-alpine
     ports:
-      - '6379:6379'
+      - '6379'
     networks:
       - cloudslit
     volumes:
       - redis-data:/data
-
-  root-ca-tls:
-    image: zhangshuainbb/zaca:0.0.2
-    command: [ "./zaca", "tls" ]
-    volumes:
-      - "./root_ca_config.json:/etc/zaca/config.json"
-    environment:
-      IS_ENV: 'test'
-      IS_HTTP_CA_LISTEN: '0.0.0.0:8083'
-      IS_SINGLECA_CONFIG_PATH: '/etc/zaca/config.json'
-      IS_INFLUXDB_ENABLED: 'false'
-      IS_KEYMANAGER_SELF_SIGN: 'true'
-      IS_MYSQL_DSN: 'root:root@tcp(mysql:3306)/root_cap?charset=utf8mb4&parseTime=True&loc=Local'
-    depends_on:
-      - mysql
-    networks:
-      - cloudslit
-    restart: always
-
-  zaca-tls:
-    image: zhangshuainbb/zaca:0.0.2
-    command: [ "./zaca", "tls" ]
-    ports:
-      - "8081:8081"
-    volumes:
-      - "./ca_config.json:/etc/zaca/config.json"
-    environment:
-      IS_ENV: 'test'
-      IS_SINGLECA_CONFIG_PATH: '/etc/zaca/config.json'
-      IS_KEYMANAGER_UPPER_CA: "https://root-ca-tls:8083"
-      IS_MYSQL_DSN: 'root:root@tcp(mysql:3306)/cap?charset=utf8mb4&parseTime=True&loc=Local'
-      IS_OCSP_HOST: 'http://zaca-ocsp:8082'
-    depends_on:
-      - mysql
-      - root-ca-tls
-    networks:
-      - cloudslit
-    restart: always
-
-  zaca-ocsp:
-    image: zhangshuainbb/zaca:0.0.2
-    command: [ "./zaca", "ocsp" ]
-    ports:
-      - "8082:8082"
-    volumes:
-      - "./ca_config.json:/etc/zaca/config.json"
-    environment:
-      IS_ENV: 'test'
-      IS_SINGLECA_CONFIG_PATH: '/etc/zaca/config.json'
-      IS_KEYMANAGER_UPPER_CA: "https://root-ca-tls:8083"
-      IS_MYSQL_DSN: 'root:root@tcp(mysql:3306)/cap?charset=utf8mb4&parseTime=True&loc=Local'
-    depends_on:
-      - mysql
-      - root-ca-tls
-    networks:
-      - cloudslit
-    restart: always
-
-  zaca-api:
-    image: zhangshuainbb/zaca:0.0.2
-    command: [ "./zaca", "api" ]
-    ports:
-      - "8080:8080"
-    volumes:
-      - "./ca_config.json:/etc/zaca/config.json"
-    environment:
-      IS_ENV: 'test'
-      IS_SINGLECA_CONFIG_PATH: '/etc/zaca/config.json'
-      IS_KEYMANAGER_UPPER_CA: "https://root-ca-tls:8083"
-      IS_MYSQL_DSN: 'root:root@tcp(mysql:3306)/cap?charset=utf8mb4&parseTime=True&loc=Local'
-    depends_on:
-      - mysql
-      - root-ca-tls
-    networks:
-      - cloudslit
-    restart: always
 
   zta-portal:
     image: rovast/za-portal
@@ -110,6 +20,8 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./portal_source:/usr/share/nginx/html
+    depends_on:
+      - cloudslit-backend
 
   icefiresqlite:
     image: taosheng205054/icefire-sqlite:latest
@@ -129,13 +41,15 @@ services:
     image: taosheng205054/cloudslit:v0.0.10
     restart: always
     environment:
-      DOMAIN: 'dash.cloudslit.xyz'
+      DOMAIN: 'https://dash.cloudslit.xyz'
       CS_REDIS_ADDR: 'redis:6379'
       CS_MYSQL_HOST: 'icefiresqlite'
       CS_MYSQL_USER: 'root'
       CS_MYSQL_PASSWORD: '123456'
-      CS_CA_SIGN_URL: 'https://zaca-tls:8081'
-      CS_CA_AUTH_KEY: '0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134'
+#      CS_CA_SIGN_URL: 'https://zaca-tls:8081'
+#      CS_CA_AUTH_KEY: '0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134'
+      CS_OAUTH2_CLIENT_ID: '736c3c420d6091f4cac0'
+      CS_OAUTH2_CLIENT_SECRET: 'aeec3165d947ce121692ddf22ec77b7f2f0ec2bf'
       CS_ACCOUNT: '0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d'
       CS_PRIVATE_KEY: 'xxx'
       CS_CONTRACT_TOKEN: 'xxx'
@@ -155,5 +69,4 @@ networks:
     driver: bridge
 
 volumes:
-  mysql-data:
   redis-data:

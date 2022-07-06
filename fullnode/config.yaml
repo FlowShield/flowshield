@@ -1,7 +1,7 @@
 #APP ENV
 app:
   env: "release" # dev,release
-  sysname: "cloudslit"
+  sysname: "CloudSLit"
   port: 8080
   domain: DOMAIN
 
@@ -33,6 +33,10 @@ ca:
   ocsp-url: "CS_CA_OCSP_URL"
   version: "/api/v1"
   auth-key: "CS_CA_AUTH_KEY"
+
+oauth2:
+  client-id: "CS_OAUTH2_CLIENT_ID"
+  client-secret: "CS_OAUTH2_CLIENT_SECRET"
 
 p2p:
   enable: true

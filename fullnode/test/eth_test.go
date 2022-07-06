@@ -9,13 +9,11 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/ethereum/go-ethereum/crypto"
-
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/contract"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 var client *ethclient.Client
@@ -47,26 +45,25 @@ func TestETH2(t *testing.T) {
 }
 
 func TestETH3(t *testing.T) {
+	// 根据client获取chanid
+	chanID, err := client.ChainID(context.Background())
 	// 智能合约地址
-	address := common.HexToAddress("0x4E9bfAB50AE5aA47838921450BBc1b12a81798ba")
-	instance, err := contract.NewToken(address, client)
+	address := common.HexToAddress("0x6B743495593e2EF82e77a23B222f856eDF5B0259")
+	instance, err := contract.NewSlit(address, client)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	bal, err := instance.BalanceOf(nil, common.HexToAddress("0x1623c4E373f80fa7B3d5E46c2F71bc50708bA5A9"))
+	bal, err := instance.BalanceOf(nil, common.HexToAddress("0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d"))
 	fmt.Println(bal, err)
 
-	privateKey, err := crypto.HexToECDSA("xxxxxxxxxx")
-	auth, err := bind.NewKeyedTransactorWithChainID(privateKey, big.NewInt(3))
-	opt := &bind.TransactOpts{
-		From:     auth.From,
-		Nonce:    auth.Nonce,
-		Signer:   auth.Signer,
-		Value:    big.NewInt(10000),
-		GasPrice: big.NewInt(10000),
-		GasLimit: 2381623,
-	}
-	ty, err := instance.Transfer(opt, common.HexToAddress("0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d"), big.NewInt(100000))
-	fmt.Println(ty, err)
+	privateKey, err := crypto.HexToECDSA("8829b5d74cdfa86ae17b11d2df83f627a888fab3b86a139c6d442ef7d0e9dd76")
+	auth, err := bind.NewKeyedTransactorWithChainID(privateKey, chanID)
+	trc, err := instance.Stake(auth)
+	fmt.Println(trc, err, "********************")
+	//trc, err := instance.Transfer(auth, common.HexToAddress("0x1623c4E373f80fa7B3d5E46c2F71bc50708bA5A9"), big.NewInt(7000))
+	fmt.Println(trc.Hash().String(), err)
+	isStack, err := instance.IsStake(&bind.CallOpts{
+		From: auth.From,
+	})
+	fmt.Println(isStack, err, "++++++++++")
 }

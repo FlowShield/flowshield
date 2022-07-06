@@ -7,13 +7,14 @@ import (
 )
 
 type ServerConfig struct {
-	App   App   `mapstructure:"app" json:"app" yaml:"app"`
-	Log   Log   `mapstructure:"log" json:"log" yaml:"log"`
-	Redis Redis `mapstructure:"redis" json:"redis" yaml:"redis"`
-	Mysql Mysql `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
-	CA    CA    `mapstructure:"ca" json:"ca" yaml:"ca"`
-	P2P   P2P   `mapstructure:"p2p" json:"p2p" yaml:"p2p"`
-	Web3  Web3  `mapstructure:"web3" json:"web3" yaml:"web3"`
+	App    App    `mapstructure:"app" json:"app" yaml:"app"`
+	Log    Log    `mapstructure:"log" json:"log" yaml:"log"`
+	Redis  Redis  `mapstructure:"redis" json:"redis" yaml:"redis"`
+	Mysql  Mysql  `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
+	CA     CA     `mapstructure:"ca" json:"ca" yaml:"ca"`
+	P2P    P2P    `mapstructure:"p2p" json:"p2p" yaml:"p2p"`
+	Oauth2 Oauth2 `mapstructure:"oauth2" json:"oauth2" yaml:"oauth2"`
+	Web3   Web3   `mapstructure:"web3" json:"web3" yaml:"web3"`
 	sync.RWMutex
 }
 
@@ -64,6 +65,11 @@ type P2P struct {
 	ServiceDiscoveryID   string `mapstructure:"service-discovery-id" json:"service_discovery_id" yaml:"service-discovery-id"`
 	ServiceDiscoveryMode string `mapstructure:"service-discovery-mode" json:"service_discovery_mode" yaml:"service-discovery-mode"`
 	ServiceMetadataTopic string `mapstructure:"service-metadata-topic" json:"service_metadata_topic" yaml:"service-metadata-topic"`
+}
+
+type Oauth2 struct {
+	ClientID     string `mapstructure:"client-id" json:"client_id" yaml:"client-id"`
+	ClientSecret string `mapstructure:"client-secret" json:"client_secret" yaml:"client-secret"`
 }
 
 type Web3 struct {

@@ -8,7 +8,6 @@ import (
 	"github.com/cloudslit/cloudslit/fullnode/route/access"
 	"github.com/cloudslit/cloudslit/fullnode/route/controlplane"
 	"github.com/cloudslit/cloudslit/fullnode/route/node"
-	"github.com/cloudslit/cloudslit/fullnode/route/system"
 	"github.com/cloudslit/cloudslit/fullnode/route/user"
 
 	"github.com/gin-gonic/gin"
@@ -27,7 +26,6 @@ func Api(engine *gin.Engine) {
 		access.APIAccess(RouteV1)
 		node.APINode(RouteV1)
 		controlplane.APIControlPlane(RouteV1)
-		system.APISystem(RouteV1)
 		user.APIUser(RouteV1)
 	}
 }

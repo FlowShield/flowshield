@@ -9,8 +9,9 @@ import (
 func APIUser(parentRoute gin.IRouter) {
 	user := parentRoute.Group("user")
 	{
-		user.GET("/login/:company", v1.Login)
-		user.GET("/oauth2/callback/:company", v1.Oauth2Callback)
+		user.GET("/login", v1.Login)
+		user.GET("/oauth2/callback", v1.Oauth2Callback)
 		user.GET("/detail", middle.Oauth2(), v1.UserDetail)
+		user.POST("/bind", middle.Oauth2(), v1.UserBindWallet)
 	}
 }

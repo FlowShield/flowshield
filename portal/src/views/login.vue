@@ -21,7 +21,7 @@ import { ethers } from 'ethers'
 
 export default {
   data: () => ({
-    github: process.env.VUE_APP_BASE_URL + '/user/login/github',
+    github: process.env.VUE_APP_BASE_URL + '/user/login',
     address: ''
   }),
   methods: {

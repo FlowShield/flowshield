@@ -15,7 +15,7 @@ When all things come up,Enjoy CloudSlit.
 - Web3 Dao
 - Decentralized storage
 - Zero-Trust
-- Network proxy
+- Network Security
 
 ## How does it work
 

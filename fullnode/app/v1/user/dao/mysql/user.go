@@ -51,3 +51,25 @@ func (p *User) FirstOrCreateUser(data *mmysql.User) (info *mmysql.User, err erro
 	//err = orm.Where(mmysql.User{Email: data.Email}).Attrs(mmysql.User{UUID: uuid.NewString(), AvatarUrl: data.AvatarUrl}).FirstOrCreate(&data).Error
 	return
 }
+
+func (p *User) GetUser(uuid string) (user *mmysql.User, err error) {
+	orm := p.GetOrm()
+	err = orm.Table(p.TableName).Where(fmt.Sprintf("uuid = '%s'", uuid)).First(&user).Error
+	if err != nil {
+		logger.Errorf(p.c, "GetUser err : %v", err)
+		return
+	}
+	return
+}
+
+func (p *User) UpdateUser(data *mmysql.User) (err error) {
+	orm := p.GetOrm()
+	sql := orm.ToSQL(func(tx *gorm.DB) *gorm.DB {
+		return tx.Table(p.TableName).Save(&data)
+	})
+	err = orm.Exec(sql).Error
+	if err != nil {
+		logger.Errorf(p.c, "UpdateUser err : %v", err)
+	}
+	return
+}

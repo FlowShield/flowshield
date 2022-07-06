@@ -1,7 +1,7 @@
 #APP ENV
 app:
   env: "dev" # dev,release
-  sysname: "ZAManager"
+  sysname: "CloudSLit"
   port: 80
   domain: http://192.168.2.80:9534
 
@@ -39,17 +39,21 @@ ca:
   version: "/api/v1"
   auth-key: "0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134"
 
+oauth2:
+  client-id: "736c3c420d6091f4cac0"
+  client-secret: "aeec3165d947ce121692ddf22ec77b7f2f0ec2bf"
+
 p2p:
   enable: false
-  account: "CS_ACCOUNT"
+  account: "0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d"
   service-discovery-id: "ztalab/provider"
   service-discovery-mode: "advertise" # advertise or announce
   service-metadata-topic: "ztalab_provider_metadata" # advertise or announce
 
 web3:
-  private-key: "CS_PRIVATE_KEY"
+  private-key: "8829b5d74cdfa86ae17b11d2df83f627a888fab3b86a139c6d442ef7d0e9dd76"
   contract:
-    token: "0x4E9bfAB50AE5aA47838921450BBc1b12a81798ba"
+    token: "0xC24810e64B563c4c21d1f00eB301C3162467Bbe8"
   w3s:
     token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U"
   eth:

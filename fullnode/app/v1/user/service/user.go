@@ -6,40 +6,40 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
+
+	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/model/mparam"
+
+	"golang.org/x/oauth2/github"
+
+	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"golang.org/x/oauth2"
+
 	"github.com/google/uuid"
 
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/controlplane/dao/redis"
 
 	"github.com/gin-gonic/contrib/sessions"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/system/dao/mysql"
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/system/service"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/dao/api"
 	userDao "github.com/cloudslit/cloudslit/fullnode/app/v1/user/dao/mysql"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/model/mmysql"
 	"github.com/cloudslit/cloudslit/fullnode/pconst"
 	oauth2Help "github.com/cloudslit/cloudslit/fullnode/pkg/oauth2"
 	"github.com/gin-gonic/gin"
-	"golang.org/x/oauth2/facebook"
-	"golang.org/x/oauth2/google"
 )
 
-func GetRedirectURL(c *gin.Context, company string) (redirectURL string, code int) {
-	info, err := mysql.NewOauth2(c).GetOauth2ByCompany(company)
-	if err != nil {
-		code = pconst.CODE_COMMON_SERVER_BUSY
-		return
+func GetRedirectURL(c *gin.Context) (redirectURL string, code int) {
+	cfg := confer.GlobalConfig().Oauth2
+	domain := confer.ConfigAppGetString("domain", "http://localhost:8080")
+	config := &oauth2.Config{
+		ClientID:     cfg.ClientID,
+		ClientSecret: cfg.ClientSecret,
+		Endpoint:     github.Endpoint,
+		RedirectURL:  domain + "/v1/user/oauth2/callback",
+		Scopes:       []string{"user"},
 	}
-	if info.ID == 0 {
-		code = pconst.CODE_API_BAD_REQUEST
-		return
-	}
-	config, err := service.Oauth2Config(info)
-	if err != nil {
-		code = pconst.CODE_API_BAD_REQUEST
-		return
-	}
-	redirectURL, err = oauth2Help.GetOauth2RedirectURL(c, config)
+	redirectURL, err := oauth2Help.GetOauth2RedirectURL(c, config)
 	if err != nil {
 		code = pconst.CODE_COMMON_SERVER_BUSY
 		return
@@ -47,46 +47,32 @@ func GetRedirectURL(c *gin.Context, company string) (redirectURL string, code in
 	return
 }
 
-func Oauth2Callback(c *gin.Context, session sessions.Session, company, oauth2Code string) {
+func Oauth2Callback(c *gin.Context, session sessions.Session, oauth2Code string) {
 	var userInfo *mmysql.User
-	// 查询对应的配置
-	info, err := mysql.NewOauth2(c).GetOauth2ByCompany(company)
+	cfg := confer.GlobalConfig().Oauth2
+	domain := confer.ConfigAppGetString("domain", "http://localhost:8080")
+	config := &oauth2.Config{
+		ClientID:     cfg.ClientID,
+		ClientSecret: cfg.ClientSecret,
+		Endpoint:     github.Endpoint,
+		RedirectURL:  domain + "/v1/user/oauth2/callback",
+		Scopes:       []string{"user"},
+	}
+	githubUser, err := api.GetGithubUser(c, config, oauth2Code)
 	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, errors.New("oauth error"))
 		return
 	}
-	if info.ID == 0 {
+	user := &mmysql.User{
+		Email:     fmt.Sprintf("%s@github.com", *githubUser.Login),
+		AvatarUrl: *githubUser.AvatarURL,
+		UUID:      uuid.NewString(),
+	}
+	if userInfo, err = userDao.NewUser(c).FirstOrCreateUser(user); err != nil {
 		c.AbortWithError(http.StatusInternalServerError, errors.New("oauth error"))
 		return
 	}
-	config, err := service.Oauth2Config(info)
-	if err != nil {
-		c.AbortWithError(http.StatusInternalServerError, errors.New("oauth error"))
-		return
-	}
-	switch company {
-	case "github":
-		githubUser, err := api.GetGithubUser(c, config, oauth2Code)
-		if err != nil {
-			c.AbortWithError(http.StatusInternalServerError, errors.New("oauth error"))
-			return
-		}
-		user := &mmysql.User{
-			Email:     fmt.Sprintf("%s@github.com", *githubUser.Login),
-			AvatarUrl: *githubUser.AvatarURL,
-			UUID:      uuid.NewString(),
-		}
-		if userInfo, err = userDao.NewUser(c).FirstOrCreateUser(user); err != nil {
-			c.AbortWithError(http.StatusInternalServerError, errors.New("oauth error"))
-			return
-		}
-	case "google":
-		config.Endpoint = google.Endpoint
-	case "facebook":
-		config.Endpoint = facebook.Endpoint
-	default:
 
-	}
 	userBytes, _ := json.Marshal(userInfo)
 	session.Set("user", userBytes)
 	session.Save()
@@ -101,6 +87,22 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, company, oauth2Cod
 		c.String(http.StatusOK, "Auth Success!")
 	} else {
 		c.Redirect(http.StatusSeeOther, "/")
+	}
+	return
+}
+
+func UserBindWallet(c *gin.Context, param *mparam.BindWallet) (code int) {
+	// 查询是否已经绑定钱包
+	user, err := userDao.NewUser(c).GetUser(util.User(c).UUID)
+	if err != nil {
+		return pconst.CODE_COMMON_SERVER_BUSY
+	}
+	if user.Wallet != "" {
+		return pconst.CODE_COMMON_DATA_ALREADY_EXIST
+	}
+	user.Wallet = param.Wallet
+	if err = userDao.NewUser(c).UpdateUser(user); err != nil {
+		return pconst.CODE_COMMON_SERVER_BUSY
 	}
 	return
 }
