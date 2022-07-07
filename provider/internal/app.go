@@ -5,6 +5,7 @@ import (
 	"crypto/tls"
 	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"github.com/cloudslit/cloudslit/provider/internal/initer"
+	"github.com/cloudslit/cloudslit/provider/internal/server"
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"net/http"
 	"os"
@@ -42,9 +43,7 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	for _, opt := range opts {
 		opt(&o)
 	}
-	config.MustLoad(o.ConfigFile)
-	// working with environment variables
-	err := config.ParseConfigByEnv()
+	err := config.MustLoad(o.ConfigFile)
 	if err != nil {
 		return nil, err
 	}
@@ -56,16 +55,18 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	if err != nil {
 		return nil, err
 	}
-
 	InitHttpClient()
-	InitProviderServer(ctx)
+	err = server.InitProviderServer(ctx)
+	if err != nil {
+		return nil, err
+	}
 	return func() {
 		loggerCleanFunc()
 	}, nil
 }
 
 func InitHttpClient() {
-	config.Is.HttpClient = &http.Client{
+	config.C.HttpClient = &http.Client{
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{
 				InsecureSkipVerify: true,

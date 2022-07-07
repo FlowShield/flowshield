@@ -5,26 +5,38 @@ RunMode = "release"
 PrintConfig = true
 
 # Information about themselves
-[Common]
-# Wallet address
-PeerId = "0x1B4b827703dc3545089fcee70F0e6e732BFF4413"
-# Price - Price of services provided, unit: CSD/h, CSD It's our token
-Price = 5000
-# External service address
+[App]
 LocalAddr = ""
-# External service port
-LocalPort = 5092
-## Cert Path
-#CertPath = "./configs/fullchain.crt"
-## Key Path
-#KeyPath = "./configs/private.pem"
+LocalPort = 5091
 
 # p2p config
 [P2p]
 Enable = true
 ServiceDiscoveryID = "cloudslit/provider"
-ServiceDiscoverMode = "advertise" # advertise or announce
+ServiceDiscoveryMode = "advertise" # advertise or announce
 ServiceMetadataTopic = "cloudslit_provider_metadata"
+
+[Web3]
+# Wallet account
+Account = "0x1B4b827703dc3545089fcee70F0e6e732BFF4413"
+# Wallet account private key
+PrivateKey = "8829b5d74cdfa86ae17b11d2df83f627a888fab3b86a139c6d442ef7d0e9dd76"
+# Price - Price of services provided, unit = CSD/h, CSD It's our token
+Price = 5000
+# Contract account
+
+[Web3.Contract]
+Token = "0x87f7Ad09AF04c634702c784E68989f459D32D0C8"
+
+# w3s token
+[Web3.W3s]
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U"
+
+# Ethereum information
+[Web3.Eth]
+url = "https://ropsten.infura.io/v3"
+projectid = "45630f96f9d841679dc200a7c97763d2"
+
 
 [Log]
 # level(1:fatal,2:error,3:warn,4:info,5:debug,6:trace)

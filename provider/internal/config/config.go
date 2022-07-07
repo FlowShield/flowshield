@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 	"net/http"
 	"os"
@@ -15,16 +16,10 @@ var (
 	// C Global configuration (Must Load first, otherwise the configuration will not be available)
 	C    = new(Config)
 	once sync.Once
-	Is   = new(I)
 )
 
-// I ...
-type I struct {
-	HttpClient *http.Client
-}
-
 // MustLoad load config
-func MustLoad(fpaths ...string) {
+func MustLoad(fpaths ...string) error {
 	once.Do(func() {
 		loaders := []multiconfig.Loader{
 			&multiconfig.TagLoader{},
@@ -48,15 +43,17 @@ func MustLoad(fpaths ...string) {
 		}
 		m.MustLoad(C)
 	})
+	ParseConfigByEnv()
+	return nil
 }
 
 func ParseConfigByEnv() error {
 	if v := os.Getenv("LOCAL_ADDR"); v != "" {
-		C.Common.LocalAddr = v
+		C.App.LocalAddr = v
 	}
 	if v := os.Getenv("LOCAL_PORT"); v != "" {
 		p, _ := strconv.Atoi(v)
-		C.Common.LocalPort = p
+		C.App.LocalPort = p
 	}
 	if v := os.Getenv("LOG_HOOK_ENABLED"); v == "true" {
 		C.Log.EnableHook = true
@@ -82,10 +79,12 @@ func PrintWithJSON() {
 }
 
 type Config struct {
+	HttpClient   *http.Client
 	RunMode      string
 	PrintConfig  bool
-	Common       Common
+	App          App
 	P2p          P2p
+	Web3         Web3
 	Log          Log
 	LogRedisHook LogRedisHook
 	Certificate  Certificate
@@ -130,21 +129,11 @@ type LogRedisHook struct {
 	Key  string
 }
 
-// Common Configuration parameters
-type Common struct {
-	PeerId     string
-	Price      int
+// App Configuration parameters
+type App struct {
 	LocalAddr  string
 	LocalPort  int
 	ControHost string
-}
-
-// P2p Configuration parameters
-type P2p struct {
-	Enable               bool
-	ServiceDiscoveryID   string
-	ServiceDiscoverMode  string
-	ServiceMetadataTopic string
 }
 
 // Certificate certificate
@@ -156,4 +145,38 @@ type Certificate struct {
 	CertPemPath string
 	CaPemPath   string
 	KeyPemPath  string
+}
+
+// P2p Configuration parameters
+type P2p struct {
+	Enable               bool
+	ServiceDiscoveryID   string
+	ServiceDiscoveryMode string
+	ServiceMetadataTopic string
+}
+
+type Web3 struct {
+	Account    string
+	Price      int
+	PrivateKey string
+	Contract   Contract
+	W3S        W3S
+	ETH        ETH
+}
+
+type Contract struct {
+	Token string
+}
+
+type W3S struct {
+	Token string
+}
+
+type ETH struct {
+	URL       string
+	ProjectID string
+}
+
+func (w *Web3) EthAddress() string {
+	return fmt.Sprintf("%s/%s", w.ETH.URL, w.ETH.ProjectID)
 }

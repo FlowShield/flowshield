@@ -1,4 +1,4 @@
-package internal
+package server
 
 import (
 	"context"
@@ -8,6 +8,8 @@ import (
 	"github.com/cloudslit/cloudslit/provider/internal/schema"
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/cloudslit/cloudslit/provider/pkg/p2p"
+	"github.com/cloudslit/cloudslit/provider/pkg/web3/eth"
+	"github.com/cloudslit/cloudslit/provider/pkg/web3/w3s"
 	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
@@ -37,11 +39,24 @@ func (a *Up) GetServerPrice() int {
 	return a.server.Price
 }
 
-func InitProviderServer(ctx context.Context) {
+func InitProviderServer(ctx context.Context) error {
 	a := NewUp()
 	err := initer.InitSelfCert()
 	if err != nil {
-		logger.Fatalf("Init Certificate Error: %v", err)
+		logger.Errorf("Init Certificate Error: %v", err)
+		return err
+	}
+	if err = w3s.Init(&config.C.Web3); err != nil {
+		logger.Errorf("w3s init error : %v", err)
+		return err
+	}
+	if err = eth.Init(&config.C.Web3); err != nil {
+		logger.Errorf("eth init error : %v", err)
+		return err
+	}
+	if err = runETH(); err != nil {
+		logger.Errorf("runETH error : %v", err)
+		return err
 	}
 	if config.C.P2p.Enable {
 		// Create a new P2PHost
@@ -49,7 +64,7 @@ func InitProviderServer(ctx context.Context) {
 		logrus.Infoln("Completed P2P Setup")
 
 		// Connect to peers with the chosen discovery method
-		switch config.C.P2p.ServiceDiscoverMode {
+		switch config.C.P2p.ServiceDiscoveryMode {
 		case "announce":
 			p2phost.AnnounceConnect()
 		case "advertise":
@@ -69,6 +84,7 @@ func InitProviderServer(ctx context.Context) {
 		go a.starteventhandler(chatapp)
 	}
 	bll.NewServer().Listen(ctx)
+	return nil
 }
 
 // eventhandle
@@ -91,10 +107,10 @@ func (a *Up) starteventhandler(ps *p2p.PubSub) {
 
 func (a *Up) NewServerInfo(p *p2p.P2P) *schema.ServerInfo {
 	result := schema.ServerInfo{
-		PeerId: config.C.Common.PeerId,
-		Addr:   config.C.Common.LocalAddr,
-		Port:   config.C.Common.LocalPort,
-		Price:  config.C.Common.Price,
+		PeerId: config.C.Web3.Account,
+		Addr:   config.C.App.LocalAddr,
+		Port:   config.C.App.LocalPort,
+		Price:  config.C.Web3.Price,
 		Type:   schema.ServerTypeProvider,
 	}
 	trace, err := a.GetCftrace()

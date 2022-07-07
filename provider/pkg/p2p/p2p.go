@@ -244,7 +244,7 @@ func setupHost(ctx context.Context) (host.Host, *dht.IpfsDHT) {
 	opts := libp2p.ChainOptions(identity, listen, security, transport, muxer, conn, nat, routing, relay)
 
 	// Construct a new libP2P host with the created options
-	libhost, err := libp2p.New(ctx, opts)
+	libhost, err := libp2p.New(opts)
 	// Handle any potential error
 	if err != nil {
 		logrus.WithFields(logrus.Fields{

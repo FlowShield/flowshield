@@ -181,13 +181,13 @@ func (a *Server) Listen(ctx context.Context) {
 		if err != nil {
 			panic(err)
 		}
-		l, err := tls.Listen("tcp", "0.0.0.0:"+strconv.Itoa(config.C.Common.LocalPort), &tls.Config{
+		l, err := tls.Listen("tcp", "0.0.0.0:"+strconv.Itoa(config.C.App.LocalPort), &tls.Config{
 			Certificates: []tls.Certificate{cert},
 		})
 		if err != nil {
 			panic(err)
 		}
-		logger.WithContext(ctx).Printf("Started ZERO ACCESS Server at %v\n", l.Addr().String())
+		logger.WithContext(ctx).Printf("Started Provider Server at %v", l.Addr().String())
 		for {
 			conn, err := l.Accept()
 			if err != nil {
