@@ -19,12 +19,12 @@
         </v-btn>
       </div>
       <div class="d-flex align-center">
-        <v-btn href="https://github.com/ztalab/ZASentinel" target="_blank" text>
+        <v-btn href="https://github.com/CloudSlit/cloudslit/tree/main/client" target="_blank" text>
           <span class="font-weight-regular text-capitalize text-caption">Download</span>
         </v-btn>
-        <v-btn href="#" target="_blank" text>
+       <!-- <v-btn href="#" target="_blank" text>
           <span class="font-weight-regular text-capitalize text-caption">Setup Guide</span>
-        </v-btn>
+        </v-btn> -->
         <v-btn :to="{name: 'login'}" text v-if="!isLogin">
           <span class="font-weight-regular text-capitalize text-caption">Sign in</span>
         </v-btn>
