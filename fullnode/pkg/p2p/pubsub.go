@@ -171,9 +171,9 @@ func (cr *PubSub) SubLoop() {
 			}
 
 			// Check if message is from self
-			//if message.ReceivedFrom == cr.selfid {
-			//	continue
-			//}
+			if message.ReceivedFrom == cr.selfid {
+				continue
+			}
 
 			// Declare a ChatMessage
 			cm := &chatmessage{}

@@ -1,90 +1,35 @@
 package p2p
 
 import (
-	"sync"
-
-	"github.com/cloudslit/cloudslit/fullnode/pkg/util/json"
-
-	"github.com/cloudslit/cloudslit/fullnode/pkg/schema"
+	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
 )
 
-var server = &Server{
-	Server: make([]*schema.ServerInfo, 0),
-}
+var pubSubObj *PubSub
 
-type Server struct {
-	Server []*schema.ServerInfo
-	sync.RWMutex
-}
-
-//
-//func CheckServerExist(peerid string) bool {
-//	return server.checkServerExist(peerid)
-//}
-//
-//func AddServer(ser *schema.ServerInfo) {
-//	server.addServer(ser)
-//}
-//
-//func DelServer(peerid string) {
-//	server.delServer(peerid)
-//}
-//
-//func GetServer() []*schema.ServerInfo {
-//	return server.getServer()
-//}
-
-//func (s *Server) checkServerExist(peerid string) bool {
-//	if len(s.Server) == 0 {
-//		return false
-//	}
-//	s.Lock()
-//	defer s.Unlock()
-//	for key, value := range s.Server {
-//		if value.PeerId == peerid {
-//			s.Server[key].WithTime()
-//		}
-//	}
-//	return false
-//}
-//
-//func (s *Server) addServer(server *schema.ServerInfo) {
-//	if s.checkServerExist(server.PeerId) {
-//		return
-//	}
-//	s.Lock()
-//	defer s.Unlock()
-//	s.Server = append(s.Server, server)
-//}
-//
-//func (s *Server) delServer(peerid string) {
-//	if !s.checkServerExist(peerid) {
-//		return
-//	}
-//	s.Lock()
-//	defer s.Unlock()
-//	for i := 0; i < len(s.Server); i++ {
-//		if s.Server[i].PeerId == peerid {
-//			switch {
-//			case i == 0:
-//				s.Server = s.Server[1:]
-//			case i == len(s.Server)-1:
-//				s.Server = s.Server[:i]
-//			default:
-//				s.Server = append(s.Server[:i], s.Server[i+1:]...)
-//			}
-//			i-- // 如果索引i被去掉后，原来索引i+1的会移动到索引i
-//		}
-//	}
-//}
-//
-//func (s *Server) getServer() []*schema.ServerInfo {
-//	s.RLock()
-//	defer s.RUnlock()
-//	return s.Server
-//}
-//
-func Generate(message string) (server *schema.ServerInfo) {
-	_ = json.Unmarshal([]byte(message), &server)
+func InitP2P(cfg *confer.P2P) (err error) {
+	p2phost := NewP2P(cfg.ServiceDiscoveryID)
+	logger.Infof("Completed P2P Setup")
+	// Connect to peers with the chosen discovery method
+	switch cfg.ServiceDiscoveryMode {
+	case "announce":
+		p2phost.AnnounceConnect()
+	case "advertise":
+		p2phost.AdvertiseConnect()
+	default:
+		p2phost.AdvertiseConnect()
+	}
+	logger.Infof("Connected to Service Peers")
+	// Join the chat room
+	pubSubObj, err = JoinPubSub(p2phost, "server_provider", cfg.ServiceMetadataTopic)
+	if err != nil {
+		logger.Errorf(nil, "Join PubSub Error: %v", err)
+		return err
+	}
+	logger.Infof("Successfully joined [%s] P2P channel.", cfg.ServiceMetadataTopic)
 	return
+}
+
+func GetPubSub() *PubSub {
+	return pubSubObj
 }

@@ -9,7 +9,20 @@ services:
     volumes:
       - redis-data:/data
 
-  zta-portal:
+  cloudslit-ca-tls:
+    image: zhangshuainbb/cloudslit-ca:0.0.1
+    command: [ "./ca", "tls" ]
+    ports:
+      - "8081:8081"
+    volumes:
+      - "./ca_config.json:/etc/ca/config.json"
+    environment:
+      IS_ENV: 'test'
+    networks:
+      - cloudslit
+    restart: always
+
+  cloudslit-portal:
     image: rovast/za-portal
     restart: always
     ports:
@@ -38,7 +51,7 @@ services:
       - ./db/sqlite.db:/app/db/sqlite.db
 
   cloudslit-backend:
-    image: taosheng205054/cloudslit:v0.0.18
+    image: taosheng205054/cloudslit:v0.0.19
     restart: always
     environment:
       DOMAIN: 'https://dash.cloudslit.xyz'
@@ -46,8 +59,8 @@ services:
       CS_MYSQL_HOST: 'icefiresqlite'
       CS_MYSQL_USER: 'root'
       CS_MYSQL_PASSWORD: '123456'
-#      CS_CA_SIGN_URL: 'https://zaca-tls:8081'
-#      CS_CA_AUTH_KEY: '0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134'
+      CS_CA_SIGN_URL: 'https://cloudslit-ca-tls:8081'
+      CS_CA_AUTH_KEY: '0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134'
       CS_OAUTH2_CLIENT_ID: '736c3c420d6091f4cac0'
       CS_OAUTH2_CLIENT_SECRET: 'aeec3165d947ce121692ddf22ec77b7f2f0ec2bf'
       CS_ACCOUNT: '0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d'

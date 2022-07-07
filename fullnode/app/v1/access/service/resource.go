@@ -6,7 +6,8 @@ import (
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mmysql"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mparam"
 	"github.com/cloudslit/cloudslit/fullnode/pconst"
-
+	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
+	"github.com/cloudslit/cloudslit/fullnode/pkg/w3s"
 	"github.com/google/uuid"
 
 	"github.com/gin-gonic/gin"
@@ -33,7 +34,16 @@ func AddResource(c *gin.Context, param *mparam.AddResource) (code int) {
 		Host: param.Host,
 		Port: param.Port,
 	}
-	err := mysql.NewResource(c).AddResource(data)
+	if user := util.User(c); user != nil {
+		data.UserUUID = user.UUID
+	}
+	// 先存储到w3s
+	cid, err := w3s.Put(c.Request.Context(), data)
+	if err != nil {
+		return pconst.CODE_COMMON_SERVER_BUSY
+	}
+	data.Cid = cid
+	err = mysql.NewResource(c).AddResource(data)
 	if err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
@@ -62,28 +72,28 @@ func EditResource(c *gin.Context, param *mparam.EditResource) (code int) {
 	return
 }
 
-func DelResource(c *gin.Context, uuid string) (code int) {
-	// check if any servers under this resource
-	resource, err := mysql.NewResource(c).GetResourceByUUID(uuid)
-	if err != nil {
-		code = pconst.CODE_COMMON_SERVER_BUSY
-		return
-	}
-	if resource == nil || resource.ID == 0 {
-		code = pconst.CODE_COMMON_DATA_NOT_EXIST
-		return
-	}
-	total, _, err := mysql.NewServer(c).ServerList(mparam.ServerList{
-		ResourceID: int(resource.ID),
-	})
-	if total > 0 {
-		code = pconst.CODE_DATA_HAS_RELATION
-		c.Set("error", "There are servers under this resource")
-		return
-	}
-	err = mysql.NewResource(c).DelResource(uuid)
-	if err != nil {
-		code = pconst.CODE_COMMON_SERVER_BUSY
-	}
-	return
-}
+//func DelResource(c *gin.Context, uuid string) (code int) {
+//	// check if any servers under this resource
+//	resource, err := mysql.NewResource(c).GetResourceByUUID(uuid)
+//	if err != nil {
+//		code = pconst.CODE_COMMON_SERVER_BUSY
+//		return
+//	}
+//	if resource == nil || resource.ID == 0 {
+//		code = pconst.CODE_COMMON_DATA_NOT_EXIST
+//		return
+//	}
+//	total, _, err := mysql.NewServer(c).ServerList(mparam.ServerList{
+//		ResourceID: int(resource.ID),
+//	})
+//	if total > 0 {
+//		code = pconst.CODE_DATA_HAS_RELATION
+//		c.Set("error", "There are servers under this resource")
+//		return
+//	}
+//	err = mysql.NewResource(c).DelResource(uuid)
+//	if err != nil {
+//		code = pconst.CODE_COMMON_SERVER_BUSY
+//	}
+//	return
+//}

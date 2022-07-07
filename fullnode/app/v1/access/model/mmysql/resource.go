@@ -10,6 +10,7 @@ type Resource struct {
 	Type      string `json:"type"`
 	Host      string `json:"host"`                    // api.github.com
 	Port      string `json:"port" gorm:"column:port"` // 80-443;3306;6379
+	Cid       string `json:"cid"`
 }
 
 func (Resource) TableName() string {

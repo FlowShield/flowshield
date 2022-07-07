@@ -28,10 +28,7 @@ redis:
 
 #CA
 ca:
-  base-url: "CS_CA_BASE_URL"
   sign-url: "CS_CA_SIGN_URL"
-  ocsp-url: "CS_CA_OCSP_URL"
-  version: "/api/v1"
   auth-key: "CS_CA_AUTH_KEY"
 
 oauth2:

@@ -7,16 +7,17 @@ import (
 
 type ClientList struct {
 	mdb.Paginate
-	Name     string `json:"name" form:"name"`
-	ServerID int    `json:"server_id" form:"server_id"`
+	Name        string `json:"name" form:"name"`
+	PeerID      string `json:"peer_id"`
+	ResourceCID int    `json:"resource_cid" form:"resource_cid"`
 }
 
 type AddClient struct {
-	ServerID uint64              `json:"server_id" form:"server_id" binding:"required"`
-	Name     string              `json:"name" form:"name" binding:"required"`
-	Port     int                 `json:"port" form:"port" binding:"required"`     // 443
-	Expire   int                 `json:"expire" form:"expire" binding:"required"` // 过期时间：天
-	Target   mmysql.ClientTarget `json:"target" binding:"required"`
+	PeerID      string `json:"peer_id" form:"peer_id" binding:"required"`
+	Name        string `json:"name" form:"name" binding:"required"`
+	Port        int    `json:"port" form:"port" binding:"required"`         // 443
+	Duration    uint   `json:"duration" form:"duration" binding:"required"` // 使用时间：小时
+	ResourceCID string `json:"resource_cid" binding:"required"`
 }
 
 type EditClient struct {
@@ -26,4 +27,8 @@ type EditClient struct {
 	Port     int                 `json:"port" form:"port" binding:"required"`     // 443
 	Expire   int                 `json:"expire" form:"expire" binding:"required"` // 过期时间：天
 	Target   mmysql.ClientTarget `json:"target" binding:"required"`
+}
+
+type NotifyClient struct {
+	UUID string `json:"uuid" form:"uuid" binding:"required"`
 }

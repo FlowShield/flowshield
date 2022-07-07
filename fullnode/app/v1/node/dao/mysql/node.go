@@ -83,14 +83,11 @@ func (p *Node) GetNodeByPeerId(peerId string) (info *mmysql.Node, err error) {
 }
 
 func (p *Node) AddNode(data *mmysql.Node) (err error) {
-	data.CreatedAt = time.Now().Unix()
-	data.UpdatedAt = data.CreatedAt
-	query := fmt.Sprintf("%d,%d,'%s','%s','%d','%s','%s','%s','%d','%s'", data.CreatedAt, data.UpdatedAt,
-		data.PeerId, data.Addr, data.Port, data.IP, data.Loc, data.Colo, data.Price, data.Type)
-	err = p.GetOrm().Exec("INSERT INTO `zta_node` (`created_at`," +
-		"`updated_at`,`peer_id`,`addr`,`port`,`ip`,`loc`," +
-		"`colo`,`price`,`type`) VALUES " +
-		"(" + query + ")").Error
+	orm := p.GetOrm()
+	sql := orm.ToSQL(func(tx *gorm.DB) *gorm.DB {
+		return tx.Table(p.TableName).Create(&data)
+	})
+	err = orm.Exec(sql).Error
 	if err != nil {
 		logger.Errorf(p.c, "AddNode err : %v", err)
 	}
@@ -98,11 +95,11 @@ func (p *Node) AddNode(data *mmysql.Node) (err error) {
 }
 
 func (p *Node) EditNode(data *mmysql.Node) (err error) {
-	sql := fmt.Sprintf("UPDATE `zta_node` SET "+
-		"`updated_at`=%d,`addr`='%s',`port`=%d,`ip`='%s',`loc`='%s',`colo`='%s',"+
-		"`price`=%d,`type`='%s' WHERE `peer_id`='%s'", time.Now().Unix(), data.Addr, data.Port, data.IP, data.Loc, data.Colo,
-		data.Price, data.Type, data.PeerId)
-	err = p.GetOrm().Exec(sql).Error
+	orm := p.GetOrm()
+	sql := orm.ToSQL(func(tx *gorm.DB) *gorm.DB {
+		return tx.Table(p.TableName).Save(&data)
+	})
+	err = orm.Exec(sql).Error
 	if err != nil {
 		logger.Errorf(p.c, "EditNode err : %v", err)
 	}

@@ -5,7 +5,6 @@ import (
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mparam"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/service"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/response"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -45,33 +44,52 @@ func AddClient(c *gin.Context) {
 	response.UtilResponseReturnJson(c, code, data)
 }
 
-// @Summary EditClient
-// @Description 修改ZTA的client
+//// @Summary EditClient
+//// @Description 修改ZTA的client
+//// @Tags ZTA
+//// @Accept  json
+//// @Produce  json
+//// @Param Client body mparam.EditClient true "修改ZTA的client"
+//// @Success 200 {object} controller.Res
+//// @Router /access/client [put]
+//func EditClient(c *gin.Context) {
+//	param := &mparam.EditClient{}
+//	b, code := controller.BindParams(c, &param)
+//	if !b {
+//		response.UtilResponseReturnJsonFailed(c, code)
+//		return
+//	}
+//	code = service.EditClient(c, param)
+//	response.UtilResponseReturnJson(c, code, nil)
+//}
+//
+//// @Summary DelClient
+//// @Description 删除ZTA的client
+//// @Tags ZTA
+//// @Produce  json
+//// @Param uuid path string true "uuid"
+//// @Success 200 {object} controller.Res
+//// @Router /access/client/{uuid} [delete]
+//func DelClient(c *gin.Context) {
+//	code := service.DelClient(c, c.Param("uuid"))
+//	response.UtilResponseReturnJson(c, code, nil)
+//}
+
+// @Summary NotifyClient
+// @Description 接收client订单状态改变的通知
 // @Tags ZTA
 // @Accept  json
 // @Produce  json
-// @Param Client body mparam.EditClient true "修改ZTA的client"
+// @Param NotifyClient body mparam.NotifyClient true "接收client订单状态改变的通知"
 // @Success 200 {object} controller.Res
-// @Router /access/client [put]
-func EditClient(c *gin.Context) {
-	param := &mparam.EditClient{}
+// @Router /access/client/notify [post]
+func NotifyClient(c *gin.Context) {
+	param := &mparam.NotifyClient{}
 	b, code := controller.BindParams(c, &param)
 	if !b {
 		response.UtilResponseReturnJsonFailed(c, code)
 		return
 	}
-	code = service.EditClient(c, param)
-	response.UtilResponseReturnJson(c, code, nil)
-}
-
-// @Summary DelClient
-// @Description 删除ZTA的client
-// @Tags ZTA
-// @Produce  json
-// @Param uuid path string true "uuid"
-// @Success 200 {object} controller.Res
-// @Router /access/client/{uuid} [delete]
-func DelClient(c *gin.Context) {
-	code := service.DelClient(c, c.Param("uuid"))
+	code = service.NotifyClient(c, param)
 	response.UtilResponseReturnJson(c, code, nil)
 }

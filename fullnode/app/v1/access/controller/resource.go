@@ -63,47 +63,47 @@ func AddResource(c *gin.Context) {
 	response.UtilResponseReturnJson(c, code, nil)
 }
 
-// @Summary EditResource
-// @Description 修改ZTA的resource
-// @Tags ZTA
-// @Accept  json
-// @Produce  json
-// @Param Resource body mparam.EditResource true "修改ZTA的resource"
-// @Success 200 {object} controller.Res
-// @Router /access/resource [put]
-func EditResource(c *gin.Context) {
-	param := &mparam.EditResource{}
-	b, code := controller.BindParams(c, &param)
-	if !b {
-		response.UtilResponseReturnJsonFailed(c, code)
-		return
-	}
-	if len(param.Type) > 0 && param.Type == "cidr" {
-		// 判断是不是纯IP格式
-		if strings.Contains(param.Host, "/") {
-			if !util.IsCIDR(param.Host) {
-				response.UtilResponseReturnJsonFailed(c, pconst.CODE_COMMON_PARAMS_INCOMPLETE)
-				return
-			}
-		} else {
-			if !util.IsIP(param.Host) {
-				response.UtilResponseReturnJsonFailed(c, pconst.CODE_COMMON_PARAMS_INCOMPLETE)
-				return
-			}
-		}
-	}
-	code = service.EditResource(c, param)
-	response.UtilResponseReturnJson(c, code, nil)
-}
-
-// @Summary DelResource
-// @Description 删除ZTA的resource
-// @Tags ZTA
-// @Produce  json
-// @Param id path int true "主键ID"
-// @Success 200 {object} controller.Res
-// @Router /access/resource/{uuid} [delete]
-func DelResource(c *gin.Context) {
-	code := service.DelResource(c, c.Param("uuid"))
-	response.UtilResponseReturnJson(c, code, nil)
-}
+//// @Summary EditResource
+//// @Description 修改ZTA的resource
+//// @Tags ZTA
+//// @Accept  json
+//// @Produce  json
+//// @Param Resource body mparam.EditResource true "修改ZTA的resource"
+//// @Success 200 {object} controller.Res
+//// @Router /access/resource [put]
+//func EditResource(c *gin.Context) {
+//	param := &mparam.EditResource{}
+//	b, code := controller.BindParams(c, &param)
+//	if !b {
+//		response.UtilResponseReturnJsonFailed(c, code)
+//		return
+//	}
+//	if len(param.Type) > 0 && param.Type == "cidr" {
+//		// 判断是不是纯IP格式
+//		if strings.Contains(param.Host, "/") {
+//			if !util.IsCIDR(param.Host) {
+//				response.UtilResponseReturnJsonFailed(c, pconst.CODE_COMMON_PARAMS_INCOMPLETE)
+//				return
+//			}
+//		} else {
+//			if !util.IsIP(param.Host) {
+//				response.UtilResponseReturnJsonFailed(c, pconst.CODE_COMMON_PARAMS_INCOMPLETE)
+//				return
+//			}
+//		}
+//	}
+//	code = service.EditResource(c, param)
+//	response.UtilResponseReturnJson(c, code, nil)
+//}
+//
+//// @Summary DelResource
+//// @Description 删除ZTA的resource
+//// @Tags ZTA
+//// @Produce  json
+//// @Param id path int true "主键ID"
+//// @Success 200 {object} controller.Res
+//// @Router /access/resource/{uuid} [delete]
+//func DelResource(c *gin.Context) {
+//	code := service.DelResource(c, c.Param("uuid"))
+//	response.UtilResponseReturnJson(c, code, nil)
+//}

@@ -25,6 +25,9 @@ func ListNode(c *gin.Context, param mparam.ListNode) (code int, nodeList mapi.No
 }
 
 func AddNode(c *gin.Context, server *schema.ServerInfo) (code int) {
+	if server.Type == "fullnode" {
+		return
+	}
 	node := &mmysql.Node{
 		PeerId: server.PeerId,
 		Addr:   server.Addr,
@@ -41,6 +44,8 @@ func AddNode(c *gin.Context, server *schema.ServerInfo) (code int) {
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
 	if data.ID > 0 {
+		node.ID = data.ID
+		node.CreatedAt = data.CreatedAt
 		err = mysql.NewNode(c).EditNode(node)
 		if err != nil {
 			return pconst.CODE_COMMON_SERVER_BUSY

@@ -113,10 +113,23 @@ func (p *Resource) GetResourceByUUID(uuid string) (info *mmysql.Resource, err er
 	return
 }
 
-func (p *Resource) AddResource(data *mmysql.Resource) (err error) {
+func (p *Resource) GetResourceByCID(cid string) (info *mmysql.Resource, err error) {
+	orm := p.GetOrm()
+	query := orm.Table(p.TableName).Where(fmt.Sprintf("cid = '%s'", cid))
 	if user := util.User(p.c); user != nil {
-		data.UserUUID = user.UUID
+		query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
 	}
+	err = query.First(&info).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		err = nil
+	}
+	if err != nil {
+		logger.Errorf(p.c, "GetResourceByCID err : %v", err)
+	}
+	return
+}
+
+func (p *Resource) AddResource(data *mmysql.Resource) (err error) {
 	orm := p.GetOrm()
 	sql := orm.ToSQL(func(tx *gorm.DB) *gorm.DB {
 		return tx.Table(p.TableName).Create(&data)

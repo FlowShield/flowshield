@@ -34,8 +34,8 @@ func (p *Client) ClientList(param mparam.ClientList) (
 	if len(param.Name) > 0 {
 		query = query.Where(fmt.Sprintf("name like '%%%s%%'", param.Name))
 	}
-	if param.ServerID > 0 {
-		query = query.Where(fmt.Sprintf("server_id = %d", param.ServerID))
+	if len(param.PeerID) > 0 {
+		query = query.Where(fmt.Sprintf("peer_id = '%s'", param.PeerID))
 	}
 	if user := util.User(p.c); user != nil {
 		query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
@@ -68,6 +68,22 @@ func (p *Client) GetClientByID(id uint64) (info *mmysql.Client, err error) {
 	}
 	if err != nil {
 		logger.Errorf(p.c, "GetClientById err : %v", err)
+	}
+	return
+}
+
+func (p *Client) GetClientByUUID(uuid string) (info *mmysql.Client, err error) {
+	orm := p.GetOrm()
+	query := orm.Table(p.TableName).Where(fmt.Sprintf("uuid = '%s'", uuid))
+	if user := util.User(p.c); user != nil {
+		query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
+	}
+	err = query.First(&info).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		err = nil
+	}
+	if err != nil {
+		logger.Errorf(p.c, "GetClientByUUID err : %v", err)
 	}
 	return
 }

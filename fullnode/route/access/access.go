@@ -15,29 +15,30 @@ func APIAccess(parentRoute gin.IRouter) {
 		{
 			resource.GET("", v1.ResourceList)
 			resource.POST("", v1.AddResource)
-			resource.PUT("", v1.EditResource)
-			resource.DELETE("/:uuid", v1.DelResource)
+			//resource.PUT("", v1.EditResource)
+			//resource.DELETE("/:uuid", v1.DelResource)
 		}
-		relay := r.Group("relay")
-		{
-			relay.GET("", v1.RelayList)
-			relay.POST("", v1.AddRelay)
-			relay.PUT("", v1.EditRelay)
-			relay.DELETE("/:uuid", v1.DelRelay)
-		}
-		server := r.Group("server")
-		{
-			server.GET("", v1.ServerList)
-			server.POST("", v1.AddServer)
-			server.PUT("", v1.EditServer)
-			server.DELETE("/:uuid", v1.DelServer)
-		}
+		//relay := r.Group("relay")
+		//{
+		//	relay.GET("", v1.RelayList)
+		//	relay.POST("", v1.AddRelay)
+		//	relay.PUT("", v1.EditRelay)
+		//	relay.DELETE("/:uuid", v1.DelRelay)
+		//}
+		//server := r.Group("server")
+		//{
+		//	server.GET("", v1.ServerList)
+		//	server.POST("", v1.AddServer)
+		//	server.PUT("", v1.EditServer)
+		//	server.DELETE("/:uuid", v1.DelServer)
+		//}
 		client := r.Group("client")
 		{
 			client.GET("", v1.ClientList)
 			client.POST("", v1.AddClient)
-			client.PUT("", v1.EditClient)
-			client.DELETE("/:uuid", v1.DelClient)
+			client.POST("/notify", v1.NotifyClient)
+			//client.PUT("", v1.EditClient)
+			//client.DELETE("/:uuid", v1.DelClient)
 		}
 	}
 

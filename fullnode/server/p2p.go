@@ -1,78 +1,80 @@
 package server
 
 import (
-	"time"
+	"encoding/json"
 
+	service2 "github.com/cloudslit/cloudslit/fullnode/app/v1/access/service"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/node/service"
-
-	"github.com/cloudslit/cloudslit/fullnode/pkg/util/json"
-
-	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
-
 	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/p2p"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/schema"
-	"github.com/sirupsen/logrus"
+	"github.com/tidwall/gjson"
 )
 
-func runP2P() error {
-	cfg := confer.GlobalConfig()
+func runP2P(cfg *confer.P2P) error {
 	// Create a new P2PHost
-	p2phost := p2p.NewP2P(cfg.P2P.ServiceDiscoveryID)
-	logger.Infof("Completed P2P Setup")
-	// Connect to peers with the chosen discovery method
-	switch cfg.P2P.ServiceDiscoveryMode {
-	case "announce":
-		p2phost.AnnounceConnect()
-	case "advertise":
-		p2phost.AdvertiseConnect()
-	default:
-		p2phost.AdvertiseConnect()
-	}
-	logger.Infof("Connected to Service Peers")
-	// Join the chat room
-	pubsub, err := p2p.JoinPubSub(p2phost, "server_provider", cfg.P2P.ServiceMetadataTopic)
-	if err != nil {
-		logger.Errorf(nil, "Join PubSub Error: %v", err)
+	if err := p2p.InitP2P(cfg); err != nil {
 		return err
 	}
-	logrus.Infof("Successfully joined [%s] P2P channel.", cfg.P2P.ServiceMetadataTopic)
-	go startEventHandler(pubsub)
+	go startEventHandler(p2p.GetPubSub())
 	return nil
 }
 
 func startEventHandler(ps *p2p.PubSub) {
-	ticker := time.NewTicker(time.Second * 10)
-	defer ticker.Stop()
-	info := NewServerInfo(ps.Host)
+	//ticker := time.NewTicker(time.Second * 10)
+	//defer ticker.Stop()
+	//info := NewServerInfo(ps.Host)
 	for {
 		select {
 		case msg := <-ps.Inbound:
 			//p2p.Generate(msg.Message)
-			service.AddNode(nil, p2p.Generate(msg.Message))
-		case <-ticker.C:
-			// publish
-			ps.Outbound <- json.MarshalToString(info)
+			// TODO 判断当前传递的节点是否已经质押
+			HandleMessage(msg.Message)
+			//case <-ticker.C:
+			//	// publish
+			//	ps.Outbound <- json.MarshalToString(info)
 		}
 	}
 }
 
-func NewServerInfo(p *p2p.P2P) (server *schema.ServerInfo) {
-	server = &schema.ServerInfo{
-		PeerId: confer.GlobalConfig().P2P.Account,
-		Type:   schema.FullNode,
+func HandleMessage(message string) {
+	// 判断消息类型，是属于节点通信，还是订单通信
+	messageType := gjson.Get(message, "type")
+	switch messageType.String() {
+	case "node":
+		// 节点通信
+		service.AddNode(nil, generateNode(gjson.Get(message, "data").String()))
+	case "order":
+		service2.AcceptClientOrder(nil, generateClient(gjson.Get(message, "data").String()))
+	default:
+
 	}
-	trace, err := util.GetCftrace()
-	if err != nil {
-		logger.Warnf(nil, "Request Cfssl CDN Trace Error:%s", err)
-	} else {
-		server.MetaData = schema.MetaData{
-			Ip:   trace.Ip,
-			Loc:  trace.Loc,
-			Colo: trace.Colo,
-		}
-	}
-	return
-	//return json.MarshalToString(result)
 }
+
+func generateNode(node string) (server *schema.ServerInfo) {
+	_ = json.Unmarshal([]byte(node), &server)
+	return
+}
+
+func generateClient(client string) (info *schema.ClientP2P) {
+	_ = json.Unmarshal([]byte(client), &info)
+	return
+}
+
+//func NewServerInfo(p *p2p.P2P) (server *schema.ServerInfo) {
+//	server = &schema.ServerInfo{
+//		PeerId: confer.GlobalConfig().P2P.Account,
+//		Type:   schema.FullNode,
+//	}
+//	trace, err := util.GetCftrace()
+//	if err != nil {
+//		logger.Warnf(nil, "Request Cfssl CDN Trace Error:%s", err)
+//	} else {
+//		server.MetaData = schema.MetaData{
+//			Ip:   trace.Ip,
+//			Loc:  trace.Loc,
+//			Colo: trace.Colo,
+//		}
+//	}
+//	return
+//}

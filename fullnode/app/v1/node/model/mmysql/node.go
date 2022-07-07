@@ -15,7 +15,7 @@ type Node struct {
 	IP        string `json:"ip"`
 	Loc       string `json:"loc"`
 	Colo      string `json:"colo"`
-	Price     int    `json:"price"`
+	Price     uint   `json:"price"`
 	Type      string `json:"type"`
 }
 
