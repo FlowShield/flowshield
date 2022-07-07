@@ -1,6 +1,6 @@
 .PHONY: all build clean
 
-PROG=bin/zaca
+PROG=bin/ca
 SRCS=.
 
 # git commit hash
@@ -18,9 +18,6 @@ all:
 
 build:
 	go build -race -tags=jsoniter
-
-swagger:
-	swag init
 
 compose:
 	sudo docker-compose up -d

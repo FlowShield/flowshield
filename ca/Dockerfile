@@ -4,22 +4,16 @@ ENV GO111MODULE=on
 WORKDIR /build
 
 COPY . .
-RUN CGO_ENABLED=0 go build -o zaca .
+RUN CGO_ENABLED=0 go build -o ca .
 
 FROM ubuntu:20.04
 
-WORKDIR /zaca
+WORKDIR /root
 
-COPY --from=builder /build/zaca .
-COPY --from=builder /build/database/mysql/migrations ./database/mysql/migrations
+COPY --from=builder /build/ca .
 COPY --from=builder /build/conf.yml .
-RUN chmod +x zaca
+RUN chmod +x ca
 
-# API service
-CMD ["./zaca", "api"]
 
 # TLS service
-# CMD ["./zaca", "tls"]
-
-# OCSP service
-# CMD ["./zaca", "ocsp"]
+CMD ["./ca", "tls"]

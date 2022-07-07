@@ -18,7 +18,7 @@ keymanager:
       expiry: 175200h
 
 singleca:
-  config-path: "./config.json"
+  config-path: "/etc/ca/config.json"
 
 ocsp-host: "http://127.0.0.1:8082"
 
