@@ -34,12 +34,12 @@
                :color="$vuetify.theme.dark ? 'white' : 'black'">
           <v-icon>mdi-github</v-icon>
         </v-btn>
-        <v-btn icon
+        <!--<v-btn icon
                :color="$vuetify.theme.dark ? 'white' : 'black'"
                @click="handleToggleTheme">
           <v-icon v-if="$vuetify.theme.dark">mdi-weather-sunny</v-icon>
           <v-icon v-else>mdi-weather-night</v-icon>
-        </v-btn>
+        </v-btn> -->
         <template v-if="isLogin">
           <v-divider vertical inset class="ml-5 mr-5"/>
           <v-menu offset-y rounded>
