@@ -5,9 +5,9 @@ pragma solidity ^0.8.15;
 // This is the main building block for smart contracts.
 contract Token {
     // Some string type variables to identify the token.
-    string public name = "My Hardhat Token";
-    string public symbol = "MBT";
-    uint8 public decimals = 2;
+    string public name = "CloudSlit Dao";
+    string public symbol = "CSD";
+    uint8 public decimals = 0;
 
 
     uint256 public totalSupply = 1000000;
@@ -76,30 +76,67 @@ contract Token {
     }
    
 
-    //Stake amount
-    //uint256 public stakeAmount = 1000;
 
-    
 
+    //Deposit amount
+    uint256 public fullnodeDepositAmount = 5000;
+    uint256 public privoderDepositAmount = 1000;
     // // A mapping is a key/value map. Here we store each staked user.
-    // mapping(address => uint256) stakeList;
+    mapping(address => uint256) fullnodeDeposits;
+    mapping(address => uint256) privateDeposits;
 
     // /**
-    //  * 是否已经质押
+    //  * 
     //  */
-    // function isStake() external view returns (bool) {
-    //     return stakeList[msg.sender] != 0;
-    // }
+    function isDeposit(uint8 _type) external view returns (bool) {
+        if(_type == 1){
+            return fullnodeDeposits[msg.sender] != 0;
+        } else if(_type == 2){
+            return privateDeposits[msg.sender] != 0;
+        }
+        return false;
+    }
     
     // /**
-    //  * 质押
+    //  * 
     //  */
-    // function stake() external {
-    //     require(balances[msg.sender] >= stakeAmount, "Not enough tokens");
-        
-    //     balances[msg.sender] -= stakeAmount;
-    //     balances[owner] += stakeAmount;
-    //     stakeList[msg.sender] = stakeAmount;
-    // }
+    function deposit(uint8 _type) external {
+        if(_type == 1){
+            require(fullnodeDeposits[msg.sender] == 0, "");
+            require(balances[msg.sender] >= fullnodeDepositAmount, "Not enough tokens");
+            balances[msg.sender] -= fullnodeDepositAmount;
+            fullnodeDeposits[msg.sender] += fullnodeDepositAmount;
+        }else if(_type == 2){
+            require(privateDeposits[msg.sender] == 0, "");
+            require(balances[msg.sender] >= privoderDepositAmount, "Not enough tokens");
+            balances[msg.sender] -= privoderDepositAmount;
+            privateDeposits[msg.sender] += privoderDepositAmount;
+        }
+    }
+    // /**
+    //  * 
+    //  */
+    function withdraw(uint8 _type) external {
+        if(_type == 1){
+            require(fullnodeDeposits[msg.sender] > 0);
+            balances[msg.sender] += fullnodeDeposits[msg.sender];
+            delete fullnodeDeposits[msg.sender];
+        }else if(_type == 2){
+            require(privateDeposits[msg.sender] > 0);
+            balances[msg.sender] += privateDeposits[msg.sender];
+            delete privateDeposits[msg.sender];
+        }
+    }
     
+    mapping(string=>uint256) orders;
+
+    function clientOrder(string memory orderId, uint256 _orderPrice) public {
+        require(balances[msg.sender] >= _orderPrice, "Not enough tokens");
+        balances[msg.sender] -= _orderPrice;
+        orders[orderId] = _orderPrice;
+    }
+
+    function checkOrder(string memory orderId) public view returns(bool) {
+        return (orders[orderId] != 0);
+    }
 }
