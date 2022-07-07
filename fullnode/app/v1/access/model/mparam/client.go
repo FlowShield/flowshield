@@ -1,6 +1,8 @@
 package mparam
 
 import (
+	"time"
+
 	"github.com/cloudslit/cloudslit/fullnode/app/base/mdb"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mmysql"
 )
@@ -31,4 +33,9 @@ type EditClient struct {
 
 type NotifyClient struct {
 	UUID string `json:"uuid" form:"uuid" binding:"required"`
+}
+
+type CheckStatus struct {
+	Status   uint          `json:"status"`
+	Duration time.Duration `json:"duration"`
 }

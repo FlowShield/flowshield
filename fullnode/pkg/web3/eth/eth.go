@@ -1,26 +1,33 @@
-package server
+package eth
 
 import (
 	"context"
 	"errors"
 
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
-
 	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/contract"
+	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-const FullNode = 1
+const (
+	FullNode = 1
 
-func runETH() error {
-	logger.Infof("starting run deposit process...")
+	Provider = 2
+)
+
+var (
+	client   *ethclient.Client
+	instance *contract.Slit
+	err      error
+)
+
+func InitETH(cfg *confer.Web3) error {
 	ctx := context.Background()
-	cfg := confer.GlobalConfig().Web3
-	client, err := ethclient.Dial(cfg.EthAddress())
+	client, err = ethclient.Dial(cfg.EthAddress())
 	if err != nil {
 		return err
 	}
@@ -29,7 +36,7 @@ func runETH() error {
 		return err
 	}
 	contractAdd := common.HexToAddress(cfg.Contract.Token)
-	instance, err := contract.NewSlit(contractAdd, client)
+	instance, err = contract.NewSlit(contractAdd, client)
 	if err != nil {
 		return err
 	}
@@ -60,7 +67,12 @@ func runETH() error {
 		return err
 	}
 	if rec.Status > 0 {
+		logger.Infof("deposited succeed !")
 		return nil
 	}
 	return errors.New("sorry,deposit failed")
+}
+
+func Contract() *contract.Slit {
+	return instance
 }

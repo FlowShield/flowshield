@@ -7,7 +7,7 @@ import (
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mparam"
 	"github.com/cloudslit/cloudslit/fullnode/pconst"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/w3s"
+	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/w3s"
 	"github.com/google/uuid"
 
 	"github.com/gin-gonic/gin"

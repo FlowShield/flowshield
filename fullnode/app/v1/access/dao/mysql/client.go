@@ -3,6 +3,7 @@ package mysql
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
 
@@ -114,6 +115,23 @@ func (p *Client) EditClient(data *mmysql.Client) (err error) {
 	err = orm.Exec(sql).Error
 	if err != nil {
 		logger.Errorf(p.c, "EditClient err : %v", err)
+	}
+	return
+}
+
+func (p *Client) CheckStatusClient(param *mparam.CheckStatus) (list []mmysql.Client, err error) {
+	orm := p.GetOrm().DB
+	query := orm.Table(p.TableName)
+	query = query.Where(fmt.Sprintf("status = %d", param.Status))
+	if param.Duration > 0 {
+		query = query.Where(fmt.Sprintf("created_at >= %d", time.Now().Add(-(param.Duration * time.Minute)).Unix()))
+	}
+	err = query.First(&list).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		err = nil
+	}
+	if err != nil {
+		logger.Errorf(p.c, "CheckStatusClient err : %v", err)
 	}
 	return
 }

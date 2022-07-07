@@ -5,13 +5,15 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/eth"
+
+	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/w3s"
+
 	"github.com/cloudslit/cloudslit/fullnode/pkg/p2p"
 
 	"github.com/cloudslit/cloudslit/fullnode/pkg/schema"
 
 	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
-
-	"github.com/cloudslit/cloudslit/fullnode/pkg/w3s"
 
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/dao/api"
 	mysqlNode "github.com/cloudslit/cloudslit/fullnode/app/v1/node/dao/mysql"
@@ -248,7 +250,16 @@ func NotifyClient(c *gin.Context, param *mparam.NotifyClient) (code int) {
 	if client == nil || client.ID == 0 {
 		return pconst.CODE_COMMON_DATA_NOT_EXIST
 	}
-	// TODO 查询合约判断该笔订单是否支付
+	// 查询合约判断该笔订单是否支付
+	check, err := eth.Contract().CheckOrder(nil, param.UUID)
+	if err != nil {
+		logger.Errorf(c, "notifyClient CheckOrder err : %v", err)
+		return pconst.CODE_COMMON_SERVER_BUSY
+	}
+	if !check {
+		logger.Warnf(c, "notifyClient Order: %s has not been paid", param.UUID)
+		return pconst.CODE_DATA_WRONG_STATE
+	}
 	client.Status = mmysql.Paid
 	err = mysql.NewClient(c).EditClient(client)
 	if err != nil {

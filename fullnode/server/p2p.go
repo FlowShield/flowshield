@@ -3,6 +3,8 @@ package server
 import (
 	"encoding/json"
 
+	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
+
 	service2 "github.com/cloudslit/cloudslit/fullnode/app/v1/access/service"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/node/service"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
@@ -28,11 +30,12 @@ func startEventHandler(ps *p2p.PubSub) {
 		select {
 		case msg := <-ps.Inbound:
 			//p2p.Generate(msg.Message)
-			// TODO 判断当前传递的节点是否已经质押
 			HandleMessage(msg.Message)
-			//case <-ticker.C:
-			//	// publish
-			//	ps.Outbound <- json.MarshalToString(info)
+		//case <-ticker.C:
+		//	// publish
+		//	ps.Outbound <- json.MarshalToString(info)
+		case logData := <-ps.Logs:
+			logger.Errorf(nil, "p2p receive error: %s", logData.String())
 		}
 	}
 }

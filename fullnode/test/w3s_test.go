@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"io/fs"
+	"io/ioutil"
 	"testing"
 
 	"github.com/ipfs/go-cid"
@@ -19,25 +20,22 @@ func TestW3S(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	//all, err := ioutil.ReadAll(res.Body)
-	//if err != nil {
-	//	t.Fatal(err)
-	//}
-	//fmt.Println(string(all))
-	//return
-	f, fsys, err := res.Files()
+	_, fsys, err := res.Files()
 	if err != nil {
 		t.Fatal(err)
 	}
-	if d, ok := f.(fs.ReadDirFile); ok {
-		ents, _ := d.ReadDir(0)
-		for _, ent := range ents {
-			fmt.Println(ent.Name())
+	var data []byte
+	err = fs.WalkDir(fsys, "/", func(path string, d fs.DirEntry, err error) error {
+		if !d.IsDir() {
+			file, err := fsys.Open(path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			data, err = ioutil.ReadAll(file)
 		}
-	}
-	fs.WalkDir(fsys, "/", func(path string, d fs.DirEntry, err error) error {
-		info, _ := d.Info()
-		fmt.Printf("%s (%d bytes)\n", path, info.Size())
-		return err
+		return nil
 	})
+	if err != nil {
+		t.Fatal(err)
+	}
 }
