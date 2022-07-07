@@ -40,6 +40,11 @@ const routes = [
     component: () => import('@/views/nodes')
   },
   {
+    path: '/orders',
+    name: 'orders',
+    component: () => import('@/views/orders')
+  },
+  {
     path: '/wallet',
     name: 'wallet',
     component: () => import('@/views/wallet')
