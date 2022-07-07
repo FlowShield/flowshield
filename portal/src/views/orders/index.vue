@@ -30,6 +30,7 @@
           <form-dialog @on-success="handleSearch"/>
         </v-toolbar>
       </template>
+      <template v-slot:item.target="{item}">{{ item.target.host + ':' + item.target.port }}</template>
       <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
         <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
@@ -46,7 +47,7 @@
 import PemDialog from '@/components/pem-dialog'
 import ConfirmDialog from '@/components/confirm-dialog'
 import FormDialog from './components/form-dialog'
-import { deleteZeroAccessServer, fetchZeroAccessServers } from '@/api'
+import { deleteZeroAccessClient, fetchZeroAccessClients } from '@/api'
 
 export default {
   components: { PemDialog, FormDialog, ConfirmDialog },
@@ -58,12 +59,12 @@ export default {
       limit_num: 15
     },
     tableHeaders: [
-      { text: 'Name', align: 'start', value: 'name' },
-      { text: 'Host', value: 'host' },
-      { text: 'Listen port', value: 'port' },
-      { text: 'Expose port', value: 'out_port' },
-      { text: 'Created at', value: 'CreatedAt' },
-      { text: 'Updated at', value: 'UpdatedAt' },
+      { text: 'Name', align: 'start', sortable: true, value: 'name' },
+      { text: 'Listen port', sortable: true, value: 'port' },
+      { text: 'Valid days', sortable: true, value: 'expire' },
+      { text: 'Resource', sortable: true, value: 'target' },
+      { text: 'Created at', sortable: true, value: 'CreatedAt' },
+      { text: 'Updated at', sortable: true, value: 'UpdatedAt' },
       { text: 'Action', value: 'action' }
     ],
     tableItems: [],
@@ -79,7 +80,7 @@ export default {
     },
     getTableItems() {
       this.loading = true
-      fetchZeroAccessServers(this.query).then(res => {
+      fetchZeroAccessClients(this.query).then(res => {
         this.tableItems = res.data.list || []
         this.total = res.data.paginate.total
       }).finally(() => {
@@ -93,7 +94,7 @@ export default {
     handleDelete(ref) {
       const item = ref.data
 
-      deleteZeroAccessServer(item.ID).then(_ => {
+      deleteZeroAccessClient(item.ID).then(_ => {
         ref.$close()
       }).finally(() => {
         this.handleSearch()
