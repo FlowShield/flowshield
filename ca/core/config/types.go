@@ -1,9 +1,7 @@
 package config
 
 import (
-	cfssl_config "github.com/ztalab/cfssl/config"
-
-	"github.com/cloudslit/cloudslit/ca/pkg/influxdb"
+	cfssl_config "github.com/cloudslit/cfssl/config"
 )
 
 const (
@@ -11,19 +9,16 @@ const (
 )
 
 type IConfig struct {
-	Log            Log                   `yaml:"log"`
-	Keymanager     Keymanager            `yaml:"keymanager"`
-	Singleca       Singleca              `yaml:"singleca"`
-	OCSPHost       string                `yaml:"ocsp-host"`
-	HTTP           HTTP                  `yaml:"http"`
-	Mysql          Mysql                 `yaml:"mysql"`
-	Vault          Vault                 `yaml:"vault"`
-	Influxdb       influxdb.CustomConfig `yaml:"influxdb"`
-	SwaggerEnabled bool                  `yaml:"swagger-enabled"`
-	Debug          bool                  `yaml:"debug"`
-	Version        string                `yaml:"version"`
-	Hostname       string                `yaml:"hostname"`
-	Ocsp           Ocsp                  `yaml:"ocsp"`
+	Log            Log        `yaml:"log"`
+	Keymanager     Keymanager `yaml:"keymanager"`
+	Singleca       Singleca   `yaml:"singleca"`
+	OCSPHost       string     `yaml:"ocsp-host"`
+	HTTP           HTTP       `yaml:"http"`
+	SwaggerEnabled bool       `yaml:"swagger-enabled"`
+	Debug          bool       `yaml:"debug"`
+	Version        string     `yaml:"version"`
+	Hostname       string     `yaml:"hostname"`
+	Ocsp           Ocsp       `yaml:"ocsp"`
 }
 
 type Registry struct {

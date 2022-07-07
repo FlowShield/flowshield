@@ -8,9 +8,7 @@ import (
 	"github.com/cloudslit/cloudslit/ca/core"
 	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"github.com/gorilla/mux"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"net/http"
-	"net/http/pprof"
 	"os"
 	"os/signal"
 	"syscall"
@@ -43,32 +41,6 @@ func InitTlsServer(ctx context.Context, handler *mux.Router) func() {
 			panic(err)
 		}
 	}()
-	if !core.Is.Config.Debug {
-		// Timing monitoring
-		metrics := http.NewServeMux()
-		metrics.Handle("/metrics", promhttp.Handler())
-		metrics.HandleFunc("/debug/pprof/", pprof.Index)
-		metrics.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
-		metrics.HandleFunc("/debug/pprof/profile", pprof.Profile)
-		metrics.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
-		metrics.HandleFunc("/debug/pprof/trace", pprof.Trace)
-		metricsAddr := core.Is.Config.HTTP.Listen
-		metricsSrv := &http.Server{
-			Addr:        metricsAddr,
-			Handler:     metrics,
-			ReadTimeout: 5 * time.Second,
-			//WriteTimeout: 10 * time.Second,
-			IdleTimeout: 15 * time.Second,
-		}
-
-		go func() {
-			logger.Infof("Metrics server is running at %s.", metricsAddr)
-			err := metricsSrv.ListenAndServe()
-			if err != nil && err != http.ErrServerClosed {
-				panic(err)
-			}
-		}()
-	}
 
 	return func() {
 		ctx, cancel := context.WithTimeout(ctx, time.Second*time.Duration(30))

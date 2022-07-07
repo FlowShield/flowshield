@@ -2,27 +2,27 @@ package singleca
 
 import (
 	"crypto/x509"
+	"github.com/cloudslit/cfssl/api/revoke"
 	"net/http"
 	"net/url"
 	"strings"
 
+	"github.com/cloudslit/cfssl/api"
+	"github.com/cloudslit/cfssl/api/bundle"
+	"github.com/cloudslit/cfssl/api/certinfo"
+	"github.com/cloudslit/cfssl/api/crl"
+	"github.com/cloudslit/cfssl/api/gencrl"
+	"github.com/cloudslit/cfssl/api/generator"
+	"github.com/cloudslit/cfssl/api/health"
+	"github.com/cloudslit/cfssl/api/info"
+	"github.com/cloudslit/cfssl/api/initca"
+	apiocsp "github.com/cloudslit/cfssl/api/ocsp"
+	"github.com/cloudslit/cfssl/api/scan"
+	"github.com/cloudslit/cfssl/api/signhandler"
+	certsql "github.com/cloudslit/cfssl/certdb/sql"
 	"github.com/cloudslit/cloudslit/ca/pkg/logger"
-	"github.com/ztalab/cfssl/api"
-	"github.com/ztalab/cfssl/api/bundle"
-	"github.com/ztalab/cfssl/api/certinfo"
-	"github.com/ztalab/cfssl/api/crl"
-	"github.com/ztalab/cfssl/api/gencrl"
-	"github.com/ztalab/cfssl/api/generator"
-	"github.com/ztalab/cfssl/api/health"
-	"github.com/ztalab/cfssl/api/info"
-	"github.com/ztalab/cfssl/api/initca"
-	apiocsp "github.com/ztalab/cfssl/api/ocsp"
-	"github.com/ztalab/cfssl/api/scan"
-	"github.com/ztalab/cfssl/api/signhandler"
-	certsql "github.com/ztalab/cfssl/certdb/sql"
 
 	"github.com/cloudslit/cloudslit/ca/ca/keymanager"
-	"github.com/cloudslit/cloudslit/ca/ca/revoke"
 	"github.com/cloudslit/cloudslit/ca/ca/signer"
 )
 
@@ -81,8 +81,6 @@ var endpoints = map[string]func() (http.Handler, error){
 				return nil, err
 			}
 		}
-
-		signer.CountAll()
 		return h, nil
 	},
 
@@ -175,7 +173,6 @@ var endpoints = map[string]func() (http.Handler, error){
 		if db == nil {
 			return nil, errNoCertDBConfigured
 		}
-		revoke.CountAll()
 		return revoke.NewHandler(certsql.NewAccessor(db)), nil
 	},
 

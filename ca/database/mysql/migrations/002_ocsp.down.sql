@@ -1,1 +1,0 @@
-DROP TABLE IF EXISTS ocsp_responses;

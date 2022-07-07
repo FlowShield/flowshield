@@ -18,30 +18,12 @@ keymanager:
       expiry: 175200h
 
 singleca:
-  config-path: "/etc/capitalizone/config.json"
+  config-path: "./config.json"
 
 ocsp-host: "http://127.0.0.1:8082"
 
 http:
-  ocsp-listen: 0.0.0.0:8082
   ca-listen: 0.0.0.0:8081
-  listen: 0.0.0.0:8080
-
-mysql:
-  dsn: ""
-
-vault:
-  enabled: false
-  addr: ""
-  token: ""
-  prefix: ""
-
-swagger-enabled: false
-
 debug: false
 
 version: "0.1"
-
-# OCSP configuration
-ocsp:
-  cache-time: 60 # Cache time

@@ -12,10 +12,10 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/cloudslit/cfssl/csr"
+	"github.com/cloudslit/cfssl/helpers"
 	"github.com/cloudslit/cloudslit/ca/pkg/logger"
 	"github.com/pkg/errors"
-	"github.com/ztalab/cfssl/csr"
-	"github.com/ztalab/cfssl/helpers"
 
 	"github.com/cloudslit/cloudslit/ca/pkg/keygen"
 	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"

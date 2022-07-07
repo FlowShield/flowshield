@@ -1,25 +1,17 @@
 package signer
 
 import (
-	"encoding/hex"
 	"encoding/json"
 	"io/ioutil"
 	"math/big"
 	"net/http"
 
-	"github.com/ztalab/cfssl/api"
-	"github.com/ztalab/cfssl/auth"
-	"github.com/ztalab/cfssl/bundler"
-	"github.com/ztalab/cfssl/errors"
-	"github.com/ztalab/cfssl/helpers"
-	"github.com/ztalab/cfssl/hook"
-	"github.com/ztalab/cfssl/log"
-	"github.com/ztalab/cfssl/signer"
-
-	"github.com/cloudslit/cloudslit/ca/core"
-	"github.com/cloudslit/cloudslit/ca/database/mysql/cfssl-model/dao"
-	"github.com/cloudslit/cloudslit/ca/logic/events"
-	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
+	"github.com/cloudslit/cfssl/api"
+	"github.com/cloudslit/cfssl/auth"
+	"github.com/cloudslit/cfssl/bundler"
+	"github.com/cloudslit/cfssl/errors"
+	"github.com/cloudslit/cfssl/log"
+	"github.com/cloudslit/cfssl/signer"
 )
 
 // NoBundlerMessage is used to alert the user that the server does not have a bundler initialized.
@@ -288,53 +280,11 @@ func (h *AuthHandler) Handle(w http.ResponseWriter, r *http.Request) error {
 		return errors.NewBadRequestString("missing parameter 'certificate_request'")
 	}
 
-	// Can audit apply for certificate
-	// Query whether the DB is marked with uniqueID to prohibit application
-	for _, signHost := range signReq.Hosts {
-		id, err := spiffe.ParseIDGIdentity(signHost)
-		if err != nil {
-			continue
-		}
-
-		if id.UniqueID != "" {
-			query := core.Is.Db.Where("unique_id = ?", id.UniqueID).
-				Where("deleted_at IS NULL")
-			record, err := dao.GetForbid(query)
-			if err == nil && record != nil {
-				events.NewWorkloadLifeCycle("forbid-sign", events.OperatorSDK, events.CertOp{
-					UniqueId: id.UniqueID,
-				}).Log()
-				return errors.NewBadRequestString("unique_id forbidden for signing certs")
-			}
-		}
-	}
-
 	// CFSSL In the issuing logic, if the certificate storage mode is vault, the database flag bit is added, and the certificate PEM is not actually stored
 	cert, err := h.signer.Sign(signReq)
 	if err != nil {
 		log.Errorf("signature failed: %v", err)
 		return err
-	}
-
-	x509Cert, _ := helpers.ParseCertificatePEM(cert)
-
-	// After the certificate is issued, it is added and stored in the vault
-	if hook.EnableVaultStorage {
-		if err := core.Is.VaultSecret.StoreCertPEM(x509Cert.SerialNumber.String(), string(cert)); err != nil {
-			core.Is.Logger.Errorf("vault store err: %s", err)
-			return err
-		}
-	}
-
-	// Metrics Timing record
-	AddMetricsPoint(x509Cert)
-
-	if x509Cert != nil {
-		events.NewWorkloadLifeCycle("sign", events.OperatorSDK, events.CertOp{
-			UniqueId: x509Cert.Subject.CommonName,
-			SN:       x509Cert.SerialNumber.String(),
-			AKI:      hex.EncodeToString(x509Cert.AuthorityKeyId),
-		}).Log()
 	}
 
 	result := map[string]interface{}{"certificate": string(cert)}

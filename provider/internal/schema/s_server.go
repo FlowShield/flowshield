@@ -24,3 +24,24 @@ type MetaData struct {
 func (a *ServerInfo) String() string {
 	return json.MarshalToString(a)
 }
+
+// CreateProviderParams 创建网络服务参数
+type CreateProviderParams struct {
+	Certificate Certificate `json:"certificate"`
+}
+
+// CreateProviderParams 创建客户端参数
+type CreateClientParams struct {
+	Certificate Certificate `json:"certificate"`
+}
+
+// Certificate 证书信息
+type Certificate struct {
+	Cert string `json:"cert"`
+	Key  string `json:"key"`
+	Ca   string `json:"ca"`
+}
+
+func (a *CreateProviderParams) String() string {
+	return json.MarshalToString(a)
+}

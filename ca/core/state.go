@@ -4,10 +4,7 @@ import (
 	"context"
 
 	"github.com/cloudslit/cloudslit/ca/core/config"
-	"github.com/cloudslit/cloudslit/ca/pkg/influxdb"
 	"github.com/cloudslit/cloudslit/ca/pkg/logger"
-	"github.com/cloudslit/cloudslit/ca/pkg/vaultsecret"
-	vaultAPI "github.com/hashicorp/vault/api"
 	"gorm.io/gorm"
 )
 
@@ -31,12 +28,9 @@ type Logger struct {
 
 // I ...
 type I struct {
-	Ctx         context.Context
-	Config      *Config
-	Logger      *Logger
-	Db          *gorm.DB
-	Elector     Elector
-	Metrics     *influxdb.Metrics
-	VaultClient *vaultAPI.Client
-	VaultSecret *vaultsecret.VaultSecret
+	Ctx     context.Context
+	Config  *Config
+	Logger  *Logger
+	Db      *gorm.DB
+	Elector Elector
 }
