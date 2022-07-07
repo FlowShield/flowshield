@@ -6,7 +6,7 @@
         Sign in with Github
       </v-btn>
     </div>
-
+<!--
     <div class="mt-15">
       <p class="mt-10" v-if="address">{{ address }}</p>
       <v-btn x-large rounded @click="connectWallet" v-else>
@@ -14,6 +14,7 @@
         Connect Your Wallet
       </v-btn>
     </div>
+-->
   </div>
 </template>
 <script>
