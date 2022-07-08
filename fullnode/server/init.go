@@ -39,8 +39,6 @@ func InitService(c *cli.Context) (err error) {
 			logger.Errorf(nil, "eth init error : %v", err)
 			return
 		}
-		// 启动订单同步检查agent
-		go agent.SyncClientOrderStatus()
 	}
 	// 判断是否开启P2P
 	if confer.GlobalConfig().P2P.Enable {
@@ -48,6 +46,10 @@ func InitService(c *cli.Context) (err error) {
 			logger.Errorf(nil, "p2p init error : %v", err)
 			return
 		}
+	}
+	if confer.GlobalConfig().Web3.Register == "true" && confer.GlobalConfig().P2P.Enable {
+		// 启动订单同步检查agent
+		go agent.SyncClientOrderStatus()
 	}
 	return
 }
