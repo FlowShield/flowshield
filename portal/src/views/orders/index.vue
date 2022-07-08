@@ -32,27 +32,29 @@
       </template>
       <template v-slot:item.target="{item}">{{ item.target.host + ':' + item.target.port }}</template>
       <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+        <v-icon small class="mr-2" @click="pay(item)">Pay</v-icon>
+        <!-- <v-icon small @click="deleteItem(item)">mdi-delete</v-icon> -->
       </template>
       <template v-slot:item.action="{ item }">
-        <pem-dialog :data="item"/>
-        <confirm-dialog @on-confirm="handleDelete" :data="item"/>
+        <v-btn x-large rounded @click="pay(item)" :loading="paying">
+        <v-icon class="mr-5">mdi-wallet</v-icon>
+        Pay
+      </v-btn>
       </template>
       <template v-slot:no-data>No data</template>
     </v-data-table>
   </div>
 </template>
 <script>
-import PemDialog from '@/components/pem-dialog'
-import ConfirmDialog from '@/components/confirm-dialog'
 import FormDialog from './components/form-dialog'
-import { deleteZeroAccessClient, fetchZeroAccessClients } from '@/api'
+import { deleteZeroAccessClient, fetchZeroAccessClients, postZeroAccessClientsPayNotify } from '@/api'
+import { payOrder } from '../../utils/store.js'
 
 export default {
-  components: { PemDialog, FormDialog, ConfirmDialog },
+  components: { FormDialog },
   data: () => ({
     loading: false,
+    paying: false,
     query: {
       name: '',
       page: 1,
@@ -60,9 +62,14 @@ export default {
     },
     tableHeaders: [
       { text: 'Name', align: 'start', sortable: true, value: 'name' },
+      { text: 'OrderId', sortable: true, value: 'uuid' },
       { text: 'Listen port', sortable: true, value: 'port' },
-      { text: 'Valid days', sortable: true, value: 'expire' },
-      { text: 'Resource', sortable: true, value: 'target' },
+      { text: 'Server', sortable: true, value: 'server_cid' },
+      { text: 'PeerId', sortable: true, value: 'peer_id' },
+      { text: 'Resource', sortable: true, value: 'resource_cid' },
+      { text: 'Duration', sortable: false, value: 'duration' },
+      { text: 'Price', sortable: true, value: 'price' },
+      { text: 'Status', sortable: true, value: 'status' },
       { text: 'Created at', sortable: true, value: 'CreatedAt' },
       { text: 'Updated at', sortable: true, value: 'UpdatedAt' },
       { text: 'Action', value: 'action' }
@@ -77,6 +84,17 @@ export default {
     handleSearch() {
       this.query.page = 1
       this.getTableItems()
+    },
+    pay(item) {
+      this.paying = true
+      payOrder(item.uuid, item.price)
+      postZeroAccessClientsPayNotify(item.uuid).then(res => {
+        this.$emit('on-success')
+        this.$message.success()
+        this.paying = false
+      }).finally(() => {
+        this.paying = false
+      })
     },
     getTableItems() {
       this.loading = true
