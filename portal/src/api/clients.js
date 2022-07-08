@@ -8,6 +8,13 @@ export function fetchZeroAccessClients(params = {}) {
   })
 }
 
+export function postZeroAccessClientsPayNotify(params = {}) {
+  return request({
+    url: '/access/client/notify',
+    method: 'post',
+    params
+  })
+}
 export function postZeroAccessClient(data = {}) {
   return request({
     url: '/access/client',

@@ -19,6 +19,9 @@
       <template v-slot:item.CreatedAt="{ item }">
         <span>{{ new Date(item.CreatedAt * 1000).toLocaleString() }}</span>
       </template>
+      <template v-slot:item.price="{ item }">
+        <span>{{ item.price }} CSD</span>
+      </template>
       <template v-slot:item.UpdatedAt="{ item }">
         <span>{{ new Date(item.UpdatedAt * 1000).toLocaleString() }}</span>
       </template>

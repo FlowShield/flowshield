@@ -1,14 +1,27 @@
 <template>
   <div>
     <h3 class="font-weight-thin text-h3 mt-10">My Wallet</h3>
+    <div class="login-page">
+    <div class="mt-15">
+      <p class="mt-10" v-if="address">{{ address }}</p>
+      <v-btn x-large rounded @click="connectWallet" v-else>
+        <v-icon class="mr-5">mdi-wallet</v-icon>
+        Connect Your Wallet
+      </v-btn>
+    </div>
+    </div>
   </div>
+
 </template>
 <script>
 import { fetchZeroAccessNodes } from '@/api'
+import { ethers } from 'ethers'
+import { getBalance, setStatus } from '../../utils/store.js'
 
 export default {
   components: { },
   data: () => ({
+    address: '',
     loading: false,
     query: {
       name: '',
@@ -50,7 +63,23 @@ export default {
     handleCount(v) {
       this.query.limit_num = v
       this.handleSearch()
+    },
+    async connectWallet() {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      // eth_requestAccounts can silent prompt
+      await provider.send('wallet_requestPermissions', [{ // prompts every time
+        eth_accounts: {}
+      }])
+      const signer = provider.getSigner()
+      this.address = await signer.getAddress()
+      getBalance(this.newStatus)
+      setStatus()
     }
   }
 }
 </script>
+<style lang="scss" scoped>
+.login-page {
+  text-align: center;
+}
+</style>

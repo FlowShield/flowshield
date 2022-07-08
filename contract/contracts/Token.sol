@@ -100,7 +100,7 @@ contract Token {
     // /**
     //  * 
     //  */
-    function deposit(uint8 _type) external {
+    function stake(uint8 _type) external {
         if(_type == 1){
             require(fullnodeDeposits[msg.sender] == 0, "");
             require(balances[msg.sender] >= fullnodeDepositAmount, "Not enough tokens");
@@ -131,6 +131,7 @@ contract Token {
     mapping(string=>uint256) orders;
 
     function clientOrder(string memory orderId, uint256 _orderPrice) public {
+        require(orders[orderId] > 0, "Already paid");
         require(balances[msg.sender] >= _orderPrice, "Not enough tokens");
         balances[msg.sender] -= _orderPrice;
         orders[orderId] = _orderPrice;

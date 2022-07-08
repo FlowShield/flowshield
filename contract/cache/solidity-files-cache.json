@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/workspaces/cloudslit/contract/contracts/Token.sol": {
-      "lastModificationDate": 1657179420664,
-      "contentHash": "6b04bb9b7eeb258c6ab08cb22655403c",
+      "lastModificationDate": 1657271267721,
+      "contentHash": "c4e3d7da32619462a23281d4d4bc9180",
       "sourceName": "contracts/Token.sol",
       "solcConfig": {
         "version": "0.8.15",

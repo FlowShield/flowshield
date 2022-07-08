@@ -92,9 +92,13 @@ export default {
 
       const form = { ...this.form }
       postZeroAccessResource(form).then(res => {
+        console.log(res)
         this.$emit('on-success')
         this.$message.success()
         this.dialog = false
+      }).catch(res => {
+        console.log(res)
+        this.$message.error()
       }).finally(() => {
         this.submitting = false
       })
