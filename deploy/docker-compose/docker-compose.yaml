@@ -51,7 +51,7 @@ services:
       - ./db/sqlite.db:/app/db/sqlite.db
 
   cloudslit-backend:
-    image: taosheng205054/cloudslit:v0.0.19
+    image: taosheng205054/cloudslit:latest
     restart: always
     environment:
       DOMAIN: 'https://dash.cloudslit.xyz'

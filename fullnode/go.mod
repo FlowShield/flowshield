@@ -39,6 +39,7 @@ require (
 	github.com/tidwall/gjson v1.14.1
 	github.com/urfave/cli v1.22.5
 	github.com/web3-storage/go-w3s-client v0.0.6
+	github.com/wumansgy/goEncrypt v1.0.0
 	go.uber.org/automaxprocs v1.5.1
 	go.uber.org/zap v1.21.0
 	golang.org/x/oauth2 v0.0.0-20220411215720-9780585627b5

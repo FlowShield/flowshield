@@ -1,29 +1,12 @@
+
+singleca:
+  config-path: "./config.json"
+
+http:
+  ca-listen: 0.0.0.0:8081
+
 log:
   log-proxy:
     host: ""
     port: 6379
     key: ca_log
-
-# Cascading CA configuration items
-keymanager:
-  upper-ca: [] # https://user:password@server.ca
-  self-sign: false # Open representation ROOT CA
-  csr-templates:
-    root-ca:
-      o: CI123 ROOT AUTHORITY
-      expiry: 175200h
-    intermediate-ca:
-      o: SITE CA IDENTIFY
-      ou: "spiffe://site/cluster"
-      expiry: 175200h
-
-singleca:
-  config-path: "/etc/ca/config.json"
-
-ocsp-host: "http://127.0.0.1:8082"
-
-http:
-  ca-listen: 0.0.0.0:8081
-debug: false
-
-version: "0.1"

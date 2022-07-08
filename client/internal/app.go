@@ -3,13 +3,9 @@ package internal
 import (
 	"context"
 	"crypto/tls"
-	"fmt"
 	"github.com/cloudslit/cloudslit/client/internal/config"
 	"github.com/cloudslit/cloudslit/client/internal/initer"
-	"github.com/cloudslit/cloudslit/client/pkg/influxdb"
-	influx_client "github.com/cloudslit/cloudslit/client/pkg/influxdb/client/v2"
 	"github.com/cloudslit/cloudslit/client/pkg/logger"
-	"github.com/cloudslit/cloudslit/client/pkg/util/structure"
 	"net/http"
 	"os"
 	"os/signal"
@@ -120,38 +116,4 @@ EXIT:
 	time.Sleep(time.Second)
 	os.Exit(state)
 	return nil
-}
-
-func InitInfluxdb(ctx context.Context) (func(), error) {
-	if !config.C.Influxdb.Enabled {
-		logger.WithContext(ctx).Warn("Influxdb Function is disabled")
-		return func() {}, nil
-	}
-	client, err := influx_client.NewHTTPClient(influx_client.HTTPConfig{
-		Addr:                fmt.Sprintf("http://%v:%v", config.C.Influxdb.Address, config.C.Influxdb.Port),
-		Username:            config.C.Influxdb.Username,
-		Password:            config.C.Influxdb.Password,
-		MaxIdleConns:        config.C.Influxdb.MaxIdleConns,
-		MaxIdleConnsPerHost: config.C.Influxdb.MaxIdleConns,
-	})
-	if err != nil {
-		return func() {}, err
-	}
-	if _, _, err := client.Ping(1 * time.Second); err != nil {
-		_ = client.Close()
-		return func() {}, err
-	}
-	iconfig := new(influxdb.CustomConfig)
-	structure.Copy(config.C.Influxdb, iconfig)
-	metrics, err := influxdb.NewMetrics(&influxdb.HTTPClient{
-		Client: client,
-		BatchPointsConfig: influx_client.BatchPointsConfig{
-			Precision: config.C.Influxdb.Precision,
-			Database:  config.C.Influxdb.Database,
-		},
-	}, iconfig)
-	config.Is.Metrics = metrics
-	return func() {
-		client.Close()
-	}, err
 }

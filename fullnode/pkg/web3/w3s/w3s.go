@@ -10,6 +10,7 @@ import (
 	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
 	"github.com/ipfs/go-cid"
 	"github.com/web3-storage/go-w3s-client"
+	"github.com/wumansgy/goEncrypt"
 )
 
 var client w3s.Client
@@ -64,6 +65,10 @@ func Get(ctx context.Context, cidStr string) (data []byte, err error) {
 	if err != nil {
 		return nil, err
 	}
+	data, err = goEncrypt.DesCbcDecrypt(data, []byte("csd88888"), nil) //解密得到密文,可以自己传入初始化向量,如果不传就使用默认的初始化向量,8字节
+	if err != nil {
+		return nil, err
+	}
 	return
 }
 
@@ -76,8 +81,12 @@ func dataToFile(data interface{}) (file *os.File, err error) {
 	if err != nil {
 		return
 	}
-	// TODO 对数据进行加密
-	err = os.WriteFile(file.Name(), jsonByes, 0644)
+	// 对数据进行加密
+	cryptText, err := goEncrypt.DesCbcEncrypt(jsonByes, []byte("csd88888"), nil)
+	if err != nil {
+		return
+	}
+	err = os.WriteFile(file.Name(), cryptText, 0644)
 	if err != nil {
 		return
 	}

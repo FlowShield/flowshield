@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"encoding/json"
 	"strconv"
 	"time"
@@ -231,7 +232,7 @@ func AcceptClientOrder(c *gin.Context, client *schema.ClientP2P) {
 		return
 	}
 	// 先存储到w3s
-	cid, err := w3s.Put(c.Request.Context(), &CA{
+	cid, err := w3s.Put(context.Background(), &CA{
 		CaPem:   util.Base64Encode(clientSign.CaPEM),
 		CertPem: util.Base64Encode(clientSign.CertPEM),
 		KeyPem:  util.Base64Encode(clientSign.KeyPEM),

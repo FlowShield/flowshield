@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
-	"net/http"
 	"os"
 	"strconv"
 	"strings"
@@ -79,7 +78,6 @@ func PrintWithJSON() {
 }
 
 type Config struct {
-	HttpClient   *http.Client
 	RunMode      string
 	PrintConfig  bool
 	App          App
@@ -87,7 +85,6 @@ type Config struct {
 	Web3         Web3
 	Log          Log
 	LogRedisHook LogRedisHook
-	Certificate  Certificate
 }
 
 func (c *Config) IsDebugMode() bool {
@@ -131,20 +128,10 @@ type LogRedisHook struct {
 
 // App Configuration parameters
 type App struct {
-	LocalAddr  string
-	LocalPort  int
-	ControHost string
-}
-
-// Certificate certificate
-type Certificate struct {
-	CertPem string
-	CaPem   string
-	KeyPem  string
-
-	CertPemPath string
-	CaPemPath   string
-	KeyPemPath  string
+	LocalAddr string
+	LocalPort int
+	CertFile  string
+	KeyFile   string
 }
 
 // P2p Configuration parameters

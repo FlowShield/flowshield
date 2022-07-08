@@ -3,9 +3,9 @@ package w3s
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"io/fs"
+	"io/ioutil"
 	"os"
 
 	"github.com/ipfs/go-cid"
@@ -44,21 +44,26 @@ func Get(ctx context.Context, cidStr string) (data []byte, err error) {
 	if err != nil {
 		return nil, err
 	}
-	f, fsys, err := res.Files()
+	_, fsys, err := res.Files()
 	if err != nil {
 		return nil, err
 	}
-	if d, ok := f.(fs.ReadDirFile); ok {
-		ents, _ := d.ReadDir(0)
-		for _, ent := range ents {
-			fmt.Println(ent.Name())
+	err = fs.WalkDir(fsys, "/", func(path string, d fs.DirEntry, err error) error {
+		if !d.IsDir() {
+			file, err := fsys.Open(path)
+			if err != nil {
+				return err
+			}
+			data, err = ioutil.ReadAll(file)
+			if err != nil {
+				return err
+			}
 		}
-	}
-	fs.WalkDir(fsys, "/", func(path string, d fs.DirEntry, err error) error {
-		info, _ := d.Info()
-		fmt.Printf("%s (%d bytes)\n", path, info.Size())
 		return err
 	})
+	if err != nil {
+		return nil, err
+	}
 	return
 }
 

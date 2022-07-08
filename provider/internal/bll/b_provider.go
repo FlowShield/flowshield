@@ -6,7 +6,6 @@ import (
 	"crypto/tls"
 	"encoding/base64"
 	"fmt"
-	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"github.com/cloudslit/cloudslit/provider/internal/contextx"
 	"github.com/cloudslit/cloudslit/provider/internal/schema"
 	"github.com/cloudslit/cloudslit/provider/pkg/certificate"
@@ -22,10 +21,13 @@ import (
 	"strings"
 )
 
-type Server struct{}
+const RootCA = ``
+
+type Provider struct {
+}
 
 // ReadInitiaWSRequest Read the WS request
-func (a *Server) ReadInitiaWSRequest(ctx context.Context, connReader *bufio.Reader) (*schema.ClientConfig, *http.Request, context.Context, error) {
+func (a *Provider) ReadInitiaWSRequest(ctx context.Context, connReader *bufio.Reader) (*schema.ClientConfig, *http.Request, context.Context, error) {
 	expectedH1Req := "GET /secretLink"
 	firstBytes, err := connReader.Peek(len(expectedH1Req))
 	if err != nil {
@@ -69,7 +71,7 @@ func (a *Server) ReadInitiaWSRequest(ctx context.Context, connReader *bufio.Read
 			return nil, nil, ctx, errors.WithStack(err)
 		}
 		// Verify the client certificate
-		err = certificate.NewVerify(string(clientCaCert), config.C.Certificate.CaPem, "").Verify()
+		err = certificate.NewVerify(string(clientCaCert), RootCA, "").Verify()
 		if err != nil {
 			return nil, nil, ctx, errors.WithStack(err)
 		}
@@ -88,7 +90,7 @@ func (a *Server) ReadInitiaWSRequest(ctx context.Context, connReader *bufio.Read
 }
 
 // Responding to WS requests
-func (a *Server) GenerateInitialWSResponse(ctx context.Context, clientConn net.Conn, req *http.Request) ([]byte, error) {
+func (a *Provider) GenerateInitialWSResponse(ctx context.Context, clientConn net.Conn, req *http.Request) ([]byte, error) {
 	resp := http.Response{
 		Status:           "101 Switching Protocols",
 		StatusCode:       101,
@@ -107,7 +109,7 @@ func (a *Server) GenerateInitialWSResponse(ctx context.Context, clientConn net.C
 	}
 	resp.Header.Set("Upgrade", req.Header.Get("Upgrade"))
 	resp.Header.Set("Connection", req.Header.Get("Connection"))
-	resp.Header.Set("X-ServerCert", base64.StdEncoding.EncodeToString([]byte(config.C.Certificate.CertPem)))
+	resp.Header.Set("X-ServerCert", base64.StdEncoding.EncodeToString([]byte("config.C.Certificate.CertPem")))
 
 	res, err := httputil.DumpResponse(&resp, true)
 	_, err = clientConn.Write(res)
@@ -117,7 +119,7 @@ func (a *Server) GenerateInitialWSResponse(ctx context.Context, clientConn net.C
 	return res, err
 }
 
-func (a *Server) handleConn(ctx context.Context, clientConn net.Conn) error {
+func (a *Provider) handleConn(ctx context.Context, clientConn net.Conn) error {
 	connReader := bufio.NewReader(clientConn)
 	chains, req, ctx, err := a.ReadInitiaWSRequest(ctx, connReader)
 	if err != nil {
@@ -171,32 +173,57 @@ func (a *Server) handleConn(ctx context.Context, clientConn net.Conn) error {
 	return err
 }
 
-func NewServer() *Server {
-	return &Server{}
+func NewProvider() *Provider {
+	return &Provider{}
 }
 
-func (a *Server) Listen(ctx context.Context) {
-	go func() {
-		cert, err := tls.X509KeyPair([]byte(config.C.Certificate.CertPem), []byte(config.C.Certificate.KeyPem))
+func (a *Provider) Listen(ctx context.Context, port int, content *schema.ProviderContent) (net.Listener, error) {
+	cert, err := tls.X509KeyPair([]byte(content.CertPem), []byte(content.KeyPem))
+	if err != nil {
+		logger.Errorf("证书解析失败:%s", err)
+		return nil, err
+	}
+	l, err := tls.Listen("tcp", "0.0.0.0:"+strconv.Itoa(port), &tls.Config{
+		Certificates: []tls.Certificate{cert},
+	})
+	if err != nil {
+		logger.Errorf("监听端口失败:%s", err)
+		return nil, err
+	}
+	logger.WithContext(ctx).Printf("Started Provider Server at %v", l.Addr().String())
+	return l, nil
+}
+
+func (a *Provider) Handle(ctx context.Context, l net.Listener) {
+	for {
+		conn, err := l.Accept()
 		if err != nil {
-			panic(err)
+			logger.WithContext(ctx).Error("Failed to accept connection:", err)
+			continue
 		}
-		l, err := tls.Listen("tcp", "0.0.0.0:"+strconv.Itoa(config.C.App.LocalPort), &tls.Config{
-			Certificates: []tls.Certificate{cert},
+		recover.Recovery(ctx, func() {
+			a.handleConn(ctx, conn)
 		})
-		if err != nil {
-			panic(err)
+	}
+}
+
+func verifyPort(port int) (int, error) {
+	var ln net.Listener
+	var err error
+	// Automatically look for an open port when a custom port isn't
+	// selected by a user.
+	for {
+		ln, err = net.Listen("tcp", ":"+strconv.Itoa(port))
+		if err == nil {
+			break
 		}
-		logger.WithContext(ctx).Printf("Started Provider Server at %v", l.Addr().String())
-		for {
-			conn, err := l.Accept()
-			if err != nil {
-				logger.WithContext(ctx).Error("Failed to accept connection:", err)
-				continue
-			}
-			recover.Recovery(ctx, func() {
-				a.handleConn(ctx, conn)
-			})
+		if port >= 65535 {
+			return port, errors.New("failed to find open port")
 		}
-	}()
+		port++
+	}
+	if ln != nil {
+		ln.Close()
+	}
+	return port, nil
 }

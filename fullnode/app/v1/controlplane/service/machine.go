@@ -15,9 +15,9 @@ import (
 
 	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
 
-	"github.com/gin-gonic/gin"
 	"github.com/cloudslit/cloudslit/fullnode/pconst"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"github.com/gin-gonic/gin"
 )
 
 func GetLoginUrl(c *gin.Context, machine string) (code int, loginURL string) {
@@ -48,13 +48,12 @@ func MachineOauth(c *gin.Context, hash string) {
 		session := sessions.Default(c)
 		session.Set("machine", hash)
 		session.Save()
-		c.Redirect(http.StatusSeeOther, "/api/v1/user/login/github")
+		c.Redirect(http.StatusSeeOther, "/api/v1/user/login")
 	} else {
 		// TODO 重定向到404页面
 		c.String(http.StatusNotFound, "auth key not exist or expired")
 		return
 	}
-
 }
 
 func MachineLongPoll(c *gin.Context, param mparam.MachineLongPoll) (data string, code int) {
