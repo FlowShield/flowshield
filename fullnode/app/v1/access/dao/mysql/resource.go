@@ -38,9 +38,9 @@ func (p *Resource) ResourceList(param mparam.ResourceList) (
 	if len(param.Type) > 0 {
 		query = query.Where(fmt.Sprintf("`type` = %s", param.Type))
 	}
-	if user := util.User(p.c); user != nil {
-		query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
-	}
+	//if user := util.User(p.c); user != nil {
+	//	query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
+	//}
 	err = query.Model(&list).Count(&total).Error
 	if total > 0 {
 		offset := param.GetOffset()
