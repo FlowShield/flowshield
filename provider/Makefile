@@ -11,13 +11,10 @@ CFLAGS = -ldflags "-w -s -X main.VERSION=$(RELEASE_TAG)" -o $(SERVER_BIN)
 
 all: release
 
-build:
-	@go build $(CFLAGS)
-
 test:
 	@go test -v $(shell go list ./...)
 
-server:
+build:
 	if [ ! -d "./bin/" ]; then \
 	mkdir bin; \
 	fi

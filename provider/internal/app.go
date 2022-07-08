@@ -1,8 +1,12 @@
+//go:build linux || darwin || windows
+// +build linux darwin windows
+
 package internal
 
+import "C"
 import (
 	"context"
-	"crypto/tls"
+	"fmt"
 	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"github.com/cloudslit/cloudslit/provider/internal/initer"
 	"github.com/cloudslit/cloudslit/provider/internal/server"
@@ -10,6 +14,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 )
@@ -55,26 +60,29 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	if err != nil {
 		return nil, err
 	}
-	InitHttpClient()
-	err = server.InitProviderServer(ctx)
+	err = server.InitNode(ctx)
 	if err != nil {
 		return nil, err
 	}
+	InitHTTPServer(ctx)
 	return func() {
 		loggerCleanFunc()
 	}, nil
 }
 
-func InitHttpClient() {
-	config.C.HttpClient = &http.Client{
-		Transport: &http.Transport{
-			TLSClientConfig: &tls.Config{
-				InsecureSkipVerify: true,
-			},
-			IdleConnTimeout: 5 * time.Second,
-		},
-		Timeout: 5 * time.Second,
+// InitHTTPServer 初始化http服务
+func InitHTTPServer(ctx context.Context) {
+	addr := "0.0.0.0:" + strconv.Itoa(config.C.App.LocalPort)
+	logger.Infof("Node server is running at %s.", addr)
+	http.HandleFunc("/", IndexHandler)
+	err := http.ListenAndServe(addr, nil)
+	if err != nil {
+		fmt.Println("error: ", err)
 	}
+}
+
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "hello world")
 }
 
 // Run 运行服务

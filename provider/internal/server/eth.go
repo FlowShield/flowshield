@@ -14,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-const FullNode = 1
+const Provider = 2
 
 func runETH() error {
 	logger.Infof("starting run deposit process...")
@@ -41,7 +41,7 @@ func runETH() error {
 	logger.Infof("checking if deposited or not...")
 	isDeposit, err := instance.IsDeposit(&bind.CallOpts{
 		From: auth.From,
-	}, FullNode)
+	}, Provider)
 	if err != nil {
 		return err
 	}
@@ -51,7 +51,7 @@ func runETH() error {
 	}
 	logger.Infof("you have not deposited! trying to deposit...")
 	// 尝试质押
-	tra, err := instance.Deposit(auth, FullNode)
+	tra, err := instance.Deposit(auth, Provider)
 	if err != nil {
 		return err
 	}
@@ -60,6 +60,7 @@ func runETH() error {
 		return err
 	}
 	if rec.Status > 0 {
+		logger.Infof("deposited succeed")
 		return nil
 	}
 	return errors.New("sorry,deposit failed")

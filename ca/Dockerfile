@@ -12,8 +12,8 @@ WORKDIR /root
 
 COPY --from=builder /build/ca .
 COPY --from=builder /build/conf.yml .
+COPY --from=builder /build/config.json .
 RUN chmod +x ca
-
 
 # TLS service
 CMD ["./ca", "tls"]
