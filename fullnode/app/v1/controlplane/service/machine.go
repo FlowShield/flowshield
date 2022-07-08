@@ -54,7 +54,6 @@ func MachineOauth(c *gin.Context, hash string) {
 		c.String(http.StatusNotFound, "auth key not exist or expired")
 		return
 	}
-
 }
 
 func MachineLongPoll(c *gin.Context, param mparam.MachineLongPoll) (data string, code int) {
