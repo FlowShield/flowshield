@@ -79,7 +79,8 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, oauth2Code string)
 		c.AbortWithError(http.StatusInternalServerError, errors.New("oauth error"))
 		return
 	}
-
+	// 判断是否Dao主
+	user.Master = user.Wallet == confer.GlobalConfig().P2P.Account
 	userBytes, _ := json.Marshal(userInfo)
 	session.Set("user", userBytes)
 	session.Save()
@@ -104,13 +105,14 @@ func UserBindWallet(c *gin.Context, param *mparam.BindWallet) (code int) {
 	if err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
-	//if user.Wallet != "" {
-	//	return pconst.CODE_COMMON_DATA_ALREADY_EXIST
-	//}
+	if user.Wallet == param.Wallet {
+		return pconst.CODE_COMMON_DATA_ALREADY_EXIST
+	}
 	user.Wallet = param.Wallet
 	if err = userDao.NewUser(c).UpdateUser(user); err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
+	user.Master = user.Wallet == confer.GlobalConfig().P2P.Account
 	// 绑定成功，刷新session
 	session := sessions.Default(c)
 	userBytes, _ := json.Marshal(user)
