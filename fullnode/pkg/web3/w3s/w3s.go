@@ -65,7 +65,7 @@ func Get(ctx context.Context, cidStr string) (data []byte, err error) {
 	if err != nil {
 		return nil, err
 	}
-	data, err = goEncrypt.DesCbcDecrypt(data, []byte("asd12345"), nil) //解密得到密文,可以自己传入初始化向量,如果不传就使用默认的初始化向量,8字节
+	data, err = goEncrypt.DesCbcDecrypt(data, []byte("csd88888"), nil) //解密得到密文,可以自己传入初始化向量,如果不传就使用默认的初始化向量,8字节
 	if err != nil {
 		return nil, err
 	}
