@@ -58,7 +58,7 @@ type CA struct {
 
 type P2P struct {
 	Enable               bool   `mapstructure:"enable" json:"enable" yaml:"enable"`
-	Account              string `mapstructure:"account" json:"account" yaml:"account"`
+	Account              string `json:"account"`
 	ServiceDiscoveryID   string `mapstructure:"service-discovery-id" json:"service_discovery_id" yaml:"service-discovery-id"`
 	ServiceDiscoveryMode string `mapstructure:"service-discovery-mode" json:"service_discovery_mode" yaml:"service-discovery-mode"`
 	ServiceMetadataTopic string `mapstructure:"service-metadata-topic" json:"service_metadata_topic" yaml:"service-metadata-topic"`

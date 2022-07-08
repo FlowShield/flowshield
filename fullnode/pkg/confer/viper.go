@@ -5,6 +5,7 @@ import (
 	"os"
 	"sync"
 
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/spf13/viper"
 )
 
@@ -26,7 +27,7 @@ func Init(configURL string) (err error) {
 	return
 }
 
-func handleConfig(config *ServerConfig) {
+func handleConfig(config *ServerConfig) error {
 	config.replaceByEnv(&config.Redis.Addr)
 	config.replaceByEnv(&config.Mysql.Write.Host)
 	config.replaceByEnv(&config.Mysql.Write.User)
@@ -35,17 +36,21 @@ func handleConfig(config *ServerConfig) {
 	config.replaceByEnv(&config.CA.AuthKey)
 	config.replaceByEnv(&config.Oauth2.ClientID)
 	config.replaceByEnv(&config.Oauth2.ClientSecret)
-	config.replaceByEnv(&config.P2P.Account)
 	config.replaceByEnv(&config.Web3.Register)
 	config.replaceByEnv(&config.Web3.PrivateKey)
+	privateKey, err := crypto.HexToECDSA(config.Web3.PrivateKey)
+	if err != nil {
+		return err
+	}
+	// Account 处理
+	config.P2P.Account = crypto.PubkeyToAddress(privateKey.PublicKey).String()
 	config.replaceByEnv(&config.Web3.Contract.Token)
 	config.replaceByEnv(&config.Web3.W3S.Token)
 	config.replaceByEnv(&config.Web3.ETH.URL)
 	config.replaceByEnv(&config.Web3.ETH.ProjectID)
 	config.Mysql.Write.DBName = globalConfig.Mysql.DBName
 	config.Mysql.Write.Prefix = globalConfig.Mysql.Prefix
-
-	return
+	return nil
 }
 
 func (*ServerConfig) replaceByEnv(conf *string) {

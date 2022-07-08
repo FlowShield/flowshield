@@ -37,7 +37,7 @@ oauth2:
 
 p2p:
   enable: true
-  account: "CS_ACCOUNT"
+#  account: "CS_ACCOUNT"
   service-discovery-id: "cloudslit/provider"
   service-discovery-mode: "advertise" # advertise or announce
   service-metadata-topic: "cloudslit_provider_metadata" # advertise or announce
