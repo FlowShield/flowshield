@@ -23,6 +23,7 @@ type MetaData struct {
 
 type ClientP2P struct {
 	ServerCID string `json:"server_cid"`
+	Wallet    string `json:"wallet"`
 	UUID      string `json:"uuid"`
 	Port      int    `json:"port"`
 }

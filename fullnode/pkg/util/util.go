@@ -2,6 +2,7 @@ package util
 
 import (
 	"crypto/md5"
+	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"net"
@@ -33,6 +34,9 @@ func GetCookieFromGin(ctx *gin.Context, key string) (value string) {
 }
 
 func User(c *gin.Context) (user *mmysql.User) {
+	if c == nil {
+		return
+	}
 	if userBytes, ok := c.Get("user"); ok {
 		if err := json.Unmarshal(userBytes.([]byte), &user); err == nil {
 			return
@@ -73,4 +77,8 @@ type CfTrace struct {
 	Ip   string `json:"ip"`
 	Loc  string `json:"loc"`
 	Colo string `json:"colo"`
+}
+
+func Base64Encode(input string) string {
+	return base64.StdEncoding.EncodeToString([]byte(input))
 }

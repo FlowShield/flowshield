@@ -35,6 +35,7 @@ func TestW3S(t *testing.T) {
 		}
 		return nil
 	})
+	fmt.Println(string(data))
 	if err != nil {
 		t.Fatal(err)
 	}

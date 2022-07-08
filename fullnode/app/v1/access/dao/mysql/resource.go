@@ -68,9 +68,9 @@ func (p *Resource) GetResourceByIDSli(ids []string) (list []mmysql.Resource, err
 	if len(idStr) > 0 {
 		query = query.Where(fmt.Sprintf("id in (%s)", idStr))
 	}
-	if user := util.User(p.c); user != nil {
-		query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
-	}
+	//if user := util.User(p.c); user != nil {
+	//	query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
+	//}
 	err = query.Find(&list).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = nil
@@ -84,9 +84,9 @@ func (p *Resource) GetResourceByIDSli(ids []string) (list []mmysql.Resource, err
 func (p *Resource) GetResourceByID(id uint64) (info *mmysql.Resource, err error) {
 	orm := p.GetOrm()
 	query := orm.Table(p.TableName).Where(fmt.Sprintf("id = %d", id))
-	if user := util.User(p.c); user != nil {
-		query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
-	}
+	//if user := util.User(p.c); user != nil {
+	//	query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
+	//}
 	err = query.First(&info).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = nil
@@ -100,9 +100,9 @@ func (p *Resource) GetResourceByID(id uint64) (info *mmysql.Resource, err error)
 func (p *Resource) GetResourceByUUID(uuid string) (info *mmysql.Resource, err error) {
 	orm := p.GetOrm()
 	query := orm.Table(p.TableName).Where(fmt.Sprintf("uuid = '%s'", uuid))
-	if user := util.User(p.c); user != nil {
-		query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
-	}
+	//if user := util.User(p.c); user != nil {
+	//	query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
+	//}
 	err = query.First(&info).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = nil
@@ -116,9 +116,9 @@ func (p *Resource) GetResourceByUUID(uuid string) (info *mmysql.Resource, err er
 func (p *Resource) GetResourceByCID(cid string) (info *mmysql.Resource, err error) {
 	orm := p.GetOrm()
 	query := orm.Table(p.TableName).Where(fmt.Sprintf("cid = '%s'", cid))
-	if user := util.User(p.c); user != nil {
-		query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
-	}
+	//if user := util.User(p.c); user != nil {
+	//	query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
+	//}
 	err = query.First(&info).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = nil

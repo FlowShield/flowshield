@@ -22,7 +22,7 @@ type Client struct {
 	Port        int    `json:"port"`
 	Duration    uint   `json:"duration"` // 使用时间：小时
 	Price       uint   `json:"price"`    // 金额
-	ResourceCID string `json:"resource_cid"`
+	ResourceCid string `json:"resource_cid"`
 	ServerCid   string `json:"server_cid"`
 	ClientCid   string `json:"client_cid"`
 	Status      uint   `json:"status"` // 0:待支付，1:已支付,待回调，2:已完成

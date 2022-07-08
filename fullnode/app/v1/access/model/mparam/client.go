@@ -15,9 +15,9 @@ type ClientList struct {
 }
 
 type AddClient struct {
-	PeerID      string `json:"peer_id" form:"peer_id" binding:"required"`
-	Name        string `json:"name" form:"name" binding:"required"`
-	Port        int    `json:"port" form:"port" binding:"required"`         // 443
+	PeerID string `json:"peer_id" form:"peer_id" binding:"required"`
+	Name   string `json:"name" form:"name" binding:"required"`
+	//Port        int    `json:"port" form:"port" binding:"required"`         // 443
 	Duration    uint   `json:"duration" form:"duration" binding:"required"` // 使用时间：小时
 	ResourceCID string `json:"resource_cid" binding:"required"`
 }

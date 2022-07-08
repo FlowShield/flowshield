@@ -5,6 +5,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
+
 	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/eth"
 
 	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/w3s"
@@ -68,12 +70,13 @@ func AddClient(c *gin.Context, param *mparam.AddClient) (code int, data *mmysql.
 		return pconst.CODE_COMMON_DATA_NOT_EXIST, nil
 	}
 	data = &mmysql.Client{
-		Name:     param.Name,
-		PeerID:   param.PeerID,
-		UUID:     uuid.NewString(),
-		Port:     param.Port,
-		Duration: param.Duration,
-		Price:    param.Duration * node.Price,
+		Name:   param.Name,
+		PeerID: param.PeerID,
+		UUID:   uuid.NewString(),
+		//Port:     param.Port,
+		ResourceCid: param.ResourceCID,
+		Duration:    param.Duration,
+		Price:       param.Duration * node.Price,
 	}
 	// 查询Resource是否存在
 	resource, err := mysql.NewResource(c).GetResourceByCID(param.ResourceCID)
@@ -86,13 +89,14 @@ func AddClient(c *gin.Context, param *mparam.AddClient) (code int, data *mmysql.
 
 	serverSign, err := api.ApplySign(c, map[string]interface{}{"type": "provider"}, "cloud-slit", "cloud-slit", "cloud-slit", time.Now().Add(time.Duration(param.Duration)*time.Hour))
 	if err != nil {
+		logger.Errorf(c, "AddClient ApplySign err : %v", err)
 		return pconst.CODE_COMMON_SERVER_BUSY, nil
 	}
 	// 先存储到w3s
 	cid, err := w3s.Put(c.Request.Context(), &CA{
-		CaPem:   serverSign.CaPEM,
-		CertPem: serverSign.CertPEM,
-		KeyPem:  serverSign.KeyPEM,
+		CaPem:   util.Base64Encode(serverSign.CaPEM),
+		CertPem: util.Base64Encode(serverSign.CertPEM),
+		KeyPem:  util.Base64Encode(serverSign.KeyPEM),
 	})
 	if err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY, nil
@@ -195,7 +199,7 @@ func AcceptClientOrder(c *gin.Context, client *schema.ClientP2P) {
 	}
 	// 申请客户端ca，保存至ipfs，修改订单信息
 	// 查询Resource是否存在
-	resource, err := mysql.NewResource(c).GetResourceByCID(info.ResourceCID)
+	resource, err := mysql.NewResource(c).GetResourceByCID(info.ResourceCid)
 	if err != nil {
 		return
 	}
@@ -228,10 +232,11 @@ func AcceptClientOrder(c *gin.Context, client *schema.ClientP2P) {
 	}
 	// 先存储到w3s
 	cid, err := w3s.Put(c.Request.Context(), &CA{
-		CaPem:   clientSign.CaPEM,
-		CertPem: clientSign.CertPEM,
-		KeyPem:  clientSign.KeyPEM,
+		CaPem:   util.Base64Encode(clientSign.CaPEM),
+		CertPem: util.Base64Encode(clientSign.CertPEM),
+		KeyPem:  util.Base64Encode(clientSign.KeyPEM),
 	})
+	info.Port = client.Port
 	info.ClientCid = cid
 	info.Status = mmysql.Success
 	err = mysql.NewClient(c).EditClient(info)
@@ -270,6 +275,7 @@ func NotifyClient(c *gin.Context, param *mparam.NotifyClient) (code int) {
 		Type: "order",
 		Data: &schema.ClientP2P{
 			ServerCID: client.ServerCid,
+			Wallet:    client.PeerID,
 			UUID:      client.UUID,
 		},
 	}

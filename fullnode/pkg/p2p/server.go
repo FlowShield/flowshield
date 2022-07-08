@@ -8,6 +8,7 @@ import (
 var pubSubObj *PubSub
 
 func InitP2P(cfg *confer.P2P) (err error) {
+	logger.Infof("Starting P2P...")
 	p2phost := NewP2P(cfg.ServiceDiscoveryID)
 	logger.Infof("Completed P2P Setup")
 	// Connect to peers with the chosen discovery method
