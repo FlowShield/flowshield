@@ -7,7 +7,7 @@ PrintConfig = true
 # Information about themselves
 [App]
 # Provide publicly available domain names
-LocalAddr = "provider.zsnb.xyz"
+LocalAddr = "local.zsnb.xyz"
 # Provide the public port, which is also the default listening port of the program
 LocalPort = 5091
 # Publish the certificate specified by the domain name
@@ -24,7 +24,7 @@ ServiceMetadataTopic = "cloudslit_provider_metadata"
 
 [Web3]
 # Wallet account
-Account = "0x1B4b827703dc3545089fcee70F0e6e732BFF4413"
+Account = "0x1B4b827703dc3545089fcee70F0e6e732BFF4414"
 # Wallet account private key
 PrivateKey = "dee7aaec609f2d291ed49a4ae36a37704152e6a57188c87af5d03d1126155686"
 # Price - Price of services provided, unit = CSD/h, CSD It's our token

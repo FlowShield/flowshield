@@ -25,7 +25,7 @@ You only need to modify the following contents, and other configurations can be 
   # Listening port
   LocalPort = 5092
   # Control end address， "Used to obtain configuration or rule information"
-  ControHost = "https://dash.cloudslit.xyz"
+  ControlHost = "https://dash.cloudslit.xyz"
 ```
 
 ### Quickstart

@@ -1,14 +1,9 @@
-//go:build linux || darwin || windows
-// +build linux darwin windows
-
 package internal
 
-import "C"
 import (
 	"context"
 	"fmt"
 	"github.com/cloudslit/cloudslit/provider/internal/config"
-	"github.com/cloudslit/cloudslit/provider/internal/initer"
 	"github.com/cloudslit/cloudslit/provider/internal/server"
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"net/http"
@@ -56,7 +51,7 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	logger.WithContext(ctx).Printf("Service started, running mode：%s，version：%s，process number：%d", config.C.RunMode, o.Version, os.Getpid())
 
 	// initialize the log module
-	loggerCleanFunc, err := initer.InitLogger()
+	loggerCleanFunc, err := InitLogger()
 	if err != nil {
 		return nil, err
 	}
@@ -75,10 +70,13 @@ func InitHTTPServer(ctx context.Context) {
 	addr := "0.0.0.0:" + strconv.Itoa(config.C.App.LocalPort)
 	logger.Infof("Node server is running at %s.", addr)
 	http.HandleFunc("/", IndexHandler)
-	err := http.ListenAndServe(addr, nil)
-	if err != nil {
-		fmt.Println("error: ", err)
-	}
+	go func() {
+		err := http.ListenAndServe(addr, nil)
+		if err != nil {
+			panic(err)
+		}
+	}()
+
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {

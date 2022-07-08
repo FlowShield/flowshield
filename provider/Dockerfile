@@ -9,8 +9,10 @@ FROM ubuntu:20.04
 
 WORKDIR /root
 
+RUN apt update && apt install -y curl
+
 COPY --from=builder /build/backend .
-COPY --from=builder /build/configs .
+COPY --from=builder /build/configs/config.toml .
 RUN chmod +x provider
 
-CMD ["./provider", "-c", "./configs/config.toml"]
+CMD ["./provider", "-c", "./config.toml"]

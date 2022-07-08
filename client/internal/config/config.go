@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/cloudslit/cloudslit/client/pkg/influxdb"
+	"fmt"
 	"github.com/cloudslit/cloudslit/client/pkg/util/json"
 	"net/http"
 	"os"
@@ -21,7 +21,6 @@ var (
 
 // I ...
 type I struct {
-	Metrics    *influxdb.Metrics
 	HttpClient *http.Client
 }
 
@@ -54,14 +53,14 @@ func MustLoad(fpaths ...string) {
 
 func ParseConfigByEnv() error {
 	if v := os.Getenv("LOCAL_ADDR"); v != "" {
-		C.Common.LocalAddr = v
+		C.App.LocalAddr = v
 	}
 	if v := os.Getenv("LOCAL_PORT"); v != "" {
 		p, _ := strconv.Atoi(v)
-		C.Common.LocalPort = p
+		C.App.LocalPort = p
 	}
 	if v := os.Getenv("CONTRO_HOST"); v != "" {
-		C.Common.ControHost = v
+		C.App.ControlHost = v
 	}
 	if v := os.Getenv("LOG_HOOK_ENABLED"); v == "true" {
 		C.Log.EnableHook = true
@@ -89,12 +88,12 @@ func PrintWithJSON() {
 type Config struct {
 	RunMode      string
 	PrintConfig  bool
-	Common       Common
+	App          App
 	P2p          P2p
 	Machine      Machine
 	Log          Log
 	LogRedisHook LogRedisHook
-	Certificate  Certificate
+	Web3         Web3
 }
 
 func (c *Config) IsDebugMode() bool {
@@ -137,30 +136,44 @@ type LogRedisHook struct {
 }
 
 // Common Configuration parameters
-type Common struct {
-	PeerAddress string
+type App struct {
 	LocalAddr   string
 	LocalPort   int
-	ControHost  string
+	ControlHost string
 }
 
 // P2p Configuration parameters
 type P2p struct {
 	Enable               bool
 	ServiceDiscoveryID   string
-	ServiceDiscoverMode  string
+	ServiceDiscoveryMode string
 	ServiceMetadataTopic string
 }
 
-// Certificate certificate
-type Certificate struct {
-	CertPem string
-	CaPem   string
-	KeyPem  string
+type Web3 struct {
+	Account    string
+	Price      int
+	PrivateKey string
+	Contract   Contract
+	W3S        W3S
+	ETH        ETH
+}
 
-	CertPemPath string
-	CaPemPath   string
-	KeyPemPath  string
+type Contract struct {
+	Token string
+}
+
+type W3S struct {
+	Token string
+}
+
+type ETH struct {
+	URL       string
+	ProjectID string
+}
+
+func (w *Web3) EthAddress() string {
+	return fmt.Sprintf("%s/%s", w.ETH.URL, w.ETH.ProjectID)
 }
 
 // Machine

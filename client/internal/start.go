@@ -10,6 +10,7 @@ import (
 	"github.com/cloudslit/cloudslit/client/pkg/errors"
 	"github.com/cloudslit/cloudslit/client/pkg/logger"
 	"github.com/cloudslit/cloudslit/client/pkg/util/json"
+
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -26,7 +27,7 @@ const (
 )
 
 type Up struct {
-	UserDetail *schema.ControUserDetail
+	UserDetail *schema.ControlUserDetail
 	State      State
 	UpCode     string
 }
@@ -46,27 +47,28 @@ func InitClientServer(ctx context.Context) {
 		// Pre login
 		err := up.preLogin()
 		if err != nil {
-			logger.Fatalf("%v", err)
+			logger.Fatalf("login err:%v", err)
 		}
 		// Get client list
-		client, err := up.printClients()
+		client, err := up.printClients(ctx)
 		if err != nil {
-			logger.Fatalf("%v", err)
+			logger.Fatalf("login client err:%v", err)
 		}
-		// TODO: 根据地址获取客户端信息
-		fmt.Println(client.Uuid)
-
-		err = bll.NewClient().Listen(ctx)
+		clientConfig, err := client.ParseConfig(ctx, client.ClientCid)
 		if err != nil {
-			logger.Fatalf("%v", err)
+			logger.Fatalf("parse client err:%v", err)
+		}
+		err = bll.NewClient().Listen(ctx, clientConfig)
+		if err != nil {
+			logger.Fatalf("start client err%v", err)
 		}
 		fmt.Println("########## start the client proxy #########")
 	}()
 }
 
 // printClients
-func (a *Up) printClients() (*schema.ControClient, error) {
-	clients, err := GetControClients()
+func (a *Up) printClients(ctx context.Context) (*schema.ControlClient, error) {
+	clients, err := GetControlClients()
 	if err != nil {
 		return nil, err
 	}
@@ -141,8 +143,8 @@ func (a *Up) autoLogin() error {
 	return nil
 }
 
-func (a *Up) GetUserDetail() (*schema.ControUserDetail, error) {
-	url := fmt.Sprintf("%s/api/v1/user/detail", config.C.Common.ControHost)
+func (a *Up) GetUserDetail() (*schema.ControlUserDetail, error) {
+	url := fmt.Sprintf("%s/api/v1/user/detail", config.C.App.ControlHost)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -151,7 +153,7 @@ func (a *Up) GetUserDetail() (*schema.ControUserDetail, error) {
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	var result schema.ControUserDetail
+	var result schema.ControlUserDetail
 	err = json.Unmarshal(resp, &result)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -159,9 +161,9 @@ func (a *Up) GetUserDetail() (*schema.ControUserDetail, error) {
 	return &result, nil
 }
 
-// GetControClients
-func GetControClients() (schema.ControClients, error) {
-	url := fmt.Sprintf("%s/api/v1/access/client?name=&page=1&limit_num=50", config.C.Common.ControHost)
+// GetControlClients
+func GetControlClients() (schema.ControlClients, error) {
+	url := fmt.Sprintf("%s/api/v1/access/client?name=&page=1&limit_num=50", config.C.App.ControlHost)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -170,7 +172,7 @@ func GetControClients() (schema.ControClients, error) {
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	var result schema.ControClientResult
+	var result schema.ControlClientResult
 	err = json.Unmarshal(resp, &result)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -181,8 +183,8 @@ func GetControClients() (schema.ControClients, error) {
 	return result.Data.List, nil
 }
 
-func (a *Up) GetAuthUrl() (*schema.ControMachineAuthResult, error) {
-	url := fmt.Sprintf("%s/api/v1/controlplane/machine/%s", config.C.Common.ControHost, config.C.Machine.MachineId)
+func (a *Up) GetAuthUrl() (*schema.ControlMachineAuthResult, error) {
+	url := fmt.Sprintf("%s/api/v1/controlplane/machine/%s", config.C.App.ControlHost, config.C.Machine.MachineId)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -191,7 +193,7 @@ func (a *Up) GetAuthUrl() (*schema.ControMachineAuthResult, error) {
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	var result schema.ControMachineAuthResult
+	var result schema.ControlMachineAuthResult
 	err = json.Unmarshal(resp, &result)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -203,9 +205,9 @@ func (a *Up) GetAuthUrl() (*schema.ControMachineAuthResult, error) {
 }
 
 // GetLoginResult Get login result information
-func (a *Up) GetLoginResult(timeout int) (*schema.ControLoginResult, error) {
-	url := fmt.Sprintf("%s/api/v1/controlplane/machine/auth/poll?timeout=%d&category=%s", config.C.Common.ControHost, timeout, a.UpCode)
-	fmt.Println(url)
+func (a *Up) GetLoginResult(timeout int) (*schema.ControlLoginResult, error) {
+	url := fmt.Sprintf("%s/api/v1/controlplane/machine/auth/poll?timeout=%d&category=%s", config.C.App.ControlHost, timeout, a.UpCode)
+	//fmt.Println(url)
 	client := &http.Client{}
 	resp, err := client.Get(url)
 	if err != nil {
@@ -216,7 +218,7 @@ func (a *Up) GetLoginResult(timeout int) (*schema.ControLoginResult, error) {
 	if err != nil {
 		return nil, err
 	}
-	var result schema.ControLoginResult
+	var result schema.ControlLoginResult
 	err = json.Unmarshal(b, &result)
 	if err != nil {
 		return nil, errors.WithStack(err)

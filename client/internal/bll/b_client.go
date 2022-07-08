@@ -4,11 +4,10 @@ import (
 	"bufio"
 	"context"
 	"crypto/tls"
-	"encoding/base64"
+	"crypto/x509"
 	"github.com/cloudslit/cloudslit/client/internal/config"
 	"github.com/cloudslit/cloudslit/client/internal/contextx"
 	"github.com/cloudslit/cloudslit/client/internal/schema"
-	"github.com/cloudslit/cloudslit/client/pkg/certificate"
 	"github.com/cloudslit/cloudslit/client/pkg/errors"
 	"github.com/cloudslit/cloudslit/client/pkg/logger"
 	"github.com/cloudslit/cloudslit/client/pkg/recover"
@@ -27,10 +26,15 @@ func NewClient() *Client {
 	return &Client{}
 }
 
-func (a *Client) DialWS(ctx context.Context, nextAddr *schema.NextServer) (net.Conn, error) {
-	conn, err := tls.Dial("tcp", nextAddr.Host+":"+nextAddr.Port, &tls.Config{
-		InsecureSkipVerify: true,
-	})
+func (a *Client) DialWS(ctx context.Context, client *schema.ClientConfig) (net.Conn, error) {
+	serverAddr := client.Server.Host + ":" + strconv.Itoa(client.Server.Port)
+	tlsc, err := a.GetDialMtlsConfig(client)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	//tlsc.ServerName = "cloud-slit"
+	//serverAddr = "127.0.0.1:5092"
+	conn, err := tls.Dial("tcp", serverAddr, tlsc)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -39,13 +43,12 @@ func (a *Client) DialWS(ctx context.Context, nextAddr *schema.NextServer) (net.C
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	req.Host = nextAddr.Host
+	req.Host = client.Server.Host
 	traceID, _ := contextx.FromTraceID(ctx)
 	req.Header.Set("Connection", "Upgrade")
 	req.Header.Set("Upgrade", "websocket")
 	req.Header.Set("X-TraceID", traceID)
-	req.Header.Set("X-ClientCert", base64.StdEncoding.EncodeToString([]byte(config.C.Certificate.CertPem)))
-	req.Header.Set("X-ClientCA", base64.StdEncoding.EncodeToString([]byte(config.C.Certificate.CaPem)))
+	req.Header.Set("X-Chains", client.String())
 
 	err = req.Write(conn)
 	if err != nil {
@@ -59,25 +62,6 @@ func (a *Client) DialWS(ctx context.Context, nextAddr *schema.NextServer) (net.C
 	if resp.Status == "101 Switching Protocols" &&
 		strings.ToLower(resp.Header.Get("Upgrade")) == "websocket" &&
 		strings.ToLower(resp.Header.Get("Connection")) == "upgrade" {
-		// Obtain the server certificate
-		serverCa := resp.Header.Get("X-ServerCert")
-		if resp.Header.Get("X-ServerCert") == "" {
-			err = errors.New("Failed to obtain the lower-layer service certificate. Procedure")
-			return nil, errors.WithStack(err)
-		}
-		serverCaCert, err := base64.StdEncoding.DecodeString(serverCa)
-		if err != nil {
-			return nil, errors.WithStack(err)
-		}
-		// Verify the server certificate
-		err = certificate.NewVerify(string(serverCaCert), config.C.Certificate.CaPem, nextAddr.Host).Verify()
-		if err != nil {
-			//return nil, errors.WithStack(err)
-		}
-		_, err = conn.Write([]byte("serverCaReady"))
-		if err != nil {
-			return nil, errors.WithStack(err)
-		}
 		return conn, nil
 	}
 	respBytes, err := httputil.DumpResponse(resp, false)
@@ -88,8 +72,25 @@ func (a *Client) DialWS(ctx context.Context, nextAddr *schema.NextServer) (net.C
 	return nil, errors.WithStack(err)
 }
 
-func (a *Client) Listen(ctx context.Context) error {
-	lisAddr := config.C.Common.LocalAddr + ":" + strconv.Itoa(config.C.Common.LocalPort)
+func (a *Client) GetDialMtlsConfig(client *schema.ClientConfig) (*tls.Config, error) {
+	cert, err := tls.X509KeyPair([]byte(client.CertPem), []byte(client.KeyPem))
+	if err != nil {
+		return nil, err
+	}
+	// 加载ca证书
+	pool := x509.NewCertPool()
+	pool.AppendCertsFromPEM([]byte(client.CaPem))
+	tlsc := &tls.Config{
+		MinVersion:   tls.VersionTLS13,
+		Certificates: []tls.Certificate{cert}, // 客户端证书
+		ServerName:   client.Server.Host,      // 服务端证书通用名称
+		RootCAs:      pool,                    // 服务器证书所属ca
+	}
+	return tlsc, err
+}
+
+func (a *Client) Listen(ctx context.Context, client *schema.ClientConfig) error {
+	lisAddr := config.C.App.LocalAddr + ":" + strconv.Itoa(config.C.App.LocalPort)
 	ln, err := net.Listen("tcp", lisAddr)
 	if err != nil {
 		return err
@@ -103,12 +104,12 @@ func (a *Client) Listen(ctx context.Context) error {
 			continue
 		}
 		recover.Recovery(ctx, func() {
-			a.handleConn(ctx, clientConn)
+			a.handleConn(ctx, clientConn, client)
 		})
 	}
 }
 
-func (a *Client) handleConn(ctx context.Context, clientConn net.Conn) {
+func (a *Client) handleConn(ctx context.Context, clientConn net.Conn, client *schema.ClientConfig) {
 	traceID := trace.NewTraceID()
 	ctx = contextx.NewTraceID(ctx, traceID)
 	ctx = logger.NewTraceIDContext(ctx, traceID)
@@ -120,15 +121,9 @@ func (a *Client) handleConn(ctx context.Context, clientConn net.Conn) {
 			logger.WithContext(ctx).Infof("Closed Connection: %v\n", clientConn.RemoteAddr().String())
 		}
 	}()
-	// TODO: 获取请求服务地址
-	//nextServer := a.GetNextServer(conf)
-	nextServer := &schema.NextServer{
-		Host: "https://",
-		Port: "443",
-	}
-	serverConn, err := a.DialWS(ctx, nextServer)
+	serverConn, err := a.DialWS(ctx, client)
 	if err != nil {
-		logger.WithErrorStack(ctx, err).Errorf("The client failed to request the lower level service. Procedure:Addr:%s:%s Error:%v", nextServer.Host, nextServer.Port, err)
+		logger.WithErrorStack(ctx, err).Errorf("The client failed to request the lower level service. Procedure:Addr:%s:%s Error:%v", client.Server.Host, client.Server.Port, err)
 		return
 	}
 	defer serverConn.Close()
@@ -136,31 +131,17 @@ func (a *Client) handleConn(ctx context.Context, clientConn net.Conn) {
 	//Setup client side of smux
 	session, err := smux.Client(serverConn, nil)
 	if err != nil {
-		logger.WithErrorStack(ctx, err).Errorf("smux.Client. Procedure:Addr:%s:%s Error:%v", nextServer.Host, nextServer.Port, err)
+		logger.WithErrorStack(ctx, err).Errorf("smux.Client. Procedure:Addr:%s:%s Error:%v", client.Server.Host, client.Server.Port, err)
 		return
 	}
 	defer session.Close()
 	// Open a new stream
 	stream, err := session.OpenStream()
 	if err != nil {
-		logger.WithErrorStack(ctx, err).Errorf("session.OpenStream. Procedure:Addr:%s:%s Error:%v", nextServer.Host, nextServer.Port, err)
+		logger.WithErrorStack(ctx, err).Errorf("session.OpenStream. Procedure:Addr:%s:%s Error:%v", client.Server.Host, client.Server.Port, err)
 		return
 	}
 	defer stream.Close()
-	logger.WithContext(ctx).Infof("Connect Success:Addr:%s:%s", nextServer.Host, nextServer.Port)
+	logger.WithContext(ctx).Infof("Connect Success:Addr:%s:%s", client.Server.Host, client.Server.Port)
 	TransparentProxy(clientConn, stream)
-}
-
-func (a *Client) GetNextServer(chains *schema.ClientConfig) *schema.NextServer {
-	replyCount := len(chains.Relays)
-	nextServer := new(schema.NextServer)
-	if replyCount == 0 {
-		nextServer.Host = chains.Server.Host
-		nextServer.Port = strconv.Itoa(chains.Server.OutPort)
-	} else {
-		chain := chains.Relays[0]
-		nextServer.Host = chain.Host
-		nextServer.Port = strconv.Itoa(chain.OutPort)
-	}
-	return nextServer
 }

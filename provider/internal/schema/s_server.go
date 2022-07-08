@@ -1,9 +1,12 @@
 package schema
 
 import (
+	"context"
 	"encoding/base64"
 	"github.com/cloudslit/cloudslit/provider/pkg/errors"
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
+	"github.com/cloudslit/cloudslit/provider/pkg/web3/w3s"
+	"time"
 )
 
 type NodeType string
@@ -30,21 +33,13 @@ func (a *NodeInfo) String() string {
 }
 
 type ClientConfig struct {
-	UUID      string    `json:"uuid"`
-	Name      string    `json:"name"`
-	Type      string    `json:"type"`
-	Port      int       `json:"port"`
-	Server    Server    `json:"server"`
-	Target    Target    `json:"target"`
-	Resources Resources `json:"resources"`
+	Server Server `json:"server"`
+	Target Target `json:"target"`
 }
 
 type Server struct {
-	UUID    string `json:"uuid"`
-	Name    string `json:"name"`
-	Host    string `json:"host"`
-	Port    int    `json:"port"`
-	OutPort int    `json:"out_port"`
+	Host string `json:"host"`
+	Port int    `json:"port"`
 }
 
 type Target struct {
@@ -92,21 +87,27 @@ func (a *NodeOrder) String() string {
 	return json.MarshalToString(a)
 }
 
-// ProviderContent provider订单内容
-type ProviderContent struct {
+// ProviderConfig provider配置
+type ProviderConfig struct {
 	CertPem string `json:"cert_pem"`
 	KeyPem  string `json:"key_pem"`
 	CaPem   string `json:"ca_pem"`
 }
 
-func (a *ProviderContent) String() string {
+func (a *ProviderConfig) String() string {
 	return json.MarshalToString(a)
 }
 
-// ToProviderContent 转换为provider内容
-func ToProviderContent(data []byte) (*ProviderContent, error) {
-	var pc ProviderContent
-	err := json.Unmarshal(data, &pc)
+// ParserConfig 解析config
+func ParserConfig(ctx context.Context, cid string) (*ProviderConfig, error) {
+	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+	data, err := w3s.Get(ctx, cid)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	var pc ProviderConfig
+	err = json.Unmarshal(data, &pc)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -125,5 +126,13 @@ func ToProviderContent(data []byte) (*ProviderContent, error) {
 	pc.CaPem = string(capem)
 	pc.CertPem = string(certpem)
 	pc.KeyPem = string(keypem)
+	// 解析证书attr
+	//certConfig, _, err := certificate.LoadCert([]byte(pc.CertPem))
+	//if err != nil {
+	//	return nil,err
+	//}
+	//if certConfig.Type != certificate.TypeServer {
+	//	return nil, fmt.Errorf("证书类型错误，预期：%s, get:%s", certificate.TypeServer, certConfig.Type)
+	//}
 	return &pc, nil
 }

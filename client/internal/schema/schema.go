@@ -13,14 +13,14 @@ type NextServer struct {
 	Port string
 }
 
-// ControCommonResult
-type ControCommonResult struct {
+// ControlCommonResult
+type ControlCommonResult struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 }
 
-// ControPaginate
-type ControPaginate struct {
+// ControlPaginate
+type ControlPaginate struct {
 	Total    int `json:"total"`
 	Current  int `json:"current"`
 	PageSize int `json:"pageSize"`

@@ -9,7 +9,6 @@ import (
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/cloudslit/cloudslit/provider/pkg/p2p"
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
-	"github.com/cloudslit/cloudslit/provider/pkg/web3/w3s"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -26,6 +25,13 @@ func NewPubsub() *Pubsub {
 
 // eventhandle
 func (a *Pubsub) StartPubsubHandler(ctx context.Context, ps *p2p.PubSub, p *p2p.P2P) {
+	//go func() {
+	//	msg := `{"type":"order","data":{"server_cid":"bafybeia67xlj2w56ps7x5youglzyisqbb2syymyqditout6qfy77rrcxbq","wallet":"0x1B4b827703dc3545089fcee70F0e6e732BFF4414","uuid":"cf636cbe-cfd4-44c0-8a9d-bec110382e6a","port":0}}`
+	//	err := a.ReceiveHandle(ctx, ps, msg)
+	//	if err != nil {
+	//		logger.Errorf("Receive Msg Handle Err:%s", err)
+	//	}
+	//}()
 	server := a.NewServerInfo()
 	refreshticker := time.NewTicker(10 * time.Second)
 	defer refreshticker.Stop()
@@ -40,7 +46,7 @@ func (a *Pubsub) StartPubsubHandler(ctx context.Context, ps *p2p.PubSub, p *p2p.
 
 		case <-refreshticker.C:
 			// Timing publish
-			a.nodePublish(ps, server)
+			a.nodeHeartBeat(ps, server)
 			//msg := `{"type":"order","data":{"server_cid":"bafybeia67xlj2w56ps7x5youglzyisqbb2syymyqditout6qfy77rrcxbq","wallet":"0x1B4b827703dc3545089fcee70F0e6e732BFF4413","uuid":"cf636cbe-cfd4-44c0-8a9d-bec110382e6a","port":0}}`
 			//err := a.ReceiveHandle(ctx, ps, msg)
 			//if err != nil {
@@ -79,14 +85,13 @@ func (a *Pubsub) orderReceive(ctx context.Context, ps *p2p.PubSub, pss *schema.P
 	if order.Wallet != config.C.Web3.Account {
 		return fmt.Errorf("wallet 异常，expect:%s, get:%s", config.C.Web3.Account, order.Wallet)
 	}
-	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-	data, err := w3s.Get(ctx, order.ServerCid)
+	// 解析配置
+retry:
+	pc, err := schema.ParserConfig(ctx, order.ServerCid)
 	if err != nil {
-		return errors.WithStack(err)
-	}
-	pc, err := schema.ToProviderContent(data)
-	if err != nil {
+		time.Sleep(5 * time.Second)
+		logger.WithErrorStack(ctx, err).Warnf("get w3s data err:%v", err)
+		goto retry
 		return errors.WithStack(err)
 	}
 	// 预制端口
@@ -94,6 +99,7 @@ func (a *Pubsub) orderReceive(ctx context.Context, ps *p2p.PubSub, pss *schema.P
 	if err != nil {
 		return errors.WithStack(err)
 	}
+	order.Port = port
 	// 监听端口
 	p := NewProvider()
 	l, err := p.Listen(ctx, port, pc)
@@ -101,25 +107,37 @@ func (a *Pubsub) orderReceive(ctx context.Context, ps *p2p.PubSub, pss *schema.P
 		return errors.WithStack(err)
 	}
 	go p.Handle(ctx, l)
-	order.Port = port
-	pub := &schema.PsMessage{
-		Type: "order",
-		Data: order.String(),
-	}
-	str := pub.String()
-	ps.Outbound <- str
+	go a.providerHeartBeat(ctx, ps, order)
 	return nil
 }
 
-// nodePublish 节点发布自身信息
-func (a *Pubsub) nodePublish(ps *p2p.PubSub, server *schema.NodeInfo) {
-	logger.Infof("I'm:%s ", ps.Host.Host.ID().String())
+// Provider 心跳
+func (a *Pubsub) providerHeartBeat(ctx context.Context, ps *p2p.PubSub, order *schema.NodeOrder) {
+	ticker := time.NewTicker(10 * time.Second)
+	defer ticker.Stop()
+	for {
+		select {
+		case <-ticker.C:
+			pub := &schema.PsMessage{
+				Type: schema.PsMsgTypeOrder,
+				Data: order.String(),
+			}
+			str := pub.String()
+			ps.InsertOutbound(str)
+			logger.Infof("Provider Heart Beat - running at [::]:%d", order.Port)
+		}
+	}
+}
+
+// nodeHeartBeat 节点发布自身信息
+func (a *Pubsub) nodeHeartBeat(ps *p2p.PubSub, server *schema.NodeInfo) {
+	logger.Infof("Node Heart Beat - PeerId:%s", ps.Host.Host.ID().String())
 	pub := &schema.PsMessage{
-		Type: "node",
+		Type: schema.PsMsgTypeNode,
 		Data: server,
 	}
 	str := pub.String()
-	ps.Outbound <- str
+	ps.InsertOutbound(str)
 }
 
 func (a *Pubsub) NewServerInfo() *schema.NodeInfo {

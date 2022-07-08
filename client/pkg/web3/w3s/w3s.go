@@ -3,7 +3,7 @@ package w3s
 import (
 	"context"
 	"encoding/json"
-	"github.com/cloudslit/cloudslit/provider/internal/config"
+	"github.com/cloudslit/cloudslit/client/internal/config"
 	"io/fs"
 	"io/ioutil"
 	"os"

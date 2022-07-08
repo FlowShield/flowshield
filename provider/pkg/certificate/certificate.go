@@ -1,4 +1,4 @@
-package initer
+package certificate
 
 import (
 	"crypto/rand"
@@ -7,9 +7,9 @@ import (
 	"crypto/x509/pkix"
 	"encoding/pem"
 	"errors"
-	"github.com/cloudslit/cloudslit/client/internal/config"
-	"github.com/cloudslit/cloudslit/client/pkg/certificate"
-	"github.com/cloudslit/cloudslit/client/pkg/util"
+	"fmt"
+	"github.com/cloudslit/cloudslit/provider/pkg/util"
+	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 	"math/big"
 	"net"
 	"time"
@@ -33,7 +33,7 @@ type BasicCertConf struct {
 	Type      string
 }
 
-func InitCert(certData []byte) (*BasicCertConf, map[string]interface{}, error) {
+func LoadCert(certData []byte) (*BasicCertConf, []byte, error) {
 	p, _ := pem.Decode(certData)
 	if p == nil {
 		return nil, nil, ErrCertParse
@@ -45,7 +45,7 @@ func InitCert(certData []byte) (*BasicCertConf, map[string]interface{}, error) {
 	basicConf := &BasicCertConf{}
 
 	// parse attr
-	mgr := certificate.New()
+	mgr := New()
 	attr, err := mgr.GetAttributesFromCert(cert)
 	if err != nil {
 		return nil, nil, ErrCertParse
@@ -55,10 +55,12 @@ func InitCert(certData []byte) (*BasicCertConf, map[string]interface{}, error) {
 			basicConf.Type = t
 		}
 	}
-	if !util.InArray(basicConf.Type, []string{TypeClient, TypeRelay, TypeServer}) {
+	if !util.InArray(basicConf.Type, []string{TypeClient, TypeServer}) {
 		return nil, nil, ErrCertType
 	}
-	return basicConf, attr.Attrs, nil
+	str := json.MarshalToString(attr.Attrs)
+
+	return basicConf, []byte(str), nil
 }
 
 // 自签证书
@@ -97,9 +99,8 @@ func InitSelfCert() error {
 	certPem := pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: derBytes})
 	keyPem := pem.EncodeToMemory(&pem.Block{Type: "RSA PRIVATE KEY", Bytes: x509.MarshalPKCS1PrivateKey(pk)})
 
-	config.C.Certificate.CertPem = string(certPem)
-	config.C.Certificate.KeyPem = string(keyPem)
-	config.C.Certificate.CaPem = string(certPem)
+	fmt.Println(string(certPem))
+	fmt.Println(string(keyPem))
 
 	return nil
 }

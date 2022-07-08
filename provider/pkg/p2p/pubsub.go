@@ -212,3 +212,8 @@ func (cr *PubSub) Exit() {
 func (cr *PubSub) UpdateUser(username string) {
 	cr.ClientName = username
 }
+
+// Insert Msg to Outbound
+func (cr *PubSub) InsertOutbound(str string) {
+	cr.Outbound <- str
+}

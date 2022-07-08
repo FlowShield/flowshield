@@ -2,6 +2,7 @@ package logger
 
 import (
 	"context"
+	"fmt"
 	"io"
 
 	"github.com/sirupsen/logrus"
@@ -127,8 +128,13 @@ func WithContext(ctx context.Context) *Entry {
 	if ctx == nil {
 		ctx = context.Background()
 	}
-
-	return logrus.WithContext(ctx)
+	fields := map[string]interface{}{
+		VersionKey: version,
+	}
+	if v := FromStackContext(ctx); v != nil {
+		fields[StackKey] = fmt.Sprintf("%+v", v)
+	}
+	return logrus.WithContext(ctx).WithFields(fields)
 }
 
 // Define logrus alias

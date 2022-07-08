@@ -4,8 +4,8 @@ import (
 	"context"
 	"crypto/tls"
 	"github.com/cloudslit/cloudslit/client/internal/config"
-	"github.com/cloudslit/cloudslit/client/internal/initer"
 	"github.com/cloudslit/cloudslit/client/pkg/logger"
+	"github.com/cloudslit/cloudslit/client/pkg/web3/w3s"
 	"net/http"
 	"os"
 	"os/signal"
@@ -52,17 +52,15 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	logger.WithContext(ctx).Printf("Service started, running mode：%s，version：%s，process number：%d", config.C.RunMode, o.Version, os.Getpid())
 
 	// initialize the log module
-	loggerCleanFunc, err := initer.InitLogger()
+	loggerCleanFunc, err := InitLogger()
 	if err != nil {
 		return nil, err
 	}
-	err = initer.InitMachine()
+	err = InitMachine()
 	if err != nil {
 		return nil, err
 	}
-	// initialize Cert
-	err = initer.InitSelfCert()
-	if err != nil {
+	if err := w3s.Init(&config.C.Web3); err != nil {
 		return nil, err
 	}
 	// initialize Http Client

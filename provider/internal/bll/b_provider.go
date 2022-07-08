@@ -4,11 +4,10 @@ import (
 	"bufio"
 	"context"
 	"crypto/tls"
-	"encoding/base64"
+	"crypto/x509"
 	"fmt"
 	"github.com/cloudslit/cloudslit/provider/internal/contextx"
 	"github.com/cloudslit/cloudslit/provider/internal/schema"
-	"github.com/cloudslit/cloudslit/provider/pkg/certificate"
 	"github.com/cloudslit/cloudslit/provider/pkg/errors"
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/cloudslit/cloudslit/provider/pkg/recover"
@@ -61,20 +60,6 @@ func (a *Provider) ReadInitiaWSRequest(ctx context.Context, connReader *bufio.Re
 		if err != nil {
 			return nil, nil, ctx, errors.WithStack(err)
 		}
-		// get client certificate
-		clientCa := req.Header.Get("X-ClientCert")
-		if clientCa == "" {
-			return nil, nil, ctx, errors.NewWithStack("X-ClientCert argument is missing")
-		}
-		clientCaCert, err := base64.StdEncoding.DecodeString(clientCa)
-		if err != nil {
-			return nil, nil, ctx, errors.WithStack(err)
-		}
-		// Verify the client certificate
-		err = certificate.NewVerify(string(clientCaCert), RootCA, "").Verify()
-		if err != nil {
-			return nil, nil, ctx, errors.WithStack(err)
-		}
 		return &chains, req, ctx, nil
 	}
 	req, err := http.ReadRequest(connReader)
@@ -109,7 +94,6 @@ func (a *Provider) GenerateInitialWSResponse(ctx context.Context, clientConn net
 	}
 	resp.Header.Set("Upgrade", req.Header.Get("Upgrade"))
 	resp.Header.Set("Connection", req.Header.Get("Connection"))
-	resp.Header.Set("X-ServerCert", base64.StdEncoding.EncodeToString([]byte("config.C.Certificate.CertPem")))
 
 	res, err := httputil.DumpResponse(&resp, true)
 	_, err = clientConn.Write(res)
@@ -131,61 +115,48 @@ func (a *Provider) handleConn(ctx context.Context, clientConn net.Conn) error {
 		logger.WithErrorStack(ctx, err).Error("Response WS message error：", err)
 		return err
 	}
-	verifyFlag := "serverCaReady"
-	verifyBytes, err := connReader.Peek(len(verifyFlag))
+	targetAddr := chains.Target.Host + ":" + strconv.Itoa(chains.Target.Port)
+	//targetAddr = "127.0.0.1:9999"
+	serverConn, err := net.Dial("tcp", targetAddr)
 	if err != nil {
-		logger.WithErrorStack(ctx, err).Error("Error obtaining the certificate verification result.：", err)
+		logger.WithErrorStack(ctx, errors.WithStack(err)).Errorf("Failed to request resource from server\n:Addr:%s Error:%v", targetAddr, err)
 		return err
 	}
-	if string(verifyBytes) == verifyFlag {
-		targetAddr := chains.Target.Host + ":" + strconv.Itoa(chains.Target.Port)
-		serverConn, err := net.Dial("tcp", targetAddr)
-		if err != nil {
-			logger.WithErrorStack(ctx, errors.WithStack(err)).Errorf("Failed to request resource from server\n:Addr:%s Error:%v", targetAddr, err)
-			return err
-		}
-		// 多路复用
-		session, err := smux.Server(clientConn, nil)
-		if err != nil {
-			return err
-		}
-		stream, err := session.AcceptStream()
-		if err != nil {
-			return err
-		}
-		defer func() {
-			closeErr := clientConn.Close()
-			if closeErr != nil {
-				logger.WithContext(ctx).Errorf("Closed Connection with error: %v", closeErr)
-			} else {
-				logger.WithContext(ctx).Infof("Closed Connection: %v", clientConn.RemoteAddr().String())
-			}
-			serverConn.Close()
-			session.Close()
-			stream.Close()
-		}()
-		logger.WithContext(ctx).Infof("Connection Success: Client:%s; To:%s;", clientConn.RemoteAddr().String(), targetAddr)
-		TransparentProxy(stream, serverConn)
-		return nil
+	// 多路复用
+	session, err := smux.Server(clientConn, nil)
+	if err != nil {
+		return err
 	}
-	err = errors.New("Server certificate verification failed")
-	logger.WithErrorStack(ctx, errors.WithStack(err)).Error(err)
-	return err
+	stream, err := session.AcceptStream()
+	if err != nil {
+		return err
+	}
+	defer func() {
+		closeErr := clientConn.Close()
+		if closeErr != nil {
+			logger.WithContext(ctx).Errorf("Closed Connection with error: %v", closeErr)
+		} else {
+			logger.WithContext(ctx).Infof("Closed Connection: %v", clientConn.RemoteAddr().String())
+		}
+		serverConn.Close()
+		session.Close()
+		stream.Close()
+	}()
+	logger.WithContext(ctx).Infof("Connection Success: Client:%s; To:%s;", clientConn.RemoteAddr().String(), targetAddr)
+	TransparentProxy(stream, serverConn)
+	return nil
 }
 
 func NewProvider() *Provider {
 	return &Provider{}
 }
 
-func (a *Provider) Listen(ctx context.Context, port int, content *schema.ProviderContent) (net.Listener, error) {
-	cert, err := tls.X509KeyPair([]byte(content.CertPem), []byte(content.KeyPem))
+func (a *Provider) Listen(ctx context.Context, port int, config *schema.ProviderConfig) (net.Listener, error) {
+	tlsc, err := a.GetMtlsConfig(config)
 	if err != nil {
-		logger.Errorf("证书解析失败:%s", err)
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
-	l, err := tls.Listen("tcp", "0.0.0.0:"+strconv.Itoa(port), &tls.Config{
-		Certificates: []tls.Certificate{cert},
-	})
+	l, err := tls.Listen("tcp", "0.0.0.0:"+strconv.Itoa(port), tlsc)
 	if err != nil {
 		logger.Errorf("监听端口失败:%s", err)
 		return nil, err
@@ -205,6 +176,23 @@ func (a *Provider) Handle(ctx context.Context, l net.Listener) {
 			a.handleConn(ctx, conn)
 		})
 	}
+}
+
+func (a *Provider) GetMtlsConfig(config *schema.ProviderConfig) (*tls.Config, error) {
+	cert, err := tls.X509KeyPair([]byte(config.CertPem), []byte(config.KeyPem))
+	if err != nil {
+		return nil, err
+	}
+	// 加载ca证书
+	pool := x509.NewCertPool()
+	pool.AppendCertsFromPEM([]byte(config.CaPem))
+	tlsc := &tls.Config{
+		MinVersion:   tls.VersionTLS13,
+		Certificates: []tls.Certificate{cert},
+		ClientCAs:    pool,                           // 客户端证书所属ca
+		ClientAuth:   tls.RequireAndVerifyClientCert, // 要求验证客户端证书
+	}
+	return tlsc, err
 }
 
 func verifyPort(port int) (int, error) {

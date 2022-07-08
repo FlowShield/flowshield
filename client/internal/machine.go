@@ -1,4 +1,4 @@
-package initer
+package internal
 
 import (
 	"github.com/cloudslit/cloudslit/client/internal/config"

@@ -1,39 +1,29 @@
 package schema
 
 import (
+	"context"
+	"encoding/base64"
+	"fmt"
+	"github.com/cloudslit/cloudslit/client/pkg/certificate"
 	"github.com/cloudslit/cloudslit/client/pkg/errors"
 	"github.com/cloudslit/cloudslit/client/pkg/util/json"
+	"github.com/cloudslit/cloudslit/client/pkg/web3/w3s"
 	"net/url"
-	"sort"
 	"strings"
+	"time"
 )
 
 type ClientConfig struct {
-	UUID      string    `json:"uuid"`
-	Name      string    `json:"name"`
-	Type      string    `json:"type"`
-	Port      int       `json:"port"`
-	Relays    Relays    `json:"relay"`
-	Server    Server    `json:"server"`
-	Target    Target    `json:"target"`
-	Resources Resources `json:"resources"`
-}
-
-type Relay struct {
-	UUID    string `json:"uuid"`
-	Name    string `json:"name"`
-	Host    string `json:"host"`
-	Port    int    `json:"port"`
-	OutPort int    `json:"out_port"`
-	Sort    int    `json:"sort"`
+	Server  Server `json:"server"`
+	Target  Target `json:"target"`
+	CaPem   string `json:"ca_pem"`
+	CertPem string `json:"cert_pem"`
+	KeyPem  string `json:"key_pem"`
 }
 
 type Server struct {
-	UUID    string `json:"uuid"`
-	Name    string `json:"name"`
-	Host    string `json:"host"`
-	Port    int    `json:"port"`
-	OutPort int    `json:"out_port"`
+	Host string `json:"host"`
+	Port int    `json:"port"`
 }
 
 type Target struct {
@@ -41,18 +31,16 @@ type Target struct {
 	Port int    `json:"port"`
 }
 
-type CResource struct {
-	UUID string `json:"uuid"`
-	Name string `json:"name"`
-	Type string `json:"type"`
-	Host string `json:"host"`
-	Port int    `json:"port"`
+func (a *ClientConfig) LoadServerTarget(data []byte) (*ClientConfig, error) {
+	var result ClientConfig
+	err := json.Unmarshal(data, &result)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	a.Server = result.Server
+	a.Target = result.Target
+	return a, nil
 }
-
-type (
-	Relays     []*Relay
-	CResources []*CResource
-)
 
 func ParseClientConfig(attrs map[string]interface{}) (*ClientConfig, error) {
 	var result ClientConfig
@@ -64,10 +52,6 @@ func ParseClientConfig(attrs map[string]interface{}) (*ClientConfig, error) {
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	if len(result.Relays) > 0 {
-		// Reply sort
-		result.RelaysAscBySort()
-	}
 	if result.Server.Host == "" {
 		err := errors.New("server Addr argument is missing")
 		return nil, errors.WithStack(err)
@@ -75,61 +59,98 @@ func ParseClientConfig(attrs map[string]interface{}) (*ClientConfig, error) {
 	return &result, nil
 }
 
-func (a *ClientConfig) ToJSONString() string {
+func (a *ClientConfig) String() string {
 	return json.MarshalToString(a)
 }
 
-// RelaysAscBySort
-func (a *ClientConfig) RelaysAscBySort() {
-	sort.Slice(a.Relays, func(i, j int) bool { // asc
-		return a.Relays[i].Sort < a.Relays[j].Sort
-	})
-}
-
-// ControUserDetail Login user information
-type ControUserDetail struct {
+// ControlUserDetail Login user information
+type ControlUserDetail struct {
 	Uuid   string `json:"uuid"`
 	Status string `json:"status"`
 }
 
-type ControMachineAuthResult struct {
-	ControCommonResult
+type ControlMachineAuthResult struct {
+	ControlCommonResult
 	Data string `json:"data"`
 }
 
 // GetCode
-func (a *ControMachineAuthResult) GetCode() string {
+func (a *ControlMachineAuthResult) GetCode() string {
 	purl, _ := url.Parse(a.Data)
 	psurl := strings.Split(purl.Path, "/")
 	return psurl[len(psurl)-1]
 }
 
-// ControLoginResult Device login
-type ControLoginResult struct {
-	ControCommonResult
+// ControlLoginResult Device login
+type ControlLoginResult struct {
+	ControlCommonResult
 	Data string `json:"data"`
 }
 
-// ControClientResult Client list
-type ControClientResult struct {
-	ControCommonResult
-	Data ControClientData
+// ControlClientResult Client list
+type ControlClientResult struct {
+	ControlCommonResult
+	Data ControlClientData
 }
 
-// ControClientData
-type ControClientData struct {
-	List     ControClients  `json:"list"`
-	Paginate ControPaginate `json:"paginate"`
+// ControlClientData
+type ControlClientData struct {
+	List     ControlClients  `json:"list"`
+	Paginate ControlPaginate `json:"paginate"`
 }
 
-type ControClients []*ControClient
+type ControlClients []*ControlClient
 
-// ControClient Controller Client
-type ControClient struct {
-	Uuid     string `json:"uuid"`
-	UserUuid string `json:"user_uuid"`
-	Name     string `json:"name"`
-	CaPem    string `json:"ca_pem"`
-	CertPem  string `json:"cert_pem"`
-	KeyPem   string `json:"key_pem"`
+// ControlClient Controller Client
+type ControlClient struct {
+	Uuid      string `json:"uuid"`
+	UserUuid  string `json:"user_uuid"`
+	Name      string `json:"name"`
+	ClientCid string `json:"client_cid"`
+}
+
+// ParseConfig 解析客户端配置
+func (a *ControlClient) ParseConfig(ctx context.Context, cid string) (*ClientConfig, error) {
+	// 读取w3s数据
+	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+	data, err := w3s.Get(ctx, cid)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	// 解析w3s数据
+	var result ClientConfig
+	err = json.Unmarshal(data, &result)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	capem, err := base64.StdEncoding.DecodeString(result.CaPem)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	certpem, err := base64.StdEncoding.DecodeString(result.CertPem)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	keypem, err := base64.StdEncoding.DecodeString(result.KeyPem)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	result.CaPem = string(capem)
+	result.CertPem = string(certpem)
+	result.KeyPem = string(keypem)
+	// 解析证书attr
+	certConfig, attr, err := certificate.LoadCert([]byte(result.CertPem))
+	if err != nil {
+		return nil, err
+	}
+	if certConfig.Type != certificate.TypeClient {
+		return nil, fmt.Errorf("证书类型错误，预期：%s, get:%s", certificate.TypeClient, certConfig.Type)
+	}
+	// 加载server 和target信息
+	_, err = result.LoadServerTarget(attr)
+	if err != nil {
+		return nil, err
+	}
+	return &result, nil
 }

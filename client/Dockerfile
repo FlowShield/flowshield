@@ -9,8 +9,10 @@ FROM ubuntu:20.04
 
 WORKDIR /root
 
+RUN apt update && apt install -y curl
+
 COPY --from=builder /build/client .
-COPY --from=builder /build/configs .
+COPY --from=builder /build/configs/config.toml .
 RUN chmod +x client
 
-CMD ["./client", "-c", "./configs/config.toml"]
+CMD ["./client", "-c", "./config.toml"]
