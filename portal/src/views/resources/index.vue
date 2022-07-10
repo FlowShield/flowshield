@@ -27,7 +27,7 @@
               @keydown.enter="handleSearch"
           ></v-text-field>
           <v-spacer></v-spacer>
-          <form-dialog @on-success="handleSearch"/>
+          <form-dialog v-if="isshowadd" @on-success="handleSearch"/>
         </v-toolbar>
       </template>
       <template v-slot:item.action="{ item }">
@@ -41,10 +41,12 @@
 import ConfirmDialog from '@/components/confirm-dialog'
 import FormDialog from './components/form-dialog'
 import { deleteZeroAccessResource, fetchZeroAccessResources } from '@/api'
+import store from '@/store'
 
 export default {
   components: { FormDialog, ConfirmDialog },
   data: () => ({
+    isshowadd: false,
     loading: false,
     query: {
       name: '',
@@ -72,6 +74,7 @@ export default {
       this.getTableItems()
     },
     getTableItems() {
+      this.isshowadd = store.state.user.master
       this.loading = true
       fetchZeroAccessResources(this.query).then(res => {
         this.tableItems = res.data.list || []

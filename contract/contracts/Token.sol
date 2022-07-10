@@ -102,12 +102,12 @@ contract Token {
     //  */
     function stake(uint8 _type) external {
         if(_type == 1){
-            require(fullnodeDeposits[msg.sender] == 0, "");
+            require(fullnodeDeposits[msg.sender] == 0, "Already staked");
             require(balances[msg.sender] >= fullnodeDepositAmount, "Not enough tokens");
             balances[msg.sender] -= fullnodeDepositAmount;
             fullnodeDeposits[msg.sender] += fullnodeDepositAmount;
         }else if(_type == 2){
-            require(privateDeposits[msg.sender] == 0, "");
+            require(privateDeposits[msg.sender] == 0, "Already staked");
             require(balances[msg.sender] >= privoderDepositAmount, "Not enough tokens");
             balances[msg.sender] -= privoderDepositAmount;
             privateDeposits[msg.sender] += privoderDepositAmount;
@@ -130,8 +130,8 @@ contract Token {
     
     mapping(string=>uint256) orders;
 
-    function clientOrder(string memory orderId, uint256 _orderPrice) public {
-        require(orders[orderId] > 0, "Already paid");
+    function clientOrder(string memory orderId, uint256 _orderPrice) external {
+        require(orders[orderId] == 0, "Already paid");
         require(balances[msg.sender] >= _orderPrice, "Not enough tokens");
         balances[msg.sender] -= _orderPrice;
         orders[orderId] = _orderPrice;
