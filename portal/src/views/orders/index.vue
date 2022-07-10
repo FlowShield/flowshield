@@ -30,16 +30,28 @@
           <form-dialog @on-success="handleSearch"/>
         </v-toolbar>
       </template>
-      <template v-slot:item.target="{item}">{{ item.target.host + ':' + item.target.port }}</template>
-      <template v-slot:item.actions="{ item }">
+      <!-- <template v-slot:item.target="{item}">{{ item.target.host + ':' + item.target.port }}</template> -->
+      <!-- <template v-slot:item.actions="{ item }">
         <v-icon small class="mr-2" @click="pay(item)">Pay</v-icon>
-        <!-- <v-icon small @click="deleteItem(item)">mdi-delete</v-icon> -->
+        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+      </template> -->
+
+      <template v-slot:item.status="{item}">
+      <span v-if=" item.status == 0 ">
+      Wait for payment
+      </span>
+      <span v-else-if=" item.status == 1 ">
+      Paid, please wait
+      </span>
+      <span v-else-if=" item.status == 2 ">
+      Success
+      </span>
       </template>
       <template v-slot:item.action="{ item }">
-        <v-btn x-large rounded @click="pay(item)" :loading="paying">
-        <v-icon class="mr-5">mdi-wallet</v-icon>
-        Pay
-      </v-btn>
+        <v-btn x-medium rounded @click="pay(item)" :loading="paying[item.uuid]" v-if=" item.status == 0">
+          <v-icon class="mr-3">mdi-wallet</v-icon>
+          Pay
+        </v-btn>
       </template>
       <template v-slot:no-data>No data</template>
     </v-data-table>
@@ -48,13 +60,13 @@
 <script>
 import FormDialog from './components/form-dialog'
 import { deleteZeroAccessClient, fetchZeroAccessClients, postZeroAccessClientsPayNotify } from '@/api'
-import { payOrder } from '../../utils/store.js'
+import { payOrder, getOrder } from '../../utils/store.js'
 
 export default {
   components: { FormDialog },
   data: () => ({
     loading: false,
-    paying: false,
+    paying: [],
     query: {
       name: '',
       page: 1,
@@ -67,8 +79,8 @@ export default {
       { text: 'Server', sortable: true, value: 'server_cid' },
       { text: 'PeerId', sortable: true, value: 'peer_id' },
       { text: 'Resource', sortable: true, value: 'resource_cid' },
-      { text: 'Duration', sortable: false, value: 'duration' },
-      { text: 'Price', sortable: true, value: 'price' },
+      { text: 'Duration(Hours)', sortable: false, value: 'duration' },
+      { text: 'Price(CSD)', sortable: true, value: 'price' },
       { text: 'Status', sortable: true, value: 'status' },
       { text: 'Created at', sortable: true, value: 'CreatedAt' },
       { text: 'Updated at', sortable: true, value: 'UpdatedAt' },
@@ -85,22 +97,31 @@ export default {
       this.query.page = 1
       this.getTableItems()
     },
-    pay(item) {
-      this.paying = true
-      payOrder(item.uuid, item.price)
-      postZeroAccessClientsPayNotify(item.uuid).then(res => {
-        this.$emit('on-success')
-        this.$message.success()
-        this.paying = false
-      }).finally(() => {
-        this.paying = false
-      })
+    async pay(item) {
+      await getOrder(item.uuid)
+      this.paying[item.uuid] = true
+      const payStatus = await payOrder(item.uuid, item.price)
+      if (payStatus === 'ok') {
+        postZeroAccessClientsPayNotify({ uuid: item.uuid }).then(res => {
+          this.$emit('on-success')
+          this.$message.success()
+          this.paying[item.uuid] = false
+        }).finally(() => {
+          this.paying[item.uuid] = false
+        })
+      } else {
+        this.$message.error(payStatus)
+      }
     },
     getTableItems() {
       this.loading = true
       fetchZeroAccessClients(this.query).then(res => {
         this.tableItems = res.data.list || []
         this.total = res.data.paginate.total
+        for (let i = 0; i < this.tableItems.length; i++) {
+          this.paying[this.tableItems[i].uuid] = false
+        }
+        console.log(this.paying)
       }).finally(() => {
         this.loading = false
       })

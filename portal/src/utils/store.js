@@ -50,7 +50,7 @@ const networks = {
   }
 }
 
-const contractAddress = '0x4b8b26a1D6BEACE5E093F732be18E45EE25E83ac'
+const contractAddress = '0xCAdF7B1f6f4E5452FAdf55820B2EA7b6Dd3C972a'
 
 const web3Init = async() => {
   let web3 = ''
@@ -84,9 +84,7 @@ export const setStatus = async() => {
   const account = accounts[0]
   const abi = contractJSON.abi
   const sbs = new web3.eth.Contract(abi, contractAddress, account)
-  // await sbs.methods.transfer('0x828233e3908fb45d40bac6b2f19f8a239ab7ae7d', 1000).send({ from: accounts[0] })
   await sbs.methods.clientOrder('test', 1000).send({ from: accounts[0] })
-  // await sbs.methods.stake(1).send({ from: accounts[0] })
   getBalance()
 }
 
@@ -97,8 +95,28 @@ export const payOrder = async(uuid, price) => {
   const account = accounts[0]
   const abi = contractJSON.abi
   const sbs = new web3.eth.Contract(abi, contractAddress, account)
-  await sbs.methods.clientOrder(uuid, price).send({ from: accounts[0] })
-  // getBalance()
+  if (await getOrder(uuid) === true) {
+    return 'Paid, payment failed'
+  }
+  try {
+    await sbs.methods.clientOrder(uuid, price).send({ from: accounts[0] })
+  } catch (error) {
+    console.log(error)
+    return 'Payment failed'
+  }
+  return 'ok'
+}
+
+export const getOrder = async(uuid) => {
+  const web3 = await web3Init()
+  const accounts = await web3.eth.getAccounts()
+  web3.eth.defaultAccount = accounts[0]
+  const account = accounts[0]
+  const abi = contractJSON.abi
+  const sbs = new web3.eth.Contract(abi, contractAddress, account)
+  const x = await sbs.methods.checkOrder(uuid).call()
+  console.log(uuid, x)
+  return x
 }
 
 export default state

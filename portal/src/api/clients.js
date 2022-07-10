@@ -8,11 +8,11 @@ export function fetchZeroAccessClients(params = {}) {
   })
 }
 
-export function postZeroAccessClientsPayNotify(params = {}) {
+export function postZeroAccessClientsPayNotify(data = {}) {
   return request({
     url: '/access/client/notify',
     method: 'post',
-    params
+    data
   })
 }
 export function postZeroAccessClient(data = {}) {

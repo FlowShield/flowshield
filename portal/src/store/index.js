@@ -4,16 +4,18 @@ import { fetchUser } from '@/api'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   state: {
     user: {
       avatar: '',
-      email: ''
+      email: '',
+      master: ''
     }
   }, getters: {}, mutations: {
     SET_USER(state, info) {
       state.user.avatar = info.avatar_url
       state.user.email = info.email
+      state.user.master = info.master
     }
   }, actions: {
     getUserInfo({ commit, state }) {
@@ -33,3 +35,5 @@ export default new Vuex.Store({
     }
   }, modules: {}
 })
+
+export default store
