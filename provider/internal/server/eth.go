@@ -51,7 +51,7 @@ func runETH() error {
 	}
 	logger.Infof("you have not deposited! trying to deposit...")
 	// 尝试质押
-	tra, err := instance.Deposit(auth, Provider)
+	tra, err := instance.Stake(auth, Provider)
 	if err != nil {
 		return err
 	}

@@ -26,7 +26,7 @@ func NewPubsub() *Pubsub {
 // eventhandle
 func (a *Pubsub) StartPubsubHandler(ctx context.Context, ps *p2p.PubSub, p *p2p.P2P) {
 	//go func() {
-	//	msg := `{"type":"order","data":{"server_cid":"bafybeia67xlj2w56ps7x5youglzyisqbb2syymyqditout6qfy77rrcxbq","wallet":"0x1B4b827703dc3545089fcee70F0e6e732BFF4414","uuid":"cf636cbe-cfd4-44c0-8a9d-bec110382e6a","port":0}}`
+	//	msg := `{"type":"order","data":{"server_cid":"bafybeifnc734brtng4tn2wxfp7pjtjz7qicd2dqvsxs36shugxoogzu4zu","wallet":"0x1B4b827703dc3545089fcee70F0e6e732BFF4413","uuid":"cde5260e-47ac-4a07-88b4-9a7ffc357a0b","port":0}}`
 	//	err := a.ReceiveHandle(ctx, ps, msg)
 	//	if err != nil {
 	//		logger.Errorf("Receive Msg Handle Err:%s", err)

@@ -3,6 +3,8 @@ package schema
 import (
 	"context"
 	"encoding/base64"
+	"fmt"
+	"github.com/cloudslit/cloudslit/provider/pkg/certificate"
 	"github.com/cloudslit/cloudslit/provider/pkg/errors"
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 	"github.com/cloudslit/cloudslit/provider/pkg/web3/w3s"
@@ -127,12 +129,12 @@ func ParserConfig(ctx context.Context, cid string) (*ProviderConfig, error) {
 	pc.CertPem = string(certpem)
 	pc.KeyPem = string(keypem)
 	// 解析证书attr
-	//certConfig, _, err := certificate.LoadCert([]byte(pc.CertPem))
-	//if err != nil {
-	//	return nil,err
-	//}
-	//if certConfig.Type != certificate.TypeServer {
-	//	return nil, fmt.Errorf("证书类型错误，预期：%s, get:%s", certificate.TypeServer, certConfig.Type)
-	//}
+	certConfig, _, err := certificate.LoadCert([]byte(pc.CertPem))
+	if err != nil {
+		return nil, err
+	}
+	if certConfig.Type != certificate.TypeServer {
+		return nil, fmt.Errorf("证书类型错误，预期：%s, get:%s", certificate.TypeServer, certConfig.Type)
+	}
 	return &pc, nil
 }

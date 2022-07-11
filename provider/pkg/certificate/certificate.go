@@ -17,7 +17,7 @@ import (
 
 const (
 	TypeClient = "client"
-	TypeServer = "server"
+	TypeServer = "provider"
 	TypeRelay  = "relay"
 )
 

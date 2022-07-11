@@ -55,7 +55,7 @@ func TestW3SPut(t *testing.T) {
 }
 
 func TestW3SGet(t *testing.T) {
-	cidObj, err := cid.Decode("bafybeifnc734brtng4tn2wxfp7pjtjz7qicd2dqvsxs36shugxoogzu4zu")
+	cidObj, err := cid.Decode("bafybeihvhtz4h5f3wepzyyjpcz4fx3g6emdu35dyy7n7fytdb3gypehwzm")
 	res, err := Ws3client.Get(context.Background(), cidObj)
 	if err != nil {
 		t.Fatal(err)
