@@ -21,37 +21,42 @@ When all things come up,Enjoy CloudSlit.
 
 
 
-## Building
-
-```shell
-$ git clone git@github.com:ztalab/ZAManager.git
-$ cd cloudslit/fullnode
-$ make
-```
-
-You can set GOOS and GOARCH environment variables to allow Go to cross-compile alternative platforms.
-
-The resulting binaries will be in the bin folder:
-
-```shell
-$ tree bin
-bin
-├── fullnode
-```
-
 ## Installing
 
 ### Docker-compose
 
+1. Get deploy Dockerfile
+
 ~~~shell
 cd deploy/docker-compose
-vim nginx.conf. line 38,chane you own domain
-docker-compose up -d
+~~~
+
+just pay attention to `nginx.conf` and `docker-compose.yaml`
+
+2. Change `nginx.conf` line32 to your own domain
+
+~~~nginx
+...
+listen 80 default_server;
+
+server_name dash.cloudslit.xyz;  #here is your domain
+
+root /usr/share/nginx/html;
+index index.html;
+...
+~~~
+
+3. Change some ENV in `docker-compose.yaml` file
+
+~~~ini
+CS_OAUTH2_CLIENT_ID: 'your client id should apply from github'
+CS_OAUTH2_CLIENT_SECRET: 'your client secret should apply from github'
+CS_PRIVATE_KEY: 'a blockchain private key'
+CS_CONTRACT_TOKEN: 'contract address'
+CS_W3S_TOKEN: 'apply from https://web3.storage'
 ~~~
 
 This will also install [CA](https://github.com/CloudSlit/cloudslit/tree/main/ca) and [Portal](https://github.com/CloudSlit/cloudslit/tree/main/portal)
-
-Don't forget change  `zta_oauth2 ` table Oauth2 data in mysql with your owns
 
 ## License
 
