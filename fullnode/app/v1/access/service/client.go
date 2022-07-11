@@ -88,7 +88,7 @@ func AddClient(c *gin.Context, param *mparam.AddClient) (code int, data *mmysql.
 		return pconst.CODE_COMMON_DATA_NOT_EXIST, nil
 	}
 
-	serverSign, err := api.ApplySign(c, map[string]interface{}{"type": "provider"}, "cloud-slit", "cloud-slit", "cloud-slit", time.Now().Add(time.Duration(param.Duration)*time.Hour))
+	serverSign, err := api.ApplySign(c, map[string]interface{}{"type": "provider"}, "cloud-slit", "cloud-slit", node.Addr, time.Now().Add(time.Duration(param.Duration)*time.Hour))
 	if err != nil {
 		logger.Errorf(c, "AddClient ApplySign err : %v", err)
 		return pconst.CODE_COMMON_SERVER_BUSY, nil
@@ -255,6 +255,11 @@ func NotifyClient(c *gin.Context, param *mparam.NotifyClient) (code int) {
 	}
 	if client == nil || client.ID == 0 {
 		return pconst.CODE_COMMON_DATA_NOT_EXIST
+	}
+	// 如果已经成功，则忽略
+	if client.Status == mmysql.Success {
+		logger.Infof("client status is success, ignore")
+		return
 	}
 	// 查询合约判断该笔订单是否支付
 	check, err := eth.Contract().CheckOrder(nil, param.UUID)
