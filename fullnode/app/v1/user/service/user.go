@@ -80,7 +80,7 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, oauth2Code string)
 		return
 	}
 	// 判断是否Dao主
-	user.Master = user.Wallet == confer.GlobalConfig().P2P.Account
+	userInfo.Master = userInfo.Wallet == confer.GlobalConfig().P2P.Account
 	userBytes, _ := json.Marshal(userInfo)
 	session.Set("user", userBytes)
 	session.Save()

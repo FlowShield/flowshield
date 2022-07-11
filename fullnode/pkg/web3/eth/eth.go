@@ -58,7 +58,7 @@ func InitETH(cfg *confer.Web3) error {
 	}
 	logger.Infof("you have not deposited! trying to deposit...")
 	// 尝试质押
-	tra, err := instance.Deposit(auth, FullNode)
+	tra, err := instance.Stake(auth, FullNode)
 	if err != nil {
 		return err
 	}

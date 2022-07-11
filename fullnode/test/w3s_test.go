@@ -55,7 +55,7 @@ func TestW3SPut(t *testing.T) {
 }
 
 func TestW3SGet(t *testing.T) {
-	cidObj, err := cid.Decode("bafybeicklok2lcgqv4cb4fuynwwlg2pfoijkaklq2cqmx4r2awmkaanofm")
+	cidObj, err := cid.Decode("bafybeifnc734brtng4tn2wxfp7pjtjz7qicd2dqvsxs36shugxoogzu4zu")
 	res, err := Ws3client.Get(context.Background(), cidObj)
 	if err != nil {
 		t.Fatal(err)
@@ -75,7 +75,7 @@ func TestW3SGet(t *testing.T) {
 		}
 		return nil
 	})
-	newplaintext, err := goEncrypt.DesCbcDecrypt(data, []byte("asd12345"), nil) //解密得到密文,可以自己传入初始化向量,如果不传就使用默认的初始化向量,8字节
+	newplaintext, err := goEncrypt.DesCbcDecrypt(data, []byte("csd88888"), nil) //解密得到密文,可以自己传入初始化向量,如果不传就使用默认的初始化向量,8字节
 	if err != nil {
 		t.Fatal(err)
 	}
