@@ -1,0 +1,63 @@
+# mode(debug,test,release)
+RunMode = "release"
+
+# Whether to print configuration parameters at startup
+PrintConfig = true
+
+# Information about themselves
+[App]
+# Provide publicly available domain names
+LocalAddr = ""
+# Provide the public port, which is also the default listening port of the program
+LocalPort = 5091
+# Publish the certificate specified by the domain name
+CertFile = ""
+# Publish the certificate private key specified by the domain name
+KeyFile = ""
+
+# p2p config
+[P2p]
+Enable = true
+ServiceDiscoveryID = "cloudslit/provider"
+ServiceDiscoveryMode = "advertise" # advertise or announce
+ServiceMetadataTopic = "cloudslit_provider_metadata"
+
+[Web3]
+# Wallet account
+Account = "0x1B4b827703dc3545089fcee70F0e6e732BFF4413"
+# Wallet account private key
+PrivateKey = "dee7aaec609f2d291ed49a4ae36a37704152e6a57188c87af5d03d1126155686"
+# Price - Price of services provided, unit = CSD/h, CSD It's our token
+Price = 1
+
+[Web3.Contract]
+# Contract account
+Token = "0xCAdF7B1f6f4E5452FAdf55820B2EA7b6Dd3C972a"
+
+# w3s token
+[Web3.W3s]
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U"
+
+# Ethereum information
+[Web3.Eth]
+url = "https://ropsten.infura.io/v3"
+projectid = "45630f96f9d841679dc200a7c97763d2"
+
+[Log]
+# level(1:fatal,2:error,3:warn,4:info,5:debug,6:trace)
+Level = 4
+# text、json
+Format = "text"
+# stdout、stderr、file
+Output = "stdout"
+OutputFile = "data/logger.log"
+EnableHook = false
+HookLevels = ["info", "warn", "error"]
+# redis
+Hook = "redis"
+HookMaxThread = 1
+HookMaxBuffer = 512
+
+[LogRedisHook]
+Addr = "127.0.0.1:6379"
+Key = "log_key"
