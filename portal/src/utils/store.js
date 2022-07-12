@@ -19,26 +19,13 @@ export const _connect = async() => {
   }
 }
 
-export const checkAndGo = async() => {
-  if (window.ethereum) {
-    const web3 = await new Web3(window.ethereum)
-    const accounts = await web3.eth.getAccounts()
-    const cache = localStorage.getItem('connected')
-    if (accounts) {
-      if (accounts[0] === cache) {
-        const balance = await web3.eth.getBalance(accounts[0])
-      }
-    }
-  }
-}
-
 const networks = {
   dev: {
     httpProvider: 'https://ropsten.infura.io/v3/811238fc53164a35a96f841a7a89bea5'
   }
 }
 
-const contractAddress = '0x5c5286B0B87B075563e6308CC9D5d9D9E0901228'
+const contractAddress = '0xB82278dCb9b94fC00fF7AD63f335FD3C0e46E809'
 
 const web3Init = async() => {
   let web3 = ''

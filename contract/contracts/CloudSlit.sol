@@ -75,20 +75,40 @@ contract CloudSlit {
         return allowances[owner][spender];
     }
 
-    mapping(string => address) userBindings;
+    struct userWallet {
+        address user;
+        uint8 status;
+    }
+    mapping(string => userWallet) userWallets;
 
-    function getWallet(string memory uid) external view returns(address){
-        return userBindings[uid];
+    function getWallet(string memory uuid) external view returns(address, uint8){
+        return (userWallets[uuid].user, userWallets[uuid].status);
     }
 
-    function bindWallet(string memory uid) external {
-        require(userBindings[uid] == address(0));
-        userBindings[uid] = msg.sender;
+    function bindWallet(string memory uuid) external {
+        require(userWallets[uuid].user == address(0));
+        if (fullnodeDeposits[msg.sender] == 0) {
+            userWallets[uuid] = userWallet(msg.sender, 1);
+        }else{
+            userWallets[uuid] = userWallet(msg.sender, 2);
+        }
+    }
+
+    function verifyWallet(string memory uuid) external {
+        require(fullnodeDeposits[msg.sender] > 0);
+        require(userWallets[uuid].status == 1);
+        userWallets[uuid].status = 2;
     }
 
     // Todo
-    function changeWallet(string memory uid) external {
-        userBindings[uid] = msg.sender;
+    function changeWallet(string memory uuid, address newWallet) external {
+        require(newWallet != address(0));
+        if (userWallets[uuid].status == 1){
+            userWallets[uuid].user = newWallet;
+        }else{
+            require(userWallets[uuid].user == msg.sender);
+            userWallets[uuid].user = newWallet;
+        }
     }
     
     //Deposit amount
@@ -98,6 +118,10 @@ contract CloudSlit {
     mapping(address => uint256) fullnodeDeposits;
     mapping(address => uint256) privateDeposits;
 
+    function getUserInfo(string memory uuid) external view returns(bool, bool){
+        require(userWallets[uuid].status == 2);
+        return ((fullnodeDeposits[userWallets[uuid].user] > 0), (privateDeposits[userWallets[uuid].user] > 0));
+    }
     // /**
     //  * 
     //  */

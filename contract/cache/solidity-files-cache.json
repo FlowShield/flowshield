@@ -37,8 +37,8 @@
       ]
     },
     "/workspaces/cloudslit/contract/contracts/CloudSlit.sol": {
-      "lastModificationDate": 1657597528124,
-      "contentHash": "f3d9d4c0fc4a89d62abef617d482de97",
+      "lastModificationDate": 1657609168681,
+      "contentHash": "55d2ec8aef8742877bfeb498d716af23",
       "sourceName": "contracts/CloudSlit.sol",
       "solcConfig": {
         "version": "0.8.15",

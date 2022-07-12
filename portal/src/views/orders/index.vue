@@ -76,15 +76,15 @@ export default {
       { text: 'Name', align: 'start', sortable: true, value: 'name' },
       { text: 'OrderId', sortable: true, value: 'uuid' },
       { text: 'Listen port', sortable: true, value: 'port' },
-      { text: 'Server', sortable: true, value: 'server_cid' },
-      { text: 'PeerId', sortable: true, value: 'peer_id' },
-      { text: 'Resource', sortable: true, value: 'resource_cid' },
       { text: 'Duration(Hours)', sortable: false, value: 'duration' },
       { text: 'Price(CSD)', sortable: true, value: 'price' },
       { text: 'Status', sortable: true, value: 'status' },
+      { text: 'Action', value: 'action' },
+      { text: 'Server', sortable: true, value: 'server_cid' },
+      { text: 'PeerId', sortable: true, value: 'peer_id' },
+      { text: 'Resource', sortable: true, value: 'resource_cid' },
       { text: 'Created at', sortable: true, value: 'CreatedAt' },
-      { text: 'Updated at', sortable: true, value: 'UpdatedAt' },
-      { text: 'Action', value: 'action' }
+      { text: 'Updated at', sortable: true, value: 'UpdatedAt' }
     ],
     tableItems: [],
     total: 0
