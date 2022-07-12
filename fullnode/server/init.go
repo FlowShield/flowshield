@@ -50,6 +50,7 @@ func InitService(c *cli.Context) (err error) {
 	if confer.GlobalConfig().Web3.Register == "true" && confer.GlobalConfig().P2P.Enable {
 		// 启动订单同步检查agent
 		go agent.SyncClientOrderStatus()
+		go agent.SyncUserBindStatus()
 	}
 	return
 }

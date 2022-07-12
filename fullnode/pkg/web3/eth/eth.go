@@ -19,15 +19,17 @@ const (
 	Provider = 2
 )
 
-var (
-	client   *ethclient.Client
-	instance *contract.Slit
-	err      error
-)
+type CloudSlit struct {
+	Client   *ethclient.Client
+	Instance *contract.Slit
+	Auth     *bind.TransactOpts
+}
+
+var CS *CloudSlit
 
 func InitETH(cfg *confer.Web3) error {
 	ctx := context.Background()
-	client, err = ethclient.Dial(cfg.EthAddress())
+	client, err := ethclient.Dial(cfg.EthAddress())
 	if err != nil {
 		return err
 	}
@@ -36,7 +38,7 @@ func InitETH(cfg *confer.Web3) error {
 		return err
 	}
 	contractAdd := common.HexToAddress(cfg.Contract.Token)
-	instance, err = contract.NewSlit(contractAdd, client)
+	instance, err := contract.NewSlit(contractAdd, client)
 	if err != nil {
 		return err
 	}
@@ -45,9 +47,18 @@ func InitETH(cfg *confer.Web3) error {
 	if err != nil {
 		return err
 	}
+	CS = &CloudSlit{
+		Client:   client,
+		Instance: instance,
+		Auth:     auth,
+	}
+	return CS.stack(ctx)
+}
+
+func (c *CloudSlit) stack(ctx context.Context) error {
 	logger.Infof("checking if deposited or not...")
-	isDeposit, err := instance.IsDeposit(&bind.CallOpts{
-		From: auth.From,
+	isDeposit, err := c.Instance.IsDeposit(&bind.CallOpts{
+		From: c.Auth.From,
 	}, FullNode)
 	if err != nil {
 		return err
@@ -58,11 +69,11 @@ func InitETH(cfg *confer.Web3) error {
 	}
 	logger.Infof("you have not deposited! trying to deposit...")
 	// 尝试质押
-	tra, err := instance.Stake(auth, FullNode)
+	tra, err := c.Instance.Stake(c.Auth, FullNode)
 	if err != nil {
 		return err
 	}
-	rec, err := bind.WaitMined(ctx, client, tra)
+	rec, err := bind.WaitMined(ctx, c.Client, tra)
 	if err != nil {
 		return err
 	}
@@ -73,6 +84,6 @@ func InitETH(cfg *confer.Web3) error {
 	return errors.New("sorry,deposit failed")
 }
 
-func Contract() *contract.Slit {
-	return instance
+func Instance() *contract.Slit {
+	return CS.Instance
 }

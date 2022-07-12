@@ -20,3 +20,8 @@ func TestJson(t *testing.T) {
 	json.Unmarshal([]byte(value.String()), &person)
 	fmt.Println(person)
 }
+
+func TestString(t *testing.T) {
+	var str = "abcdefg"
+	fmt.Println(str[len(str)-2:])
+}

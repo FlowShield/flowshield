@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	WaittingPaid = iota
+	WaitingPaid = iota
 	Paid
 	Success
 )
