@@ -71,38 +71,6 @@ var doc = `{
                     }
                 }
             },
-            "put": {
-                "description": "修改ZTA的client",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA"
-                ],
-                "summary": "EditClient",
-                "parameters": [
-                    {
-                        "description": "修改ZTA的client",
-                        "name": "Client",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/mparam.EditClient"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            },
             "post": {
                 "description": "新增ZTA的client",
                 "consumes": [
@@ -136,88 +104,9 @@ var doc = `{
                 }
             }
         },
-        "/access/client/{uuid}": {
-            "delete": {
-                "description": "删除ZTA的client",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA"
-                ],
-                "summary": "DelClient",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "uuid",
-                        "name": "uuid",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            }
-        },
-        "/access/relay": {
-            "get": {
-                "description": "获取ZTA的relay",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA"
-                ],
-                "summary": "RelayList",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "修改ZTA的relay",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA"
-                ],
-                "summary": "EditRelay",
-                "parameters": [
-                    {
-                        "description": "修改ZTA的relay",
-                        "name": "Relay",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/mparam.EditRelay"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            },
+        "/access/client/notify": {
             "post": {
-                "description": "新增ZTA的relay",
+                "description": "接收client订单状态改变的通知",
                 "consumes": [
                     "application/json"
                 ],
@@ -227,45 +116,16 @@ var doc = `{
                 "tags": [
                     "ZTA"
                 ],
-                "summary": "AddRelay",
+                "summary": "NotifyClient",
                 "parameters": [
                     {
-                        "description": "新增ZTA的relay",
-                        "name": "Relay",
+                        "description": "接收client订单状态改变的通知",
+                        "name": "NotifyClient",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/mparam.AddRelay"
+                            "$ref": "#/definitions/mparam.NotifyClient"
                         }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            }
-        },
-        "/access/relay/{uuid}": {
-            "delete": {
-                "description": "删除ZTA的relay",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA"
-                ],
-                "summary": "DelRelay",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "uuid",
-                        "name": "uuid",
-                        "in": "path",
-                        "required": true
                     }
                 ],
                 "responses": {
@@ -297,38 +157,6 @@ var doc = `{
                     }
                 }
             },
-            "put": {
-                "description": "修改ZTA的resource",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA"
-                ],
-                "summary": "EditResource",
-                "parameters": [
-                    {
-                        "description": "修改ZTA的resource",
-                        "name": "Resource",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/mparam.EditResource"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            },
             "post": {
                 "description": "新增ZTA的resource",
                 "consumes": [
@@ -350,148 +178,6 @@ var doc = `{
                         "schema": {
                             "$ref": "#/definitions/mparam.AddResource"
                         }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            }
-        },
-        "/access/resource/{uuid}": {
-            "delete": {
-                "description": "删除ZTA的resource",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA"
-                ],
-                "summary": "DelResource",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "主键ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            }
-        },
-        "/access/server": {
-            "get": {
-                "description": "获取ZTA的server",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA"
-                ],
-                "summary": "ServerList",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "修改ZTA的server",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA"
-                ],
-                "summary": "EditServer",
-                "parameters": [
-                    {
-                        "description": "修改ZTA的server",
-                        "name": "Server",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/mparam.EditServer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "新增ZTA的server",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA"
-                ],
-                "summary": "AddServer",
-                "parameters": [
-                    {
-                        "description": "新增ZTA的server",
-                        "name": "Server",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/mparam.AddServer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            }
-        },
-        "/access/server/{uuid}": {
-            "delete": {
-                "description": "删除ZTA的server",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA"
-                ],
-                "summary": "DelServer",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "uuid",
-                        "name": "uuid",
-                        "in": "path",
-                        "required": true
                     }
                 ],
                 "responses": {
@@ -589,59 +275,9 @@ var doc = `{
                 }
             }
         },
-        "/sysytem/oauth2": {
-            "get": {
-                "description": "获取ZTA的Oauth2",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA Oauth2"
-                ],
-                "summary": "ListOauth2",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "修改ZTA的Oauth2",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA Oauth2"
-                ],
-                "summary": "EditOauth2",
-                "parameters": [
-                    {
-                        "description": "修改ZTA的Oauth2",
-                        "name": "Oauth2",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/mparam.EditOauth2"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            },
+        "/user/refresh": {
             "post": {
-                "description": "新增ZTA的Oauth2",
+                "description": "用户刷新token",
                 "consumes": [
                     "application/json"
                 ],
@@ -649,49 +285,9 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "ZTA Oauth2"
+                    "ZTA"
                 ],
-                "summary": "AddOauth2",
-                "parameters": [
-                    {
-                        "description": "新增ZTA的Oauth2",
-                        "name": "Oauth2",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/mparam.AddOauth2"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/controller.Res"
-                        }
-                    }
-                }
-            }
-        },
-        "/sysytem/oauth2/{id}": {
-            "delete": {
-                "description": "删除ZTA的Oauth2",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "ZTA Oauth2"
-                ],
-                "summary": "DelOauth2",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "主键ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
+                "summary": "UserRefresh",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -718,116 +314,27 @@ var doc = `{
                 }
             }
         },
-        "mmysql.ClientTarget": {
-            "type": "object",
-            "required": [
-                "host",
-                "port"
-            ],
-            "properties": {
-                "host": {
-                    "type": "string"
-                },
-                "port": {
-                    "type": "integer"
-                }
-            }
-        },
         "mparam.AddClient": {
             "type": "object",
             "required": [
-                "expire",
+                "duration",
                 "name",
-                "port",
-                "server_id",
-                "target"
+                "peer_id",
+                "resource_cid"
             ],
             "properties": {
-                "expire": {
-                    "description": "过期时间：天",
+                "duration": {
+                    "description": "Port        int    ` + "`" + `json:\"port\" form:\"port\" binding:\"required\"` + "`" + `         // 443",
                     "type": "integer"
                 },
                 "name": {
                     "type": "string"
                 },
-                "port": {
-                    "description": "443",
-                    "type": "integer"
-                },
-                "server_id": {
-                    "type": "integer"
-                },
-                "target": {
-                    "$ref": "#/definitions/mmysql.ClientTarget"
-                }
-            }
-        },
-        "mparam.AddOauth2": {
-            "type": "object",
-            "required": [
-                "auth_url",
-                "client_id",
-                "client_secret",
-                "name",
-                "redirect_url",
-                "scopes",
-                "token_url"
-            ],
-            "properties": {
-                "auth_url": {
+                "peer_id": {
                     "type": "string"
                 },
-                "client_id": {
+                "resource_cid": {
                     "type": "string"
-                },
-                "client_secret": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string",
-                    "enum": [
-                        "github",
-                        "facebook",
-                        "google"
-                    ]
-                },
-                "redirect_url": {
-                    "type": "string"
-                },
-                "scopes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "token_url": {
-                    "type": "string"
-                }
-            }
-        },
-        "mparam.AddRelay": {
-            "type": "object",
-            "required": [
-                "host",
-                "name",
-                "out_port",
-                "port"
-            ],
-            "properties": {
-                "host": {
-                    "description": "api.github.com",
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "out_port": {
-                    "description": "443",
-                    "type": "integer"
-                },
-                "port": {
-                    "description": "443",
-                    "type": "integer"
                 }
             }
         },
@@ -859,206 +366,13 @@ var doc = `{
                 }
             }
         },
-        "mparam.AddServer": {
+        "mparam.NotifyClient": {
             "type": "object",
             "required": [
-                "host",
-                "name",
-                "out_port",
-                "port"
+                "uuid"
             ],
             "properties": {
-                "host": {
-                    "description": "api.github.com",
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "out_port": {
-                    "description": "443",
-                    "type": "integer"
-                },
-                "port": {
-                    "description": "443",
-                    "type": "integer"
-                },
-                "resource_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "mparam.EditClient": {
-            "type": "object",
-            "required": [
-                "expire",
-                "id",
-                "name",
-                "port",
-                "server_id",
-                "target"
-            ],
-            "properties": {
-                "expire": {
-                    "description": "过期时间：天",
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "port": {
-                    "description": "443",
-                    "type": "integer"
-                },
-                "server_id": {
-                    "type": "integer"
-                },
-                "target": {
-                    "$ref": "#/definitions/mmysql.ClientTarget"
-                }
-            }
-        },
-        "mparam.EditOauth2": {
-            "type": "object",
-            "required": [
-                "auth_url",
-                "client_id",
-                "client_secret",
-                "id",
-                "name",
-                "redirect_url",
-                "scopes",
-                "token_url"
-            ],
-            "properties": {
-                "auth_url": {
-                    "type": "string"
-                },
-                "client_id": {
-                    "type": "string"
-                },
-                "client_secret": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string",
-                    "enum": [
-                        "github",
-                        "facebook",
-                        "google"
-                    ]
-                },
-                "redirect_url": {
-                    "type": "string"
-                },
-                "scopes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "token_url": {
-                    "type": "string"
-                }
-            }
-        },
-        "mparam.EditRelay": {
-            "type": "object",
-            "required": [
-                "host",
-                "id",
-                "name",
-                "out_port",
-                "port"
-            ],
-            "properties": {
-                "host": {
-                    "description": "api.github.com",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "out_port": {
-                    "description": "443",
-                    "type": "integer"
-                },
-                "port": {
-                    "description": "443",
-                    "type": "integer"
-                }
-            }
-        },
-        "mparam.EditResource": {
-            "type": "object",
-            "required": [
-                "host",
-                "id",
-                "name",
-                "port"
-            ],
-            "properties": {
-                "host": {
-                    "description": "api.github.com,192.168.1.1/16",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "port": {
-                    "description": "80-443;3306;6379",
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string",
-                    "enum": [
-                        "cidr",
-                        "dns"
-                    ]
-                }
-            }
-        },
-        "mparam.EditServer": {
-            "type": "object",
-            "required": [
-                "host",
-                "id",
-                "name",
-                "out_port",
-                "port"
-            ],
-            "properties": {
-                "host": {
-                    "description": "api.github.com",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "out_port": {
-                    "description": "443",
-                    "type": "integer"
-                },
-                "port": {
-                    "description": "443",
-                    "type": "integer"
-                },
-                "resource_id": {
+                "uuid": {
                     "type": "string"
                 }
             }
@@ -1081,8 +395,8 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "127.0.0.1:80",
 	BasePath:    "/api/v1",
 	Schemes:     []string{},
-	Title:       "ZAManager API",
-	Description: "This is ZAManager api list.",
+	Title:       "FullNode API",
+	Description: "This is FullNode api list.",
 }
 
 type s struct{}

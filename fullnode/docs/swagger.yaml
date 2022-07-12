@@ -9,86 +9,23 @@ definitions:
       message:
         type: string
     type: object
-  mmysql.ClientTarget:
-    properties:
-      host:
-        type: string
-      port:
-        type: integer
-    required:
-    - host
-    - port
-    type: object
   mparam.AddClient:
     properties:
-      expire:
-        description: 过期时间：天
+      duration:
+        description: Port        int    `json:"port" form:"port" binding:"required"`         //
+          443
         type: integer
       name:
         type: string
-      port:
-        description: "443"
-        type: integer
-      server_id:
-        type: integer
-      target:
-        $ref: '#/definitions/mmysql.ClientTarget'
-    required:
-    - expire
-    - name
-    - port
-    - server_id
-    - target
-    type: object
-  mparam.AddOauth2:
-    properties:
-      auth_url:
+      peer_id:
         type: string
-      client_id:
-        type: string
-      client_secret:
-        type: string
-      name:
-        enum:
-        - github
-        - facebook
-        - google
-        type: string
-      redirect_url:
-        type: string
-      scopes:
-        items:
-          type: string
-        type: array
-      token_url:
+      resource_cid:
         type: string
     required:
-    - auth_url
-    - client_id
-    - client_secret
+    - duration
     - name
-    - redirect_url
-    - scopes
-    - token_url
-    type: object
-  mparam.AddRelay:
-    properties:
-      host:
-        description: api.github.com
-        type: string
-      name:
-        type: string
-      out_port:
-        description: "443"
-        type: integer
-      port:
-        description: "443"
-        type: integer
-    required:
-    - host
-    - name
-    - out_port
-    - port
+    - peer_id
+    - resource_cid
     type: object
   mparam.AddResource:
     properties:
@@ -110,159 +47,18 @@ definitions:
     - name
     - port
     type: object
-  mparam.AddServer:
+  mparam.NotifyClient:
     properties:
-      host:
-        description: api.github.com
-        type: string
-      name:
-        type: string
-      out_port:
-        description: "443"
-        type: integer
-      port:
-        description: "443"
-        type: integer
-      resource_id:
+      uuid:
         type: string
     required:
-    - host
-    - name
-    - out_port
-    - port
-    type: object
-  mparam.EditClient:
-    properties:
-      expire:
-        description: 过期时间：天
-        type: integer
-      id:
-        type: integer
-      name:
-        type: string
-      port:
-        description: "443"
-        type: integer
-      server_id:
-        type: integer
-      target:
-        $ref: '#/definitions/mmysql.ClientTarget'
-    required:
-    - expire
-    - id
-    - name
-    - port
-    - server_id
-    - target
-    type: object
-  mparam.EditOauth2:
-    properties:
-      auth_url:
-        type: string
-      client_id:
-        type: string
-      client_secret:
-        type: string
-      id:
-        type: integer
-      name:
-        enum:
-        - github
-        - facebook
-        - google
-        type: string
-      redirect_url:
-        type: string
-      scopes:
-        items:
-          type: string
-        type: array
-      token_url:
-        type: string
-    required:
-    - auth_url
-    - client_id
-    - client_secret
-    - id
-    - name
-    - redirect_url
-    - scopes
-    - token_url
-    type: object
-  mparam.EditRelay:
-    properties:
-      host:
-        description: api.github.com
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      out_port:
-        description: "443"
-        type: integer
-      port:
-        description: "443"
-        type: integer
-    required:
-    - host
-    - id
-    - name
-    - out_port
-    - port
-    type: object
-  mparam.EditResource:
-    properties:
-      host:
-        description: api.github.com,192.168.1.1/16
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      port:
-        description: 80-443;3306;6379
-        type: string
-      type:
-        enum:
-        - cidr
-        - dns
-        type: string
-    required:
-    - host
-    - id
-    - name
-    - port
-    type: object
-  mparam.EditServer:
-    properties:
-      host:
-        description: api.github.com
-        type: string
-      id:
-        type: integer
-      name:
-        type: string
-      out_port:
-        description: "443"
-        type: integer
-      port:
-        description: "443"
-        type: integer
-      resource_id:
-        type: string
-    required:
-    - host
-    - id
-    - name
-    - out_port
-    - port
+    - uuid
     type: object
 host: 127.0.0.1:80
 info:
   contact: {}
-  description: This is ZAManager api list.
-  title: ZAManager API
+  description: This is FullNode api list.
+  title: FullNode API
   version: 1.0.0
 paths:
   /a/{hash}:
@@ -318,70 +114,18 @@ paths:
       summary: AddClient
       tags:
       - ZTA
-    put:
-      consumes:
-      - application/json
-      description: 修改ZTA的client
-      parameters:
-      - description: 修改ZTA的client
-        in: body
-        name: Client
-        required: true
-        schema:
-          $ref: '#/definitions/mparam.EditClient'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: EditClient
-      tags:
-      - ZTA
-  /access/client/{uuid}:
-    delete:
-      description: 删除ZTA的client
-      parameters:
-      - description: uuid
-        in: path
-        name: uuid
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: DelClient
-      tags:
-      - ZTA
-  /access/relay:
-    get:
-      description: 获取ZTA的relay
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: RelayList
-      tags:
-      - ZTA
+  /access/client/notify:
     post:
       consumes:
       - application/json
-      description: 新增ZTA的relay
+      description: 接收client订单状态改变的通知
       parameters:
-      - description: 新增ZTA的relay
+      - description: 接收client订单状态改变的通知
         in: body
-        name: Relay
+        name: NotifyClient
         required: true
         schema:
-          $ref: '#/definitions/mparam.AddRelay'
+          $ref: '#/definitions/mparam.NotifyClient'
       produces:
       - application/json
       responses:
@@ -389,47 +133,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/controller.Res'
-      summary: AddRelay
-      tags:
-      - ZTA
-    put:
-      consumes:
-      - application/json
-      description: 修改ZTA的relay
-      parameters:
-      - description: 修改ZTA的relay
-        in: body
-        name: Relay
-        required: true
-        schema:
-          $ref: '#/definitions/mparam.EditRelay'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: EditRelay
-      tags:
-      - ZTA
-  /access/relay/{uuid}:
-    delete:
-      description: 删除ZTA的relay
-      parameters:
-      - description: uuid
-        in: path
-        name: uuid
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: DelRelay
+      summary: NotifyClient
       tags:
       - ZTA
   /access/resource:
@@ -464,120 +168,6 @@ paths:
           schema:
             $ref: '#/definitions/controller.Res'
       summary: AddResource
-      tags:
-      - ZTA
-    put:
-      consumes:
-      - application/json
-      description: 修改ZTA的resource
-      parameters:
-      - description: 修改ZTA的resource
-        in: body
-        name: Resource
-        required: true
-        schema:
-          $ref: '#/definitions/mparam.EditResource'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: EditResource
-      tags:
-      - ZTA
-  /access/resource/{uuid}:
-    delete:
-      description: 删除ZTA的resource
-      parameters:
-      - description: 主键ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: DelResource
-      tags:
-      - ZTA
-  /access/server:
-    get:
-      description: 获取ZTA的server
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: ServerList
-      tags:
-      - ZTA
-    post:
-      consumes:
-      - application/json
-      description: 新增ZTA的server
-      parameters:
-      - description: 新增ZTA的server
-        in: body
-        name: Server
-        required: true
-        schema:
-          $ref: '#/definitions/mparam.AddServer'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: AddServer
-      tags:
-      - ZTA
-    put:
-      consumes:
-      - application/json
-      description: 修改ZTA的server
-      parameters:
-      - description: 修改ZTA的server
-        in: body
-        name: Server
-        required: true
-        schema:
-          $ref: '#/definitions/mparam.EditServer'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: EditServer
-      tags:
-      - ZTA
-  /access/server/{uuid}:
-    delete:
-      description: 删除ZTA的server
-      parameters:
-      - description: uuid
-        in: path
-        name: uuid
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: DelServer
       tags:
       - ZTA
   /controlplane/machine/{machine_id}:
@@ -636,30 +226,11 @@ paths:
       summary: ListNode
       tags:
       - ZTA Node
-  /sysytem/oauth2:
-    get:
-      description: 获取ZTA的Oauth2
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: ListOauth2
-      tags:
-      - ZTA Oauth2
+  /user/refresh:
     post:
       consumes:
       - application/json
-      description: 新增ZTA的Oauth2
-      parameters:
-      - description: 新增ZTA的Oauth2
-        in: body
-        name: Oauth2
-        required: true
-        schema:
-          $ref: '#/definitions/mparam.AddOauth2'
+      description: 用户刷新token
       produces:
       - application/json
       responses:
@@ -667,47 +238,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/controller.Res'
-      summary: AddOauth2
+      summary: UserRefresh
       tags:
-      - ZTA Oauth2
-    put:
-      consumes:
-      - application/json
-      description: 修改ZTA的Oauth2
-      parameters:
-      - description: 修改ZTA的Oauth2
-        in: body
-        name: Oauth2
-        required: true
-        schema:
-          $ref: '#/definitions/mparam.EditOauth2'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: EditOauth2
-      tags:
-      - ZTA Oauth2
-  /sysytem/oauth2/{id}:
-    delete:
-      description: 删除ZTA的Oauth2
-      parameters:
-      - description: 主键ID
-        in: path
-        name: id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/controller.Res'
-      summary: DelOauth2
-      tags:
-      - ZTA Oauth2
+      - ZTA
 swagger: "2.0"

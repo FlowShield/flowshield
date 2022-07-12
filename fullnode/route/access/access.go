@@ -5,7 +5,6 @@ import (
 
 	v1 "github.com/cloudslit/cloudslit/fullnode/app/v1/access/controller"
 	"github.com/cloudslit/cloudslit/fullnode/pconst"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/middle"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
 
@@ -21,9 +20,8 @@ func APIAccess(parentRoute gin.IRouter) {
 			resource.GET("", v1.ResourceList)
 			resource.POST("", func(c *gin.Context) {
 				// 判断当前用户是否是Dao主
-				token := confer.GlobalConfig().P2P.Account
 				user := util.User(c)
-				if user == nil || user.Wallet != token {
+				if user == nil || !user.Master {
 					c.JSON(http.StatusForbidden, gin.H{
 						"code":    pconst.CODE_COMMON_ACCESS_FORBIDDEN,
 						"message": "permission denied",

@@ -9,7 +9,9 @@ import (
 
 	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/model/mparam"
+	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
+
+	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/eth"
 
 	"golang.org/x/oauth2/github"
 
@@ -80,7 +82,12 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, oauth2Code string)
 		return
 	}
 	// 判断是否Dao主
-	userInfo.Master = userInfo.Wallet == confer.GlobalConfig().P2P.Account
+	address, err := eth.Contract().GetWallet(nil, userInfo.UUID)
+	if err != nil {
+		logger.Errorf(c, "get wallet error: %v", err)
+	} else {
+		userInfo.Master = address.String() == confer.GlobalConfig().P2P.Account
+	}
 	userBytes, _ := json.Marshal(userInfo)
 	session.Set("user", userBytes)
 	session.Save()
@@ -99,21 +106,19 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, oauth2Code string)
 	return
 }
 
-func UserBindWallet(c *gin.Context, param *mparam.BindWallet) (code int) {
-	// 查询是否已经绑定钱包
+func UserRefresh(c *gin.Context) (code int) {
+	// 查询信息
 	user, err := userDao.NewUser(c).GetUser(util.User(c).UUID)
 	if err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
-	if user.Wallet == param.Wallet {
-		return pconst.CODE_COMMON_DATA_ALREADY_EXIST
+	address, err := eth.Contract().GetWallet(nil, user.UUID)
+	if err != nil {
+		logger.Errorf(c, "get wallet error: %v", err)
+	} else {
+		user.Master = address.String() == confer.GlobalConfig().P2P.Account
 	}
-	user.Wallet = param.Wallet
-	if err = userDao.NewUser(c).UpdateUser(user); err != nil {
-		return pconst.CODE_COMMON_SERVER_BUSY
-	}
-	user.Master = user.Wallet == confer.GlobalConfig().P2P.Account
-	// 绑定成功，刷新session
+	//刷新session
 	session := sessions.Default(c)
 	userBytes, _ := json.Marshal(user)
 	session.Set("user", userBytes)

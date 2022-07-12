@@ -30,7 +30,7 @@ var (
 
 // SlitMetaData contains all meta data concerning the Slit contract.
 var SlitMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"}],\"name\":\"allowance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"orderId\",\"type\":\"string\"}],\"name\":\"checkOrder\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"orderId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_orderPrice\",\"type\":\"uint256\"}],\"name\":\"clientOrder\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"fullnodeDepositAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"isDeposit\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"privoderDepositAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"stake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"}],\"name\":\"allowance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uid\",\"type\":\"string\"}],\"name\":\"bindWallet\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uid\",\"type\":\"string\"}],\"name\":\"changeWallet\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_orderId\",\"type\":\"string\"}],\"name\":\"checkOrder\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"uint32\",\"name\":\"_duration\",\"type\":\"uint32\"},{\"internalType\":\"string\",\"name\":\"_orderId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"}],\"name\":\"clientOrder\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"fullnodeDepositAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uid\",\"type\":\"string\"}],\"name\":\"getWallet\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"isDeposit\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"privoderDepositAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"stake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdrawAllOrderTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_orderId\",\"type\":\"string\"}],\"name\":\"withdrawOrderTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
 }
 
 // SlitABI is the input ABI used to generate the binding from.
@@ -243,10 +243,10 @@ func (_Slit *SlitCallerSession) BalanceOf(account common.Address) (*big.Int, err
 
 // CheckOrder is a free data retrieval call binding the contract method 0xdd6887ed.
 //
-// Solidity: function checkOrder(string orderId) view returns(bool)
-func (_Slit *SlitCaller) CheckOrder(opts *bind.CallOpts, orderId string) (bool, error) {
+// Solidity: function checkOrder(string _orderId) view returns(bool)
+func (_Slit *SlitCaller) CheckOrder(opts *bind.CallOpts, _orderId string) (bool, error) {
 	var out []interface{}
-	err := _Slit.contract.Call(opts, &out, "checkOrder", orderId)
+	err := _Slit.contract.Call(opts, &out, "checkOrder", _orderId)
 
 	if err != nil {
 		return *new(bool), err
@@ -260,16 +260,16 @@ func (_Slit *SlitCaller) CheckOrder(opts *bind.CallOpts, orderId string) (bool, 
 
 // CheckOrder is a free data retrieval call binding the contract method 0xdd6887ed.
 //
-// Solidity: function checkOrder(string orderId) view returns(bool)
-func (_Slit *SlitSession) CheckOrder(orderId string) (bool, error) {
-	return _Slit.Contract.CheckOrder(&_Slit.CallOpts, orderId)
+// Solidity: function checkOrder(string _orderId) view returns(bool)
+func (_Slit *SlitSession) CheckOrder(_orderId string) (bool, error) {
+	return _Slit.Contract.CheckOrder(&_Slit.CallOpts, _orderId)
 }
 
 // CheckOrder is a free data retrieval call binding the contract method 0xdd6887ed.
 //
-// Solidity: function checkOrder(string orderId) view returns(bool)
-func (_Slit *SlitCallerSession) CheckOrder(orderId string) (bool, error) {
-	return _Slit.Contract.CheckOrder(&_Slit.CallOpts, orderId)
+// Solidity: function checkOrder(string _orderId) view returns(bool)
+func (_Slit *SlitCallerSession) CheckOrder(_orderId string) (bool, error) {
+	return _Slit.Contract.CheckOrder(&_Slit.CallOpts, _orderId)
 }
 
 // Decimals is a free data retrieval call binding the contract method 0x313ce567.
@@ -332,6 +332,37 @@ func (_Slit *SlitSession) FullnodeDepositAmount() (*big.Int, error) {
 // Solidity: function fullnodeDepositAmount() view returns(uint256)
 func (_Slit *SlitCallerSession) FullnodeDepositAmount() (*big.Int, error) {
 	return _Slit.Contract.FullnodeDepositAmount(&_Slit.CallOpts)
+}
+
+// GetWallet is a free data retrieval call binding the contract method 0xa4e2df66.
+//
+// Solidity: function getWallet(string uid) view returns(address)
+func (_Slit *SlitCaller) GetWallet(opts *bind.CallOpts, uid string) (common.Address, error) {
+	var out []interface{}
+	err := _Slit.contract.Call(opts, &out, "getWallet", uid)
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// GetWallet is a free data retrieval call binding the contract method 0xa4e2df66.
+//
+// Solidity: function getWallet(string uid) view returns(address)
+func (_Slit *SlitSession) GetWallet(uid string) (common.Address, error) {
+	return _Slit.Contract.GetWallet(&_Slit.CallOpts, uid)
+}
+
+// GetWallet is a free data retrieval call binding the contract method 0xa4e2df66.
+//
+// Solidity: function getWallet(string uid) view returns(address)
+func (_Slit *SlitCallerSession) GetWallet(uid string) (common.Address, error) {
+	return _Slit.Contract.GetWallet(&_Slit.CallOpts, uid)
 }
 
 // IsDeposit is a free data retrieval call binding the contract method 0xf276b8aa.
@@ -510,25 +541,67 @@ func (_Slit *SlitTransactorSession) Approve(spender common.Address, value *big.I
 	return _Slit.Contract.Approve(&_Slit.TransactOpts, spender, value)
 }
 
-// ClientOrder is a paid mutator transaction binding the contract method 0x1b005437.
+// BindWallet is a paid mutator transaction binding the contract method 0x8ec012b9.
 //
-// Solidity: function clientOrder(string orderId, uint256 _orderPrice) returns()
-func (_Slit *SlitTransactor) ClientOrder(opts *bind.TransactOpts, orderId string, _orderPrice *big.Int) (*types.Transaction, error) {
-	return _Slit.contract.Transact(opts, "clientOrder", orderId, _orderPrice)
+// Solidity: function bindWallet(string uid) returns()
+func (_Slit *SlitTransactor) BindWallet(opts *bind.TransactOpts, uid string) (*types.Transaction, error) {
+	return _Slit.contract.Transact(opts, "bindWallet", uid)
 }
 
-// ClientOrder is a paid mutator transaction binding the contract method 0x1b005437.
+// BindWallet is a paid mutator transaction binding the contract method 0x8ec012b9.
 //
-// Solidity: function clientOrder(string orderId, uint256 _orderPrice) returns()
-func (_Slit *SlitSession) ClientOrder(orderId string, _orderPrice *big.Int) (*types.Transaction, error) {
-	return _Slit.Contract.ClientOrder(&_Slit.TransactOpts, orderId, _orderPrice)
+// Solidity: function bindWallet(string uid) returns()
+func (_Slit *SlitSession) BindWallet(uid string) (*types.Transaction, error) {
+	return _Slit.Contract.BindWallet(&_Slit.TransactOpts, uid)
 }
 
-// ClientOrder is a paid mutator transaction binding the contract method 0x1b005437.
+// BindWallet is a paid mutator transaction binding the contract method 0x8ec012b9.
 //
-// Solidity: function clientOrder(string orderId, uint256 _orderPrice) returns()
-func (_Slit *SlitTransactorSession) ClientOrder(orderId string, _orderPrice *big.Int) (*types.Transaction, error) {
-	return _Slit.Contract.ClientOrder(&_Slit.TransactOpts, orderId, _orderPrice)
+// Solidity: function bindWallet(string uid) returns()
+func (_Slit *SlitTransactorSession) BindWallet(uid string) (*types.Transaction, error) {
+	return _Slit.Contract.BindWallet(&_Slit.TransactOpts, uid)
+}
+
+// ChangeWallet is a paid mutator transaction binding the contract method 0xb031bc66.
+//
+// Solidity: function changeWallet(string uid) returns()
+func (_Slit *SlitTransactor) ChangeWallet(opts *bind.TransactOpts, uid string) (*types.Transaction, error) {
+	return _Slit.contract.Transact(opts, "changeWallet", uid)
+}
+
+// ChangeWallet is a paid mutator transaction binding the contract method 0xb031bc66.
+//
+// Solidity: function changeWallet(string uid) returns()
+func (_Slit *SlitSession) ChangeWallet(uid string) (*types.Transaction, error) {
+	return _Slit.Contract.ChangeWallet(&_Slit.TransactOpts, uid)
+}
+
+// ChangeWallet is a paid mutator transaction binding the contract method 0xb031bc66.
+//
+// Solidity: function changeWallet(string uid) returns()
+func (_Slit *SlitTransactorSession) ChangeWallet(uid string) (*types.Transaction, error) {
+	return _Slit.Contract.ChangeWallet(&_Slit.TransactOpts, uid)
+}
+
+// ClientOrder is a paid mutator transaction binding the contract method 0x5c437c7a.
+//
+// Solidity: function clientOrder(string _name, uint32 _duration, string _orderId, uint256 _price) returns()
+func (_Slit *SlitTransactor) ClientOrder(opts *bind.TransactOpts, _name string, _duration uint32, _orderId string, _price *big.Int) (*types.Transaction, error) {
+	return _Slit.contract.Transact(opts, "clientOrder", _name, _duration, _orderId, _price)
+}
+
+// ClientOrder is a paid mutator transaction binding the contract method 0x5c437c7a.
+//
+// Solidity: function clientOrder(string _name, uint32 _duration, string _orderId, uint256 _price) returns()
+func (_Slit *SlitSession) ClientOrder(_name string, _duration uint32, _orderId string, _price *big.Int) (*types.Transaction, error) {
+	return _Slit.Contract.ClientOrder(&_Slit.TransactOpts, _name, _duration, _orderId, _price)
+}
+
+// ClientOrder is a paid mutator transaction binding the contract method 0x5c437c7a.
+//
+// Solidity: function clientOrder(string _name, uint32 _duration, string _orderId, uint256 _price) returns()
+func (_Slit *SlitTransactorSession) ClientOrder(_name string, _duration uint32, _orderId string, _price *big.Int) (*types.Transaction, error) {
+	return _Slit.Contract.ClientOrder(&_Slit.TransactOpts, _name, _duration, _orderId, _price)
 }
 
 // Stake is a paid mutator transaction binding the contract method 0x604f2177.
@@ -613,6 +686,48 @@ func (_Slit *SlitSession) Withdraw(_type uint8) (*types.Transaction, error) {
 // Solidity: function withdraw(uint8 _type) returns()
 func (_Slit *SlitTransactorSession) Withdraw(_type uint8) (*types.Transaction, error) {
 	return _Slit.Contract.Withdraw(&_Slit.TransactOpts, _type)
+}
+
+// WithdrawAllOrderTokens is a paid mutator transaction binding the contract method 0x27a0b34a.
+//
+// Solidity: function withdrawAllOrderTokens() returns()
+func (_Slit *SlitTransactor) WithdrawAllOrderTokens(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Slit.contract.Transact(opts, "withdrawAllOrderTokens")
+}
+
+// WithdrawAllOrderTokens is a paid mutator transaction binding the contract method 0x27a0b34a.
+//
+// Solidity: function withdrawAllOrderTokens() returns()
+func (_Slit *SlitSession) WithdrawAllOrderTokens() (*types.Transaction, error) {
+	return _Slit.Contract.WithdrawAllOrderTokens(&_Slit.TransactOpts)
+}
+
+// WithdrawAllOrderTokens is a paid mutator transaction binding the contract method 0x27a0b34a.
+//
+// Solidity: function withdrawAllOrderTokens() returns()
+func (_Slit *SlitTransactorSession) WithdrawAllOrderTokens() (*types.Transaction, error) {
+	return _Slit.Contract.WithdrawAllOrderTokens(&_Slit.TransactOpts)
+}
+
+// WithdrawOrderTokens is a paid mutator transaction binding the contract method 0x25cfedb5.
+//
+// Solidity: function withdrawOrderTokens(string _orderId) returns()
+func (_Slit *SlitTransactor) WithdrawOrderTokens(opts *bind.TransactOpts, _orderId string) (*types.Transaction, error) {
+	return _Slit.contract.Transact(opts, "withdrawOrderTokens", _orderId)
+}
+
+// WithdrawOrderTokens is a paid mutator transaction binding the contract method 0x25cfedb5.
+//
+// Solidity: function withdrawOrderTokens(string _orderId) returns()
+func (_Slit *SlitSession) WithdrawOrderTokens(_orderId string) (*types.Transaction, error) {
+	return _Slit.Contract.WithdrawOrderTokens(&_Slit.TransactOpts, _orderId)
+}
+
+// WithdrawOrderTokens is a paid mutator transaction binding the contract method 0x25cfedb5.
+//
+// Solidity: function withdrawOrderTokens(string _orderId) returns()
+func (_Slit *SlitTransactorSession) WithdrawOrderTokens(_orderId string) (*types.Transaction, error) {
+	return _Slit.Contract.WithdrawOrderTokens(&_Slit.TransactOpts, _orderId)
 }
 
 // SlitApprovalIterator is returned from FilterApproval and is used to iterate over the raw logs and unpacked data for Approval events raised by the Slit contract.

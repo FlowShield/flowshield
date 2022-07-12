@@ -5,9 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/model/mparam"
-
-	"github.com/cloudslit/cloudslit/fullnode/app/base/controller"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/service"
 	"github.com/cloudslit/cloudslit/fullnode/pconst"
 	"github.com/cloudslit/cloudslit/fullnode/pkg/response"
@@ -43,21 +40,14 @@ func Oauth2Callback(c *gin.Context) {
 	service.Oauth2Callback(c, session, c.Query("code"))
 }
 
-// @Summary UserBindWallet
-// @Description 用户绑定钱包地址
+// @Summary UserRefresh
+// @Description 用户刷新token
 // @Tags ZTA
 // @Accept  json
 // @Produce  json
-// @Param Resource body mparam.AddResource true "用户绑定钱包地址"
-// @Success 200 {object} controller.BindWallet
-// @Router /user/bind [post]
-func UserBindWallet(c *gin.Context) {
-	param := &mparam.BindWallet{}
-	b, code := controller.BindParams(c, &param)
-	if !b {
-		response.UtilResponseReturnJsonFailed(c, code)
-		return
-	}
-	code = service.UserBindWallet(c, param)
+// @Success 200 {object} controller.Res
+// @Router /user/refresh [post]
+func UserRefresh(c *gin.Context) {
+	code := service.UserRefresh(c)
 	response.UtilResponseReturnJson(c, code, nil)
 }
