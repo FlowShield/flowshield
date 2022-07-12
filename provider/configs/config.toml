@@ -7,7 +7,7 @@ PrintConfig = true
 # Information about themselves
 [App]
 # Provide publicly available domain names
-LocalAddr = "local.zsnb.xyz"
+LocalAddr = "49.65.1.210"
 # Provide the public port, which is also the default listening port of the program
 LocalPort = 5091
 # Publish the certificate specified by the domain name
@@ -24,9 +24,9 @@ ServiceMetadataTopic = "cloudslit_provider_metadata"
 
 [Web3]
 # Wallet account
-Account = "0x1B4b827703dc3545089fcee70F0e6e732BFF4413"
+Account = "0x0e5518bfef2b0e0c6600742c662b797445020F99"
 # Wallet account private key
-PrivateKey = "dee7aaec609f2d291ed49a4ae36a37704152e6a57188c87af5d03d1126155686"
+PrivateKey = "64e6d1e67af078a1af9ab1113f755ee1a926889cbc091c96bebc58e5f6f93ab9"
 # Price - Price of services provided, unit = CSD/h, CSD It's our token
 Price = 1
 
@@ -61,3 +61,25 @@ HookMaxBuffer = 512
 [LogRedisHook]
 Addr = "127.0.0.1:6379"
 Key = "log_key"
+
+[MySQL]
+# Connection address
+Host = "127.0.0.1"
+# Connection port
+Port= 23306
+# user name
+User = "root"
+# Password
+Password = "123456"
+# Database
+DBName = "provider"
+# Prefix
+Prefix = "pr_"
+# Connection parameters
+Parameters = "charset=utf8mb4&parseTime=True&loc=Local&allowNativePasswords=true"
+PoolMinCap = 10
+PoolExCap = 5
+PoolMaxCap = 40
+PoolIdleTimeout = 3600
+PoolWaitCount = 1000
+PoolWaiTimeout = 30

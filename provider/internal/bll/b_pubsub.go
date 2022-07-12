@@ -4,34 +4,76 @@ import (
 	"context"
 	"fmt"
 	"github.com/cloudslit/cloudslit/provider/internal/config"
+	"github.com/cloudslit/cloudslit/provider/internal/dao/provider/model"
+	"github.com/cloudslit/cloudslit/provider/internal/dao/provider/service"
 	"github.com/cloudslit/cloudslit/provider/internal/schema"
 	"github.com/cloudslit/cloudslit/provider/pkg/errors"
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/cloudslit/cloudslit/provider/pkg/p2p"
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 	"io/ioutil"
+	"net"
 	"net/http"
+	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
 // Pubsub
 type Pubsub struct {
+	Orders map[string]*schema.NodeOrder
+	mu     sync.RWMutex
 }
 
 func NewPubsub() *Pubsub {
-	return &Pubsub{}
+	return &Pubsub{
+		Orders: make(map[string]*schema.NodeOrder),
+		mu:     sync.RWMutex{},
+	}
+}
+
+// 检查数据库是否存在
+func (a *Pubsub) InitByDB(ctx context.Context, ps *p2p.PubSub) {
+	// 查询数据库
+	list, err := service.ListProvider(&model.Provider{})
+	if err != nil {
+		logger.Errorf("读取持久化数据失败：%v", err)
+		return
+	}
+	for _, item := range list {
+		if _, ok := a.getOrder(item.Uuid); ok {
+			continue
+		}
+		if item.Wallet != config.C.Web3.Account {
+			logger.Warnf("The persistent order information is inconsistent with the node information and will not be started")
+			continue
+		}
+		order := item.ToNodeOrder()
+		// 检测端口是否异常
+		ln, err := net.Listen("tcp", ":"+strconv.Itoa(order.Port))
+		if err != nil {
+			logger.Errorf("The order is restarted, and the port is abnormal. Please deal with it in time, Err:%s", err)
+			continue
+		}
+		_ = ln.Close()
+		err = a.handleOrder(ctx, ps, order)
+		if err != nil {
+			logger.Errorf("Init Handle Order Err:%s", err)
+			continue
+		}
+	}
 }
 
 // eventhandle
 func (a *Pubsub) StartPubsubHandler(ctx context.Context, ps *p2p.PubSub, p *p2p.P2P) {
-	//go func() {
-	//	msg := `{"type":"order","data":{"server_cid":"bafybeifnc734brtng4tn2wxfp7pjtjz7qicd2dqvsxs36shugxoogzu4zu","wallet":"0x1B4b827703dc3545089fcee70F0e6e732BFF4413","uuid":"cde5260e-47ac-4a07-88b4-9a7ffc357a0b","port":0}}`
-	//	err := a.ReceiveHandle(ctx, ps, msg)
-	//	if err != nil {
-	//		logger.Errorf("Receive Msg Handle Err:%s", err)
-	//	}
-	//}()
+	go func() {
+		msg := `{"type":"order","data":{"server_cid":"bafybeifnc734brtng4tn2wxfp7pjtjz7qicd2dqvsxs36shugxoogzu4zu","wallet":"0x0e5518bfef2b0e0c6600742c662b797445020F99","uuid":"cde5260e-47ac-4a07-88b4-9a7ffc357a0b","port":0}}`
+		err := a.ReceiveHandle(ctx, ps, msg)
+		if err != nil {
+			logger.Errorf("Receive Msg Handle Err:%s", err)
+		}
+	}()
 	server := a.NewServerInfo()
 	refreshticker := time.NewTicker(10 * time.Second)
 	defer refreshticker.Stop()
@@ -47,11 +89,6 @@ func (a *Pubsub) StartPubsubHandler(ctx context.Context, ps *p2p.PubSub, p *p2p.
 		case <-refreshticker.C:
 			// Timing publish
 			a.nodeHeartBeat(ps, server)
-			//msg := `{"type":"order","data":{"server_cid":"bafybeia67xlj2w56ps7x5youglzyisqbb2syymyqditout6qfy77rrcxbq","wallet":"0x1B4b827703dc3545089fcee70F0e6e732BFF4413","uuid":"cf636cbe-cfd4-44c0-8a9d-bec110382e6a","port":0}}`
-			//err := a.ReceiveHandle(ctx, ps, msg)
-			//if err != nil {
-			//	logger.Errorf("Receive Msg Handle Err:%s", err)
-			//}
 
 		case log := <-ps.Logs:
 			// Add the log to the message box
@@ -82,24 +119,38 @@ func (a *Pubsub) orderReceive(ctx context.Context, ps *p2p.PubSub, pss *schema.P
 	if err != nil {
 		return err
 	}
+	return a.handleOrder(ctx, ps, order)
+}
+
+// 处理订单
+func (a *Pubsub) handleOrder(ctx context.Context, ps *p2p.PubSub, order *schema.NodeOrder) error {
+	if _, ok := a.getOrder(order.Uuid); ok {
+		return fmt.Errorf("this order has been launched:%s", order.Uuid)
+	}
 	if order.Wallet != config.C.Web3.Account {
-		return fmt.Errorf("wallet 异常，expect:%s, get:%s", config.C.Web3.Account, order.Wallet)
+		return fmt.Errorf("wallet Abnormal，expect:%s, get:%s", config.C.Web3.Account, order.Wallet)
 	}
 	// 解析配置
 retry:
-	pc, err := schema.ParserConfig(ctx, order.ServerCid)
+	pc, err := schema.ParserConfig(ctx, order.ServerCid, []byte(config.C.Web3.Account[len(config.C.Web3.Account)-8:]))
 	if err != nil {
 		time.Sleep(5 * time.Second)
 		logger.WithErrorStack(ctx, err).Warnf("get w3s data err:%v", err)
 		goto retry
 		return errors.WithStack(err)
 	}
+
 	// 预制端口
-	port, err := verifyPort(config.C.App.LocalPort + 1)
+	port, err := verifyPort(order.Port)
 	if err != nil {
 		return errors.WithStack(err)
 	}
 	order.Port = port
+	// 入库
+	err = a.addProvider(model.OrderToProvider(order, pc))
+	if err != nil {
+		return errors.WithStack(err)
+	}
 	// 监听端口
 	p := NewProvider()
 	l, err := p.Listen(ctx, port, pc)
@@ -108,7 +159,13 @@ retry:
 	}
 	go p.Handle(ctx, l)
 	go a.providerHeartBeat(ctx, ps, order)
+	a.setOrder(order)
 	return nil
+}
+
+func (a *Pubsub) addProvider(item *model.Provider) error {
+	err := service.AddProvider(item)
+	return err
 }
 
 // Provider 心跳
@@ -127,6 +184,19 @@ func (a *Pubsub) providerHeartBeat(ctx context.Context, ps *p2p.PubSub, order *s
 			logger.Infof("Provider Heart Beat - running at [::]:%d", order.Port)
 		}
 	}
+}
+
+func (a *Pubsub) getOrder(uuid string) (*schema.NodeOrder, bool) {
+	a.mu.RLock()
+	defer a.mu.RUnlock()
+	v, ok := a.Orders[uuid]
+	return v, ok
+}
+
+func (a *Pubsub) setOrder(order *schema.NodeOrder) {
+	a.mu.Lock()
+	a.Orders[order.Uuid] = order
+	defer a.mu.Unlock()
 }
 
 // nodeHeartBeat 节点发布自身信息

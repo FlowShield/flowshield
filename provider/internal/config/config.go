@@ -85,6 +85,7 @@ type Config struct {
 	Web3         Web3
 	Log          Log
 	LogRedisHook LogRedisHook
+	Mysql        Mysql
 }
 
 func (c *Config) IsDebugMode() bool {
@@ -132,6 +133,22 @@ type App struct {
 	LocalPort int
 	CertFile  string
 	KeyFile   string
+}
+
+type Mysql struct {
+	Host            string
+	Port            int
+	User            string
+	Password        string
+	DBName          string
+	Prefix          string
+	Parameters      string
+	PoolMinCap      int
+	PoolExCap       int
+	PoolMaxCap      int
+	PoolIdleTimeout int
+	PoolWaitCount   int
+	PoolWaiTimeout  int
 }
 
 // P2p Configuration parameters

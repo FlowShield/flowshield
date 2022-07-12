@@ -61,3 +61,25 @@ HookMaxBuffer = 512
 [LogRedisHook]
 Addr = "127.0.0.1:6379"
 Key = "log_key"
+
+[MySQL]
+# Connection address
+Host = "127.0.0.1"
+# Connection port
+Port= 23306
+# user name
+User = "root"
+# Password
+Password = "123456"
+# Database
+DBName = "provider"
+# Prefix
+Prefix = "pr_"
+# Connection parameters
+Parameters = "charset=utf8mb4&parseTime=True&loc=Local&allowNativePasswords=true"
+PoolMinCap = 10
+PoolExCap = 5
+PoolMaxCap = 40
+PoolIdleTimeout = 3600
+PoolWaitCount = 1000
+PoolWaiTimeout = 30

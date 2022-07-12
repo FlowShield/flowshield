@@ -46,7 +46,9 @@ func InitNode(ctx context.Context) error {
 			logger.Fatalf("Join PubSub Error: %v", err)
 		}
 		logrus.Infof("Successfully joined [%s] P2P channel.", config.C.P2p.ServiceMetadataTopic)
-		go bll.NewPubsub().StartPubsubHandler(ctx, chatapp, p2phost)
+		psBll := bll.NewPubsub()
+		go psBll.InitByDB(ctx, chatapp)
+		go psBll.StartPubsubHandler(ctx, chatapp, p2phost)
 	}
 	return nil
 }

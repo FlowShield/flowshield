@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   provider:
-    image: zhangshuainbb/cloudslit-provider:v0.0.7
+    image: zhangshuainbb/cloudslit-provider:v0.0.9
     network_mode: host
     volumes:
       - "./config.toml:/root/config.toml"
@@ -14,3 +14,17 @@ services:
         reservations:
           cpus: '0.50'
           memory: 500M
+    depends_on:
+      icefiresqlite:
+        condition: "service_healthy"
+
+  icefiresqlite:
+    image: taosheng205054/icefire-sqlite:latest
+    restart: always
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "127.0.0.1", "-P", "23306","-uroot","-p123456" ]
+      timeout: 20s
+      retries: 10
+    network_mode: host
+    volumes:
+      - ./db/sqlite.db:/app/db/sqlite.db

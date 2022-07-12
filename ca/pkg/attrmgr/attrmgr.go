@@ -9,7 +9,7 @@ SPDX-License-Identifier: Apache-2.0
  * Attributes are added to an X509 certificate as an extension.
  */
 
-package certificate
+package attrmgr
 
 import (
 	"crypto/x509"
@@ -240,7 +240,7 @@ func AppendExpiryToCSR(expiry time.Duration, csr *x509.CertificateRequest) {
 }
 
 func GetExpiryValue(csr *x509.CertificateRequest) time.Duration {
-	for _, ext := range csr.ExtraExtensions {
+	for _, ext := range csr.Extensions {
 		if ext.Id.String() == ExpiryOID.String() {
 			if string(ext.Value) == "" {
 				break

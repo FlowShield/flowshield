@@ -23,8 +23,8 @@ func Init(cfg *config.Web3) (err error) {
 	return
 }
 
-func Put(ctx context.Context, data interface{}) (cid string, err error) {
-	file, err := dataToFile(data)
+func Put(ctx context.Context, data interface{}, key []byte) (cid string, err error) {
+	file, err := dataToFile(data, key)
 	defer os.Remove(file.Name())
 	if err != nil {
 		return
@@ -36,7 +36,7 @@ func Put(ctx context.Context, data interface{}) (cid string, err error) {
 	return cidObj.String(), nil
 }
 
-func Get(ctx context.Context, cidStr string) (data []byte, err error) {
+func Get(ctx context.Context, cidStr string, key []byte) (data []byte, err error) {
 	cidObj, err := cid.Decode(cidStr)
 	if err != nil {
 		return nil, err
@@ -65,14 +65,14 @@ func Get(ctx context.Context, cidStr string) (data []byte, err error) {
 	if err != nil {
 		return nil, err
 	}
-	data, err = goEncrypt.DesCbcDecrypt(data, []byte("csd88888"), nil) //解密得到密文,可以自己传入初始化向量,如果不传就使用默认的初始化向量,8字节
+	data, err = goEncrypt.DesCbcDecrypt(data, key[:], nil) //解密得到密文,可以自己传入初始化向量,如果不传就使用默认的初始化向量,8字节
 	if err != nil {
 		return nil, err
 	}
 	return
 }
 
-func dataToFile(data interface{}) (file *os.File, err error) {
+func dataToFile(data interface{}, key []byte) (file *os.File, err error) {
 	jsonByes, err := json.Marshal(data)
 	if err != nil {
 		return
@@ -82,7 +82,7 @@ func dataToFile(data interface{}) (file *os.File, err error) {
 		return
 	}
 	// 对数据进行加密
-	cryptText, err := goEncrypt.DesCbcEncrypt(jsonByes, []byte("csd88888"), nil)
+	cryptText, err := goEncrypt.DesCbcEncrypt(jsonByes, key[:], nil)
 	if err != nil {
 		return
 	}
