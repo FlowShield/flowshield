@@ -88,7 +88,7 @@ func AddClient(c *gin.Context, param *mparam.AddClient) (code int, data *mmysql.
 		return pconst.CODE_COMMON_DATA_NOT_EXIST, nil
 	}
 
-	serverSign, err := api.ApplySign(c, map[string]interface{}{"type": "provider"}, "cloud-slit", "cloud-slit", node.Addr, time.Now().Add(time.Duration(param.Duration)*time.Hour))
+	serverSign, err := api.ApplySign(c, map[string]interface{}{"type": "provider"}, "cloud-slit", "cloud-slit", node.Addr, time.Duration(param.Duration)*time.Hour)
 	if err != nil {
 		logger.Errorf(c, "AddClient ApplySign err : %v", err)
 		return pconst.CODE_COMMON_SERVER_BUSY, nil
@@ -226,7 +226,7 @@ func AcceptClientOrder(c *gin.Context, client *schema.ClientP2P) {
 			Port: port,
 		},
 	}
-	clientSign, err := api.ApplySign(c, attrs, "cloud-slit", "cloud-slit", "cloud-slit", time.Now().Add(time.Duration(info.Duration)*time.Hour))
+	clientSign, err := api.ApplySign(c, attrs, "cloud-slit", "cloud-slit", "cloud-slit", time.Duration(info.Duration)*time.Hour)
 	if err != nil {
 		logger.Errorf(c, "AcceptClientOrder ApplySign err : %v", err)
 		return
