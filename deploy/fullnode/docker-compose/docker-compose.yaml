@@ -53,6 +53,11 @@ services:
   cloudslit-backend:
     image: taosheng205054/cloudslit:latest
     restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 1G
     environment:
       DOMAIN: 'https://dash.cloudslit.xyz'
       CS_REDIS_ADDR: 'redis:6379'
