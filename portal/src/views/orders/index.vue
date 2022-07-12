@@ -60,7 +60,7 @@
 <script>
 import FormDialog from './components/form-dialog'
 import { deleteZeroAccessClient, fetchZeroAccessClients, postZeroAccessClientsPayNotify } from '@/api'
-import { payOrder, getOrder } from '../../utils/store.js'
+import { payOrder, paid } from '../../utils/store.js'
 
 export default {
   components: { FormDialog },
@@ -98,19 +98,21 @@ export default {
       this.getTableItems()
     },
     async pay(item) {
-      await getOrder(item.uuid)
       this.paying[item.uuid] = true
       const payStatus = await payOrder(item.uuid, item.price)
-      if (payStatus === 'ok') {
+
+      if (payStatus === 'ok' || payStatus === paid) {
         postZeroAccessClientsPayNotify({ uuid: item.uuid }).then(res => {
           this.$emit('on-success')
           this.$message.success()
           this.paying[item.uuid] = false
+          this.getTableItems()
         }).finally(() => {
           this.paying[item.uuid] = false
         })
       } else {
         this.$message.error(payStatus)
+        this.paying[item.uuid] = false
       }
     },
     getTableItems() {
@@ -121,7 +123,6 @@ export default {
         for (let i = 0; i < this.tableItems.length; i++) {
           this.paying[this.tableItems[i].uuid] = false
         }
-        console.log(this.paying)
       }).finally(() => {
         this.loading = false
       })

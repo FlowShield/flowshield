@@ -3,7 +3,13 @@
     <h3 class="font-weight-thin text-h3 mt-10">My Wallet</h3>
     <div class="login-page">
     <div class="mt-15">
-      <p class="mt-10" v-if="address">{{ address }}</p>
+      <div v-if="address">
+        <p class="mt-10">Your wallet address is '{{ address }}'</p>
+        <v-btn x-large rounded @click="changeWallet">
+          <v-icon class="mr-5">mdi-wallet</v-icon>
+          Change Your Wallet
+        </v-btn>
+      </div>
       <v-btn x-large rounded @click="connectWallet" v-else>
         <v-icon class="mr-5">mdi-wallet</v-icon>
         Connect Your Wallet
@@ -15,8 +21,8 @@
 </template>
 <script>
 import { fetchZeroAccessNodes } from '@/api'
-import { ethers } from 'ethers'
-import { getBalance, setStatus } from '../../utils/store.js'
+import { bindWallet, getWallet, changeWallet } from '../../utils/store.js'
+import store from '@/store'
 
 export default {
   components: { },
@@ -44,6 +50,7 @@ export default {
     total: 0
   }),
   created() {
+    this.getBind()
     this.getTableItems()
   },
   methods: {
@@ -64,16 +71,25 @@ export default {
       this.query.limit_num = v
       this.handleSearch()
     },
+    async getBind() {
+      const address = await getWallet(store.state.user.uuid)
+      if (address !== '0x0000000000000000000000000000000000000000') {
+        this.address = address
+      }
+    },
     async connectWallet() {
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      // eth_requestAccounts can silent prompt
-      await provider.send('wallet_requestPermissions', [{ // prompts every time
-        eth_accounts: {}
-      }])
-      const signer = provider.getSigner()
-      this.address = await signer.getAddress()
-      getBalance(this.newStatus)
-      setStatus()
+      let address = await getWallet(store.state.user.uuid)
+      if (address === '0x0000000000000000000000000000000000000000') {
+        await bindWallet(store.state.user.uuid)
+        address = await getWallet(store.state.user.uuid)
+        if (address === '0x0000000000000000000000000000000000000000') {
+          this.$message.error('Bind failed')
+        }
+      }
+    },
+    async changeWallet() {
+      await changeWallet(store.state.user.uuid)
+      this.address = await getWallet(store.state.user.uuid)
     }
   }
 }

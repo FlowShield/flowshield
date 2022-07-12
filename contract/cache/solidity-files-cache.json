@@ -1,41 +1,6 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/workspaces/cloudslit/contract/contracts/Token.sol": {
-      "lastModificationDate": 1657389348444,
-      "contentHash": "9ae70577fbb7d41bbfcbc569abb42a7a",
-      "sourceName": "contracts/Token.sol",
-      "solcConfig": {
-        "version": "0.8.15",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [],
-      "versionPragmas": [
-        "^0.8.15"
-      ],
-      "artifacts": [
-        "Token"
-      ]
-    },
     "/workspaces/cloudslit/contract/node_modules/hardhat/console.sol": {
       "lastModificationDate": 1656916890017,
       "contentHash": "cc4777addd464ea56fa35b1c45df0591",
@@ -69,6 +34,41 @@
       ],
       "artifacts": [
         "console"
+      ]
+    },
+    "/workspaces/cloudslit/contract/contracts/CloudSlit.sol": {
+      "lastModificationDate": 1657597528124,
+      "contentHash": "f3d9d4c0fc4a89d62abef617d482de97",
+      "sourceName": "contracts/CloudSlit.sol",
+      "solcConfig": {
+        "version": "0.8.15",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.15"
+      ],
+      "artifacts": [
+        "CloudSlit"
       ]
     }
   }

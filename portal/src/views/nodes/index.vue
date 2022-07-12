@@ -57,7 +57,7 @@ export default {
       { text: 'Wallet', value: 'peer_id', width: '210px' },
       { text: 'Type', value: 'type' },
       { text: 'Loc', value: 'loc' },
-      { text: 'Public IP', align: 'start', value: 'ip' },
+      // { text: 'Public IP', align: 'start', value: 'ip' },
       { text: 'Host', value: 'addr' },
       { text: 'Listen Port', value: 'port' },
       { text: 'Colo', value: 'colo' },

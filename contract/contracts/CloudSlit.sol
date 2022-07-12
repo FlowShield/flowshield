@@ -3,7 +3,7 @@
 pragma solidity ^0.8.15;
 
 // This is the main building block for smart contracts.
-contract Token {
+contract CloudSlit {
     // Some string type variables to identify the token.
     string public name = "CloudSlit Dao";
     string public symbol = "CSD";
@@ -74,10 +74,23 @@ contract Token {
     function allowance(address owner, address spender)public view returns (uint256){
         return allowances[owner][spender];
     }
-   
 
+    mapping(string => address) userBindings;
 
+    function getWallet(string memory uid) external view returns(address){
+        return userBindings[uid];
+    }
 
+    function bindWallet(string memory uid) external {
+        require(userBindings[uid] == address(0));
+        userBindings[uid] = msg.sender;
+    }
+
+    // Todo
+    function changeWallet(string memory uid) external {
+        userBindings[uid] = msg.sender;
+    }
+    
     //Deposit amount
     uint256 public fullnodeDepositAmount = 5000;
     uint256 public privoderDepositAmount = 1000;
@@ -128,16 +141,45 @@ contract Token {
         }
     }
     
-    mapping(string=>uint256) orders;
+    struct Order {
+        string name;
+        uint startTime;
+        uint endTime;
+        uint withdrawTime;
+        uint32 duration;
+        uint256 price;
+        bool used;
+        bool withdraw;
+        address payUser;
+    }
+    
+    mapping(string=>Order) orders;
+    mapping(address=>string[]) privoderOrders;
 
-    function clientOrder(string memory orderId, uint256 _orderPrice) external {
-        require(orders[orderId] == 0, "Already paid");
-        require(balances[msg.sender] >= _orderPrice, "Not enough tokens");
-        balances[msg.sender] -= _orderPrice;
-        orders[orderId] = _orderPrice;
+    function clientOrder(string memory _name, uint32 _duration, string memory _orderId, uint256 _price) external {
+        require(orders[_orderId].used, "Already paid");
+        require(balances[msg.sender] >= _price, "Not enough tokens");
+        balances[msg.sender] -= _price;
+        uint cooldownTime = 1 hours;
+        orders[_orderId] = Order(_name, block.timestamp, block.timestamp + _duration * cooldownTime, 0, _duration, _price, true, false, msg.sender );
     }
 
-    function checkOrder(string memory orderId) public view returns(bool) {
-        return (orders[orderId] != 0);
+    function checkOrder(string memory _orderId) public view returns(bool) {
+        return (orders[_orderId].used);
+    }
+
+    function withdrawAllOrderTokens() external {
+        require(privateDeposits[msg.sender] != 0);
+        string[] memory _orders = privoderOrders[msg.sender];
+        for (uint i=0; i < _orders.length; i++){
+            if (!orders[_orders[i]].withdraw){
+                
+            }
+        }
+    }
+    
+    function withdrawOrderTokens(string memory _orderId) external {
+        require(orders[_orderId].used);
+
     }
 }

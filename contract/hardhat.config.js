@@ -17,6 +17,10 @@ module.exports = {
     ropsten: {
       url: `https://ropsten.infura.io/v3/${INFURA_PROJECT_ID}`,
       accounts: [`0x${ROPSTEN_PRIVATE_KEY}`]
+    },
+    'godwoken-testnet': {
+      url: `https://godwoken-testnet-v1.ckbapp.dev`,
+      accounts: [`0x${ROPSTEN_PRIVATE_KEY}`]
     }
   },
 };
