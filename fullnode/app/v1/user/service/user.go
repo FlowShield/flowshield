@@ -77,10 +77,11 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, oauth2Code string)
 		return
 	}
 	// 判断是否Dao主
-	master, provider, err := eth.Instance().GetUserInfo(nil, user.UUID)
+	master, provider, err := eth.Instance().GetUserInfo(nil, userInfo.UUID)
 	if err != nil {
 		logger.Errorf(c, "get wallet error: %v", err)
 	} else {
+		logger.Infof("get userinfo result: %v, master:%v, provider:%v", userInfo.UUID, master, provider)
 		userInfo.Master = master
 		userInfo.Provider = provider
 	}
@@ -112,6 +113,7 @@ func UserRefresh(c *gin.Context) (code int) {
 	if err != nil {
 		logger.Errorf(c, "get wallet error: %v", err)
 	} else {
+		logger.Infof("get userinfo result: %v, master:%v, provider:%v", user.UUID, master, provider)
 		user.Master = master
 		user.Provider = provider
 	}

@@ -56,7 +56,7 @@ func InitETH(cfg *confer.Web3) error {
 }
 
 func (c *CloudSlit) stack(ctx context.Context) error {
-	logger.Infof("checking if deposited or not...")
+	logger.Infof("checking if stacked or not...")
 	isDeposit, err := c.Instance.IsDeposit(&bind.CallOpts{
 		From: c.Auth.From,
 	}, FullNode)
@@ -64,10 +64,10 @@ func (c *CloudSlit) stack(ctx context.Context) error {
 		return err
 	}
 	if isDeposit {
-		logger.Infof("you have deposited!")
+		logger.Infof("you have stacked!")
 		return nil
 	}
-	logger.Infof("you have not deposited! trying to deposit...")
+	logger.Infof("you have not stacked! trying to stack...")
 	// 尝试质押
 	tra, err := c.Instance.Stake(c.Auth, FullNode)
 	if err != nil {
@@ -78,10 +78,10 @@ func (c *CloudSlit) stack(ctx context.Context) error {
 		return err
 	}
 	if rec.Status > 0 {
-		logger.Infof("deposited succeed !")
+		logger.Infof("stack succeed !")
 		return nil
 	}
-	return errors.New("sorry,deposit failed")
+	return errors.New("sorry,stacked failed")
 }
 
 func Instance() *contract.Slit {
