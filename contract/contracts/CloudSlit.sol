@@ -119,8 +119,11 @@ contract CloudSlit {
     mapping(address => uint256) privateDeposits;
 
     function getUserInfo(string memory uuid) external view returns(bool, bool){
-        require(userWallets[uuid].status == 2);
-        return ((fullnodeDeposits[userWallets[uuid].user] > 0), (privateDeposits[userWallets[uuid].user] > 0));
+        if(userWallets[uuid].status == 2){
+            return ((fullnodeDeposits[userWallets[uuid].user] > 0), (privateDeposits[userWallets[uuid].user] > 0));
+        }else{
+            return (false, false);
+        }
     }
     // /**
     //  * 
@@ -169,41 +172,68 @@ contract CloudSlit {
         string name;
         uint startTime;
         uint endTime;
-        uint withdrawTime;
+        uint withdrawDuration;
         uint32 duration;
         uint256 price;
         bool used;
         bool withdraw;
-        address payUser;
+        address payAddress;
+        address privateAddress;
     }
     
     mapping(string=>Order) orders;
     mapping(address=>string[]) privoderOrders;
+    uint32 durationUnit = 1 minutes;
 
-    function clientOrder(string memory _name, uint32 _duration, string memory _orderId, uint256 _price) external {
-        require(orders[_orderId].used, "Already paid");
+    function clientOrder(string memory _name, uint32 _duration, string memory _orderId, uint256 _price, address _to) external {
+        require(!orders[_orderId].used, "Already paid");
         require(balances[msg.sender] >= _price, "Not enough tokens");
         balances[msg.sender] -= _price;
-        uint cooldownTime = 1 hours;
-        orders[_orderId] = Order(_name, block.timestamp, block.timestamp + _duration * cooldownTime, 0, _duration, _price, true, false, msg.sender );
+        orders[_orderId] = Order(_name, block.timestamp, block.timestamp + _duration * durationUnit, 0, _duration, _price, true, false, msg.sender , _to);
+        privoderOrders[_to].push(_orderId);
     }
 
     function checkOrder(string memory _orderId) public view returns(bool) {
         return (orders[_orderId].used);
     }
 
+    function getPrivoderOrders(address from) public view returns(string[] memory ){
+        return privoderOrders[from];
+    }
+
     function withdrawAllOrderTokens() external {
         require(privateDeposits[msg.sender] != 0);
         string[] memory _orders = privoderOrders[msg.sender];
+        uint price = 0;
         for (uint i=0; i < _orders.length; i++){
             if (!orders[_orders[i]].withdraw){
-                
+                if(block.timestamp >= orders[_orders[i]].endTime){
+                    orders[_orders[i]].withdraw = true;
+                    uint duration = orders[_orders[i]].duration  - orders[_orders[i]].withdrawDuration;
+                    price += (orders[_orders[i]].price / orders[_orders[i]].duration) * duration;
+                }else{
+                    uint duration = (block.timestamp - orders[_orders[i]].startTime) % durationUnit  - orders[_orders[i]].withdrawDuration;
+                    orders[_orders[i]].withdrawDuration += duration;
+                    price += (orders[_orders[i]].price / orders[_orders[i]].duration) * duration;
+                }
             }
         }
+        balances[msg.sender] += price;
     }
     
     function withdrawOrderTokens(string memory _orderId) external {
-        require(orders[_orderId].used);
-
+        require(!orders[_orderId].withdraw, 'The order has been withdrawn');
+        require(orders[_orderId].privateAddress == msg.sender, 'Please confirm the wallet address, Can not withdraw');
+        if(block.timestamp >= orders[_orderId].endTime){
+            orders[_orderId].withdraw = true;
+            uint duration = orders[_orderId].duration  - orders[_orderId].withdrawDuration;
+            uint price = (orders[_orderId].price / orders[_orderId].duration) * duration;
+            balances[msg.sender] += price;
+        }else{
+            uint duration = (block.timestamp - orders[_orderId].startTime) % durationUnit  - orders[_orderId].withdrawDuration;
+            orders[_orderId].withdrawDuration += duration;
+            uint price = (orders[_orderId].price / orders[_orderId].duration) * duration;
+            balances[msg.sender] += price;
+        }
     }
 }
