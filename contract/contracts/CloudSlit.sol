@@ -206,7 +206,9 @@ contract CloudSlit {
     }
 
     function getAllOrderTokens() external view returns(uint){
-        require(privateDeposits[msg.sender] != 0, 'Not deposits');
+        if (privateDeposits[msg.sender] != 0){
+            return 0;
+        }
         string[] memory _orders = privoderOrders[msg.sender];
         uint price = 0;
         for (uint i=0; i < _orders.length; i++){
