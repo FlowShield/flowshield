@@ -143,12 +143,12 @@ contract CloudSlit {
     function stake(uint8 _type) external {
         if(_type == 1){
             require(fullnodeDeposits[msg.sender] == 0, "Already staked");
-            require(balances[msg.sender] >= fullnodeDepositAmount, "Not enough tokens");
+            require(balances[msg.sender] >= fullnodeDepositAmount, "Not enough CSD");
             balances[msg.sender] -= fullnodeDepositAmount;
             fullnodeDeposits[msg.sender] += fullnodeDepositAmount;
         }else if(_type == 2){
             require(privateDeposits[msg.sender] == 0, "Already staked");
-            require(balances[msg.sender] >= privoderDepositAmount, "Not enough tokens");
+            require(balances[msg.sender] >= privoderDepositAmount, "Not enough CSD");
             balances[msg.sender] -= privoderDepositAmount;
             privateDeposits[msg.sender] += privoderDepositAmount;
         }
@@ -174,20 +174,24 @@ contract CloudSlit {
         uint endTime;
         uint withdrawDuration;
         uint32 duration;
-        uint256 price;
+        uint price;
         bool used;
         bool withdraw;
         address payAddress;
         address privateAddress;
     }
-    
+
+    function getOrdersInfo(string memory _orderId) public view returns(Order memory){
+        return (orders[_orderId]);
+    }
+
     mapping(string=>Order) orders;
     mapping(address=>string[]) privoderOrders;
-    uint32 durationUnit = 1 minutes;
+    uint32 durationUnit = 1 hours;
 
     function clientOrder(string memory _name, uint32 _duration, string memory _orderId, uint256 _price, address _to) external {
         require(!orders[_orderId].used, "Already paid");
-        require(balances[msg.sender] >= _price, "Not enough tokens");
+        require(balances[msg.sender] >= _price, "Not enough CSD");
         balances[msg.sender] -= _price;
         orders[_orderId] = Order(_name, block.timestamp, block.timestamp + _duration * durationUnit, 0, _duration, _price, true, false, msg.sender , _to);
         privoderOrders[_to].push(_orderId);
@@ -201,8 +205,26 @@ contract CloudSlit {
         return privoderOrders[from];
     }
 
+    function getAllOrderTokens() external view returns(uint){
+        require(privateDeposits[msg.sender] != 0, 'Not deposits');
+        string[] memory _orders = privoderOrders[msg.sender];
+        uint price = 0;
+        for (uint i=0; i < _orders.length; i++){
+            if (!orders[_orders[i]].withdraw){
+                if(block.timestamp >= orders[_orders[i]].endTime){
+                    uint duration = orders[_orders[i]].duration  - orders[_orders[i]].withdrawDuration;
+                    price += (orders[_orders[i]].price / orders[_orders[i]].duration) * duration;
+                }else{
+                    uint duration = (block.timestamp - orders[_orders[i]].startTime) / durationUnit  - orders[_orders[i]].withdrawDuration;
+                    price += (orders[_orders[i]].price / orders[_orders[i]].duration) * duration;
+                }
+            }
+        }
+        return (price);
+    }
+
     function withdrawAllOrderTokens() external {
-        require(privateDeposits[msg.sender] != 0);
+        require(privateDeposits[msg.sender] != 0, 'Not deposits');
         string[] memory _orders = privoderOrders[msg.sender];
         uint price = 0;
         for (uint i=0; i < _orders.length; i++){
@@ -212,7 +234,7 @@ contract CloudSlit {
                     uint duration = orders[_orders[i]].duration  - orders[_orders[i]].withdrawDuration;
                     price += (orders[_orders[i]].price / orders[_orders[i]].duration) * duration;
                 }else{
-                    uint duration = (block.timestamp - orders[_orders[i]].startTime) % durationUnit  - orders[_orders[i]].withdrawDuration;
+                    uint duration = (block.timestamp - orders[_orders[i]].startTime) / durationUnit  - orders[_orders[i]].withdrawDuration;
                     orders[_orders[i]].withdrawDuration += duration;
                     price += (orders[_orders[i]].price / orders[_orders[i]].duration) * duration;
                 }
@@ -220,7 +242,7 @@ contract CloudSlit {
         }
         balances[msg.sender] += price;
     }
-    
+
     function withdrawOrderTokens(string memory _orderId) external {
         require(!orders[_orderId].withdraw, 'The order has been withdrawn');
         require(orders[_orderId].privateAddress == msg.sender, 'Please confirm the wallet address, Can not withdraw');
@@ -230,7 +252,7 @@ contract CloudSlit {
             uint price = (orders[_orderId].price / orders[_orderId].duration) * duration;
             balances[msg.sender] += price;
         }else{
-            uint duration = (block.timestamp - orders[_orderId].startTime) % durationUnit  - orders[_orderId].withdrawDuration;
+            uint duration = (block.timestamp - orders[_orderId].startTime) / durationUnit  - orders[_orderId].withdrawDuration;
             orders[_orderId].withdrawDuration += duration;
             uint price = (orders[_orderId].price / orders[_orderId].duration) * duration;
             balances[msg.sender] += price;
