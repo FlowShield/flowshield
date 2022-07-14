@@ -60,7 +60,7 @@
 <script>
 import FormDialog from './components/form-dialog'
 import { deleteZeroAccessClient, fetchZeroAccessClients, postZeroAccessClientsPayNotify } from '@/api'
-import { payOrder, getOrder } from '../../utils/store.js'
+import { payOrder, OrderPaid } from '@/utils/ethers'
 
 export default {
   components: { FormDialog },
@@ -76,15 +76,15 @@ export default {
       { text: 'Name', align: 'start', sortable: true, value: 'name' },
       { text: 'OrderId', sortable: true, value: 'uuid' },
       { text: 'Listen port', sortable: true, value: 'port' },
-      { text: 'Server', sortable: true, value: 'server_cid' },
-      { text: 'PeerId', sortable: true, value: 'peer_id' },
-      { text: 'Resource', sortable: true, value: 'resource_cid' },
       { text: 'Duration(Hours)', sortable: false, value: 'duration' },
       { text: 'Price(CSD)', sortable: true, value: 'price' },
       { text: 'Status', sortable: true, value: 'status' },
+      { text: 'Action', value: 'action' },
+      { text: 'Server', sortable: true, value: 'server_cid' },
+      { text: 'PeerId', sortable: true, value: 'peer_id' },
+      { text: 'Resource', sortable: true, value: 'resource_cid' },
       { text: 'Created at', sortable: true, value: 'CreatedAt' },
-      { text: 'Updated at', sortable: true, value: 'UpdatedAt' },
-      { text: 'Action', value: 'action' }
+      { text: 'Updated at', sortable: true, value: 'UpdatedAt' }
     ],
     tableItems: [],
     total: 0
@@ -98,19 +98,21 @@ export default {
       this.getTableItems()
     },
     async pay(item) {
-      await getOrder(item.uuid)
       this.paying[item.uuid] = true
-      const payStatus = await payOrder(item.uuid, item.price)
-      if (payStatus === 'ok') {
+      const payStatus = await payOrder(item.name, item.duration, item.uuid, item.price, item.peer_id)
+      if (payStatus === 'ok' || payStatus === OrderPaid) {
         postZeroAccessClientsPayNotify({ uuid: item.uuid }).then(res => {
           this.$emit('on-success')
           this.$message.success()
           this.paying[item.uuid] = false
+          this.getTableItems()
         }).finally(() => {
           this.paying[item.uuid] = false
+          this.loopResult()
         })
       } else {
         this.$message.error(payStatus)
+        this.paying[item.uuid] = false
       }
     },
     getTableItems() {
@@ -121,7 +123,6 @@ export default {
         for (let i = 0; i < this.tableItems.length; i++) {
           this.paying[this.tableItems[i].uuid] = false
         }
-        console.log(this.paying)
       }).finally(() => {
         this.loading = false
       })
@@ -138,6 +139,20 @@ export default {
       }).finally(() => {
         this.handleSearch()
       })
+    },
+    loopResult() {
+      let i = 0
+      const timer = setInterval(() => {
+        this.Interval(timer, i++)
+      }, 10000)
+    },
+    Interval(timer, i) {
+      setTimeout(() => {
+        this.getTableItems()
+        if (i >= 4) {
+          clearInterval(timer)
+        }
+      }, 0)
     }
   }
 }

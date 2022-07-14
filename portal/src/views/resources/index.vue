@@ -31,7 +31,7 @@
         </v-toolbar>
       </template>
       <template v-slot:item.action="{ item }">
-        <confirm-dialog @on-confirm="handleDelete" :data="item"/>
+        <confirm-dialog v-if="isshowadd" @on-confirm="handleDelete" :data="item"/>
       </template>
       <template v-slot:no-data>No data</template>
     </v-data-table>

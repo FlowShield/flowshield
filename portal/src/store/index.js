@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     user: {
       avatar: '',
       email: '',
+      uuid: '',
       master: ''
     }
   }, getters: {}, mutations: {
@@ -16,6 +17,7 @@ const store = new Vuex.Store({
       state.user.avatar = info.avatar_url
       state.user.email = info.email
       state.user.master = info.master
+      state.user.uuid = info.uuid
     }
   }, actions: {
     getUserInfo({ commit, state }) {

@@ -5,43 +5,22 @@
       max-width="600px"
   >
     <template #activator="{ on, attrs }">
-      <v-btn fab v-bind="attrs" color="primary" v-on="on">
-        <v-icon>mdi-plus</v-icon>
+      <v-btn x-large rounded v-bind="attrs" color="primary" v-on="on">
+        <v-icon>mdi-wallet</v-icon>
+        Change Your Wallet
       </v-btn>
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">New relay</span>
+        <span class="text-h5">New account</span>
       </v-card-title>
       <v-card-text>
         <v-form v-model="valid">
           <v-container>
             <v-text-field
-                v-model="form.name"
-                label="Name"
-                :rules="rule.name"
-                required
-            ></v-text-field>
-            <v-text-field
-                v-model="form.host"
-                label="Host"
-                :rules="rule.host"
-                required
-            ></v-text-field>
-            <v-text-field
-                v-model.number="form.port"
-                label="Listen port"
-                :min="1"
-                :max="65535"
-                type="number"
-                required
-            ></v-text-field>
-            <v-text-field
-                v-model.number="form.out_port"
-                label="Expose port"
-                :min="1"
-                :max="65535"
-                type="number"
+                v-model="address"
+                label="New account address"
+                :rules="rule.address"
                 required
             ></v-text-field>
           </v-container>
@@ -61,7 +40,8 @@
   </v-dialog>
 </template>
 <script>
-import { postZeroAccessRelay } from '@/api'
+import { changeWallet, getWallet } from '@/utils/ethers'
+import store from '@/store'
 
 export default {
   data: () => ({
@@ -70,39 +50,26 @@ export default {
     serverItems: [],
     loadingServer: false,
     submitting: false,
-    form: {
-      name: '',
-      host: '',
-      port: null,
-      out_port: null
-    },
+    address: '',
     rule: {
-      name: [
+      address: [
         v => !!v || 'Name is required'
-      ],
-      host: [
-        v => !!v || 'Host is required'
-      ],
-      port: [
-        v => !!v || 'Port is required'
-      ],
-      out_port: [
-        v => !!v || 'Expose port is required'
       ]
     }
   }),
   methods: {
-    handleSubmit() {
+    async handleSubmit() {
       this.submitting = true
-
-      const form = { ...this.form }
-      postZeroAccessRelay(form).then(res => {
+      await changeWallet(store.state.user.uuid, this.address)
+      const address = await getWallet(store.state.user.uuid)
+      if (address[0] === '0x0000000000000000000000000000000000000000') {
+        this.$message.error('Change failed')
+      } else {
         this.$emit('on-success')
         this.$message.success()
         this.dialog = false
-      }).finally(() => {
-        this.submitting = false
-      })
+      }
+      this.submitting = false
     }
   }
 }

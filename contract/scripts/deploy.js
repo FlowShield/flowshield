@@ -9,12 +9,10 @@ async function main() {
     
     console.log("Account balance:", (await deployer.getBalance()).toString());
   
-    const Token = await ethers.getContractFactory("Token");
-    const token = await Token.deploy();
+    const ContractFactory = await ethers.getContractFactory("CloudSlit");
+    const contract = await ContractFactory.deploy();
   
-    await token.deployed();
-  
-    console.log("Token address:", token.address);
+    console.log("Contract address:", contract.address);
   }
   
   main()
