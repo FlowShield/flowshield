@@ -2,33 +2,96 @@
   <div>
     <h3 class="font-weight-thin text-h3 mt-10">My Wallet</h3>
     <div class="login-page">
-    <div class="mt-15">
-      <div v-if="address">
-        <p class="mt-10">Your wallet address is '{{ address }}'</p>
-        <v-btn x-large rounded @click="changeWallet">
+      <div class="mt-15">
+        <div v-if="address">
+          <template>
+            <v-card
+                class="mx-auto"
+            >
+              <v-container fluid>
+                <v-row dense>
+                  <v-col
+                      :cols="6"
+                  >
+                    <v-card  dark>
+                        <v-card-title >
+                          Account address
+                          <span v-if="status == 2" style="color: #0D8DF1">
+                            &nbsp;(Awaiting verification)
+                          </span>
+                          <span v-if="status == 1" style="color: #0DF171">
+                            &nbsp;(Verified)
+                          </span>
+                        </v-card-title>
+                      <div class="text--primary">
+                        {{ address }}
+                      </div>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                      </v-card-actions>
+                      <div style="padding-bottom: 20px">
+                        <form-dialog @on-success="getBind"/>
+                      </div>
+                    </v-card>
+                  </v-col>
+                  <v-col
+                      :cols="6"
+                  >
+                    <v-card>
+                      <v-card-title >Withdrawable CSD</v-card-title>
+                      <div class="text--primary">
+                        {{ withdrawCSD }}
+                      </div>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                      </v-card-actions>
+                      <div style="padding-bottom: 20px">
+                        <v-btn
+                            x-large
+                            rounded
+                            color="teal"
+                            @click="withdrawAllOrder"
+                            :loading="withdrawLoading"
+                        >
+                          <v-icon class="mr-3">mdi-wallet</v-icon>
+                          Withdraw all CSD
+                        </v-btn>
+                      </div>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card>
+          </template>
+        </div>
+        <v-btn x-large rounded @click="bindWallet" v-else>
           <v-icon class="mr-5">mdi-wallet</v-icon>
-          Change Your Wallet
+          Connect Your Wallet
         </v-btn>
       </div>
-      <v-btn x-large rounded @click="connectWallet" v-else>
-        <v-icon class="mr-5">mdi-wallet</v-icon>
-        Connect Your Wallet
-      </v-btn>
-    </div>
     </div>
   </div>
 
 </template>
 <script>
-import { fetchZeroAccessNodes } from '@/api'
-import { bindWallet, getWallet, changeWallet } from '../../utils/store.js'
+import {
+  getWallet,
+  bindWallet,
+  getAllOrderTokens,
+  withdrawAllOrderTokens
+} from '@/utils/ethers'
 import store from '@/store'
+import FormDialog from './components/form-dialog'
 
 export default {
-  components: { },
+  components: { FormDialog },
   data: () => ({
     address: '',
-    loading: false,
+    withdrawCSD: 0,
+    status: 0,
+    color: '',
+    walletLoading: false,
+    withdrawLoading: false,
     query: {
       name: '',
       page: 1,
@@ -51,45 +114,42 @@ export default {
   }),
   created() {
     this.getBind()
-    this.getTableItems()
+    this.getAllOrderTokens()
   },
   methods: {
-    handleSearch() {
-      this.query.page = 1
-      this.getTableItems()
-    },
-    getTableItems() {
-      this.loading = true
-      fetchZeroAccessNodes(this.query).then(res => {
-        this.tableItems = res.data.list || []
-        this.total = res.data.paginate.total
-      }).finally(() => {
-        this.loading = false
-      })
-    },
-    handleCount(v) {
-      this.query.limit_num = v
-      this.handleSearch()
-    },
     async getBind() {
       const address = await getWallet(store.state.user.uuid)
-      if (address !== '0x0000000000000000000000000000000000000000') {
-        this.address = address
-      }
-    },
-    async connectWallet() {
-      let address = await getWallet(store.state.user.uuid)
-      if (address === '0x0000000000000000000000000000000000000000') {
-        await bindWallet(store.state.user.uuid)
-        address = await getWallet(store.state.user.uuid)
-        if (address === '0x0000000000000000000000000000000000000000') {
-          this.$message.error('Bind failed')
+      if (address[0] !== '0x0000000000000000000000000000000000000000') {
+        this.address = address[0]
+        this.status = address[1]
+        if (this.status === 1) {
+          this.color = '#0DF171'
+        } else if (this.status === 2) {
+          this.color = '#0D8DF1'
         }
       }
     },
-    async changeWallet() {
-      await changeWallet(store.state.user.uuid)
-      this.address = await getWallet(store.state.user.uuid)
+    async getAllOrderTokens() {
+      this.withdrawCSD = await getAllOrderTokens()
+    },
+    async bindWallet() {
+      let address = await getWallet(store.state.user.uuid)
+      if (address[0] === '0x0000000000000000000000000000000000000000') {
+        await bindWallet(store.state.user.uuid)
+        address = await getWallet(store.state.user.uuid)
+        if (address[0] === '0x0000000000000000000000000000000000000000') {
+          this.$message.error('Bind failed')
+        } else {
+          await this.getBind()
+        }
+      }
+    },
+    async withdrawAllOrder() {
+      this.withdrawLoading = true
+      await withdrawAllOrderTokens()
+      this.$message.success('Withdraw success')
+      await this.getAllOrderTokens()
+      this.withdrawLoading = false
     }
   }
 }

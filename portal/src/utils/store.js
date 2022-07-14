@@ -25,7 +25,7 @@ const networks = {
   }
 }
 
-const contractAddress = '0xB82278dCb9b94fC00fF7AD63f335FD3C0e46E809'
+const contractAddress = '0x2A3881f34eBf481240FbFA6ab26C7Ac5210e4A47'
 
 const web3Init = async() => {
   let web3 = ''
@@ -59,6 +59,7 @@ export const getWallet = async(uid) => {
   const abi = contractJSON.abi
   const sbs = new web3.eth.Contract(abi, contractAddress, account)
   const walletAddress = await sbs.methods.getWallet(uid).call()
+  console.log(walletAddress)
   return walletAddress
 }
 
