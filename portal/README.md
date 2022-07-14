@@ -1,7 +1,8 @@
 🌈 _**Portal** is a user-friendly UI portal that provides users with a control interface with low thresholds._ 🌈
 ---
 
-<img width="1764" alt="page1" src="https://user-images.githubusercontent.com/34047788/177101157-767c6072-d4b5-424d-9993-3298d2865b2f.png">
+![image](https://user-images.githubusercontent.com/34047788/178912108-eccd2819-e4b3-4d8e-9dd3-d1c2b16458fd.png)
+
 
 ## 💪🏻 Start
 
@@ -28,5 +29,5 @@ If you want to report a bug or request a new feature. Free feel to open a [new i
 
 ### Pull Requests
 
-If you want to modify ZAPortal, this guideline may be useful for you [CONTRIBUTING](https://github.com/CloudSlit/cloudslit/blob/main/portal/CONTRIBUTING.md)
+If you want to modify Cloudslit-portal, this guideline may be useful for you [CONTRIBUTING](https://github.com/CloudSlit/cloudslit/blob/main/portal/CONTRIBUTING.md)
 

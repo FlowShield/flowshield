@@ -62,6 +62,19 @@ func (p *User) GetUser(uuid string) (user *mmysql.User, err error) {
 	return
 }
 
+func (p *User) GetUserByStatus(status int) (list []mmysql.User, err error) {
+	orm := p.GetOrm().DB
+	query := orm.Table(p.TableName).Where(fmt.Sprintf("status = %d", status))
+	err = query.Find(&list).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		err = nil
+	}
+	if err != nil {
+		logger.Errorf(p.c, "GetUserByStatus err : %v", err)
+	}
+	return
+}
+
 func (p *User) UpdateUser(data *mmysql.User) (err error) {
 	orm := p.GetOrm()
 	sql := orm.ToSQL(func(tx *gorm.DB) *gorm.DB {

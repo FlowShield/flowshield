@@ -91,9 +91,10 @@ func (a *NodeOrder) String() string {
 
 // ProviderConfig provider配置
 type ProviderConfig struct {
-	CertPem string `json:"cert_pem"`
-	KeyPem  string `json:"key_pem"`
-	CaPem   string `json:"ca_pem"`
+	CertPem    string `json:"cert_pem"`
+	KeyPem     string `json:"key_pem"`
+	CaPem      string `json:"ca_pem"`
+	CertConfig *certificate.BasicCertConf
 }
 
 func (a *ProviderConfig) String() string {
@@ -101,10 +102,10 @@ func (a *ProviderConfig) String() string {
 }
 
 // ParserConfig 解析config
-func ParserConfig(ctx context.Context, cid string) (*ProviderConfig, error) {
+func ParserConfig(ctx context.Context, cid string, key []byte) (*ProviderConfig, error) {
 	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
-	data, err := w3s.Get(ctx, cid)
+	data, err := w3s.Get(ctx, cid, key)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -136,5 +137,6 @@ func ParserConfig(ctx context.Context, cid string) (*ProviderConfig, error) {
 	if certConfig.Type != certificate.TypeServer {
 		return nil, fmt.Errorf("证书类型错误，预期：%s, get:%s", certificate.TypeServer, certConfig.Type)
 	}
+	pc.CertConfig = certConfig
 	return &pc, nil
 }

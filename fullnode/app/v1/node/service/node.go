@@ -57,7 +57,7 @@ func AddNode(c *gin.Context, server *schema.ServerInfo) (code int) {
 		return
 	}
 	// 判断当前传递的节点是否已经质押
-	isDeposit, err := eth.Contract().IsDeposit(&bind.CallOpts{
+	isDeposit, err := eth.Instance().IsDeposit(&bind.CallOpts{
 		From: common.HexToAddress(server.PeerId),
 	}, eth.Provider)
 	if err != nil {

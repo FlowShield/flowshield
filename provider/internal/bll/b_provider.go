@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
+	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"github.com/cloudslit/cloudslit/provider/internal/contextx"
 	"github.com/cloudslit/cloudslit/provider/internal/schema"
 	"github.com/cloudslit/cloudslit/provider/pkg/errors"
@@ -19,8 +20,6 @@ import (
 	"strconv"
 	"strings"
 )
-
-const RootCA = ``
 
 type Provider struct {
 }
@@ -195,7 +194,11 @@ func (a *Provider) GetMtlsConfig(config *schema.ProviderConfig) (*tls.Config, er
 	return tlsc, err
 }
 
+// 预制端口
 func verifyPort(port int) (int, error) {
+	if port == 0 {
+		port = config.C.App.LocalPort + 1
+	}
 	var ln net.Listener
 	var err error
 	// Automatically look for an open port when a custom port isn't

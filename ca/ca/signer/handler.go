@@ -2,16 +2,19 @@ package signer
 
 import (
 	"encoding/json"
-	"io/ioutil"
-	"math/big"
-	"net/http"
-
 	"github.com/cloudslit/cfssl/api"
 	"github.com/cloudslit/cfssl/auth"
 	"github.com/cloudslit/cfssl/bundler"
+	"github.com/cloudslit/cfssl/config"
 	"github.com/cloudslit/cfssl/errors"
+	"github.com/cloudslit/cfssl/helpers"
 	"github.com/cloudslit/cfssl/log"
 	"github.com/cloudslit/cfssl/signer"
+	"github.com/cloudslit/cloudslit/ca/pkg/attrmgr"
+	"io/ioutil"
+	"math/big"
+	"net/http"
+	"time"
 )
 
 // NoBundlerMessage is used to alert the user that the server does not have a bundler initialized.
@@ -275,9 +278,13 @@ func (h *AuthHandler) Handle(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	signReq := jsonReqToTrue(req)
-
 	if signReq.Request == "" {
 		return errors.NewBadRequestString("missing parameter 'certificate_request'")
+	}
+	err = genExpiryByCsr(&signReq, profile)
+	if err != nil {
+		log.Errorf("Expiration time processing failed: %v", err)
+		return err
 	}
 
 	// CFSSL In the issuing logic, if the certificate storage mode is vault, the database flag bit is added, and the certificate PEM is not actually stored
@@ -303,4 +310,27 @@ func (h *AuthHandler) Handle(w http.ResponseWriter, r *http.Request) error {
 	}
 	log.Info("wrote response")
 	return api.SendResponse(w, result)
+}
+
+// 添加过期时间
+func genExpiryByCsr(sr *signer.SignRequest, profile *config.SigningProfile) error {
+	csr, err := helpers.ParseCSRPEM([]byte(sr.Request))
+	if err != nil {
+		return err
+	}
+	if v := attrmgr.GetExpiryValue(csr); v > 0 {
+		var backdate time.Duration
+		if backdate = profile.Backdate; backdate == 0 {
+			backdate = -5 * time.Minute
+		} else {
+			backdate = -1 * profile.Backdate
+		}
+		notBefore := time.Now().Round(time.Minute).Add(backdate)
+		notBefore = notBefore.UTC()
+		notAfter := notBefore.Add(v)
+		notAfter = notAfter.UTC()
+		sr.NotBefore = notBefore
+		sr.NotAfter = notAfter
+	}
+	return nil
 }

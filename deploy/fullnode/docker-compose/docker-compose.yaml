@@ -10,7 +10,7 @@ services:
       - redis-data:/data
 
   cloudslit-ca-tls:
-    image: zhangshuainbb/cloudslit-ca:0.0.1
+    image: zhangshuainbb/cloudslit-ca:v0.0.2
     command: [ "./ca", "tls" ]
     ports:
       - "8081:8081"

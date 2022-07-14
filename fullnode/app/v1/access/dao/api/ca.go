@@ -42,7 +42,7 @@ func getCaClient() *caclient.CAInstance {
 	return caClient
 }
 
-func ApplySign(c *gin.Context, attrs map[string]interface{}, uniqueID, cn, host string, expiredAt time.Time) (sentinelSign SentinelSign, err error) {
+func ApplySign(c *gin.Context, attrs map[string]interface{}, uniqueID, cn, host string, duration time.Duration) (sentinelSign SentinelSign, err error) {
 	client := getCaClient()
 	mgr, err := client.NewCertManager()
 	if err != nil {
@@ -71,6 +71,7 @@ func ApplySign(c *gin.Context, attrs map[string]interface{}, uniqueID, cn, host 
 	}, &keygen.CertOptions{ /* 通常为固定值 */
 		CN:   cn,
 		Host: host,
+		TTL:  duration,
 	}, []pkix.Extension{ext} /* 注入扩展字段 */)
 	// get cert
 	certPEMBytes, err := mgr.SignPEM(csrPEM, uniqueID)
@@ -85,12 +86,12 @@ func ApplySign(c *gin.Context, attrs map[string]interface{}, uniqueID, cn, host 
 		return
 	}
 	sentinelSign = SentinelSign{
-		CaPEM:     caPEM,
-		CertPEM:   certPEM,
-		KeyPEM:    string(keyPEMBytes),
-		Sn:        cert.SerialNumber.String(),
-		Aki:       hex.EncodeToString(cert.AuthorityKeyId),
-		ExpiredAt: expiredAt,
+		CaPEM:   caPEM,
+		CertPEM: certPEM,
+		KeyPEM:  string(keyPEMBytes),
+		Sn:      cert.SerialNumber.String(),
+		Aki:     hex.EncodeToString(cert.AuthorityKeyId),
+		//ExpiredAt: expiredAt,
 		//ExpiredAt: cert.NotAfter,
 	}
 	return

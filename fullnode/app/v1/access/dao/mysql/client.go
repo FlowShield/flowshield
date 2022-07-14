@@ -126,7 +126,7 @@ func (p *Client) CheckStatusClient(param *mparam.CheckStatus) (list []mmysql.Cli
 	if param.Duration > 0 {
 		query = query.Where(fmt.Sprintf("created_at >= %d", time.Now().Add(-(param.Duration * time.Minute)).Unix()))
 	}
-	err = query.First(&list).Error
+	err = query.Find(&list).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = nil
 	}

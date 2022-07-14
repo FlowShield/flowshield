@@ -15,7 +15,7 @@ import (
 	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
 )
 
-// SyncClientOrderStatus 每30轮循10分钟内的订单，判断是否已支付
+// SyncClientOrderStatus 每30秒轮循10分钟内的订单，判断是否已支付
 func SyncClientOrderStatus() {
 	closeChan := make(chan interface{}) // 信号监控
 	go func() {
@@ -38,7 +38,7 @@ func handleClientOrderStatus(closeChan chan<- interface{}) {
 		select {
 		case <-time.After(time.Second * 30):
 			clientList, err := clientDao.CheckStatusClient(&mparam.CheckStatus{
-				Status:   mmysql.WaittingPaid,
+				Status:   mmysql.WaitingPaid,
 				Duration: 10,
 			})
 			if err != nil {

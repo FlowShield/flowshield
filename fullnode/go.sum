@@ -244,8 +244,8 @@ github.com/cloudflare/backoff v0.0.0-20161212185259-647f3cdfc87a h1:8d1CEOF1xlde
 github.com/cloudflare/backoff v0.0.0-20161212185259-647f3cdfc87a/go.mod h1:rzgs2ZOiguV6/NpiDgADjRLPNyZlApIWxKpkT+X8SdY=
 github.com/cloudflare/go-metrics v0.0.0-20151117154305-6a9aea36fb41/go.mod h1:eaZPlJWD+G9wseg1BuRXlHnjntPMrywMsyxf+LTOdP4=
 github.com/cloudflare/redoctober v0.0.0-20171127175943-746a508df14c/go.mod h1:6Se34jNoqrd8bTxrmJB2Bg2aoZ2CdSXonils9NsiNgo=
-github.com/cloudslit/casdk v0.0.3 h1:QZy5Y29mGwqFaNIKwH64kHxbX+vRICnoO36IkH830ik=
-github.com/cloudslit/casdk v0.0.3/go.mod h1:AWmnKLXsQnhtPFGUjlZaAqhQn7sHeH94A40I6FMiSQM=
+github.com/cloudslit/casdk v0.0.5 h1:NdBsc7K9cXbbbtnUC6jEn32/c97dOilfPr7IUdwteGE=
+github.com/cloudslit/casdk v0.0.5/go.mod h1:+KlIOsHJSf/hg7uHLenhL1YzV0WHom7neniaZiPaLNg=
 github.com/cloudslit/cfssl v0.0.1 h1:vGLq8xAyO/xtDRgVs5Eo0ANxfEs9/05HOC8FvOuu88M=
 github.com/cloudslit/cfssl v0.0.1/go.mod h1:yLy1Ao1m97Na/phPjfO/pm+pmQQK941JshmDYL6DsW4=
 github.com/cncf/udpa/go v0.0.0-20191209042840-269d4d468f6f/go.mod h1:M8M6+tZqaGXZJjfX53e64911xZQV5JYwmTeXPW+k8Sc=

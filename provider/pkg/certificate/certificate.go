@@ -31,6 +31,8 @@ type BasicCertConf struct {
 	SiteID    string
 	ClusterID string
 	Type      string
+	NotBefore time.Time
+	NotAfter  time.Time
 }
 
 func LoadCert(certData []byte) (*BasicCertConf, []byte, error) {
@@ -43,7 +45,8 @@ func LoadCert(certData []byte) (*BasicCertConf, []byte, error) {
 		return nil, nil, ErrCertParse
 	}
 	basicConf := &BasicCertConf{}
-
+	basicConf.NotBefore = cert.NotBefore
+	basicConf.NotAfter = cert.NotAfter
 	// parse attr
 	mgr := New()
 	attr, err := mgr.GetAttributesFromCert(cert)

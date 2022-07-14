@@ -1,33 +1,30 @@
 package service
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
 	"os"
 
-	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
-
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/model/mparam"
-
-	"golang.org/x/oauth2/github"
-
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
-	"golang.org/x/oauth2"
-
-	"github.com/google/uuid"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/controlplane/dao/redis"
-
-	"github.com/gin-gonic/contrib/sessions"
-
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/dao/api"
 	userDao "github.com/cloudslit/cloudslit/fullnode/app/v1/user/dao/mysql"
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/model/mmysql"
 	"github.com/cloudslit/cloudslit/fullnode/pconst"
+	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
 	oauth2Help "github.com/cloudslit/cloudslit/fullnode/pkg/oauth2"
+	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
+	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/eth"
+	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/github"
 )
 
 func GetRedirectURL(c *gin.Context) (redirectURL string, code int) {
@@ -80,7 +77,14 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, oauth2Code string)
 		return
 	}
 	// 判断是否Dao主
-	userInfo.Master = userInfo.Wallet == confer.GlobalConfig().P2P.Account
+	master, provider, err := eth.Instance().GetUserInfo(nil, userInfo.UUID)
+	if err != nil {
+		logger.Errorf(c, "get wallet error: %v", err)
+	} else {
+		logger.Infof("get userinfo result: %v, master:%v, provider:%v", userInfo.UUID, master, provider)
+		userInfo.Master = master
+		userInfo.Provider = provider
+	}
 	userBytes, _ := json.Marshal(userInfo)
 	session.Set("user", userBytes)
 	session.Save()
@@ -99,24 +103,58 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, oauth2Code string)
 	return
 }
 
-func UserBindWallet(c *gin.Context, param *mparam.BindWallet) (code int) {
-	// 查询是否已经绑定钱包
+func UserRefresh(c *gin.Context) (code int) {
+	// 查询信息
 	user, err := userDao.NewUser(c).GetUser(util.User(c).UUID)
 	if err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
-	if user.Wallet == param.Wallet {
-		return pconst.CODE_COMMON_DATA_ALREADY_EXIST
+	master, provider, err := eth.Instance().GetUserInfo(nil, user.UUID)
+	if err != nil {
+		logger.Errorf(c, "get wallet error: %v", err)
+	} else {
+		logger.Infof("get userinfo result: %v, master:%v, provider:%v", user.UUID, master, provider)
+		user.Master = master
+		user.Provider = provider
 	}
-	user.Wallet = param.Wallet
-	if err = userDao.NewUser(c).UpdateUser(user); err != nil {
-		return pconst.CODE_COMMON_SERVER_BUSY
-	}
-	user.Master = user.Wallet == confer.GlobalConfig().P2P.Account
-	// 绑定成功，刷新session
+	//刷新session
 	session := sessions.Default(c)
 	userBytes, _ := json.Marshal(user)
 	session.Set("user", userBytes)
 	session.Save()
+	return
+}
+
+func CheckAndBindUser(user *mmysql.User) (code int) {
+	_, status, err := eth.Instance().GetWallet(nil, user.UUID)
+	if err != nil {
+		logger.Errorf(nil, "contract get wallet error: %v", err)
+		return pconst.CODE_COMMON_SERVER_BUSY
+	}
+	switch status {
+	case 1:
+		// 代表用户状态为预绑定，执行绑定
+		tra, err := eth.Instance().VerifyWallet(eth.CS.Auth, user.UUID)
+		if err != nil {
+			logger.Errorf(nil, "contract verify wallet error: %v", err)
+		}
+		rec, err := bind.WaitMined(context.Background(), eth.CS.Client, tra)
+		if err != nil {
+			logger.Errorf(nil, "contract verify wallet error: %v", err)
+		}
+		if rec.Status == 0 {
+			logger.Errorf(nil, "contract verify wallet err: %v", user.UUID)
+			return
+		}
+	case 2:
+	default:
+		return
+	}
+	// 修改绑定状态并同步本地
+	user.Status = mmysql.Bind
+	err = userDao.NewUser(nil).UpdateUser(user)
+	if err != nil {
+		return pconst.CODE_COMMON_SERVER_BUSY
+	}
 	return
 }

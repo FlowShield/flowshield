@@ -103,6 +103,7 @@ type ControlClients []*ControlClient
 
 // ControlClient Controller Client
 type ControlClient struct {
+	PeerId    string `json:"peer_id"`
 	Uuid      string `json:"uuid"`
 	UserUuid  string `json:"user_uuid"`
 	Name      string `json:"name"`
@@ -110,11 +111,11 @@ type ControlClient struct {
 }
 
 // ParseConfig 解析客户端配置
-func (a *ControlClient) ParseConfig(ctx context.Context, cid string) (*ClientConfig, error) {
+func (a *ControlClient) ParseConfig(ctx context.Context, cid string, key []byte) (*ClientConfig, error) {
 	// 读取w3s数据
 	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
 	defer cancel()
-	data, err := w3s.Get(ctx, cid)
+	data, err := w3s.Get(ctx, cid, key)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}

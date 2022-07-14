@@ -54,7 +54,7 @@ func InitClientServer(ctx context.Context) {
 		if err != nil {
 			logger.Fatalf("login client err:%v", err)
 		}
-		clientConfig, err := client.ParseConfig(ctx, client.ClientCid)
+		clientConfig, err := client.ParseConfig(ctx, client.ClientCid, []byte(client.PeerId[len(client.PeerId)-8:]))
 		if err != nil {
 			logger.Fatalf("parse client err:%v", err)
 		}

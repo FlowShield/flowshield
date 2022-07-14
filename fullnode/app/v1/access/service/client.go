@@ -88,7 +88,7 @@ func AddClient(c *gin.Context, param *mparam.AddClient) (code int, data *mmysql.
 		return pconst.CODE_COMMON_DATA_NOT_EXIST, nil
 	}
 
-	serverSign, err := api.ApplySign(c, map[string]interface{}{"type": "provider"}, "cloud-slit", "cloud-slit", node.Addr, time.Now().Add(time.Duration(param.Duration)*time.Hour))
+	serverSign, err := api.ApplySign(c, map[string]interface{}{"type": "provider"}, "cloud-slit", "cloud-slit", node.Addr, time.Duration(param.Duration)*time.Hour)
 	if err != nil {
 		logger.Errorf(c, "AddClient ApplySign err : %v", err)
 		return pconst.CODE_COMMON_SERVER_BUSY, nil
@@ -98,7 +98,7 @@ func AddClient(c *gin.Context, param *mparam.AddClient) (code int, data *mmysql.
 		CaPem:   util.Base64Encode(serverSign.CaPEM),
 		CertPem: util.Base64Encode(serverSign.CertPEM),
 		KeyPem:  util.Base64Encode(serverSign.KeyPEM),
-	})
+	}, []byte(node.PeerId[len(node.PeerId)-8:]))
 	if err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY, nil
 	}
@@ -226,7 +226,7 @@ func AcceptClientOrder(c *gin.Context, client *schema.ClientP2P) {
 			Port: port,
 		},
 	}
-	clientSign, err := api.ApplySign(c, attrs, "cloud-slit", "cloud-slit", "cloud-slit", time.Now().Add(time.Duration(info.Duration)*time.Hour))
+	clientSign, err := api.ApplySign(c, attrs, "cloud-slit", "cloud-slit", "cloud-slit", time.Duration(info.Duration)*time.Hour)
 	if err != nil {
 		logger.Errorf(c, "AcceptClientOrder ApplySign err : %v", err)
 		return
@@ -236,7 +236,7 @@ func AcceptClientOrder(c *gin.Context, client *schema.ClientP2P) {
 		CaPem:   util.Base64Encode(clientSign.CaPEM),
 		CertPem: util.Base64Encode(clientSign.CertPEM),
 		KeyPem:  util.Base64Encode(clientSign.KeyPEM),
-	})
+	}, []byte(node.PeerId[len(node.PeerId)-8:]))
 	info.Port = client.Port
 	info.ClientCid = cid
 	info.Status = mmysql.Success
@@ -262,7 +262,7 @@ func NotifyClient(c *gin.Context, param *mparam.NotifyClient) (code int) {
 		return
 	}
 	// 查询合约判断该笔订单是否支付
-	check, err := eth.Contract().CheckOrder(nil, param.UUID)
+	check, err := eth.Instance().CheckOrder(nil, param.UUID)
 	if err != nil {
 		logger.Errorf(c, "notifyClient CheckOrder err : %v", err)
 		return pconst.CODE_COMMON_SERVER_BUSY
