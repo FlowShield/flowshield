@@ -60,7 +60,7 @@
 <script>
 import FormDialog from './components/form-dialog'
 import { deleteZeroAccessClient, fetchZeroAccessClients, postZeroAccessClientsPayNotify } from '@/api'
-import { payOrder, paid } from '@/utils/ethers'
+import { payOrder, OrderPaid } from '@/utils/ethers'
 
 export default {
   components: { FormDialog },
@@ -100,7 +100,7 @@ export default {
     async pay(item) {
       this.paying[item.uuid] = true
       const payStatus = await payOrder(item.name, item.duration, item.uuid, item.price, item.peer_id)
-      if (payStatus === 'ok' || payStatus === paid) {
+      if (payStatus === 'ok' || payStatus === OrderPaid) {
         postZeroAccessClientsPayNotify({ uuid: item.uuid }).then(res => {
           this.$emit('on-success')
           this.$message.success()

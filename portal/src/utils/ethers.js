@@ -14,7 +14,7 @@ const providerInit = async() => {
   return provider
 }
 
-const contractAddress = '0xfbe2CdbC167376Df727AbBf6EdD9062461067181'
+const contractAddress = '0xa9eC0d7FF7975D9930030DDf3d0c9260B1A766cF'
 
 export const getBalance = async() => {
   const provider = await providerInit()
@@ -42,7 +42,8 @@ export const bindWallet = async(uid) => {
     const transaction = await contract.bindWallet(uid)
     await transaction.wait()
   } catch (error) {
-    console.log(error.toString())
+    console.log(error.message.message)
+    return error.message.message
   }
 }
 
@@ -54,7 +55,8 @@ export const changeWallet = async(uid, newwallet) => {
     const transaction = await contract.changeWallet(uid, newwallet)
     await transaction.wait()
   } catch (error) {
-    console.log(error.toString())
+    console.log(error)
+    return error.message.message
   }
 }
 
