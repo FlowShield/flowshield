@@ -28,9 +28,23 @@ var (
 	_ = event.NewSubscription
 )
 
+// CloudSlitOrder is an auto generated low-level Go binding around an user-defined struct.
+type CloudSlitOrder struct {
+	Name             string
+	StartTime        *big.Int
+	EndTime          *big.Int
+	WithdrawDuration *big.Int
+	Duration         uint32
+	Price            *big.Int
+	Used             bool
+	Withdraw         bool
+	PayAddress       common.Address
+	PrivateAddress   common.Address
+}
+
 // SlitMetaData contains all meta data concerning the Slit contract.
 var SlitMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"}],\"name\":\"allowance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uuid\",\"type\":\"string\"}],\"name\":\"bindWallet\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uuid\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"newWallet\",\"type\":\"address\"}],\"name\":\"changeWallet\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_orderId\",\"type\":\"string\"}],\"name\":\"checkOrder\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"uint32\",\"name\":\"_duration\",\"type\":\"uint32\"},{\"internalType\":\"string\",\"name\":\"_orderId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"}],\"name\":\"clientOrder\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"fullnodeDepositAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uuid\",\"type\":\"string\"}],\"name\":\"getUserInfo\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uuid\",\"type\":\"string\"}],\"name\":\"getWallet\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"isDeposit\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"privoderDepositAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"stake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uuid\",\"type\":\"string\"}],\"name\":\"verifyWallet\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdrawAllOrderTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_orderId\",\"type\":\"string\"}],\"name\":\"withdrawOrderTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"}],\"name\":\"allowance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"spender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uuid\",\"type\":\"string\"}],\"name\":\"bindWallet\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uuid\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"newWallet\",\"type\":\"address\"}],\"name\":\"changeWallet\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_orderId\",\"type\":\"string\"}],\"name\":\"checkOrder\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"uint32\",\"name\":\"_duration\",\"type\":\"uint32\"},{\"internalType\":\"string\",\"name\":\"_orderId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_to\",\"type\":\"address\"}],\"name\":\"clientOrder\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"decimals\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"fullnodeDepositAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getAllOrderTokens\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_orderId\",\"type\":\"string\"}],\"name\":\"getOrdersInfo\",\"outputs\":[{\"components\":[{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"startTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"withdrawDuration\",\"type\":\"uint256\"},{\"internalType\":\"uint32\",\"name\":\"duration\",\"type\":\"uint32\"},{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"used\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"withdraw\",\"type\":\"bool\"},{\"internalType\":\"address\",\"name\":\"payAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"privateAddress\",\"type\":\"address\"}],\"internalType\":\"structCloudSlit.Order\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"}],\"name\":\"getPrivoderOrders\",\"outputs\":[{\"internalType\":\"string[]\",\"name\":\"\",\"type\":\"string[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uuid\",\"type\":\"string\"}],\"name\":\"getUserInfo\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uuid\",\"type\":\"string\"}],\"name\":\"getWallet\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"},{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"isDeposit\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"privoderDepositAmount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"stake\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"uuid\",\"type\":\"string\"}],\"name\":\"verifyWallet\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint8\",\"name\":\"_type\",\"type\":\"uint8\"}],\"name\":\"withdraw\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"withdrawAllOrderTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_orderId\",\"type\":\"string\"}],\"name\":\"withdrawOrderTokens\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
 }
 
 // SlitABI is the input ABI used to generate the binding from.
@@ -334,6 +348,99 @@ func (_Slit *SlitCallerSession) FullnodeDepositAmount() (*big.Int, error) {
 	return _Slit.Contract.FullnodeDepositAmount(&_Slit.CallOpts)
 }
 
+// GetAllOrderTokens is a free data retrieval call binding the contract method 0xf3fbfc7b.
+//
+// Solidity: function getAllOrderTokens() view returns(uint256)
+func (_Slit *SlitCaller) GetAllOrderTokens(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _Slit.contract.Call(opts, &out, "getAllOrderTokens")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// GetAllOrderTokens is a free data retrieval call binding the contract method 0xf3fbfc7b.
+//
+// Solidity: function getAllOrderTokens() view returns(uint256)
+func (_Slit *SlitSession) GetAllOrderTokens() (*big.Int, error) {
+	return _Slit.Contract.GetAllOrderTokens(&_Slit.CallOpts)
+}
+
+// GetAllOrderTokens is a free data retrieval call binding the contract method 0xf3fbfc7b.
+//
+// Solidity: function getAllOrderTokens() view returns(uint256)
+func (_Slit *SlitCallerSession) GetAllOrderTokens() (*big.Int, error) {
+	return _Slit.Contract.GetAllOrderTokens(&_Slit.CallOpts)
+}
+
+// GetOrdersInfo is a free data retrieval call binding the contract method 0x8291a021.
+//
+// Solidity: function getOrdersInfo(string _orderId) view returns((string,uint256,uint256,uint256,uint32,uint256,bool,bool,address,address))
+func (_Slit *SlitCaller) GetOrdersInfo(opts *bind.CallOpts, _orderId string) (CloudSlitOrder, error) {
+	var out []interface{}
+	err := _Slit.contract.Call(opts, &out, "getOrdersInfo", _orderId)
+
+	if err != nil {
+		return *new(CloudSlitOrder), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(CloudSlitOrder)).(*CloudSlitOrder)
+
+	return out0, err
+
+}
+
+// GetOrdersInfo is a free data retrieval call binding the contract method 0x8291a021.
+//
+// Solidity: function getOrdersInfo(string _orderId) view returns((string,uint256,uint256,uint256,uint32,uint256,bool,bool,address,address))
+func (_Slit *SlitSession) GetOrdersInfo(_orderId string) (CloudSlitOrder, error) {
+	return _Slit.Contract.GetOrdersInfo(&_Slit.CallOpts, _orderId)
+}
+
+// GetOrdersInfo is a free data retrieval call binding the contract method 0x8291a021.
+//
+// Solidity: function getOrdersInfo(string _orderId) view returns((string,uint256,uint256,uint256,uint32,uint256,bool,bool,address,address))
+func (_Slit *SlitCallerSession) GetOrdersInfo(_orderId string) (CloudSlitOrder, error) {
+	return _Slit.Contract.GetOrdersInfo(&_Slit.CallOpts, _orderId)
+}
+
+// GetPrivoderOrders is a free data retrieval call binding the contract method 0x183dd1cd.
+//
+// Solidity: function getPrivoderOrders(address from) view returns(string[])
+func (_Slit *SlitCaller) GetPrivoderOrders(opts *bind.CallOpts, from common.Address) ([]string, error) {
+	var out []interface{}
+	err := _Slit.contract.Call(opts, &out, "getPrivoderOrders", from)
+
+	if err != nil {
+		return *new([]string), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new([]string)).(*[]string)
+
+	return out0, err
+
+}
+
+// GetPrivoderOrders is a free data retrieval call binding the contract method 0x183dd1cd.
+//
+// Solidity: function getPrivoderOrders(address from) view returns(string[])
+func (_Slit *SlitSession) GetPrivoderOrders(from common.Address) ([]string, error) {
+	return _Slit.Contract.GetPrivoderOrders(&_Slit.CallOpts, from)
+}
+
+// GetPrivoderOrders is a free data retrieval call binding the contract method 0x183dd1cd.
+//
+// Solidity: function getPrivoderOrders(address from) view returns(string[])
+func (_Slit *SlitCallerSession) GetPrivoderOrders(from common.Address) ([]string, error) {
+	return _Slit.Contract.GetPrivoderOrders(&_Slit.CallOpts, from)
+}
+
 // GetUserInfo is a free data retrieval call binding the contract method 0x7c9b7fdd.
 //
 // Solidity: function getUserInfo(string uuid) view returns(bool, bool)
@@ -616,25 +723,25 @@ func (_Slit *SlitTransactorSession) ChangeWallet(uuid string, newWallet common.A
 	return _Slit.Contract.ChangeWallet(&_Slit.TransactOpts, uuid, newWallet)
 }
 
-// ClientOrder is a paid mutator transaction binding the contract method 0x5c437c7a.
+// ClientOrder is a paid mutator transaction binding the contract method 0x5c9abe11.
 //
-// Solidity: function clientOrder(string _name, uint32 _duration, string _orderId, uint256 _price) returns()
-func (_Slit *SlitTransactor) ClientOrder(opts *bind.TransactOpts, _name string, _duration uint32, _orderId string, _price *big.Int) (*types.Transaction, error) {
-	return _Slit.contract.Transact(opts, "clientOrder", _name, _duration, _orderId, _price)
+// Solidity: function clientOrder(string _name, uint32 _duration, string _orderId, uint256 _price, address _to) returns()
+func (_Slit *SlitTransactor) ClientOrder(opts *bind.TransactOpts, _name string, _duration uint32, _orderId string, _price *big.Int, _to common.Address) (*types.Transaction, error) {
+	return _Slit.contract.Transact(opts, "clientOrder", _name, _duration, _orderId, _price, _to)
 }
 
-// ClientOrder is a paid mutator transaction binding the contract method 0x5c437c7a.
+// ClientOrder is a paid mutator transaction binding the contract method 0x5c9abe11.
 //
-// Solidity: function clientOrder(string _name, uint32 _duration, string _orderId, uint256 _price) returns()
-func (_Slit *SlitSession) ClientOrder(_name string, _duration uint32, _orderId string, _price *big.Int) (*types.Transaction, error) {
-	return _Slit.Contract.ClientOrder(&_Slit.TransactOpts, _name, _duration, _orderId, _price)
+// Solidity: function clientOrder(string _name, uint32 _duration, string _orderId, uint256 _price, address _to) returns()
+func (_Slit *SlitSession) ClientOrder(_name string, _duration uint32, _orderId string, _price *big.Int, _to common.Address) (*types.Transaction, error) {
+	return _Slit.Contract.ClientOrder(&_Slit.TransactOpts, _name, _duration, _orderId, _price, _to)
 }
 
-// ClientOrder is a paid mutator transaction binding the contract method 0x5c437c7a.
+// ClientOrder is a paid mutator transaction binding the contract method 0x5c9abe11.
 //
-// Solidity: function clientOrder(string _name, uint32 _duration, string _orderId, uint256 _price) returns()
-func (_Slit *SlitTransactorSession) ClientOrder(_name string, _duration uint32, _orderId string, _price *big.Int) (*types.Transaction, error) {
-	return _Slit.Contract.ClientOrder(&_Slit.TransactOpts, _name, _duration, _orderId, _price)
+// Solidity: function clientOrder(string _name, uint32 _duration, string _orderId, uint256 _price, address _to) returns()
+func (_Slit *SlitTransactorSession) ClientOrder(_name string, _duration uint32, _orderId string, _price *big.Int, _to common.Address) (*types.Transaction, error) {
+	return _Slit.Contract.ClientOrder(&_Slit.TransactOpts, _name, _duration, _orderId, _price, _to)
 }
 
 // Stake is a paid mutator transaction binding the contract method 0x604f2177.

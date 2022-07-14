@@ -77,7 +77,9 @@ func Oauth2Callback(c *gin.Context, session sessions.Session, oauth2Code string)
 		return
 	}
 	// 判断是否Dao主
-	master, provider, err := eth.Instance().GetUserInfo(nil, userInfo.UUID)
+	master, provider, err := eth.Instance().GetUserInfo(&bind.CallOpts{
+		From: eth.CS.Auth.From,
+	}, userInfo.UUID)
 	if err != nil {
 		logger.Errorf(c, "get wallet error: %v", err)
 	} else {
@@ -109,7 +111,9 @@ func UserRefresh(c *gin.Context) (code int) {
 	if err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
-	master, provider, err := eth.Instance().GetUserInfo(nil, user.UUID)
+	master, provider, err := eth.Instance().GetUserInfo(&bind.CallOpts{
+		From: eth.CS.Auth.From,
+	}, user.UUID)
 	if err != nil {
 		logger.Errorf(c, "get wallet error: %v", err)
 	} else {
@@ -126,7 +130,9 @@ func UserRefresh(c *gin.Context) (code int) {
 }
 
 func CheckAndBindUser(user *mmysql.User) (code int) {
-	_, status, err := eth.Instance().GetWallet(nil, user.UUID)
+	_, status, err := eth.Instance().GetWallet(&bind.CallOpts{
+		From: eth.CS.Auth.From,
+	}, user.UUID)
 	if err != nil {
 		logger.Errorf(nil, "contract get wallet error: %v", err)
 		return pconst.CODE_COMMON_SERVER_BUSY
