@@ -14,7 +14,7 @@ const providerInit = async() => {
   return provider
 }
 
-const contractAddress = '0xa9eC0d7FF7975D9930030DDf3d0c9260B1A766cF'
+const contractAddress = '0xa1386996687D0A523b770e843895c8236E54AB82'
 
 export const getBalance = async() => {
   const provider = await providerInit()
@@ -42,7 +42,7 @@ export const bindWallet = async(uid) => {
     const transaction = await contract.bindWallet(uid)
     await transaction.wait()
   } catch (error) {
-    console.log(error.message.message)
+    console.log(error)
     return error.message.message
   }
 }
