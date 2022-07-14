@@ -1,7 +1,7 @@
 🌈 _**Portal** is a user-friendly UI portal that provides users with a control interface with low thresholds._ 🌈
 ---
 
-<img width="1764" alt="page1" src="https://user-images.githubusercontent.com/34047788/177101157-767c6072-d4b5-424d-9993-3298d2865b2f.png">
+<img width="1764" alt="page1" src="https://user-images.githubusercontent.com/34047788/178911914-0ad986b5-73ad-4ef8-984b-b50a821a0a8e.png">
 
 ## 💪🏻 Start
 
