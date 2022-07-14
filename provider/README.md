@@ -39,7 +39,7 @@ $ ./bin/provider -c ./configs/config.yaml
 ```
 
 ## License
-Icefiredb agent uses Apache 2.0 license. See [license](.License) directory for details
+cloudslit-fullnode uses Apache 2.0 license. See [license](.License) directory for details
 
 ## Disclaimers
 When you use this software, you have agreed and declared that the author, maintainer and contributor of this software are not responsible for any risks, costs or problems you encounter. If you find a software defect or bug, please submit a patch to help improve!
