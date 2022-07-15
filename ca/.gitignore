@@ -19,4 +19,4 @@
 # IDE configs
 .idea
 .vscode
-./bin
+bin
