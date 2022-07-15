@@ -10,7 +10,7 @@ async function main() {
     console.log("Account balance:", (await deployer.getBalance()).toString());
   
     const ContractFactory = await ethers.getContractFactory("CloudSlit");
-    const contract = await ContractFactory.deploy();
+    const contract = await ContractFactory.deploy(100000000);
   
     console.log("Contract address:", contract.address);
   }
