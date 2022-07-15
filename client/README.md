@@ -1,4 +1,4 @@
-# [CloudSlit Client]
+# CloudSlit Client
 
 This is the cloudslit client program.
 
