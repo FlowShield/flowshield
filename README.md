@@ -12,7 +12,7 @@ For all users and Dao's data, we use Filecoin's web3.storage decentralized stora
 
 We use nervos to deploy smart contracts.
 
-CloudSlit Item Design：
+## Project composition:
 
 * [CloudSlit-Fullnode](https://github.com/CloudSlit/cloudslit/tree/main/fullnode)
 * [CloudSlit-Provider](https://github.com/CloudSlit/cloudslit/tree/main/provider)
