@@ -20,10 +20,10 @@ func main() {
 	app.Usage = "Security, network acceleration, zero trust network architecture"
 	app.Flags = []cli.Flag{
 		&cli.StringFlag{
-			Name:     "conf",
-			Aliases:  []string{"c"},
-			Usage:    "App configuration file(.toml)",
-			Required: true,
+			Name:    "conf",
+			Aliases: []string{"c"},
+			Usage:   "App configuration file(.toml .json .yaml)",
+			Value:   "configs/config.toml",
 		},
 	}
 	app.Action = func(c *cli.Context) error {

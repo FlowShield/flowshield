@@ -1,11 +1,22 @@
 version: '3.3'
 services:
   provider:
-    image: zhangshuainbb/cloudslit-provider:v0.0.9
+    image: zhangshuainbb/cloudslit-provider:v0.0.11
     network_mode: host
-    volumes:
-      - "./config.toml:/root/config.toml"
     restart: always
+    environment:
+      PR_APP_LOCAL_ADDR: 'xxx'
+      PR_APP_LOCAL_PORT: '5091'
+      PR_WEB3_PRICE: '20'
+      PR_WEB3_PRIVATE_KEY: 'xxx'
+      PR_WEB3_CONTRACT_TOKEN: 'xxx'
+      PR_WEB3_W3S_TOKEN: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U'
+      PR_WEB3_ETH_URL: 'xxx'
+      PR_WEB3_ETH_PROJECT_ID: 'xxx'
+      PR_MYSQL_HOST: '127.0.0.1'
+      PR_MYSQL_PORT: '23306'
+      PR_MYSQL_USER: 'root'
+      PR_MYSQL_PASSWORD: '123456'
     deploy:
       resources:
         limits:
@@ -25,6 +36,8 @@ services:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "127.0.0.1", "-P", "23306","-uroot","-p123456" ]
       timeout: 20s
       retries: 10
-    network_mode: host
+    ports:
+      - 23306:23306
     volumes:
       - ./db/sqlite.db:/app/db/sqlite.db
+      - "./sqlite_config.yaml:/app/config/config.yaml"

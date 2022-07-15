@@ -67,13 +67,13 @@ func (a *Pubsub) InitByDB(ctx context.Context, ps *p2p.PubSub) {
 
 // eventhandle
 func (a *Pubsub) StartPubsubHandler(ctx context.Context, ps *p2p.PubSub, p *p2p.P2P) {
-	go func() {
-		msg := `{"type":"order","data":{"server_cid":"bafybeifnc734brtng4tn2wxfp7pjtjz7qicd2dqvsxs36shugxoogzu4zu","wallet":"0x0e5518bfef2b0e0c6600742c662b797445020F99","uuid":"cde5260e-47ac-4a07-88b4-9a7ffc357a0b","port":0}}`
-		err := a.ReceiveHandle(ctx, ps, msg)
-		if err != nil {
-			logger.Errorf("Receive Msg Handle Err:%s", err)
-		}
-	}()
+	//go func() {
+	//	msg := `{"type":"order","data":{"server_cid":"bafybeifnc734brtng4tn2wxfp7pjtjz7qicd2dqvsxs36shugxoogzu4zu","wallet":"0x0e5518bfef2b0e0c6600742c662b797445020F99","uuid":"cde5260e-47ac-4a07-88b4-9a7ffc357a0b","port":0}}`
+	//	err := a.ReceiveHandle(ctx, ps, msg)
+	//	if err != nil {
+	//		logger.Errorf("Receive Msg Handle Err:%s", err)
+	//	}
+	//}()
 	server := a.NewServerInfo()
 	refreshticker := time.NewTicker(10 * time.Second)
 	defer refreshticker.Stop()

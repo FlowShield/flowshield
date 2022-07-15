@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
+	"github.com/ethereum/go-ethereum/crypto"
 	"os"
 	"strconv"
 	"strings"
@@ -42,25 +43,78 @@ func MustLoad(fpaths ...string) error {
 		}
 		m.MustLoad(C)
 	})
-	ParseConfigByEnv()
-	return nil
+	return ParseConfigByEnv()
 }
 
 func ParseConfigByEnv() error {
-	if v := os.Getenv("LOCAL_ADDR"); v != "" {
+	// APP
+	if v := os.Getenv("PR_APP_LOCAL_ADDR"); v != "" {
 		C.App.LocalAddr = v
 	}
-	if v := os.Getenv("LOCAL_PORT"); v != "" {
-		p, _ := strconv.Atoi(v)
+	if v := os.Getenv("PR_APP_LOCAL_PORT"); v != "" {
+		p, err := strconv.Atoi(v)
+		if err != nil {
+			return fmt.Errorf("environment variable [%s] parsing error:%v", "PR_APP_LOCAL_PORT", err)
+		}
 		C.App.LocalPort = p
 	}
-	if v := os.Getenv("LOG_HOOK_ENABLED"); v == "true" {
+
+	// Web3
+	if v := os.Getenv("PR_WEB3_PRIVATE_KEY"); v != "" {
+		C.Web3.PrivateKey = v
+	}
+	// Account 处理
+	privateKey, err := crypto.HexToECDSA(C.Web3.PrivateKey)
+	if err != nil {
+		return fmt.Errorf("wallet account private key resolution failed:%v", err)
+	}
+	C.Web3.Account = crypto.PubkeyToAddress(privateKey.PublicKey).String()
+	if v := os.Getenv("PR_WEB3_PRICE"); v != "" {
+		p, err := strconv.Atoi(v)
+		if err != nil {
+			return fmt.Errorf("environment variable [%s] parsing error:%v", "PR_WEB3_PRICE", err)
+		}
+		C.Web3.Price = p
+	}
+	if v := os.Getenv("PR_WEB3_CONTRACT_TOKEN"); v != "" {
+		C.Web3.Contract.Token = v
+	}
+	if v := os.Getenv("PR_WEB3_W3S_TOKEN"); v != "" {
+		C.Web3.W3S.Token = v
+	}
+	if v := os.Getenv("PR_WEB3_ETH_URL"); v != "" {
+		C.Web3.ETH.URL = v
+	}
+	if v := os.Getenv("PR_WEB3_ETH_PROJECT_ID"); v != "" {
+		C.Web3.ETH.ProjectID = v
+	}
+
+	// Mysql
+	if v := os.Getenv("PR_MYSQL_HOST"); v != "" {
+		C.Mysql.Host = v
+	}
+	if v := os.Getenv("PR_MYSQL_PORT"); v != "" {
+		p, err := strconv.Atoi(v)
+		if err != nil {
+			return fmt.Errorf("environment variable [%s] parsing error:%v", "PR_MYSQL_PORT", err)
+		}
+		C.Mysql.Port = p
+	}
+	if v := os.Getenv("PR_MYSQL_USER"); v != "" {
+		C.Mysql.User = v
+	}
+	if v := os.Getenv("PR_MYSQL_PASSWORD"); v != "" {
+		C.Mysql.Password = v
+	}
+
+	// Log
+	if v := os.Getenv("PR_LOG_HOOK_ENABLED"); v == "true" {
 		C.Log.EnableHook = true
 	}
-	if v := os.Getenv("LOG_REDIS_ADDR"); v != "" {
+	if v := os.Getenv("PR_LOG_REDIS_ADDR"); v != "" {
 		C.LogRedisHook.Addr = v
 	}
-	if v := os.Getenv("LOG_REDIS_KEY"); v != "" {
+	if v := os.Getenv("PR_LOG_REDIS_KEY"); v != "" {
 		C.LogRedisHook.Key = v
 	}
 	return nil
