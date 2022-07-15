@@ -18,7 +18,11 @@ CloudSlit aims to build a global web3 decentralized zero trust security network 
 
 # Project Explanation
 
-[Video of project explanation](https://res.cloudinary.com/malloc/video/upload/v1657872089/cloudslit/CloudSlit-v2.1_cghnts.mp4)
+
+
+https://user-images.githubusercontent.com/34047788/179197598-72861348-b012-4974-ac9a-7e81fe43e0f6.mp4
+
+
 
 # Project Design
 ## [CloudSlit-Fullnode](https://github.com/CloudSlit/cloudslit/tree/main/fullnode)
