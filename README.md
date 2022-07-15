@@ -1,6 +1,6 @@
 # CloudSlit
 
-### Build a global web3 decentralized zero-trust security network，Building Cyber Sovereignty.
+#### Build a global web3 decentralized zero-trust security network，Building Cyber Sovereignty.
 
 ![desp1](https://user-images.githubusercontent.com/34047788/177115308-0a19979f-1df9-462e-8d51-4a43e290a266.png)
 
@@ -19,7 +19,7 @@ We use nervos to deploy smart contracts.
 * [CloudSlit-Contract](https://github.com/CloudSlit/cloudslit/tree/main/contract)
 * [CloudSlit-Client](https://github.com/CloudSlit/cloudslit/tree/main/client)
 
-# CloudSlit-Project Explanation
+# Project Explanation
 
 [Video of project explanation](https://res.cloudinary.com/malloc/video/upload/v1657872089/cloudslit/CloudSlit-v2.1_cghnts.mp4)
 
