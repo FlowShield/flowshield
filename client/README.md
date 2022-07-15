@@ -19,7 +19,7 @@ You only need to modify the following contents, and other configurations can be 
 
 ```yaml
 # Information about themselves
-[Common]
+[App]
   # Listening address
   LocalAddr = "0.0.0.0"
   # Listening port
@@ -31,7 +31,7 @@ You only need to modify the following contents, and other configurations can be 
 ### Quickstart
 ```shell
 $ make
-$ ./bin/client -c ./configs/config.yaml
+$ ./bin/client
 ```
 
 ## License

@@ -142,6 +142,6 @@ func (a *Client) handleConn(ctx context.Context, clientConn net.Conn, client *sc
 		return
 	}
 	defer stream.Close()
-	logger.WithContext(ctx).Infof("Connect Success:Addr:%s:%s", client.Server.Host, client.Server.Port)
+	logger.WithContext(ctx).Infof("Connect Success:Addr:%s:%d", client.Server.Host, client.Server.Port)
 	TransparentProxy(clientConn, stream)
 }

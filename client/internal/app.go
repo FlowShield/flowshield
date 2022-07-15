@@ -42,9 +42,7 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 	for _, opt := range opts {
 		opt(&o)
 	}
-	config.MustLoad(o.ConfigFile)
-	// working with environment variables
-	err := config.ParseConfigByEnv()
+	err := config.MustLoad(o.ConfigFile)
 	if err != nil {
 		return nil, err
 	}

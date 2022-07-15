@@ -1,7 +1,10 @@
 package config
 
 import (
+	"bufio"
 	"fmt"
+	"github.com/cloudslit/cloudslit/client/configs"
+	"github.com/cloudslit/cloudslit/client/pkg/util"
 	"github.com/cloudslit/cloudslit/client/pkg/util/json"
 	"net/http"
 	"os"
@@ -24,14 +27,46 @@ type I struct {
 	HttpClient *http.Client
 }
 
+// 读取内置配置文件并创建
+func createConfigFile(path string) error {
+	ok, err := util.PathExists(path)
+	if err != nil {
+		return err
+	}
+	if !ok {
+		f, err := os.Create(path) //创建文件
+		if err != nil {
+			return err
+		}
+		defer f.Close()
+		w := bufio.NewWriter(f)
+		_, err = w.WriteString(string(configs.ConfigFileData))
+		if err != nil {
+			return err
+		}
+		err = w.Flush()
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // MustLoad load config
-func MustLoad(fpaths ...string) {
+func MustLoad(fpaths ...string) error {
+	if len(fpaths) <= 0 || fpaths[0] == "" {
+		fpaths[0] = "config.toml"
+		// 无配置文件，读取默认配置文件
+		err := createConfigFile(fpaths[0])
+		if err != nil {
+			return err
+		}
+	}
 	once.Do(func() {
 		loaders := []multiconfig.Loader{
 			&multiconfig.TagLoader{},
 			&multiconfig.EnvironmentLoader{},
 		}
-
 		for _, fpath := range fpaths {
 			if strings.HasSuffix(fpath, "toml") {
 				loaders = append(loaders, &multiconfig.TOMLLoader{Path: fpath})
@@ -49,26 +84,38 @@ func MustLoad(fpaths ...string) {
 		}
 		m.MustLoad(C)
 	})
+	return ParseConfigByEnv()
 }
 
 func ParseConfigByEnv() error {
-	if v := os.Getenv("LOCAL_ADDR"); v != "" {
+	// APP
+	if v := os.Getenv("CLI_APP_LOCAL_ADDR"); v != "" {
 		C.App.LocalAddr = v
 	}
-	if v := os.Getenv("LOCAL_PORT"); v != "" {
-		p, _ := strconv.Atoi(v)
+	if v := os.Getenv("CLI_APP_LOCAL_PORT"); v != "" {
+		p, err := strconv.Atoi(v)
+		if err != nil {
+			return fmt.Errorf("environment variable [%s] parsing error:%v", "CLI_APP_LOCAL_PORT", err)
+		}
 		C.App.LocalPort = p
 	}
-	if v := os.Getenv("CONTRO_HOST"); v != "" {
+	if v := os.Getenv("CLI_APP_CONTROL_HOST"); v != "" {
 		C.App.ControlHost = v
 	}
-	if v := os.Getenv("LOG_HOOK_ENABLED"); v == "true" {
+
+	// w3s
+	if v := os.Getenv("CLI_WEB3_W3S_TOKEN"); v != "" {
+		C.Web3.W3S.Token = v
+	}
+
+	// Log
+	if v := os.Getenv("CLI_LOG_HOOK_ENABLED"); v == "true" {
 		C.Log.EnableHook = true
 	}
-	if v := os.Getenv("LOG_REDIS_ADDR"); v != "" {
+	if v := os.Getenv("CLI_LOG_REDIS_ADDR"); v != "" {
 		C.LogRedisHook.Addr = v
 	}
-	if v := os.Getenv("LOG_REDIS_KEY"); v != "" {
+	if v := os.Getenv("CLI_LOG_REDIS_KEY"); v != "" {
 		C.LogRedisHook.Key = v
 	}
 	return nil
