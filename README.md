@@ -20,7 +20,7 @@ CloudSlit aims to build a global web3 decentralized zero trust security network 
 
 [Video of project explanation](https://res.cloudinary.com/malloc/video/upload/v1657872089/cloudslit/CloudSlit-v2.1_cghnts.mp4)
 
-# Item Design
+# Project Design
 ## [CloudSlit-Fullnode](https://github.com/CloudSlit/cloudslit/tree/main/fullnode)
 Anyone can run a full node, which hosts the metadata of the decentralized network, and provides a metadata networking and transaction matching platform.
 
