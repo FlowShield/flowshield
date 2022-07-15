@@ -1,5 +1,7 @@
 # CloudSlit
 
+#### Build a global web3 decentralized zero-trust security network，Building Cyber Sovereignty.
+
 ![image](https://user-images.githubusercontent.com/34047788/179193778-afda3a35-9ba3-4bd1-8550-e06cef196f03.png)
 
 CloudSlit aims to build a global web3 decentralized zero trust security network system to help users regain the private security information eroded by giants under web2, so that the current global hot zero trust security network technology can better help users master their own security privacy data in combination with web3, and give users a good zero trust security network products and platform experience.
