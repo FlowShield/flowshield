@@ -1,25 +1,20 @@
 # CloudSlit
 
-#### Build a global web3 decentralized zero-trust security network，Building Cyber Sovereignty.
-
 ![desp1](https://user-images.githubusercontent.com/34047788/177115308-0a19979f-1df9-462e-8d51-4a43e290a266.png)
 
 CloudSlit aims to build a global web3 decentralized zero trust security network system to help users regain the private security information eroded by giants under web2, so that the current global hot zero trust security network technology can better help users master their own security privacy data in combination with web3, and give users a good zero trust security network products and platform experience.
 
-Our miners and all nodes build P2P networks through libp2p of IPFS, and realize data synchronization between multiple nodes through PubSub function of libp2p.
-
-For all users and Dao's data, we use Filecoin's web3.storage decentralized storage of user data.
-
-We use nervos to deploy smart contracts.
-
-## Project composition:
+CloudSlit Item Design：
 
 * [CloudSlit-Fullnode](https://github.com/CloudSlit/cloudslit/tree/main/fullnode)
+  (Thank Filecoin and IPFS for their support)
 * [CloudSlit-Provider](https://github.com/CloudSlit/cloudslit/tree/main/provider)
+  (Thank Filecoin and IPFS for their support)
 * [CloudSlit-Contract](https://github.com/CloudSlit/cloudslit/tree/main/contract)
+  (Thank Nervos for their support)
 * [CloudSlit-Client](https://github.com/CloudSlit/cloudslit/tree/main/client)
 
-# Project Explanation
+# CloudSlit-Project Explanation
 
 [Video of project explanation](https://res.cloudinary.com/malloc/video/upload/v1657872089/cloudslit/CloudSlit-v2.1_cghnts.mp4)
 
