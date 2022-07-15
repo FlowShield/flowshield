@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+
 	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
 
 	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/eth"
@@ -262,7 +264,9 @@ func NotifyClient(c *gin.Context, param *mparam.NotifyClient) (code int) {
 		return
 	}
 	// 查询合约判断该笔订单是否支付
-	check, err := eth.Instance().CheckOrder(nil, param.UUID)
+	check, err := eth.Instance().CheckOrder(&bind.CallOpts{
+		From: eth.CS.Auth.From,
+	}, param.UUID)
 	if err != nil {
 		logger.Errorf(c, "notifyClient CheckOrder err : %v", err)
 		return pconst.CODE_COMMON_SERVER_BUSY
