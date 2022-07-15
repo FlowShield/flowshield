@@ -1,78 +1,13 @@
 // Solidity files have to start with this pragma.
 // It will be used by the Solidity compiler to validate its version.
 pragma solidity ^0.8.15;
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 // This is the main building block for smart contracts.
-contract CloudSlit {
-    // Some string type variables to identify the token.
-    string public name = "CloudSlit Dao";
-    string public symbol = "CSD";
-    uint8 public decimals = 0;
+contract CloudSlit is ERC20 {
 
-
-    uint256 public totalSupply = 1000000;
-
-    // A mapping is a key/value map. Here we store each account balance.
-    mapping(address => uint256) private balances;
-    mapping(address => mapping(address=>uint256)) private allowances;
-
-    event Transfer(
-        address indexed from,
-        address indexed to,
-        uint256 value
-    );
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
-    constructor() {
-        // The totalSupply is assigned to transaction sender, which is the account
-        // that is deploying the contract.
-        balances[msg.sender] = totalSupply;
-    }
-
-    function balanceOf(address account) public view returns (uint256) {
-        return balances[account];
-    }
-
-    /**
-    * @dev Transfer token for a specified address
-    * @param to The address to transfer to.
-    * @param value The amount to be transferred.
-    */
-    function transfer(address to, uint256 value) public returns (bool) {
-        require(balances[msg.sender] >= value);
-
-        balances[msg.sender] -= value;
-        balances[to] += value;
-        emit Transfer(msg.sender, to, value);
-        return true;
-    }
-    /**
-    * @dev Transfer tokens from one address to another
-    * @param from address The address which you want to send tokens from
-    * @param to address The address which you want to transfer to
-    * @param value uint256 the amount of tokens to be transferred
-    */
-    function transferFrom(address from,address to,uint256 value)public returns (bool){
-        require(balances[from] >= value );
-        require(allowances[from][msg.sender] >= value);
-
-        balances[from] -= value;
-        allowances[from][msg.sender] -= value;
-        balances[to] += value;
-        emit Transfer(from, to, value);
-        return true;
-    }
-    function approve(address spender, uint256 value)public returns (bool){
-        allowances[msg.sender][spender] = value;
-        emit Approval(msg.sender, spender, value);
-        return true;
-    }
-
-    function allowance(address owner, address spender)public view returns (uint256){
-        return allowances[owner][spender];
+    constructor(uint256 initialSupply) ERC20("CloudSlit Dao", "CSD") public {
+        _mint(msg.sender, initialSupply * 10 ** decimals());
     }
 
     struct userWallet {
@@ -92,6 +27,11 @@ contract CloudSlit {
         }else{
             userWallets[uuid] = userWallet(msg.sender, 2);
         }
+    }
+
+    function unbindWallet(string memory uuid) external {
+        require(userWallets[uuid].user == msg.sender);
+        delete userWallets[uuid];
     }
 
     function verifyWallet(string memory uuid) external {
@@ -143,13 +83,13 @@ contract CloudSlit {
     function stake(uint8 _type) external {
         if(_type == 1){
             require(fullnodeDeposits[msg.sender] == 0, "Already staked");
-            require(balances[msg.sender] >= fullnodeDepositAmount, "Not enough CSD");
-            balances[msg.sender] -= fullnodeDepositAmount;
+            require(balanceOf(msg.sender) >= fullnodeDepositAmount, "Not enough CSD");
+            _transfer(msg.sender, address(this), fullnodeDepositAmount);
             fullnodeDeposits[msg.sender] += fullnodeDepositAmount;
         }else if(_type == 2){
             require(privateDeposits[msg.sender] == 0, "Already staked");
-            require(balances[msg.sender] >= privoderDepositAmount, "Not enough CSD");
-            balances[msg.sender] -= privoderDepositAmount;
+            require(balanceOf(msg.sender) >= privoderDepositAmount, "Not enough CSD");
+            _transfer(msg.sender, address(this), privoderDepositAmount);
             privateDeposits[msg.sender] += privoderDepositAmount;
         }
     }
@@ -159,11 +99,11 @@ contract CloudSlit {
     function withdraw(uint8 _type) external {
         if(_type == 1){
             require(fullnodeDeposits[msg.sender] > 0);
-            balances[msg.sender] += fullnodeDeposits[msg.sender];
+            _transfer(address(this), msg.sender, fullnodeDeposits[msg.sender]);
             delete fullnodeDeposits[msg.sender];
         }else if(_type == 2){
             require(privateDeposits[msg.sender] > 0);
-            balances[msg.sender] += privateDeposits[msg.sender];
+            _transfer(address(this), msg.sender, privateDeposits[msg.sender]);
             delete privateDeposits[msg.sender];
         }
     }
@@ -191,8 +131,8 @@ contract CloudSlit {
 
     function clientOrder(string memory _name, uint32 _duration, string memory _orderId, uint256 _price, address _to) external {
         require(!orders[_orderId].used, "Already paid");
-        require(balances[msg.sender] >= _price, "Not enough CSD");
-        balances[msg.sender] -= _price;
+        require(balanceOf(msg.sender) >= _price, "Not enough CSD");
+        _transfer(msg.sender, address(this), _price);
         orders[_orderId] = Order(_name, block.timestamp, block.timestamp + _duration * durationUnit, 0, _duration, _price, true, false, msg.sender , _to);
         privoderOrders[_to].push(_orderId);
     }
@@ -242,7 +182,7 @@ contract CloudSlit {
                 }
             }
         }
-        balances[msg.sender] += price;
+        _transfer(address(this), msg.sender, price);
     }
 
     function withdrawOrderTokens(string memory _orderId) external {
@@ -252,12 +192,12 @@ contract CloudSlit {
             orders[_orderId].withdraw = true;
             uint duration = orders[_orderId].duration  - orders[_orderId].withdrawDuration;
             uint price = (orders[_orderId].price / orders[_orderId].duration) * duration;
-            balances[msg.sender] += price;
+            _transfer(address(this), msg.sender, price);
         }else{
             uint duration = (block.timestamp - orders[_orderId].startTime) / durationUnit  - orders[_orderId].withdrawDuration;
             orders[_orderId].withdrawDuration += duration;
             uint price = (orders[_orderId].price / orders[_orderId].duration) * duration;
-            balances[msg.sender] += price;
+            _transfer(address(this), msg.sender, price);
         }
     }
 }
