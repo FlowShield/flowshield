@@ -1,4 +1,4 @@
-# [Cloudslit Provider]
+# Cloudslit Provider
 
 As a service network provider program, miners can deploy network services through this program to obtain rewards.
 
