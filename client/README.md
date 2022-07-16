@@ -23,7 +23,7 @@ You only need to modify the following contents, and other configurations can be 
   # Listening address
   LocalAddr = "0.0.0.0"
   # Listening port
-  LocalPort = 5092
+  LocalPort = 3091
   # Control end address， "Used to obtain configuration or rule information"
   ControlHost = "https://dash.cloudslit.xyz"
 ```
