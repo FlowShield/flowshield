@@ -15,31 +15,19 @@ Currently, websocket traffic transmission is supported.
 
 ### Configuration
 
-In the config directory, the user stores the project configuration file with the file name: config server Yaml, which can be modified according to your own needs
+In the configs directory, the user stores the project configuration file with the file name: config.toml, which can be modified according to your own needs
 
-You only need to modify the following contents, and other configurations can be modified according to your own needs.
+During deployment, you can refer to our current [deployment example](https://github.com/CloudSlit/cloudslit/tree/main/deploy/provider) and modify the corresponding configuration
 
-```yaml
-# Information about themselves
-[Common]
-  # Wallet address
-  PeerId = "0x1B4b827703dc3545089fcee70F0e6e732BFF4413"
-  # Price - Price of services provided, unit: CSD/h, CSD It's our token
-  Price = 5000
-  # External service address
-  LocalAddr = ""
-  # External service port
-  LocalPort = 5091
-```
 
 ### Quickstart
 ```shell
 $ make
-$ ./bin/provider -c ./configs/config.yaml
+$ ./bin/provider -c ./configs/config.toml
 ```
 
 ## License
-Cloudslit-Provider uses Apache 2.0 license. See [license](.License) directory for details
+Cloudslit-Provider uses Apache 2.0 license. See [license](LICENSE) directory for details
 
 ## Disclaimers
 When you use this software, you have agreed and declared that the author, maintainer and contributor of this software are not responsible for any risks, costs or problems you encounter. If you find a software defect or bug, please submit a patch to help improve!
