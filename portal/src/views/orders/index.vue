@@ -30,22 +30,26 @@
           <form-dialog @on-success="handleSearch"/>
         </v-toolbar>
       </template>
-      <!-- <template v-slot:item.target="{item}">{{ item.target.host + ':' + item.target.port }}</template> -->
-      <!-- <template v-slot:item.actions="{ item }">
-        <v-icon small class="mr-2" @click="pay(item)">Pay</v-icon>
-        <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-      </template> -->
 
       <template v-slot:item.status="{item}">
-      <span v-if=" item.status == 0 ">
-      Wait for payment
-      </span>
-      <span v-else-if=" item.status == 1 ">
-      Paid, please wait
-      </span>
-      <span v-else-if=" item.status == 2 ">
-      Success
-      </span>
+        <v-chip
+            color="red"
+            v-if=" item.status == 0 "
+        >
+          Wait for payment
+        </v-chip>
+        <v-chip
+            color="primary"
+            v-else-if=" item.status == 1 "
+        >
+          Paid, please wait
+        </v-chip>
+        <v-chip
+            color="green"
+            v-else-if=" item.status == 2 "
+        >
+          Success
+        </v-chip>
       </template>
       <template v-slot:item.action="{ item }">
         <v-btn x-medium rounded @click="pay(item)" :loading="paying[item.uuid]" v-if=" item.status == 0">

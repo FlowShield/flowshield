@@ -16,10 +16,10 @@
                     <v-card  dark>
                         <v-card-title >
                           Account address
-                          <span v-if="status == 2" style="color: #0D8DF1">
+                          <span v-if="status == 1" style="color: #0D8DF1">
                             &nbsp;(Awaiting verification)
                           </span>
-                          <span v-if="status == 1" style="color: #0DF171">
+                          <span v-if="status == 2" style="color: #0DF171">
                             &nbsp;(Verified)
                           </span>
                         </v-card-title>
@@ -64,7 +64,7 @@
             </v-card>
           </template>
         </div>
-        <v-btn x-large rounded @click="bindWallet" v-else>
+        <v-btn x-large rounded @click="bindWallet" :loading="bindwalletLoading" v-else>
           <v-icon class="mr-5">mdi-wallet</v-icon>
           Connect Your Wallet
         </v-btn>
@@ -90,6 +90,7 @@ export default {
     withdrawCSD: 0,
     status: 0,
     color: '',
+    bindwalletLoading: false,
     walletLoading: false,
     withdrawLoading: false,
     query: {
@@ -122,17 +123,13 @@ export default {
       if (address[0] !== '0x0000000000000000000000000000000000000000') {
         this.address = address[0]
         this.status = address[1]
-        if (this.status === 1) {
-          this.color = '#0DF171'
-        } else if (this.status === 2) {
-          this.color = '#0D8DF1'
-        }
       }
     },
     async getAllOrderTokens() {
       this.withdrawCSD = await getAllOrderTokens()
     },
     async bindWallet() {
+      this.bindwalletLoading = true
       let address = await getWallet(store.state.user.uuid)
       if (address[0] === '0x0000000000000000000000000000000000000000') {
         await bindWallet(store.state.user.uuid)
@@ -143,11 +140,11 @@ export default {
           await this.getBind()
         }
       }
+      this.bindwalletLoading = false
     },
     async withdrawAllOrder() {
       this.withdrawLoading = true
       await withdrawAllOrderTokens()
-      this.$message.success('Withdraw success')
       await this.getAllOrderTokens()
       this.withdrawLoading = false
     }
