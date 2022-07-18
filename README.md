@@ -22,6 +22,10 @@ CloudSlit aims to build a global web3 decentralized zero trust security network 
 
 
 
+https://user-images.githubusercontent.com/34047788/179441974-35a9b81e-1a73-44ef-bfc9-55e6f89aa758.mp4
+
+
+
 https://user-images.githubusercontent.com/34047788/179205016-b113ec4a-bd8b-433d-a9dc-73c60f2e1b84.mp4
 
 
