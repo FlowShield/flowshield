@@ -54,8 +54,10 @@ func InitClientServer(ctx context.Context) {
 		if err != nil {
 			logger.Fatalf("login client err:%v", err)
 		}
+	retry:
 		clientConfig, err := client.ParseConfig(ctx, client.ClientCid, []byte(client.PeerId[len(client.PeerId)-8:]))
 		if err != nil {
+			goto retry
 			logger.Fatalf("parse client err:%v", err)
 		}
 		err = bll.NewClient().Listen(ctx, clientConfig)

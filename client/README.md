@@ -1,4 +1,4 @@
-# [CloudSlit Client]
+# CloudSlit Client
 
 This is the cloudslit client program.
 
@@ -13,29 +13,18 @@ You need to communicate with the whole node through this program to obtain the c
 
 ### Configuration
 
-In the config directory, the user stores the project configuration file with the file name: config server Yaml, which can be modified according to your own needs
+In the configs directory, the user stores the project configuration file with the file name: config.toml, which can be modified according to your own needs
 
-You only need to modify the following contents, and other configurations can be modified according to your own needs.
-
-```yaml
-# Information about themselves
-[Common]
-  # Listening address
-  LocalAddr = "0.0.0.0"
-  # Listening port
-  LocalPort = 5092
-  # Control end address， "Used to obtain configuration or rule information"
-  ControlHost = "https://dash.cloudslit.xyz"
-```
+By default, you do not need to modify the configuration file, just refer to QuickStart.
 
 ### Quickstart
 ```shell
 $ make
-$ ./bin/client -c ./configs/config.yaml
+$ ./bin/client
 ```
 
 ## License
-cloudslit-client uses Apache 2.0 license. See [license](.License) directory for details
+cloudslit-client uses Apache 2.0 license. See [license](LICENSE) directory for details
 
 ## Disclaimers
 When you use this software, you have agreed and declared that the author, maintainer and contributor of this software are not responsible for any risks, costs or problems you encounter. If you find a software defect or bug, please submit a patch to help improve!

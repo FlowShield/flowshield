@@ -6,3 +6,4 @@ bin
 .history
 vendor
 machine.lock
+config.toml
