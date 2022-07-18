@@ -33,9 +33,10 @@ func handleUserBindStatus(closeChan chan<- interface{}) {
 	}()
 	for {
 		select {
-		case <-time.After(time.Second * 30):
+		case <-time.After(time.Second * 10):
 			userList, err := userDao.GetUserByStatus(mmysql.UnBind)
 			if err != nil {
+				logger.Errorf(nil, "handleUserBindStatus get user by status error: %v", err)
 				continue
 			}
 			for _, value := range userList {

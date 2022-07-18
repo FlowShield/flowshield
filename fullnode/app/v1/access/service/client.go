@@ -197,7 +197,7 @@ func AcceptClientOrder(c *gin.Context, client *schema.ClientP2P) {
 	}
 	// 判断订单状态是否已支付
 	if info.Status != mmysql.Paid {
-		logger.Warnf(c, "order status is not right: %v", info.Status)
+		//logger.Warnf(c, "order status is not right: %v", info.Status)
 		return
 	}
 	// 申请客户端ca，保存至ipfs，修改订单信息

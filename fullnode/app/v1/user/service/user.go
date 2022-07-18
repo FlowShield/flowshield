@@ -137,16 +137,19 @@ func CheckAndBindUser(user *mmysql.User) (code int) {
 		logger.Errorf(nil, "contract get wallet error: %v", err)
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
+	logger.Infof("CheckAndBindUse, uuid: %v,status: %v", user.UUID, status)
 	switch status {
 	case 1:
 		// 代表用户状态为预绑定，执行绑定
 		tra, err := eth.Instance().VerifyWallet(eth.CS.Auth, user.UUID)
 		if err != nil {
 			logger.Errorf(nil, "contract verify wallet error: %v", err)
+			return
 		}
 		rec, err := bind.WaitMined(context.Background(), eth.CS.Client, tra)
 		if err != nil {
 			logger.Errorf(nil, "contract verify wallet error: %v", err)
+			return
 		}
 		if rec.Status == 0 {
 			logger.Errorf(nil, "contract verify wallet err: %v", user.UUID)
@@ -160,6 +163,7 @@ func CheckAndBindUser(user *mmysql.User) (code int) {
 	user.Status = mmysql.Bind
 	err = userDao.NewUser(nil).UpdateUser(user)
 	if err != nil {
+		logger.Errorf(nil, "update user error: %v", err)
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
 	return
