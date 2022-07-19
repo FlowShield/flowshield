@@ -14,7 +14,7 @@ const providerInit = async() => {
   return provider
 }
 
-const contractAddress = '0xa1386996687D0A523b770e843895c8236E54AB82'
+const contractAddress = '0xe8BEeAC9336AA108FC4Baf65ba40595A98796eB0'
 
 export const getBalance = async() => {
   const provider = await providerInit()
@@ -23,7 +23,7 @@ export const getBalance = async() => {
   const signer = provider.getSigner()
   const address = await signer.getAddress()
   const contract = new ethers.Contract(contractAddress, abi, provider)
-  const balance = await contract.balanceOf(address)
+  const balance = ethers.utils.formatUnits(await contract.balanceOf(address), 18)
   return balance
 }
 
@@ -40,10 +40,10 @@ export const bindWallet = async(uid) => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.bindWallet(uid)
-    await transaction.wait()
+    await transaction.wait(2)
   } catch (error) {
-    console.log(error)
-    return error.message.message
+    // return error.error.message
+    return error.data.message
   }
 }
 
@@ -53,10 +53,23 @@ export const changeWallet = async(uid, newwallet) => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.changeWallet(uid, newwallet)
-    await transaction.wait()
+    await transaction.wait(2)
   } catch (error) {
-    console.log(error)
-    return error.message.message
+    // return error.error.message
+    return error.data.message
+  }
+}
+
+export const verifyWallet = async(uid) => {
+  const provider = await providerInit()
+  const signer = provider.getSigner()
+  const contract = new ethers.Contract(contractAddress, abi, signer)
+  try {
+    const transaction = await contract.verifyWallet(uid)
+    await transaction.wait(2)
+  } catch (error) {
+    // return error.error.message
+    return error.data.message
   }
 }
 
@@ -71,11 +84,11 @@ export const payOrder = async(name, duration, uuid, price, wallet) => {
     return BalanceNotEnough
   }
   try {
-    const transaction = await contract.clientOrder(name, duration, uuid, price, wallet)
-    await transaction.wait()
+    const transaction = await contract.clientOrder(name, duration, uuid, ethers.utils.parseUnits(price.toString()), wallet)
+    await transaction.wait(2)
   } catch (error) {
-    console.log(error.error.message)
-    return 'Payment failed'
+    // return error.error.message
+    return error.data.message
   }
   return 'ok'
 }
@@ -99,8 +112,7 @@ export const getAllOrderTokens = async() => {
   await provider.send('eth_requestAccounts', [])
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi, signer)
-  const withdrawCSD = await contract.getAllOrderTokens()
-  console.log(withdrawCSD)
+  const withdrawCSD = ethers.utils.formatUnits(await contract.getAllOrderTokens(), 18)
   return withdrawCSD
 }
 
@@ -110,10 +122,11 @@ export const withdrawAllOrderTokens = async() => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.withdrawAllOrderTokens()
-    await transaction.wait()
+    await transaction.wait(2)
+    return 'Withdraw success'
   } catch (error) {
-    console.log(error.toString())
-    console.log(error.message.message)
+    // return error.error.message
+    return error.data.message
   }
 }
 
@@ -123,11 +136,11 @@ export const withdrawOrderTokens = async(order_id) => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.withdrawOrderTokens(order_id)
-    await transaction.wait()
-    console.log(transaction)
+    await transaction.wait(2)
+    return 'Withdraw success'
   } catch (error) {
-    console.log(error.toString())
-    console.log(error.message)
+    // return error.error.message
+    return error.data.message
   }
 }
 
@@ -137,9 +150,10 @@ export const stake = async(_type) => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.stake(_type)
-    await transaction.wait()
+    await transaction.wait(2)
+    return 'Stake success'
   } catch (error) {
-    console.log(error.toString())
-    console.log(error.message.message)
+    // return error.error.message
+    return error.data.message
   }
 }
