@@ -23,14 +23,14 @@ export const getBalance = async() => {
   const signer = provider.getSigner()
   const address = await signer.getAddress()
   const contract = new ethers.Contract(contractAddress, abi, provider)
-  const balance = await contract.balanceOf(address)
+  const balance = ethers.utils.formatUnits(await contract.balanceOf(address), 18)
   return balance
 }
 
 export const getWallet = async(uid) => {
   const provider = await providerInit()
   const contract = new ethers.Contract(contractAddress, abi, provider)
-  const walletAddress = await contract.getWallet('uid')
+  const walletAddress = await contract.getWallet(uid)
   return walletAddress
 }
 
@@ -39,7 +39,7 @@ export const bindWallet = async(uid) => {
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
-    const transaction = await contract.bindWallet('uid')
+    const transaction = await contract.bindWallet(uid)
     await transaction.wait(2)
   } catch (error) {
     // return error.error.message
@@ -53,7 +53,20 @@ export const changeWallet = async(uid, newwallet) => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.changeWallet(uid, newwallet)
-    await transaction.wait()
+    await transaction.wait(2)
+  } catch (error) {
+    // return error.error.message
+    return error.data.message
+  }
+}
+
+export const verifyWallet = async(uid) => {
+  const provider = await providerInit()
+  const signer = provider.getSigner()
+  const contract = new ethers.Contract(contractAddress, abi, signer)
+  try {
+    const transaction = await contract.verifyWallet(uid)
+    await transaction.wait(2)
   } catch (error) {
     // return error.error.message
     return error.data.message
@@ -70,19 +83,12 @@ export const payOrder = async(name, duration, uuid, price, wallet) => {
   if (await getBalance() < price) {
     return BalanceNotEnough
   }
-  console.log(ethers.BigNumber.from(price))
   try {
-    const transaction = await contract.clientOrder(name, duration, uuid, price, wallet)
-    await transaction.wait()
+    const transaction = await contract.clientOrder(name, duration, uuid, ethers.utils.parseUnits(price.toString()), wallet)
+    await transaction.wait(2)
   } catch (error) {
-    try {
-      const transaction = await contract.withdrawAllOrderTokens()
-      await transaction.wait(2)
-      return 'Withdraw success'
-    } catch (error) {
-      // return error.error.message
-      return error.data.message
-    }
+    // return error.error.message
+    return error.data.message
   }
   return 'ok'
 }
@@ -106,7 +112,7 @@ export const getAllOrderTokens = async() => {
   await provider.send('eth_requestAccounts', [])
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi, signer)
-  const withdrawCSD = await contract.getAllOrderTokens()
+  const withdrawCSD = ethers.utils.formatUnits(await contract.getAllOrderTokens(), 18)
   return withdrawCSD
 }
 
