@@ -16,9 +16,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/cskr/pubsub"
-	cid "github.com/ipfs/go-cid/_rsrch/cidiface"
-
 	"github.com/ipfs/go-cid"
 	"github.com/libp2p/go-libp2p"
 	"github.com/libp2p/go-libp2p-core/crypto"
