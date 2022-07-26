@@ -19,7 +19,7 @@ func NewProvider() *Provider {
 	}
 }
 
-func (p *Provider) ListProvider(param *model.Provider) (list model.Providers, err error) {
+func (p *Provider) ListProvider(param *model.Provider) (model.Providers, error) {
 	query := p.GetOrm().DB
 	if param.Uuid != "" {
 		query = query.Where(fmt.Sprintf("uuid = '%s'", param.Uuid))
@@ -33,12 +33,13 @@ func (p *Provider) ListProvider(param *model.Provider) (list model.Providers, er
 	if param.ServerCid != "" {
 		query = query.Where(fmt.Sprintf("server_cid = '%s'", param.ServerCid))
 	}
-	query.Where(fmt.Sprintf("expired_at = 0 or expired_at >= %d", time.Now().Unix()))
-	err = query.Order("updated_at desc").Find(&list).Error
+	query = query.Where(fmt.Sprintf("expired_at = 0 or expired_at >= %d", time.Now().Unix()))
+	var list model.Providers
+	err := query.Order("updated_at desc").Find(&list).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		err = nil
 	}
-	return
+	return list, nil
 }
 
 func (p *Provider) GetProviderByUuid(uuid string) (info *model.Provider, err error) {
