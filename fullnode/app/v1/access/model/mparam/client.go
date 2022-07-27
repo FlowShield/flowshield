@@ -12,6 +12,7 @@ type ClientList struct {
 	Name        string `json:"name" form:"name"`
 	PeerID      string `json:"peer_id"`
 	ResourceCID int    `json:"resource_cid" form:"resource_cid"`
+	Working     bool   `json:"working" form:"working"`
 }
 
 type AddClient struct {
