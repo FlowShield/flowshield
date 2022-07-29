@@ -5,13 +5,13 @@ services:
     network_mode: host
     restart: always
     environment:
-      PR_APP_LOCAL_ADDR: ''
+      PR_APP_LOCAL_ADDR: 'xxx'
       PR_APP_LOCAL_PORT: '5091'
       PR_WEB3_PRICE: '20'
       PR_WEB3_PRIVATE_KEY: 'xxx'
-      PR_WEB3_CONTRACT_TOKEN: 'xxx'
+      PR_WEB3_CONTRACT_TOKEN: '0xB82278dCb9b94fC00fF7AD63f335FD3C0e46E809'
       PR_WEB3_W3S_TOKEN: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U'
-      PR_WEB3_ETH_URL: 'xxx'
+      PR_WEB3_ETH_URL: 'https://godwoken-testnet-v1.ckbapp.dev'
       PR_WEB3_ETH_PROJECT_ID: ''
       PR_MYSQL_HOST: '127.0.0.1'
       PR_MYSQL_PORT: '23306'
