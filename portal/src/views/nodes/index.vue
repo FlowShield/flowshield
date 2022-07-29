@@ -59,7 +59,7 @@ export default {
       { text: 'Loc', value: 'loc' },
       // { text: 'Public IP', align: 'start', value: 'ip' },
       { text: 'Host', value: 'addr' },
-      { text: 'Listen Port', value: 'port' },
+      // { text: 'Listen Port', value: 'port' },
       { text: 'Colo', value: 'colo' },
       { text: 'Price/Hour', value: 'price' },
       { text: 'Created at', value: 'CreatedAt' },

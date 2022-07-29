@@ -52,7 +52,7 @@
         </v-chip>
       </template>
       <template v-slot:item.action="{ item }">
-        <v-btn x-medium rounded @click="pay(item)" :loading="paying[item.uuid]" v-if=" item.status == 0">
+        <v-btn x-medium rounded @click="pay(item)" :loading="item.paying" v-if=" item.status == 0">
           <v-icon class="mr-3">mdi-wallet</v-icon>
           Pay
         </v-btn>
@@ -64,21 +64,21 @@
 <script>
 import FormDialog from './components/form-dialog'
 import { deleteZeroAccessClient, fetchZeroAccessClients, postZeroAccessClientsPayNotify } from '@/api'
-import { payOrder, OrderPaid } from '@/utils/ethers'
+import { payOrder, OrderPaid, PaySuccess } from '@/utils/ethers'
 
 export default {
   components: { FormDialog },
   data: () => ({
     loading: false,
-    paying: [],
     query: {
       name: '',
       page: 1,
       limit_num: 15
     },
     tableHeaders: [
-      { text: 'Name', align: 'start', sortable: true, value: 'name' },
-      { text: 'OrderId', sortable: true, value: 'uuid' },
+      { text: 'Name', align: 'start', sortable: true, value: 'name', width: '160px' },
+      { text: 'OrderId', sortable: true, value: 'uuid', width: '300px' },
+      { text: 'Host', sortable: true, value: 'node_ip' },
       { text: 'Listen port', sortable: true, value: 'port' },
       { text: 'Duration(Hours)', sortable: false, value: 'duration' },
       { text: 'Price(CSD)', sortable: true, value: 'price' },
@@ -102,21 +102,20 @@ export default {
       this.getTableItems()
     },
     async pay(item) {
-      this.paying[item.uuid] = true
+      item.paying = true
       const payStatus = await payOrder(item.name, item.duration, item.uuid, item.price, item.peer_id)
-      if (payStatus === 'ok' || payStatus === OrderPaid) {
+      if (payStatus === PaySuccess || payStatus === OrderPaid) {
         postZeroAccessClientsPayNotify({ uuid: item.uuid }).then(res => {
           this.$emit('on-success')
-          this.$message.success()
-          this.paying[item.uuid] = false
-          this.getTableItems()
+          this.$message.success(payStatus)
         }).finally(() => {
-          this.paying[item.uuid] = false
+          item.paying = false
+          this.getTableItems()
           this.loopResult()
         })
       } else {
         this.$message.error(payStatus)
-        this.paying[item.uuid] = false
+        item.paying = false
       }
     },
     getTableItems() {
@@ -125,7 +124,7 @@ export default {
         this.tableItems = res.data.list || []
         this.total = res.data.paginate.total
         for (let i = 0; i < this.tableItems.length; i++) {
-          this.paying[this.tableItems[i].uuid] = false
+          this.$set(this.tableItems[i], 'paying', false)
         }
       }).finally(() => {
         this.loading = false
