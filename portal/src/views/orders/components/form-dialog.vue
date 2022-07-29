@@ -26,7 +26,7 @@
                 v-model="form.peer_id"
                 label="Server"
                 :items="serverItems"
-                item-text="addr"
+                item-text="showinfo"
                 item-value="peer_id"
                 :loading="loadingServer"
             >
@@ -102,6 +102,9 @@ export default {
       this.loadingServer = true
       fetchZeroAccessNodes({ limit_num: 999 }).then(res => {
         this.serverItems = (res.data.list || [])
+        for (let i = 0; i < this.serverItems.length; i++) {
+          this.$set(this.serverItems[i], 'showinfo', this.serverItems[i].loc + ' --- ' + this.serverItems[i].addr + ' --- ' + this.serverItems[i].price + '   CSD/Hour')
+        }
       }).finally(() => {
         this.loadingServer = false
       })
