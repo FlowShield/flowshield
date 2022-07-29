@@ -7,9 +7,10 @@ import (
 	"io/ioutil"
 	"os"
 
+	"github.com/web3-storage/go-w3s-client"
+
 	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
 	"github.com/ipfs/go-cid"
-	"github.com/web3-storage/go-w3s-client"
 	"github.com/wumansgy/goEncrypt"
 )
 

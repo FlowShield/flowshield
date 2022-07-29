@@ -33,10 +33,7 @@ redis:
 
 #CA
 ca:
-  base-url: "http://192.168.2.80:8382"
-  sign-url: "https://192.168.2.80:8681"
-  ocsp-url: "http://192.168.2.80:8383"
-  version: "/api/v1"
+  sign-url: "https://192.168.2.80:8581"
   auth-key: "0739a645a7d6601d9d45f6b237c4edeadad904f2fce53625dfdd541ec4fc8134"
 
 oauth2:
@@ -44,19 +41,19 @@ oauth2:
   client-secret: "aeec3165d947ce121692ddf22ec77b7f2f0ec2bf"
 
 p2p:
-  enable: false
-  account: "0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d"
+  enable: true
+#  account: "0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d"
   service-discovery-id: "cloudslit/provider"
   service-discovery-mode: "advertise" # advertise or announce
   service-metadata-topic: "cloudslit_provider_metadata" # advertise or announce
 
 web3:
   register: "true"
-  private-key: "xxxx"
+  private-key: "a5042f010a7d7f5652097768612265014ec390ea6f2f281f362091a5c39f4900"
   contract:
-    token: "0x87f7Ad09AF04c634702c784E68989f459D32D0C8"
+    token: "0xa1386996687D0A523b770e843895c8236E54AB82"
   w3s:
-    token: "xxxx"
+    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U"
   eth:
-    url: "https://ropsten.infura.io/v3"
-    projectid: "45630f96f9d841679dc200a7c97763d2"
+    url: "https://godwoken-testnet-v1.ckbapp.dev"
+    projectid: ""

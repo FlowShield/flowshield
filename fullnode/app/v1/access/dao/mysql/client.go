@@ -38,6 +38,10 @@ func (p *Client) ClientList(param mparam.ClientList) (
 	if len(param.PeerID) > 0 {
 		query = query.Where(fmt.Sprintf("peer_id = '%s'", param.PeerID))
 	}
+	if param.Working {
+		query = query.Where(fmt.Sprintf("status = %d", mmysql.Success))
+		query = query.Where(fmt.Sprintf("updated_at + 60*60*duration >= %d", time.Now().Unix()))
+	}
 	if user := util.User(p.c); user != nil {
 		query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
 	}
