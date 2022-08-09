@@ -1,4 +1,4 @@
-const abi = require('../../../contract/artifacts/contracts/CloudSlit.sol/CloudSlit.json').abi
+const abi = require('../../../contract/artifacts/contracts/CloudSlitDao.sol/CloudSlitDao.json').abi
 const ethers = require('ethers')
 export const OrderPaid = 'Paid, payment failed'
 export const BalanceNotEnough = 'Your balance is insufficient'
@@ -29,7 +29,7 @@ const handleErrorMsg = async(error) => {
   }
 }
 
-const contractAddress = '0xB82278dCb9b94fC00fF7AD63f335FD3C0e46E809'
+const contractAddress = '0x3A35207918FEE0F59a32a1a36B58A758B4F222de'
 
 export const getBalance = async() => {
   const provider = await providerInit()
@@ -55,7 +55,7 @@ export const bindWallet = async(uid) => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.bindWallet(uid)
-    await transaction.wait(2)
+    await transaction.wait()
   } catch (error) {
     return handleErrorMsg(error)
   }
@@ -67,7 +67,7 @@ export const changeWallet = async(uid, newwallet) => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.changeWallet(uid, newwallet)
-    await transaction.wait(2)
+    await transaction.wait()
   } catch (error) {
     return handleErrorMsg(error)
   }
@@ -79,7 +79,7 @@ export const verifyWallet = async(uid) => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.verifyWallet(uid)
-    await transaction.wait(2)
+    await transaction.wait()
   } catch (error) {
     return handleErrorMsg(error)
   }
@@ -97,7 +97,7 @@ export const payOrder = async(name, duration, uuid, price, wallet) => {
   }
   try {
     const transaction = await contract.clientOrder(name, duration, uuid, ethers.utils.parseUnits(price.toString()), wallet)
-    await transaction.wait(2)
+    await transaction.wait()
   } catch (error) {
     return handleErrorMsg(error)
   }
@@ -124,7 +124,6 @@ export const getAllOrderTokens = async() => {
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi, signer)
   const withdrawCSD = ethers.utils.formatUnits(await contract.getAllOrderTokens())
-  console.log(withdrawCSD)
   return withdrawCSD
 }
 
@@ -134,7 +133,7 @@ export const withdrawAllOrderTokens = async() => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.withdrawAllOrderTokens()
-    await transaction.wait(2)
+    await transaction.wait()
     return 'Withdraw success'
   } catch (error) {
     return handleErrorMsg(error)
@@ -147,7 +146,7 @@ export const withdrawOrderTokens = async(order_id) => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.withdrawOrderTokens(order_id)
-    await transaction.wait(2)
+    await transaction.wait()
     return 'Withdraw success'
   } catch (error) {
     return handleErrorMsg(error)
@@ -160,7 +159,7 @@ export const stake = async(_type) => {
   const contract = new ethers.Contract(contractAddress, abi, signer)
   try {
     const transaction = await contract.stake(_type)
-    await transaction.wait(2)
+    await transaction.wait()
     return 'Stake success'
   } catch (error) {
     return handleErrorMsg(error)

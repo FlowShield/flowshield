@@ -130,15 +130,18 @@ export default {
     },
     async bindWallet() {
       this.bindwalletLoading = true
-      let address = await getWallet(store.state.user.uuid)
+      const address = await getWallet(store.state.user.uuid)
       if (address[0] === '0x0000000000000000000000000000000000000000') {
-        await bindWallet(store.state.user.uuid)
-        address = await getWallet(store.state.user.uuid)
-        if (address[0] === '0x0000000000000000000000000000000000000000') {
-          this.$message.error('Bind failed')
+        const res = await bindWallet(store.state.user.uuid)
+        if (res !== undefined) {
+          this.$message.error(res)
         } else {
+          this.$message.success('Bind succeeded')
           await this.getBind()
         }
+      } else {
+        this.address = address[0]
+        this.status = address[1]
       }
       this.bindwalletLoading = false
     },
