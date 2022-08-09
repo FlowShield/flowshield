@@ -1,5 +1,5 @@
 require("@nomiclabs/hardhat-waffle");
-
+require("@openzeppelin/hardhat-upgrades");
 // Go to https://infura.io/ and create a new project
 // Replace this with your Infura project ID
 const INFURA_PROJECT_ID = "811238fc53164a35a96f841a7a89bea5";
