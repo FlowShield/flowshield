@@ -532,47 +532,6 @@
       "artifacts": [
         "CloudSlitDao"
       ]
-    },
-    "/Users/chengqiang/icode/github/CloudSlit/cloudslit/contract/contracts/CloudSlitDaoV2.sol": {
-      "lastModificationDate": 1659954767316,
-      "contentHash": "b06a9e882b9ff381b68b6e09176455e3",
-      "sourceName": "contracts/CloudSlitDaoV2.sol",
-      "solcConfig": {
-        "version": "0.8.15",
-        "settings": {
-          "optimizer": {
-            "enabled": false,
-            "runs": 200
-          },
-          "outputSelection": {
-            "*": {
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata",
-                "storageLayout"
-              ],
-              "": [
-                "ast"
-              ]
-            }
-          }
-        }
-      },
-      "imports": [
-        "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol",
-        "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol"
-      ],
-      "versionPragmas": [
-        "^0.8.15"
-      ],
-      "artifacts": [
-        "CloudSlitDaoV2"
-      ]
     }
   }
 }

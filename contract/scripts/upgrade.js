@@ -1,5 +1,5 @@
 async function main() {
-    const proxyAddress = '0x45292fC8824A5cFF141B37E0e85c787390Ed76B7';
+    const proxyAddress = '0x3A35207918FEE0F59a32a1a36B58A758B4F222de';
 
     const CloudSlitDaoV2 = await ethers.getContractFactory("CloudSlitDaoV2");
     console.log("Preparing upgrade...");
