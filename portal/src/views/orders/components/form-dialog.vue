@@ -14,7 +14,7 @@
         <span class="text-h5">New order</span>
       </v-card-title>
       <v-card-text>
-        <v-form v-model="valid">
+        <v-form v-model="valid" ref="form">
           <v-container>
             <v-text-field
                 v-model="form.name"
@@ -118,18 +118,20 @@ export default {
       })
     },
     handleSubmit() {
-      this.submitting = true
+      if (this.$refs.form.validate()) {
+        this.submitting = true
 
-      const form = { ...this.form }
-      // const [host, port] = form.target.split(':')
-      // form.target = { host, port: +port }
-      postZeroAccessClient(form).then(res => {
-        this.$emit('on-success')
-        this.$message.success()
-        this.dialog = false
-      }).finally(() => {
-        this.submitting = false
-      })
+        const form = { ...this.form }
+        // const [host, port] = form.target.split(':')
+        // form.target = { host, port: +port }
+        postZeroAccessClient(form).then(res => {
+          this.$emit('on-success')
+          this.$message.success()
+          this.dialog = false
+        }).finally(() => {
+          this.submitting = false
+        })
+      }
     }
   }
 }
