@@ -11,7 +11,7 @@ require (
 	github.com/jinzhu/copier v0.0.0-20190924061706-b57f9002281a
 	github.com/json-iterator/go v1.1.12
 	github.com/koding/multiconfig v0.0.0-20171124222453-69c27309b2d7
-	github.com/libp2p/go-libp2p v0.21.0-rc.0.20220713113257-7facd81bba88
+	github.com/libp2p/go-libp2p v0.21.0
 	github.com/libp2p/go-libp2p-core v0.19.1
 	github.com/libp2p/go-libp2p-kad-dht v0.16.1-0.20220630180013-60451c06b768
 	github.com/libp2p/go-libp2p-pubsub v0.7.1-0.20220701163738-60cf38003244
