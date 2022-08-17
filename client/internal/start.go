@@ -52,7 +52,7 @@ func InitClientServer(ctx context.Context) {
 		// Get client list
 		client, err := up.printClients(ctx)
 		if err != nil {
-			logger.Fatalf("login client err:%v", err)
+			logger.Fatalf("load client err:%v", err)
 		}
 	retry:
 		clientConfig, err := client.ParseConfig(ctx, client.ClientCid, []byte(client.PeerId[len(client.PeerId)-8:]))
@@ -75,7 +75,7 @@ func (a *Up) printClients(ctx context.Context) (*schema.ControlClient, error) {
 		return nil, err
 	}
 	if len(clients) <= 0 {
-		return nil, errors.NewWithStack("You haven't added a client yet")
+		return nil, errors.NewWithStack("You have no available clients, Please go to " + config.C.App.ControlHost + " ,to place an order")
 	}
 	scanner := bufio.NewScanner(os.Stdin)
 retry:
@@ -165,7 +165,7 @@ func (a *Up) GetUserDetail() (*schema.ControlUserDetail, error) {
 
 // GetControlClients
 func GetControlClients() (schema.ControlClients, error) {
-	url := fmt.Sprintf("%s/api/v1/access/client?name=&page=1&limit_num=50", config.C.App.ControlHost)
+	url := fmt.Sprintf("%s/api/v1/access/client?name=&page=1&limit_num=50&working=true", config.C.App.ControlHost)
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, errors.WithStack(err)
