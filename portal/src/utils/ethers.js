@@ -2,6 +2,9 @@ const abi = require('../../../contract/artifacts/contracts/CloudSlit.sol/CloudSl
 const ethers = require('ethers')
 export const OrderPaid = 'Paid, payment failed'
 export const BalanceNotEnough = 'Your balance is insufficient'
+export const PaySuccess = 'Payment successful'
+
+export const Error = 'Error parsing failed'
 
 const providerInit = async() => {
   let provider = ''
@@ -14,7 +17,19 @@ const providerInit = async() => {
   return provider
 }
 
-const contractAddress = '0xe8BEeAC9336AA108FC4Baf65ba40595A98796eB0'
+const handleErrorMsg = async(error) => {
+  if (error.data !== undefined && error.data.message !== undefined) {
+    return error.data.message
+  } else if (error.message !== undefined) {
+    return error.message
+  } else if (error.error !== undefined && error.error.message !== undefined) {
+    return error.error.message
+  } else {
+    return Error
+  }
+}
+
+const contractAddress = '0xB82278dCb9b94fC00fF7AD63f335FD3C0e46E809'
 
 export const getBalance = async() => {
   const provider = await providerInit()
@@ -23,7 +38,7 @@ export const getBalance = async() => {
   const signer = provider.getSigner()
   const address = await signer.getAddress()
   const contract = new ethers.Contract(contractAddress, abi, provider)
-  const balance = ethers.utils.formatUnits(await contract.balanceOf(address), 18)
+  const balance = ethers.utils.formatUnits(await contract.balanceOf(address))
   return balance
 }
 
@@ -42,8 +57,7 @@ export const bindWallet = async(uid) => {
     const transaction = await contract.bindWallet(uid)
     await transaction.wait(2)
   } catch (error) {
-    // return error.error.message
-    return error.data.message
+    return handleErrorMsg(error)
   }
 }
 
@@ -55,8 +69,7 @@ export const changeWallet = async(uid, newwallet) => {
     const transaction = await contract.changeWallet(uid, newwallet)
     await transaction.wait(2)
   } catch (error) {
-    // return error.error.message
-    return error.data.message
+    return handleErrorMsg(error)
   }
 }
 
@@ -68,8 +81,7 @@ export const verifyWallet = async(uid) => {
     const transaction = await contract.verifyWallet(uid)
     await transaction.wait(2)
   } catch (error) {
-    // return error.error.message
-    return error.data.message
+    return handleErrorMsg(error)
   }
 }
 
@@ -87,10 +99,9 @@ export const payOrder = async(name, duration, uuid, price, wallet) => {
     const transaction = await contract.clientOrder(name, duration, uuid, ethers.utils.parseUnits(price.toString()), wallet)
     await transaction.wait(2)
   } catch (error) {
-    // return error.error.message
-    return error.data.message
+    return handleErrorMsg(error)
   }
-  return 'ok'
+  return PaySuccess
 }
 
 export const checkOrder = async(uuid) => {
@@ -112,7 +123,8 @@ export const getAllOrderTokens = async() => {
   await provider.send('eth_requestAccounts', [])
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi, signer)
-  const withdrawCSD = ethers.utils.formatUnits(await contract.getAllOrderTokens(), 18)
+  const withdrawCSD = ethers.utils.formatUnits(await contract.getAllOrderTokens())
+  console.log(withdrawCSD)
   return withdrawCSD
 }
 
@@ -125,8 +137,7 @@ export const withdrawAllOrderTokens = async() => {
     await transaction.wait(2)
     return 'Withdraw success'
   } catch (error) {
-    // return error.error.message
-    return error.data.message
+    return handleErrorMsg(error)
   }
 }
 
@@ -139,8 +150,7 @@ export const withdrawOrderTokens = async(order_id) => {
     await transaction.wait(2)
     return 'Withdraw success'
   } catch (error) {
-    // return error.error.message
-    return error.data.message
+    return handleErrorMsg(error)
   }
 }
 
@@ -153,7 +163,6 @@ export const stake = async(_type) => {
     await transaction.wait(2)
     return 'Stake success'
   } catch (error) {
-    // return error.error.message
-    return error.data.message
+    return handleErrorMsg(error)
   }
 }

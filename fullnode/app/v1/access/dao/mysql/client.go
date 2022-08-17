@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mapi"
+
 	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
 
 	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mmysql"
@@ -29,23 +31,28 @@ func NewClient(c *gin.Context) *Client {
 }
 
 func (p *Client) ClientList(param mparam.ClientList) (
-	total int64, list []mmysql.Client, err error) {
+	total int64, list []mapi.Client, err error) {
 	orm := p.GetOrm().DB
-	query := orm.Table(p.TableName)
+	query := orm.Table(p.TableName).Select(p.TableName + ".*,zta_node.ip as node_ip").
+		Joins("left join zta_node on zta_client.peer_id = zta_node.peer_id")
 	if len(param.Name) > 0 {
-		query = query.Where(fmt.Sprintf("name like '%%%s%%'", param.Name))
+		query = query.Where(fmt.Sprintf(p.TableName+".name like '%%%s%%'", param.Name))
 	}
 	if len(param.PeerID) > 0 {
-		query = query.Where(fmt.Sprintf("peer_id = '%s'", param.PeerID))
+		query = query.Where(fmt.Sprintf(p.TableName+".peer_id = '%s'", param.PeerID))
+	}
+	if param.Working {
+		query = query.Where(fmt.Sprintf(p.TableName+".status = %d", mmysql.Success))
+		query = query.Where(fmt.Sprintf(p.TableName+".updated_at + 60*60*duration >= %d", time.Now().Unix()))
 	}
 	if user := util.User(p.c); user != nil {
-		query = query.Where(fmt.Sprintf("user_uuid = '%s'", user.UUID))
+		query = query.Where(fmt.Sprintf(p.TableName+".user_uuid = '%s'", user.UUID))
 	}
 	err = query.Model(&list).Count(&total).Error
 	if total > 0 {
 		offset := param.GetOffset()
 		err = query.Limit(param.LimitNum).Offset(offset).
-			Order("created_at desc").
+			Order(p.TableName + ".created_at desc").
 			Find(&list).Error
 	}
 	if errors.Is(err, gorm.ErrRecordNotFound) {

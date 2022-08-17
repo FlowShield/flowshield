@@ -137,7 +137,7 @@ func CheckAndBindUser(user *mmysql.User) (code int) {
 		logger.Errorf(nil, "contract get wallet error: %v", err)
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}
-	logger.Infof("CheckAndBindUse, uuid: %v,status: %v", user.UUID, status)
+	//logger.Infof("CheckAndBindUse, uuid: %v,status: %v", user.UUID, status)
 	switch status {
 	case 1:
 		// 代表用户状态为预绑定，执行绑定
