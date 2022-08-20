@@ -38,7 +38,7 @@ func (a *Pubsub) InitByDB(ctx context.Context, ps *p2p.PubSub) {
 	// 查询数据库
 	list, err := service.ListProvider(&model.Provider{})
 	if err != nil {
-		logger.Errorf("读取持久化数据失败：%v", err)
+		logger.WithErrorStack(ctx, err).Errorf("读取持久化数据失败：%v", err)
 		return
 	}
 	for _, item := range list {
@@ -53,13 +53,13 @@ func (a *Pubsub) InitByDB(ctx context.Context, ps *p2p.PubSub) {
 		// 检测端口是否异常
 		ln, err := net.Listen("tcp", ":"+strconv.Itoa(order.Port))
 		if err != nil {
-			logger.Errorf("The order is restarted, and the port is abnormal. Please deal with it in time, Err:%s", err)
+			logger.WithErrorStack(ctx, err).Errorf("The order is restarted, and the port is abnormal. Please deal with it in time, Err:%s", err)
 			continue
 		}
 		_ = ln.Close()
 		err = a.handleOrder(ctx, ps, order)
 		if err != nil {
-			logger.Errorf("Init Handle Order Err:%s", err)
+			logger.WithErrorStack(ctx, err).Errorf("Init Handle Order Err:%s", err)
 			continue
 		}
 	}
@@ -83,7 +83,7 @@ func (a *Pubsub) StartPubsubHandler(ctx context.Context, ps *p2p.PubSub, p *p2p.
 			// Print the recieved messages to the message box
 			err := a.ReceiveHandle(ctx, ps, msg.Message)
 			if err != nil {
-				logger.Errorf("Receive Msg Handle Err:%s", msg)
+				logger.WithErrorStack(ctx, err).Errorf("Receive Msg Handle Err:%s", err)
 			}
 
 		case <-refreshticker.C:
