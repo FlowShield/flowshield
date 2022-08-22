@@ -74,28 +74,20 @@ func EditResource(c *gin.Context, param *mparam.EditResource) (code int) {
 	return
 }
 
-//func DelResource(c *gin.Context, uuid string) (code int) {
-//	// check if any servers under this resource
-//	resource, err := mysql.NewResource(c).GetResourceByUUID(uuid)
-//	if err != nil {
-//		code = pconst.CODE_COMMON_SERVER_BUSY
-//		return
-//	}
-//	if resource == nil || resource.ID == 0 {
-//		code = pconst.CODE_COMMON_DATA_NOT_EXIST
-//		return
-//	}
-//	total, _, err := mysql.NewServer(c).ServerList(mparam.ServerList{
-//		ResourceID: int(resource.ID),
-//	})
-//	if total > 0 {
-//		code = pconst.CODE_DATA_HAS_RELATION
-//		c.Set("error", "There are servers under this resource")
-//		return
-//	}
-//	err = mysql.NewResource(c).DelResource(uuid)
-//	if err != nil {
-//		code = pconst.CODE_COMMON_SERVER_BUSY
-//	}
-//	return
-//}
+func DelResource(c *gin.Context, uuid string) (code int) {
+	// check if any servers under this resource
+	resource, err := mysql.NewResource(c).GetResourceByUUID(uuid)
+	if err != nil {
+		code = pconst.CODE_COMMON_SERVER_BUSY
+		return
+	}
+	if resource == nil || resource.ID == 0 {
+		code = pconst.CODE_COMMON_DATA_NOT_EXIST
+		return
+	}
+	err = mysql.NewResource(c).DelResource(uuid)
+	if err != nil {
+		code = pconst.CODE_COMMON_SERVER_BUSY
+	}
+	return
+}

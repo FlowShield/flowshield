@@ -95,15 +95,15 @@ func AddResource(c *gin.Context) {
 //	code = service.EditResource(c, param)
 //	response.UtilResponseReturnJson(c, code, nil)
 //}
-//
-//// @Summary DelResource
-//// @Description 删除ZTA的resource
-//// @Tags ZTA
-//// @Produce  json
-//// @Param id path int true "主键ID"
-//// @Success 200 {object} controller.Res
-//// @Router /access/resource/{uuid} [delete]
-//func DelResource(c *gin.Context) {
-//	code := service.DelResource(c, c.Param("uuid"))
-//	response.UtilResponseReturnJson(c, code, nil)
-//}
+
+// @Summary DelResource
+// @Description 删除ZTA的resource
+// @Tags ZTA
+// @Produce  json
+// @Param id path int true "主键ID"
+// @Success 200 {object} controller.Res
+// @Router /access/resource/{uuid} [delete]
+func DelResource(c *gin.Context) {
+	code := service.DelResource(c, c.Param("uuid"))
+	response.UtilResponseReturnJson(c, code, nil)
+}

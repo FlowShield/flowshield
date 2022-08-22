@@ -11,7 +11,6 @@ import (
 	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/eth"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -30,6 +29,18 @@ func ListNode(c *gin.Context, param mparam.ListNode) (code int, nodeList mapi.No
 
 func AddNode(c *gin.Context, server *schema.ServerInfo) (code int) {
 	if server.Type == "fullnode" {
+		return
+	}
+	// 判断当前传递的节点是否已经质押
+	isDeposit, err := eth.Instance().IsDeposit(&bind.CallOpts{
+		From: common.HexToAddress(server.PeerId),
+	}, eth.Provider)
+	if err != nil {
+		logger.Errorf(c, "check isDeposit error: %v", err)
+		return pconst.CODE_COMMON_SERVER_BUSY
+	}
+	if !isDeposit {
+		logger.Warnf(c, "provider %s has not deposited yet: %v", server.PeerId, err)
 		return
 	}
 	node := &mmysql.Node{
@@ -54,18 +65,6 @@ func AddNode(c *gin.Context, server *schema.ServerInfo) (code int) {
 		if err != nil {
 			return pconst.CODE_COMMON_SERVER_BUSY
 		}
-		return
-	}
-	// 判断当前传递的节点是否已经质押
-	isDeposit, err := eth.Instance().IsDeposit(&bind.CallOpts{
-		From: common.HexToAddress(server.PeerId),
-	}, eth.Provider)
-	if err != nil {
-		logger.Errorf(c, "check isDeposit error: %v", err)
-		return pconst.CODE_COMMON_SERVER_BUSY
-	}
-	if !isDeposit {
-		logger.Warnf(c, "provider %s has not deposited yet: %v", server.PeerId, err)
 		return
 	}
 	err = mysql.NewNode(c).AddNode(node)

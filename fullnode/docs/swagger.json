@@ -176,6 +176,35 @@
                 }
             }
         },
+        "/access/resource/{uuid}": {
+            "delete": {
+                "description": "删除ZTA的resource",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ZTA"
+                ],
+                "summary": "DelResource",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "主键ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Res"
+                        }
+                    }
+                }
+            }
+        },
         "/controlplane/machine/{machine_id}": {
             "get": {
                 "description": "根据机器码获取客户端鉴权的url",
