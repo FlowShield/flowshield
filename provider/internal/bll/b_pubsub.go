@@ -53,7 +53,7 @@ func (a *Pubsub) InitByDB(ctx context.Context, ps *p2p.PubSub) {
 		// 检测端口是否异常
 		ln, err := net.Listen("tcp", ":"+strconv.Itoa(order.Port))
 		if err != nil {
-			logger.Errorf("The order is restarted, and the port is abnormal. Please deal with it in time, Err:%s", err)
+			logger.WithErrorStack(ctx, err).Errorf("The order is restarted, and the port is abnormal. Please deal with it in time, Err:%s", err)
 			continue
 		}
 		_ = ln.Close()

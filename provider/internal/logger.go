@@ -28,9 +28,9 @@ func InitLogger() (func(), error) {
 			logger.SetOutput(os.Stderr)
 		case "file":
 			if name := c.OutputFile; name != "" {
-				_ = os.MkdirAll(filepath.Dir(name), 0o777)
+				_ = os.MkdirAll(filepath.Dir(name), 0777)
 
-				f, err := os.OpenFile(name, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0o666)
+				f, err := os.OpenFile(name, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 				if err != nil {
 					return nil, err
 				}

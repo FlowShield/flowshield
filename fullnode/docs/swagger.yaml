@@ -170,6 +170,25 @@ paths:
       summary: AddResource
       tags:
       - ZTA
+  /access/resource/{uuid}:
+    delete:
+      description: 删除ZTA的resource
+      parameters:
+      - description: 主键ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controller.Res'
+      summary: DelResource
+      tags:
+      - ZTA
   /controlplane/machine/{machine_id}:
     get:
       description: 根据机器码获取客户端鉴权的url

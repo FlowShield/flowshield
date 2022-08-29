@@ -1,0 +1,54 @@
+#APP ENV
+app:
+  env: "release" # dev,release
+  sysname: "CloudSLit"
+  port: 8080
+  domain: DOMAIN
+
+#Mysql
+mysql:
+  dbname: "zta"
+  prefix: "zta_"
+  pool:
+    pool-min-cap: 10
+    pool-ex-cap: 5
+    pool-max-cap: 40
+    pool-idle-timeout: 3600
+    pool-wait-count: 1000
+    pool-wai-timeout: 30
+  write:
+    host: "CS_MYSQL_HOST"
+    port: 23306
+    user: "CS_MYSQL_USER"
+    password: "CS_MYSQL_PASSWORD"
+
+#Redis
+redis:
+  addr: "CS_REDIS_ADDR"
+
+#CA
+ca:
+  sign-url: "CS_CA_SIGN_URL"
+  auth-key: "CS_CA_AUTH_KEY"
+
+oauth2:
+  client-id: "CS_OAUTH2_CLIENT_ID"
+  client-secret: "CS_OAUTH2_CLIENT_SECRET"
+
+p2p:
+  enable: true
+#  account: "CS_ACCOUNT"
+  service-discovery-id: "cloudslit/provider"
+  service-discovery-mode: "advertise" # advertise or announce
+  service-metadata-topic: "cloudslit_provider_metadata" # advertise or announce
+
+web3:
+  register: "CS_WEB3_REGIST"
+  private-key: "CS_PRIVATE_KEY"
+  contract:
+    token: "CS_CONTRACT_TOKEN"
+  w3s:
+    token: "CS_W3S_TOKEN"
+  eth:
+    url: "https://godwoken-testnet-v1.ckbapp.dev"
+    projectid: ""
