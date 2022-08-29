@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [ ethers ]
+    branches: [ main ]
   pull_request:
-    branches: [ ethers ]
+    branches: [ main ]
 
 jobs:
 
