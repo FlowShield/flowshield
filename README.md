@@ -44,6 +44,10 @@ We use nervos to deploy smart contracts.Provide a safe trading process and a saf
 The client software user connects to the provider to establish a zero trust network security tunnel.
 <img width="985" alt="image" src="https://user-images.githubusercontent.com/52234994/179190148-ebd19f1d-90f0-4377-a57d-7c4942d5e0b3.png">
 
+# Disclaimers
+When you use this software, you have agreed and declared that the author, maintainer and contributor of this software will not be responsible for any risks, costs or problems you encounter. If you find software defects or bugs, please submit patches to help improve!
+
+
 ## Thanks supports
 
 <table>
@@ -54,6 +58,4 @@ The client software user connects to the provider to establish a zero trust netw
   </tr>
 </table>
 
-# Disclaimers
-When you use this software, you have agreed and declared that the author, maintainer and contributor of this software will not be responsible for any risks, costs or problems you encounter. If you find software defects or bugs, please submit patches to help improve!
 
