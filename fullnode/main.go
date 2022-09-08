@@ -4,7 +4,6 @@ import (
 	"os"
 
 	_ "github.com/cloudslit/cloudslit/fullnode/docs"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
 	"github.com/cloudslit/cloudslit/fullnode/server"
 	"github.com/urfave/cli"
 	_ "go.uber.org/automaxprocs"
@@ -45,7 +44,6 @@ func main() {
 	}
 	err := app.Run(os.Args)
 	if err != nil {
-		logger.Errorf(nil, "app run error : %v", err)
 		panic("app run error:" + err.Error())
 	}
 }

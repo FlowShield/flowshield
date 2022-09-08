@@ -1,0 +1,22 @@
+#APP ENV
+app:
+  env: "release" # dev,release
+  sysname: "CloudSLit"
+  domain: DOMAIN
+
+#Mysql
+mysql:
+  dbname: "zta"
+  prefix: "zta_"
+  pool:
+    pool-min-cap: 10
+    pool-ex-cap: 5
+    pool-max-cap: 40
+    pool-idle-timeout: 3600
+    pool-wait-count: 1000
+    pool-wai-timeout: 30
+  write:
+    host: "CS_MYSQL_HOST"
+    port: 23306
+    user: "CS_MYSQL_USER"
+    password: "CS_MYSQL_PASSWORD"

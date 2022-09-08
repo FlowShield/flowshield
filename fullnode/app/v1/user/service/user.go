@@ -1,7 +1,6 @@
 package service
 
 import (
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -139,22 +138,22 @@ func CheckAndBindUser(user *mmysql.User) (code int) {
 	}
 	//logger.Infof("CheckAndBindUse, uuid: %v,status: %v", user.UUID, status)
 	switch status {
-	case 1:
-		// 代表用户状态为预绑定，执行绑定
-		tra, err := eth.Instance().VerifyWallet(eth.CS.Auth, user.UUID)
-		if err != nil {
-			logger.Errorf(nil, "contract verify wallet error: %v", err)
-			return
-		}
-		rec, err := bind.WaitMined(context.Background(), eth.CS.Client, tra)
-		if err != nil {
-			logger.Errorf(nil, "contract verify wallet error: %v", err)
-			return
-		}
-		if rec.Status == 0 {
-			logger.Errorf(nil, "contract verify wallet err: %v", user.UUID)
-			return
-		}
+	//case 1:
+	//	// 代表用户状态为预绑定，执行绑定
+	//	tra, err := eth.Instance().VerifyWallet(eth.CS.Auth, user.UUID)
+	//	if err != nil {
+	//		logger.Errorf(nil, "contract verify wallet error: %v", err)
+	//		return
+	//	}
+	//	rec, err := bind.WaitMined(context.Background(), eth.CS.Client, tra)
+	//	if err != nil {
+	//		logger.Errorf(nil, "contract verify wallet error: %v", err)
+	//		return
+	//	}
+	//	if rec.Status == 0 {
+	//		logger.Errorf(nil, "contract verify wallet err: %v", user.UUID)
+	//		return
+	//	}
 	case 2:
 	default:
 		return
