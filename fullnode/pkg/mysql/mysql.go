@@ -107,6 +107,8 @@ func initDb(cfg *confer.Mysql, isRead bool) (resultDb *gorm.DB, err error) {
 			},
 		)
 		config.Logger = newLogger
+	} else {
+		config.Logger = glogger.Default.LogMode(glogger.Silent)
 	}
 	resultDb, err = gorm.Open(mysql.Open(dsn), config)
 	return resultDb, err

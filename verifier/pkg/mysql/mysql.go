@@ -56,6 +56,8 @@ func Init(cfg *confer.Mysql) error {
 			},
 		)
 		config.Logger = newLogger
+	} else {
+		config.Logger = glogger.Default.LogMode(glogger.Silent)
 	}
 	db, err := gorm.Open(mysql.Open(dsn), config)
 	if err != nil {

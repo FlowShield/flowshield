@@ -6,10 +6,10 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
+
+	"github.com/cloudslit/cloudslit/verifier/verify"
 
 	"github.com/cloudslit/cloudslit/verifier/server"
-	"github.com/cloudslit/cloudslit/verifier/verify"
 	"github.com/urfave/cli"
 	_ "go.uber.org/automaxprocs"
 )
@@ -27,16 +27,16 @@ func main() {
 	}
 	app.Before = server.InitService
 	app.Action = func(c *cli.Context) error {
-		v, err := verify.NewVerifier(&verify.Options{Often: time.Second * 60})
-		if err != nil {
+		if err := verify.VerObj.Run(context.TODO()); err != nil {
 			return err
 		}
-		return v.Run(context.TODO())
-	}
-	app.After = func(c *cli.Context) error {
-		exitSignal()
+		server.RunHTTP()
 		return nil
 	}
+	//app.After = func(c *cli.Context) error {
+	//exitSignal()
+	//return nil
+	//}
 	err := app.Run(os.Args)
 	if err != nil {
 		panic("app run error:" + err.Error())

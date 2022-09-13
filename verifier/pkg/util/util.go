@@ -12,6 +12,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 func FloatToString(Num float64) string {
@@ -22,6 +24,11 @@ func FloatToString(Num float64) string {
 func MD5Bytes(s []byte) string {
 	ret := md5.Sum(s)
 	return hex.EncodeToString(ret[:])
+}
+
+func GetCookieFromGin(ctx *gin.Context, key string) (value string) {
+	value, _ = ctx.Cookie(key)
+	return
 }
 
 func MD5(s string) string {

@@ -3,9 +3,9 @@ package verify
 import "sync/atomic"
 
 type Record struct {
-	Total   uint64
-	Success uint64
-	Fail    uint64
+	Total   uint64 `json:"total"`
+	Success uint64 `json:"success"`
+	Fail    uint64 `json:"fail"`
 }
 
 func (r *Record) AddSuccess(num uint64) {
