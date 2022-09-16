@@ -108,6 +108,13 @@ func ParseConfigByEnv() error {
 	}
 
 	// Log
+	if v := os.Getenv("PR_LOG_LEVEL"); v != "" {
+		p, err := strconv.Atoi(v)
+		if err != nil {
+			return fmt.Errorf("environment variable [%s] parsing error:%v", "PR_LOG_LEVEL", err)
+		}
+		C.Log.Level = p
+	}
 	if v := os.Getenv("PR_LOG_HOOK_ENABLED"); v == "true" {
 		C.Log.EnableHook = true
 	}

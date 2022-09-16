@@ -5,6 +5,7 @@ services:
     network_mode: host
     restart: always
     environment:
+      PR_LOG_LEVEL: '5'
       PR_APP_LOCAL_ADDR: 'xxx'
       PR_APP_LOCAL_PORT: '5091'
       PR_WEB3_PRICE: '20'

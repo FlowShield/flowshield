@@ -92,13 +92,13 @@ func (a *Pubsub) StartPubsubHandler(ctx context.Context, ps *p2p.PubSub, p *p2p.
 
 		case log := <-ps.Logs:
 			// Add the log to the message box
-			logger.Infof("PubSub Log:%s", log)
+			logger.Warnf("PubSub Log:%s", log)
 		}
 	}
 }
 
 func (a *Pubsub) ReceiveHandle(ctx context.Context, ps *p2p.PubSub, msg string) error {
-	logger.Infof("Received Msg:%s", msg)
+	logger.Debugf("Received Msg:%s", msg)
 	var pss schema.PsMessage
 	err := json.Unmarshal([]byte(msg), &pss)
 	if err != nil {
@@ -124,6 +124,12 @@ func (a *Pubsub) orderReceive(ctx context.Context, ps *p2p.PubSub, pss *schema.P
 
 // 处理订单
 func (a *Pubsub) handleOrder(ctx context.Context, ps *p2p.PubSub, order *schema.NodeOrder) error {
+	// 包含Port 不处理心跳包
+	if order.IsHeart {
+		return nil
+	}
+	// 处理订单
+	logger.WithContext(ctx).Infof("handle Order: %s", order.String())
 	if _, ok := a.getOrder(order.Uuid); ok {
 		return fmt.Errorf("this order has been launched:%s", order.Uuid)
 	}
@@ -131,15 +137,18 @@ func (a *Pubsub) handleOrder(ctx context.Context, ps *p2p.PubSub, order *schema.
 		return fmt.Errorf("wallet Abnormal，expect:%s, get:%s", config.C.Web3.Account, order.Wallet)
 	}
 	// 解析配置
+	count := 0
 retry:
 	pc, err := schema.ParserConfig(ctx, order.ServerCid, []byte(config.C.Web3.Account[len(config.C.Web3.Account)-8:]))
 	if err != nil {
 		time.Sleep(5 * time.Second)
 		logger.WithErrorStack(ctx, err).Warnf("get w3s data err:%v", err)
+		if count > 10 { // 读取配置10次错误，return
+			return errors.WithStack(err)
+		}
+		count++
 		goto retry
-		return errors.WithStack(err)
 	}
-
 	// 预制端口
 	port, err := verifyPort(order.Port)
 	if err != nil {
@@ -153,13 +162,14 @@ retry:
 	}
 	// 监听端口
 	p := NewProvider()
-	l, err := p.Listen(ctx, port, pc)
+	err = p.Listen(ctx, port, pc)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	go p.Handle(ctx, l)
-	go a.providerHeartBeat(ctx, ps, order)
+	go p.Handle(ctx)
+	go a.providerHeartBeat(ctx, ps, order, p, pc)
 	a.setOrder(order)
+	logger.WithContext(ctx).Infof("Handle Order Success: %s", order.String())
 	return nil
 }
 
@@ -169,19 +179,28 @@ func (a *Pubsub) addProvider(item *model.Provider) error {
 }
 
 // Provider 心跳
-func (a *Pubsub) providerHeartBeat(ctx context.Context, ps *p2p.PubSub, order *schema.NodeOrder) {
+func (a *Pubsub) providerHeartBeat(ctx context.Context, ps *p2p.PubSub, order *schema.NodeOrder, p *Provider, pc *schema.ProviderConfig) {
+	order.IsHeart = true
 	ticker := time.NewTicker(10 * time.Second)
 	defer ticker.Stop()
 	for {
 		select {
 		case <-ticker.C:
+			// 检测证书到期，关闭服务
+			if time.Now().After(pc.CertConfig.NotAfter) {
+				p.Close()
+				a.closeOrder(order)
+				logger.Warnf("Provider Service expired, Closing soon: %s", order.String())
+				return
+			}
+			// 服务心跳包
 			pub := &schema.PsMessage{
 				Type: schema.PsMsgTypeOrder,
-				Data: order.String(),
+				Data: order,
 			}
 			str := pub.String()
 			ps.InsertOutbound(str)
-			logger.Infof("Provider Heart Beat - running at [::]:%d", order.Port)
+			logger.Debugf("Provider Heart Beat - running at [::]:%d", order.Port)
 		}
 	}
 }
@@ -199,9 +218,15 @@ func (a *Pubsub) setOrder(order *schema.NodeOrder) {
 	defer a.mu.Unlock()
 }
 
+func (a *Pubsub) closeOrder(order *schema.NodeOrder) {
+	a.mu.Lock()
+	delete(a.Orders, order.Uuid)
+	defer a.mu.Unlock()
+}
+
 // nodeHeartBeat 节点发布自身信息
 func (a *Pubsub) nodeHeartBeat(ps *p2p.PubSub, server *schema.NodeInfo) {
-	logger.Infof("Node Heart Beat - PeerId:%s", ps.Host.Host.ID().String())
+	logger.Debugf("Node Heart Beat - PeerId:%s", ps.Host.Host.ID().String())
 	pub := &schema.PsMessage{
 		Type: schema.PsMsgTypeNode,
 		Data: server,

@@ -83,6 +83,7 @@ type NodeOrder struct {
 	Wallet    string `json:"wallet"`
 	ServerCid string `json:"server_cid"`
 	Port      int    `json:"port"`
+	IsHeart   bool   `json:"is_heart"`
 }
 
 func (a *NodeOrder) String() string {

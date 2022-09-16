@@ -22,6 +22,8 @@ import (
 )
 
 type Provider struct {
+	quit chan struct{}
+	ln   net.Listener
 }
 
 // ReadInitiaWSRequest Read the WS request
@@ -147,34 +149,48 @@ func (a *Provider) handleConn(ctx context.Context, clientConn net.Conn) error {
 }
 
 func NewProvider() *Provider {
-	return &Provider{}
+	return &Provider{
+		quit: make(chan struct{}),
+	}
 }
 
-func (a *Provider) Listen(ctx context.Context, port int, config *schema.ProviderConfig) (net.Listener, error) {
+func (a *Provider) Listen(ctx context.Context, port int, config *schema.ProviderConfig) error {
+	var err error
 	tlsc, err := a.GetMtlsConfig(config)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return errors.WithStack(err)
 	}
-	l, err := tls.Listen("tcp", "0.0.0.0:"+strconv.Itoa(port), tlsc)
+	a.ln, err = tls.Listen("tcp", "0.0.0.0:"+strconv.Itoa(port), tlsc)
 	if err != nil {
 		logger.Errorf("监听端口失败:%s", err)
-		return nil, err
+		return err
 	}
-	logger.WithContext(ctx).Printf("Started Provider Server at %v", l.Addr().String())
-	return l, nil
+	logger.WithContext(ctx).Printf("Started Provider Server at %v", a.ln.Addr().String())
+	return nil
 }
 
-func (a *Provider) Handle(ctx context.Context, l net.Listener) {
+func (a *Provider) Handle(ctx context.Context) {
 	for {
-		conn, err := l.Accept()
+		conn, err := a.ln.Accept()
 		if err != nil {
-			logger.WithContext(ctx).Error("Failed to accept connection:", err)
-			continue
+			select {
+			case <-a.quit:
+				logger.WithContext(ctx).Warnf("服务关闭: %s", a.ln.Addr())
+				return
+			default:
+				logger.WithContext(ctx).Error("Failed to accept connection:", err)
+				continue
+			}
 		}
 		recover.Recovery(ctx, func() {
 			a.handleConn(ctx, conn)
 		})
 	}
+}
+
+func (a *Provider) Close() {
+	close(a.quit)
+	a.ln.Close()
 }
 
 func (a *Provider) GetMtlsConfig(config *schema.ProviderConfig) (*tls.Config, error) {
