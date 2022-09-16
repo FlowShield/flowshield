@@ -27,20 +27,20 @@ func providers(orders []*OrderMysql) (providers []*Provider, err error) {
 		orderSli := make([]*Order, 0)
 		for _, v := range value {
 			orderObj := &Order{
-				PeerID:     v.PeerID,
-				ServerPort: 0, //TODO ServerPort
-				OrderID:    v.UUID,
-				StartTime:  time.Unix(v.UpdatedAt, 0),
-				EndTime:    time.Unix(v.UpdatedAt, 0).Add(time.Duration(v.Duration) * 60 * 60),
-				Healthy:    nil,
+				PeerID:    v.PeerID,
+				Port:      v.Port,
+				OrderID:   v.UUID,
+				StartTime: time.Unix(v.UpdatedAt, 0),
+				EndTime:   time.Unix(v.UpdatedAt, 0).Add(time.Duration(v.Duration) * 60 * 60),
+				Healthy:   nil,
 			}
 			orderSli = append(orderSli, orderObj)
 		}
 		provider := &Provider{
 			PeerId: key,
 			Addr:   value[0].NodeIP,
-			Port:   value[0].Port,
-			IP:     value[0].NodeIP,
+			//Port:   value[0].Port,
+			IP: value[0].NodeIP,
 			//Loc:    "",
 			//Colo:   "",
 			//Price:  0,

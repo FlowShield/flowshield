@@ -2,12 +2,13 @@ package verify
 
 import (
 	"context"
-	"log"
 	"sync"
 	"time"
 
 	"github.com/cloudslit/cloudslit/verifier/pkg/recover"
 )
+
+var VerObj = NewVerifier(&Options{Often: 30})
 
 type Verifier struct {
 	opt      *Options
@@ -15,15 +16,17 @@ type Verifier struct {
 	Provider []*Provider
 	ticker   *time.Ticker
 	Record   map[string]*Record
+	Health   map[string]*Record
 	sync.RWMutex
 }
 
-func NewVerifier(opt *Options) (verifier *Verifier, err error) {
+func NewVerifier(opt *Options) (verifier *Verifier) {
 	verifier = &Verifier{
-		opt: opt,
-		//ticker: time.NewTicker(time.Second * opt.Often),
-		ticker: time.NewTicker(time.Second),
+		opt:    opt,
+		ticker: time.NewTicker(time.Second * opt.Often),
+		//ticker: time.NewTicker(time.Second),
 		Record: make(map[string]*Record),
+		Health: make(map[string]*Record),
 	}
 	return
 }
@@ -59,12 +62,22 @@ func (v *Verifier) SyncProviderAndOrder() {
 	for _, value := range v.Provider {
 		for _, va := range value.Order {
 			va.CheckHealthy(value.IP)
+			if v.Record[value.PeerId] == nil {
+				v.Record[value.PeerId] = &Record{}
+			}
+			if v.Health[va.OrderID] == nil {
+				v.Health[va.OrderID] = &Record{}
+			}
 			if !va.Healthy.Health {
 				record := v.Record[value.PeerId]
 				record.AddFail(1)
+				health := v.Health[va.OrderID]
+				health.AddFail(1)
 			} else {
 				record := v.Record[value.PeerId]
 				record.AddSuccess(1)
+				health := v.Health[va.OrderID]
+				health.AddFail(1)
 			}
 		}
 	}
@@ -76,8 +89,21 @@ func (v *Verifier) Statistics() {
 	if v.Record == nil {
 		return
 	}
-	for key, value := range v.Record {
-		// TODO
-		log.Printf("provider %s can not be connected for %d times!\n", key, value.Fail)
+	//for key, value := range v.Record {
+	// TODO
+	//log.Printf("provider %s can not be connected for %d times!\n", key, value.Fail)
+	//}
+}
+
+func (v *Verifier) ProviderHealth(orderID []string) (record map[string]*Record) {
+	if len(orderID) == 0 {
+		return nil
 	}
+	record = make(map[string]*Record)
+	v.RLock()
+	defer v.RUnlock()
+	for _, value := range orderID {
+		record[value] = v.Health[value]
+	}
+	return
 }

@@ -1,7 +1,8 @@
 #APP ENV
 app:
-  env: "dev" # dev,release
+  env: "release" # dev,release
   sysname: "CloudSLit"
+  port: 80
 
 #Mysql
 mysql:
@@ -15,8 +16,8 @@ mysql:
     pool-wait-count: 1000
     pool-wai-timeout: 30
   write:
-    host: "127.0.0.1:23306"
-    port: 23306
+    host: "38.96.139.114:33306"
+    port: 33306
     user: "root"
     password: "123456"
 #  write:
