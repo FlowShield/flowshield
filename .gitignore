@@ -11,3 +11,6 @@ fullnode/fullnode
 fullnode/logs
 fullnode/release_bin
 fullnode/bin
+
+verifier/verifier
+verifier/logs

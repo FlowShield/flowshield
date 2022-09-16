@@ -36,12 +36,12 @@ func (OrderMysql) TableName() string {
 }
 
 type Order struct {
-	PeerID     string    `json:"peer_id"`
-	ServerPort int       `json:"server_port"`
-	OrderID    string    `json:"order_id"`
-	StartTime  time.Time `json:"start_time"`
-	EndTime    time.Time `json:"end_time"`
-	Healthy    *Healthy  `json:"healthy"`
+	PeerID    string    `json:"peer_id"`
+	Port      int       `json:"port"`
+	OrderID   string    `json:"order_id"`
+	StartTime time.Time `json:"start_time"`
+	EndTime   time.Time `json:"end_time"`
+	Healthy   *Healthy  `json:"healthy"`
 }
 
 type Healthy struct {
@@ -53,7 +53,7 @@ func (o *Order) CheckHealthy(ip string) {
 	if o.Healthy == nil {
 		o.Healthy = &Healthy{Health: false, Err: nil}
 	}
-	conn, err := net.Dial("tcp", fmt.Sprintf("%s%d", ip, o.ServerPort))
+	conn, err := net.Dial("tcp", fmt.Sprintf("%s%d", ip, o.Port))
 	if err != nil {
 		o.Healthy.Health = false
 		o.Healthy.Err = err

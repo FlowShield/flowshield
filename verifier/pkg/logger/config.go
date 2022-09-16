@@ -17,5 +17,5 @@ func LogPath() string {
 }
 
 func LogName() string {
-	return "fullnode.log"
+	return "verifier.log"
 }
