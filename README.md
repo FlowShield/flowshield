@@ -25,7 +25,7 @@ In order to protect the public's network security under web2, a very popular zer
 
 CloudSlit aims to build a decentralized private data retrieval security network system of web3 in the world, and help users recapture the privacy security information eroded by giants under web2, so that the current global hot zero-trust security network technology combined with web3 can better help users master their own security privacy data and give users a good experience of private data retrieval security network products.
 
-<img width="1423" alt="image" src="https://user-images.githubusercontent.com/34047788/191491619-91a8030b-30f9-426d-af3a-de93739af1ad.png">
+<img  alt="image" src="https://user-images.githubusercontent.com/34047788/191542695-3d2d6288-8a7e-4f60-b582-954942f4a907.png">
 
 # How do we build it?
 
