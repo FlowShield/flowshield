@@ -45,6 +45,9 @@ Users can find resources and nodes to build their own secure anonymous network t
 
 For all users' and Dao's data, we use Filecoin's web3.storage to store user data in a decentralized way.
 
+<img width="1425" alt="image" src="https://user-images.githubusercontent.com/34047788/191491783-840a042d-4f39-4247-ae74-86e9278ebb4f.png">
+
+
 <img width="1102" alt="image" src="https://user-images.githubusercontent.com/34047788/191491199-61b73816-5538-460c-b0ba-e9b662e8681d.png">
 
 
