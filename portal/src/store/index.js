@@ -11,6 +11,10 @@ const store = new Vuex.Store({
       email: '',
       uuid: '',
       master: ''
+    },
+    ceramic: {
+      uuid: '',
+      address: ''
     }
   }, getters: {}, mutations: {
     SET_USER(state, info) {
@@ -18,6 +22,9 @@ const store = new Vuex.Store({
       state.user.email = info.email
       state.user.master = info.master
       state.user.uuid = info.uuid
+    }, SET_CERAMIC(state, info) {
+      state.ceramic.uuid = info.uuid
+      state.ceramic.address = info.address
     }
   }, actions: {
     getUserInfo({ commit, state }) {
