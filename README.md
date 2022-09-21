@@ -9,11 +9,8 @@ CloudSlit aims to build a global web3 decentralized zero trust security network 
 ## Project composition：
 
 * [CloudSlit-Fullnode](https://github.com/CloudSlit/cloudslit/tree/main/fullnode)
-  (Thank Filecoin and IPFS for their support)
 * [CloudSlit-Provider](https://github.com/CloudSlit/cloudslit/tree/main/provider)
-  (Thank Filecoin and IPFS for their support)
 * [CloudSlit-Contracts](https://github.com/CloudSlit/cloudslit/tree/main/contract)
-  (Thank Nervos for their support)
 * [CloudSlit-Client](https://github.com/CloudSlit/cloudslit/tree/main/client)
 
 # Project Explanation
