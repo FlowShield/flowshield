@@ -54,7 +54,7 @@ For all users and Dao data, we use web3.storage of Filecoin to store user data i
 <img width="1120" alt="image" src="https://user-images.githubusercontent.com/34047788/191491394-6dccc868-ed08-483b-9a74-2fcff6a243e2.png">
 
 
-## Part three:[CloudSlit-Contracts](./contract)(support:Nervos)
+## Part three:[CloudSlit-Contracts](./contract)(support:EVM Chains)
 
 We provide a complete smart contract for the decentralized trusted bandwidth market. Our smart contract is deployed on the EVM network, and we provide many methods in the smart contract to ensure a safe trading process and a safe trading environment.
 
