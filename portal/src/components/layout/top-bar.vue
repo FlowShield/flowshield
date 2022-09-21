@@ -67,7 +67,7 @@
                 <v-list-item-content @click="handleLogout">Logout</v-list-item-content>
               </v-list-item>
                <v-list-item link>
-                <v-list-item-content @click="handlewallet">Wallet</v-list-item-content>
+                <v-list-item-content @click="$router.push('/wallet')" >Wallet</v-list-item-content>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -88,8 +88,11 @@ export default {
     shortEmail() {
       return this.$store.state.user.email.substring(0, 2)
     },
+    shortCeramic() {
+      return this.$store.state.ceramic.uuid.substring(0, 2)
+    },
     isLogin() {
-      return !!this.shortEmail
+      return !!this.shortEmail || !!this.shortCeramic
     }
   },
   created() {

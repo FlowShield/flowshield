@@ -16,10 +16,10 @@
                     <v-card  dark>
                         <v-card-title >
                           Account address
-                          <span v-if="status == 1" style="color: #0D8DF1">
-                            &nbsp;(Awaiting verification)
-                          </span>
-                          <span v-if="status == 2" style="color: #0DF171">
+<!--                          <span v-if="status == 1" style="color: #0D8DF1">-->
+<!--                            &nbsp;(Awaiting verification)-->
+<!--                          </span>-->
+                          <span style="color: #0DF171">
                             &nbsp;(Verified)
                           </span>
                         </v-card-title>
@@ -30,7 +30,10 @@
                         <v-spacer></v-spacer>
                       </v-card-actions>
                       <div style="padding-bottom: 20px">
-                        <form-dialog @on-success="getBind"/>
+                        <v-btn x-large rounded color="primary" @click="changeWallet" :loading="changewalletLoading">
+                          <v-icon>mdi-wallet</v-icon>
+                          Change Your Wallet
+                        </v-btn>
                       </div>
                     </v-card>
                   </v-col>
@@ -66,7 +69,7 @@
         </div>
         <v-btn x-large rounded @click="bindWallet" :loading="bindwalletLoading" v-else>
           <v-icon class="mr-5">mdi-wallet</v-icon>
-          Connect Your Wallet
+          Connect Your Wallet (DID)
         </v-btn>
       </div>
     </div>
@@ -75,22 +78,22 @@
 </template>
 <script>
 import {
-  getWallet,
-  bindWallet,
   getAllOrderTokens,
   withdrawAllOrderTokens
 } from '@/utils/ethers'
 import store from '@/store'
-import FormDialog from './components/form-dialog'
+// import FormDialog from './components/form-dialog'
+import { updateGithubIdOnCeramic } from '@/utils/ceramic'
 
 export default {
-  components: { FormDialog },
+  components: {},
   data: () => ({
     address: '',
     withdrawCSD: 0,
     status: 0,
     color: '',
     bindwalletLoading: false,
+    changewalletLoading: false,
     walletLoading: false,
     withdrawLoading: false,
     query: {
@@ -119,10 +122,8 @@ export default {
   },
   methods: {
     async getBind() {
-      const address = await getWallet(store.state.user.uuid)
-      if (address[0] !== '0x0000000000000000000000000000000000000000') {
-        this.address = address[0]
-        this.status = address[1]
+      if (store.state.ceramic.address) {
+        this.address = store.state.ceramic.address
       }
     },
     async getAllOrderTokens() {
@@ -130,20 +131,27 @@ export default {
     },
     async bindWallet() {
       this.bindwalletLoading = true
-      const address = await getWallet(store.state.user.uuid)
-      if (address[0] === '0x0000000000000000000000000000000000000000') {
-        const res = await bindWallet(store.state.user.uuid)
-        if (res !== undefined) {
-          this.$message.error(res)
-        } else {
-          this.$message.success('Bind succeeded')
-          await this.getBind()
-        }
+      const profile = await updateGithubIdOnCeramic(store.state.user.uuid)
+      if (profile && profile.address) {
+        this.$store.commit('SET_CERAMIC', { uuid: profile.githubID, address: profile.address })
+        this.address = profile.address
       } else {
-        this.address = address[0]
-        this.status = address[1]
+        this.$message.error('Bind Wallet error')
       }
+      await this.getAllOrderTokens()
       this.bindwalletLoading = false
+    },
+    async changeWallet() {
+      this.changewalletLoading = true
+      const profile = await updateGithubIdOnCeramic(store.state.user.uuid)
+      if (profile && profile.address) {
+        this.$store.commit('SET_CERAMIC', { uuid: profile.githubID, address: profile.address })
+        this.address = profile.address
+      } else {
+        this.$message.error('Bind Wallet error')
+      }
+      await this.getAllOrderTokens()
+      this.changewalletLoading = false
     },
     async withdrawAllOrder() {
       this.withdrawLoading = true

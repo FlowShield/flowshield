@@ -17,7 +17,7 @@
   </v-container>
 
 </div>
-<p class="subtitle mt-0 font-weight-regular text-h4">Build a global web3 decentralized zero-trust security network, Building Cyber Sovereignty</p>
+<p class="subtitle mt-0 font-weight-regular text-h4">Build a global web3 decentralized private retrieval network for data, building cyber sovereignty</p>
 
     <div class="mt-15">
       <v-btn x-large color="primary" href="https://dash.cloudslit.xyz/" target="_blank">
