@@ -54,7 +54,7 @@ Our nodes are automatically networked through kademlia DHT and IPFS networks of 
 
 For all users and Dao data, we use web3.storage of Filecoin to store user data in a decentralized way.
 
-<img width="952" alt="image" src="https://user-images.githubusercontent.com/34047788/190649367-aea3230f-6c87-4b74-b692-e328ed33a78f.png">
+<img width="1120" alt="image" src="https://user-images.githubusercontent.com/34047788/191491394-6dccc868-ed08-483b-9a74-2fcff6a243e2.png">
 
 
 ## Part threee:[CloudSlit-Contracts](https://github.com/wanxiang-blockchain/2022-WX-Blockchain-Fall-Hackathon-CloudSlit/tree/main/codes/contract)(support:polygon)
@@ -65,14 +65,14 @@ Test network address: https://rpc-mumbai.maticvigil.com
 
 Address of the contract: 0x9672f063ccba1e4ac40d31f4c00fdc9de491ab59
 
-## Part four:[CloudSlit-verifier](https://github.com/wanxiang-blockchain/2022-WX-Blockchain-Fall-Hackathon-CloudSlit/tree/main/codes/verifier)(Decentralized network quality checker)
+## Part four:[CloudSlit-verifier](./verifier)(Decentralized network quality checker)
 We provide the verifier component for the decentralized trusted bandwidth market. Anyone can run the network verifier, monitor the network quality of ongoing orders, and detect and punish illegal and bad network providers.
 
-<img width="935" alt="image" src="https://user-images.githubusercontent.com/34047788/190649698-9a48853b-aae4-4951-9ffe-f18ae23e8fc9.png">
+<img width="1428" alt="image" src="https://user-images.githubusercontent.com/34047788/191491491-cde176f0-f01c-4dfe-8d5f-b6f7d8964f35.png">
 
 
 
-## Part five:[CloudSlit-Client](https://github.com/wanxiang-blockchain/2022-WX-Blockchain-Fall-Hackathon-CloudSlit/tree/main/codes/client)(client for private data retrieval.)
+## Part five:[CloudSlit-Client](./client)(client for private data retrieval.)
 
 A client user connects to a provider to establish a network security tunnel for private data retrieval.
 
