@@ -9,7 +9,8 @@
   - [Part two: CloudSlit-Provider(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)](#part-two-cloudslit-providernetwork-miner-a-secure-network-tunnel-provider-for-decentralized-data-private-retrieval)
   - [Part threee:CloudSlit-Contracts(support:polygon)](#part-threeecloudslit-contractssupportpolygon)
   - [Part four:CloudSlit-verifier(Decentralized network quality checker)](#part-fourcloudslit-verifierdecentralized-network-quality-checker)
-  - [Part five:CloudSlit-Client(client for private data retrieval.)](#part-fivecloudslit-clientclient-for-private-data-retrieval)
+  - [Part five:DeCA(Decentralized PKI CA center)](#part-fivedecadecentralized-pki-ca-center)
+  - [Part six:CloudSlit-Client(client for private data retrieval.)](#part-sixcloudslit-clientclient-for-private-data-retrieval)
 - [The challenges we encountered](#the-challenges-we-encountered)
 - [What we are proud of](#what-we-are-proud-of)
 
@@ -74,13 +75,15 @@ We provide the verifier component for the decentralized trusted bandwidth market
 <img width="1428" alt="image" src="https://user-images.githubusercontent.com/34047788/191491491-cde176f0-f01c-4dfe-8d5f-b6f7d8964f35.png">
 
 
+## Part five:[DeCA](./ca)(Decentralized PKI CA center)
 
-## Part five:[CloudSlit-Client](./client)(client for private data retrieval.)
+
+Decentralize PKI CA center to provide communication authentication infrastructure for Dao point-to-point communication.
+
+
+## Part six:[CloudSlit-Client](./client)(client for private data retrieval.)
 
 A client user connects to a provider to establish a network security tunnel for private data retrieval.
-
-<img width="932" alt="image" src="https://user-images.githubusercontent.com/34047788/190649859-ee288f05-3581-4323-b672-de9546f8758d.png">
-
 
 
 # The challenges we encountered
