@@ -37,7 +37,7 @@ CloudSlit aims to build a decentralized private data retrieval security network 
 
 The design part of CloudSlit project includes distributed full-nodes, network miner provider, intelligent contract, network quality checker and network client program. The details are as follows:
 
-## Part one:[CloudSlit-Fullnode](https://github.com/wanxiang-blockchain/2022-WX-Blockchain-Fall-Hackathon-CloudSlit/tree/main/codes/fullnode)(Ful nodes of private data retrieval network based on DAO Tools)
+## Part one:[CloudSlit-Fullnode](./fullnode)(Ful nodes of private data retrieval network based on DAO Tools)
 
 Anyone can run Fullnode, which hosts the metadata of decentralized network and provides metadata networking and transaction matching platform. It integrates metadata from all providers, and providers use [libp2p-based pubsub](https://github.com/libp2p/go-libp2p) every few seconds to keep heartbeat to Fullnode to prove that they are online.
 
@@ -45,10 +45,10 @@ Users can find resources and nodes to build their own secure anonymous network t
 
 For all users' and Dao's data, we use Filecoin's web3.storage to store user data in a decentralized way.
 
-<img width="929" alt="image" src="https://user-images.githubusercontent.com/34047788/190649560-9bb3d443-3a3e-4747-8805-931c79db55b0.png">
+<img width="1102" alt="image" src="https://user-images.githubusercontent.com/34047788/191491199-61b73816-5538-460c-b0ba-e9b662e8681d.png">
 
 
-## Part two: [CloudSlit-Provider](https://github.com/wanxiang-blockchain/2022-WX-Blockchain-Fall-Hackathon-CloudSlit/tree/main/codes/provider)(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)
+## Part two: [CloudSlit-Provider](./provider)(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)
 
 Our nodes are automatically networked through kademlia DHT and IPFS networks of libp2p through peer discovery and routing, and data synchronization among multiple nodes is realized through PubSub function of libp2p.
 
