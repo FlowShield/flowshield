@@ -6,7 +6,7 @@
 - [How do we build it?](#how-do-we-build-it)
   - [Part one:CloudSlit-Fullnode(Ful nodes of private data retrieval network based on DAO Tools)](#part-onecloudslit-fullnodeful-nodes-of-private-data-retrieval-network-based-on-dao-tools)
   - [Part two: CloudSlit-Provider(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)](#part-two-cloudslit-providernetwork-miner-a-secure-network-tunnel-provider-for-decentralized-data-private-retrieval)
-  - [Part three:CloudSlit-Contracts(support:polygon)](#part-threecloudslit-contractssupportpolygon)
+  - [Part three:CloudSlit-Contracts(support:Nervos)](#part-threecloudslit-contractssupportnervos)
   - [Part four:CloudSlit-verifier(Decentralized network quality checker)](#part-fourcloudslit-verifierdecentralized-network-quality-checker)
   - [Part five:DeCA(Decentralized PKI CA center)](#part-fivedecadecentralized-pki-ca-center)
   - [Part six:CloudSlit-Client(client for private data retrieval.)](#part-sixcloudslit-clientclient-for-private-data-retrieval)
@@ -54,13 +54,9 @@ For all users and Dao data, we use web3.storage of Filecoin to store user data i
 <img width="1120" alt="image" src="https://user-images.githubusercontent.com/34047788/191491394-6dccc868-ed08-483b-9a74-2fcff6a243e2.png">
 
 
-## Part three:[CloudSlit-Contracts](./contract)(support:polygon)
+## Part three:[CloudSlit-Contracts](./contract)(support:Nervos)
 
-We provide a complete smart contract for the decentralized trusted bandwidth market. Our smart contract is deployed on the polygon test network, and we provide many methods in the smart contract to ensure a safe trading process and a safe trading environment.
-
-Test network address: https://rpc-mumbai.maticvigil.com
-
-Address of the contract: 0x9672f063ccba1e4ac40d31f4c00fdc9de491ab59
+We provide a complete smart contract for the decentralized trusted bandwidth market. Our smart contract is deployed on the EVM network, and we provide many methods in the smart contract to ensure a safe trading process and a safe trading environment.
 
 ## Part four:[CloudSlit-verifier](./verifier)(Decentralized network quality checker)
 We provide the verifier component for the decentralized trusted bandwidth market. Anyone can run the network verifier, monitor the network quality of ongoing orders, and detect and punish illegal and bad network providers.
