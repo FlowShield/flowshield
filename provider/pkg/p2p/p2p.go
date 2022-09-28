@@ -22,8 +22,8 @@ import (
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/peer"
 	"github.com/libp2p/go-libp2p-core/routing"
-	"github.com/libp2p/go-libp2p-kad-dht"
-	"github.com/libp2p/go-libp2p-pubsub"
+	dht "github.com/libp2p/go-libp2p-kad-dht"
+	pubsub "github.com/libp2p/go-libp2p-pubsub"
 	discoveryRouting "github.com/libp2p/go-libp2p/p2p/discovery/routing"
 	"github.com/libp2p/go-libp2p/p2p/muxer/yamux"
 	"github.com/libp2p/go-libp2p/p2p/net/connmgr"
@@ -173,7 +173,6 @@ func (p2p *P2P) AnnounceConnect() {
 func setupHost(ctx context.Context) (host.Host, *dht.IpfsDHT) {
 	// Set up the host identity options
 	prvkey, pubkey, err := crypto.GenerateKeyPairWithReader(crypto.RSA, 2048, rand.Reader)
-
 	// Handle any potential error
 	if err != nil {
 		logrus.WithFields(logrus.Fields{
@@ -236,7 +235,7 @@ func setupHost(ctx context.Context) (host.Host, *dht.IpfsDHT) {
 	// Declare a KadDHT
 	var kaddht *dht.IpfsDHT
 	// Setup a routing configuration with the KadDHT
-	//定义节点路由函数,设置节点发现函数
+	// 定义节点路由函数,设置节点发现函数
 	routingOpt := libp2p.Routing(func(h host.Host) (routing.PeerRouting, error) {
 		kaddht = setupKadDHT(ctx, h)
 		return kaddht, err
@@ -360,7 +359,6 @@ func handlePeerDiscovery(nodehost host.Host, peerchan <-chan peer.AddrInfo) {
 
 		// Connect to the peer
 		err := nodehost.Connect(context.Background(), peer)
-
 		if err != nil {
 			logrus.Debugln("p2p peer connection failed: ", err)
 		}

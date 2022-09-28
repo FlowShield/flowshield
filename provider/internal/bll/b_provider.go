@@ -6,6 +6,14 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
+	"net"
+	"net/http"
+	"net/http/httputil"
+	"strconv"
+	"strings"
+
+	"github.com/xtaci/smux"
+
 	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"github.com/cloudslit/cloudslit/provider/internal/contextx"
 	"github.com/cloudslit/cloudslit/provider/internal/schema"
@@ -13,12 +21,6 @@ import (
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/cloudslit/cloudslit/provider/pkg/recover"
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
-	"github.com/xtaci/smux"
-	"net"
-	"net/http"
-	"net/http/httputil"
-	"strconv"
-	"strings"
 )
 
 type Provider struct {
@@ -117,7 +119,7 @@ func (a *Provider) handleConn(ctx context.Context, clientConn net.Conn) error {
 		return err
 	}
 	targetAddr := chains.Target.Host + ":" + strconv.Itoa(chains.Target.Port)
-	//targetAddr = "127.0.0.1:9999"
+	// targetAddr = "127.0.0.1:9999"
 	serverConn, err := net.Dial("tcp", targetAddr)
 	if err != nil {
 		logger.WithErrorStack(ctx, errors.WithStack(err)).Errorf("Failed to request resource from server\n:Addr:%s Error:%v", targetAddr, err)

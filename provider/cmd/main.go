@@ -2,10 +2,12 @@ package main
 
 import (
 	"context"
+	"os"
+
+	"github.com/urfave/cli/v2"
+
 	"github.com/cloudslit/cloudslit/provider/internal"
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
-	"github.com/urfave/cli/v2"
-	"os"
 )
 
 var VERSION = "0.0.0"

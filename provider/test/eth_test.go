@@ -9,13 +9,16 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/cloudslit/cloudslit/provider/pkg/contract"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
+
+	"github.com/cloudslit/cloudslit/provider/pkg/contract"
 )
 
-var client *ethclient.Client
-var err error
+var (
+	client *ethclient.Client
+	err    error
+)
 
 func init() {
 	client, err = ethclient.Dial("https://ropsten.infura.io/v3/45630f96f9d841679dc200a7c97763d2")
@@ -44,7 +47,7 @@ func TestETH2(t *testing.T) {
 
 func TestETH3(t *testing.T) {
 	// 根据client获取chanid
-	//chanID, err := client.ChainID(context.Background())
+	// chanID, err := client.ChainID(context.Background())
 	// 智能合约地址
 	address := common.HexToAddress("0xAc0A5A821d7b818f7495062e2a2FD38cEe207397")
 	instance, err := contract.NewSlit(address, client)

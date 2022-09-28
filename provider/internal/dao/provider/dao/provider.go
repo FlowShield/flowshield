@@ -3,10 +3,12 @@ package dao
 import (
 	"errors"
 	"fmt"
+	"time"
+
+	"gorm.io/gorm"
+
 	"github.com/cloudslit/cloudslit/provider/internal/dao/provider/model"
 	"github.com/cloudslit/cloudslit/provider/pkg/mysql"
-	"gorm.io/gorm"
-	"time"
 )
 
 type Provider struct {
