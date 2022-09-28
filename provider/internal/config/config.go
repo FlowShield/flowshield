@@ -2,12 +2,14 @@ package config
 
 import (
 	"fmt"
-	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
-	"github.com/ethereum/go-ethereum/crypto"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
+
+	"github.com/ethereum/go-ethereum/crypto"
+
+	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 
 	"github.com/koding/multiconfig"
 )

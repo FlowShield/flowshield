@@ -8,11 +8,12 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"github.com/cloudslit/cloudslit/provider/pkg/util"
-	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 	"math/big"
 	"net"
 	"time"
+
+	"github.com/cloudslit/cloudslit/provider/pkg/util"
+	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 )
 
 const (

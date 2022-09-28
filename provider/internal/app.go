@@ -3,11 +3,6 @@ package internal
 import (
 	"context"
 	"fmt"
-	"github.com/cloudslit/cloudslit/provider/internal/config"
-	"github.com/cloudslit/cloudslit/provider/internal/server"
-	"github.com/cloudslit/cloudslit/provider/pkg/logger"
-	"github.com/cloudslit/cloudslit/provider/pkg/mysql"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"net/http"
 	"net/http/pprof"
 	"os"
@@ -15,6 +10,13 @@ import (
 	"strconv"
 	"syscall"
 	"time"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+
+	"github.com/cloudslit/cloudslit/provider/internal/config"
+	"github.com/cloudslit/cloudslit/provider/internal/server"
+	"github.com/cloudslit/cloudslit/provider/pkg/logger"
+	"github.com/cloudslit/cloudslit/provider/pkg/mysql"
 )
 
 type options struct {
@@ -103,7 +105,6 @@ func InitHTTPServer(ctx context.Context) {
 			panic(err)
 		}
 	}()
-
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {

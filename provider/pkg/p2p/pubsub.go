@@ -63,7 +63,6 @@ func (c chatlog) String() string {
 // A constructor function that generates and returns a new
 // PubSub for a given P2PHost, username and roomname
 func JoinPubSub(p2phost *P2P, clientName string, topicName string) (*PubSub, error) {
-
 	// Create a PubSub topic with the room name
 	topic, err := p2phost.PubSub.Join(fmt.Sprintf("pub-sub-p2p-%s", topicName))
 	// Check the error

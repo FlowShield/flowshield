@@ -25,3 +25,14 @@ release:
 	mkdir bin; \
 	fi
 	GOPROXY=$(GOPROXY) CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build $(CFLAGS) ./cmd
+
+################################################################################
+# Target: format                                                              #
+################################################################################
+.PHONY: format
+format: modtidy
+	gofumpt -l -w . && goimports -local github.com/cloudslit/ -w $(shell find ./ -type f -name '*.go' -not -path "./test")
+
+.PHONY: modtidy
+modtidy:
+	go mod tidy

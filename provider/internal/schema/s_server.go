@@ -4,11 +4,12 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
+	"time"
+
 	"github.com/cloudslit/cloudslit/provider/pkg/certificate"
 	"github.com/cloudslit/cloudslit/provider/pkg/errors"
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 	"github.com/cloudslit/cloudslit/provider/pkg/web3/w3s"
-	"time"
 )
 
 type NodeType string
@@ -49,8 +50,10 @@ type Target struct {
 	Port int    `json:"port"`
 }
 
-const PsMsgTypeNode = "node"
-const PsMsgTypeOrder = "order"
+const (
+	PsMsgTypeNode  = "node"
+	PsMsgTypeOrder = "order"
+)
 
 type PsMessage struct {
 	Type string      `json:"type"` // node, order

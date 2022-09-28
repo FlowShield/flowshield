@@ -3,10 +3,11 @@ package w3s
 import (
 	"context"
 	"encoding/json"
-	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"io/fs"
 	"io/ioutil"
 	"os"
+
+	"github.com/cloudslit/cloudslit/provider/internal/config"
 
 	"github.com/ipfs/go-cid"
 	"github.com/web3-storage/go-w3s-client"
@@ -65,7 +66,7 @@ func Get(ctx context.Context, cidStr string, key []byte) (data []byte, err error
 	if err != nil {
 		return nil, err
 	}
-	data, err = goEncrypt.DesCbcDecrypt(data, key[:], nil) //解密得到密文,可以自己传入初始化向量,如果不传就使用默认的初始化向量,8字节
+	data, err = goEncrypt.DesCbcDecrypt(data, key[:], nil) // 解密得到密文,可以自己传入初始化向量,如果不传就使用默认的初始化向量,8字节
 	if err != nil {
 		return nil, err
 	}
@@ -86,7 +87,7 @@ func dataToFile(data interface{}, key []byte) (file *os.File, err error) {
 	if err != nil {
 		return
 	}
-	err = os.WriteFile(file.Name(), cryptText, 0644)
+	err = os.WriteFile(file.Name(), cryptText, 0o644)
 	if err != nil {
 		return
 	}

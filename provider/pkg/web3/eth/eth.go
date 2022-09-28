@@ -2,8 +2,9 @@ package eth
 
 import (
 	"context"
-	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"math/big"
+
+	"github.com/cloudslit/cloudslit/provider/internal/config"
 
 	"github.com/ethereum/go-ethereum/common"
 
