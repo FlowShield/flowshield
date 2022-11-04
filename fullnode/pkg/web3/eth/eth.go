@@ -29,7 +29,7 @@ var CS *CloudSlit
 
 func InitETH(cfg *confer.Web3) error {
 	ctx := context.Background()
-	client, err := ethclient.Dial(cfg.EthAddress())
+	client, err := ethclient.Dial(cfg.ETH.URL)
 	if err != nil {
 		return err
 	}
