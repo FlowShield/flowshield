@@ -51,4 +51,3 @@ web3:
     token: "CS_W3S_TOKEN"
   eth:
     url: "CS_ETH_URL"
-    projectid: "CS_ETH_PROJECTID"

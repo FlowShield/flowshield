@@ -23,8 +23,7 @@ func Init(configURL string) (err error) {
 	if err = v.Unmarshal(&globalConfig); err != nil {
 		return
 	}
-	handleConfig(globalConfig)
-	return
+	return handleConfig(globalConfig)
 }
 
 func handleConfig(config *ServerConfig) error {
@@ -47,7 +46,6 @@ func handleConfig(config *ServerConfig) error {
 	config.replaceByEnv(&config.Web3.Contract.Token)
 	config.replaceByEnv(&config.Web3.W3S.Token)
 	config.replaceByEnv(&config.Web3.ETH.URL)
-	config.replaceByEnv(&config.Web3.ETH.ProjectID)
 	config.Mysql.Write.DBName = globalConfig.Mysql.DBName
 	config.Mysql.Write.Prefix = globalConfig.Mysql.Prefix
 	return nil

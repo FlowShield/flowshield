@@ -1,7 +1,6 @@
 package confer
 
 import (
-	"fmt"
 	"sync"
 	"time"
 )
@@ -86,12 +85,8 @@ type W3S struct {
 }
 
 type ETH struct {
-	URL       string `mapstructure:"url" json:"url" yaml:"url"`
-	ProjectID string `mapstructure:"projectid" json:"projectid" yaml:"projectid"`
-}
-
-func (w *Web3) EthAddress() string {
-	return fmt.Sprintf("%s/%s", w.ETH.URL, w.ETH.ProjectID)
+	URL string `mapstructure:"url" json:"url" yaml:"url"`
+	//ProjectID string `mapstructure:"projectid" json:"projectid" yaml:"projectid"`
 }
 
 type Log struct {
