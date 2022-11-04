@@ -3,10 +3,11 @@ package mysql
 import (
 	"errors"
 	"fmt"
-	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"log"
 	"os"
 	"time"
+
+	"github.com/cloudslit/cloudslit/provider/internal/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

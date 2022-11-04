@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"io/ioutil"
 	"runtime"
+
+	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 )
 
 var (
