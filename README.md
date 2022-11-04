@@ -16,8 +16,6 @@
   - [Part five:DeCA(Decentralized PKI CA center)](#part-fivedecadecentralized-pki-ca-center)
   - [Part six:CloudSlit-Client(client for private data retrieval.)](#part-sixcloudslit-clientclient-for-private-data-retrieval)
   - [Part two: CloudSlit-Provider(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)](#part-two-cloudslit-providernetwork-miner-a-secure-network-tunnel-provider-for-decentralized-data-private-retrieval-1)
-- [Our nodes are automatically networked through kademlia DHT and IPFS networks of libp2p through peer discovery and routing, and data synchronization among multiple nodes is realized through PubSub function of libp2p.](#our-nodes-are-automatically-networked-through-kademlia-dht-and-ipfs-networks-of-libp2p-through-peer-discovery-and-routing-and-data-synchronization-among-multiple-nodes-is-realized-through-pubsub-function-of-libp2p)
-- [Thanks supports](#thanks-supports)
   - [Part three:CloudSlit-Contracts(support:polygon)](#part-threecloudslit-contractssupportpolygon)
   - [Part four:CloudSlit-verifier(Decentralized network quality checker)](#part-fourcloudslit-verifierdecentralized-network-quality-checker-1)
   - [Part five:DeCA(Decentralized PKI CA center)](#part-fivedecadecentralized-pki-ca-center-1)
@@ -127,16 +125,11 @@ Decentralize PKI CA center to provide communication authentication infrastructur
 ## Part six:[CloudSlit-Client](./client)(client for private data retrieval.)
 
 A client user connects to a provider to establish a network security tunnel for private data retrieval.
->>>>>>> main
 
 
 ## Part two: [CloudSlit-Provider](./provider)(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)
 
-<<<<<<< HEAD
 Our nodes are automatically networked through kademlia DHT and IPFS networks of libp2p through peer discovery and routing, and data synchronization among multiple nodes is realized through PubSub function of libp2p.
-=======
-# Thanks supports
->>>>>>> main
 
 For all users and Dao data, we use web3.storage of Filecoin to store user data in a decentralized way.
 
