@@ -493,8 +493,8 @@
       ]
     },
     "/Users/chengqiang/icode/github/CloudSlit/cloudslit/contract/contracts/CloudSlitDao.sol": {
-      "lastModificationDate": 1659954712107,
-      "contentHash": "10e51a47d1258665fb03bcdec1fdbb7b",
+      "lastModificationDate": 1663732551537,
+      "contentHash": "7a48985ab54365d590cf6c3aa010d79b",
       "sourceName": "contracts/CloudSlitDao.sol",
       "solcConfig": {
         "version": "0.8.15",

@@ -11,12 +11,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-
 	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"github.com/cloudslit/cloudslit/provider/internal/server"
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/cloudslit/cloudslit/provider/pkg/mysql"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 type options struct {
@@ -92,14 +91,14 @@ func InitHTTPServer(ctx context.Context) {
 	ps.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
 	ps.HandleFunc("/debug/pprof/trace", pprof.Trace)
 	pSrv := &http.Server{
-		Addr:        "0.0.0.0:10256",
+		Addr:        config.C.App.HttpListenAddr,
 		Handler:     ps,
 		ReadTimeout: 5 * time.Second,
 		IdleTimeout: 15 * time.Second,
 	}
 
 	go func() {
-		logger.Infof("pprof server is running at %s.", "0.0.0.0:10256")
+		logger.Infof("pprof server is running at %s.", config.C.App.HttpListenAddr)
 		err := pSrv.ListenAndServe()
 		if err != nil && err != http.ErrServerClosed {
 			panic(err)

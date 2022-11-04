@@ -23,7 +23,7 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
         bool used;
         bool withdraw;
         address payAddress;
-        address privateAddress;
+        address privoderAddress;
     }
 
     mapping(string => userWallet) userWallets;
@@ -34,7 +34,7 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
     uint32 _durationUnit;
     // // A mapping is a key/value map. Here we store each staked user.
     mapping(address => uint256) _fullnodeDeposits;
-    mapping(address => uint256) _privateDeposits;
+    mapping(address => uint256) _privoderDeposits;
 
     mapping(string=>Order) _orders;
     mapping(address=>string[]) _privoderOrders;
@@ -79,7 +79,6 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
         userWallets[uuid].status = 2;
     }
 
-
     function changeWallet(string memory uuid, address newWallet) external {
         require(newWallet != address(0));
         if (userWallets[uuid].status == 1){
@@ -90,10 +89,9 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
         }
     }
 
-
     function getUserInfo(string memory uuid) external view returns(bool, bool){
         if(userWallets[uuid].status == 2){
-            return ((_fullnodeDeposits[userWallets[uuid].user] > 0), (_privateDeposits[userWallets[uuid].user] > 0));
+            return ((_fullnodeDeposits[userWallets[uuid].user] > 0), (_privoderDeposits[userWallets[uuid].user] > 0));
         }else{
             return (false, false);
         }
@@ -105,7 +103,7 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
         if(_type == 1){
             return _fullnodeDeposits[msg.sender] != 0;
         } else if(_type == 2){
-            return _privateDeposits[msg.sender] != 0;
+            return _privoderDeposits[msg.sender] != 0;
         }
         return false;
     }
@@ -120,10 +118,10 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
             _transfer(msg.sender, address(this), _fullnodeDepositAmount);
             _fullnodeDeposits[msg.sender] += _fullnodeDepositAmount;
         }else if(_type == 2){
-            require(_privateDeposits[msg.sender] == 0, "Already staked");
+            require(_privoderDeposits[msg.sender] == 0, "Already staked");
             require(balanceOf(msg.sender) >= _privoderDepositAmount, "Not enough CSD");
             _transfer(msg.sender, address(this), _privoderDepositAmount);
-            _privateDeposits[msg.sender] += _privoderDepositAmount;
+            _privoderDeposits[msg.sender] += _privoderDepositAmount;
         }
     }
     // /**
@@ -135,9 +133,9 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
             _transfer(address(this), msg.sender, _fullnodeDeposits[msg.sender]);
             delete _fullnodeDeposits[msg.sender];
         }else if(_type == 2){
-            require(_privateDeposits[msg.sender] > 0);
-            _transfer(address(this), msg.sender, _privateDeposits[msg.sender]);
-            delete _privateDeposits[msg.sender];
+            require(_privoderDeposits[msg.sender] > 0);
+            _transfer(address(this), msg.sender, _privoderDeposits[msg.sender]);
+            delete _privoderDeposits[msg.sender];
         }
     }
 
@@ -162,7 +160,7 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
     }
 
     function getAllOrderTokens() external view returns(uint){
-        if (_privateDeposits[msg.sender] == 0){
+        if (_privoderDeposits[msg.sender] == 0){
             return 0;
         }
         string[] memory orders = _privoderOrders[msg.sender];
@@ -182,7 +180,7 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
     }
 
     function withdrawAllOrderTokens() external {
-        require(_privateDeposits[msg.sender] != 0, 'Not deposits');
+        require(_privoderDeposits[msg.sender] != 0, 'Not deposits');
         string[] memory orders = _privoderOrders[msg.sender];
         uint price = 0;
         for (uint i=0; i < orders.length; i++){
@@ -203,7 +201,7 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
 
     function withdrawOrderTokens(string memory orderId) external {
         require(!_orders[orderId].withdraw, 'The order has been withdrawn');
-        require(_orders[orderId].privateAddress == msg.sender, 'Please confirm the wallet address, Can not withdraw');
+        require(_orders[orderId].privoderAddress == msg.sender, 'Please confirm the wallet address, Can not withdraw');
         if(block.timestamp >= _orders[orderId].endTime){
             _orders[orderId].withdraw = true;
             uint duration = _orders[orderId].duration  - _orders[orderId].withdrawDuration;

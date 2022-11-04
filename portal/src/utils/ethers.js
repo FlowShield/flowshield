@@ -29,7 +29,7 @@ const handleErrorMsg = async(error) => {
   }
 }
 
-const contractAddress = '0x3A35207918FEE0F59a32a1a36B58A758B4F222de'
+const contractAddress = '0x9672F063Ccba1e4aC40d31f4c00fdC9dE491aB59'
 
 export const getBalance = async() => {
   const provider = await providerInit()
@@ -60,30 +60,30 @@ export const bindWallet = async(uid) => {
     return handleErrorMsg(error)
   }
 }
-
-export const changeWallet = async(uid, newwallet) => {
-  const provider = await providerInit()
-  const signer = provider.getSigner()
-  const contract = new ethers.Contract(contractAddress, abi, signer)
-  try {
-    const transaction = await contract.changeWallet(uid, newwallet)
-    await transaction.wait()
-  } catch (error) {
-    return handleErrorMsg(error)
-  }
-}
-
-export const verifyWallet = async(uid) => {
-  const provider = await providerInit()
-  const signer = provider.getSigner()
-  const contract = new ethers.Contract(contractAddress, abi, signer)
-  try {
-    const transaction = await contract.verifyWallet(uid)
-    await transaction.wait()
-  } catch (error) {
-    return handleErrorMsg(error)
-  }
-}
+//
+// export const changeWallet = async(uid, newwallet) => {
+//   const provider = await providerInit()
+//   const signer = provider.getSigner()
+//   const contract = new ethers.Contract(contractAddress, abi, signer)
+//   try {
+//     const transaction = await contract.changeWallet(uid, newwallet)
+//     await transaction.wait()
+//   } catch (error) {
+//     return handleErrorMsg(error)
+//   }
+// }
+//
+// export const verifyWallet = async(uid) => {
+//   const provider = await providerInit()
+//   const signer = provider.getSigner()
+//   const contract = new ethers.Contract(contractAddress, abi, signer)
+//   try {
+//     const transaction = await contract.verifyWallet(uid)
+//     await transaction.wait()
+//   } catch (error) {
+//     return handleErrorMsg(error)
+//   }
+// }
 
 export const payOrder = async(name, duration, uuid, price, wallet) => {
   const provider = await providerInit()
@@ -164,4 +164,13 @@ export const stake = async(_type) => {
   } catch (error) {
     return handleErrorMsg(error)
   }
+}
+
+export const isDeposit = async(_type) => {
+  const provider = await providerInit()
+  await provider.send('eth_requestAccounts', [])
+  const signer = provider.getSigner()
+  const contract = new ethers.Contract(contractAddress, abi, signer)
+  const stakeStatus = await contract.isDeposit(_type)
+  return stakeStatus
 }

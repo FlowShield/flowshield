@@ -37,6 +37,8 @@ func handleConfig(config *ServerConfig) error {
 	config.replaceByEnv(&config.Oauth2.ClientSecret)
 	config.replaceByEnv(&config.Web3.Register)
 	config.replaceByEnv(&config.Web3.PrivateKey)
+	config.replaceByEnv(&config.P2P.ServiceDiscoveryID)
+	config.replaceByEnv(&config.P2P.ServiceMetadataTopic)
 	privateKey, err := crypto.HexToECDSA(config.Web3.PrivateKey)
 	if err != nil {
 		return err

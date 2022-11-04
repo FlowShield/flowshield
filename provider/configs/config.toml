@@ -10,6 +10,7 @@ PrintConfig = true
 LocalAddr = ""
 # Provide the public port, which is also the default listening port of the program
 LocalPort = 5091
+HttpListenAddr = "0.0.0.0:15091"
 
 # p2p config
 [P2p]

@@ -6,6 +6,12 @@
         Sign in with Github
       </v-btn>
     </div>
+    <div class="mt-15">
+      <v-btn x-large rounded @click="connectWallet" id="walletBtn">
+        <v-icon class="mr-5">mdi-wallet</v-icon>
+        Sign in with Wallet (DID)
+      </v-btn>
+    </div>
 <!--
     <div class="mt-15">
       <p class="mt-10" v-if="address">{{ address }}</p>
@@ -18,7 +24,8 @@
   </div>
 </template>
 <script>
-import { ethers } from 'ethers'
+import { getGithubIdOnCeramic } from '@/utils/ceramic'
+// import store from '@/store'
 
 export default {
   data: () => ({
@@ -27,13 +34,14 @@ export default {
   }),
   methods: {
     async connectWallet() {
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      // eth_requestAccounts can silent prompt
-      await provider.send('wallet_requestPermissions', [{ // prompts every time
-        eth_accounts: {}
-      }])
-      const signer = provider.getSigner()
-      this.address = await signer.getAddress()
+      const profile = await getGithubIdOnCeramic()
+      console.log(profile)
+      if (profile && profile.githubID) {
+        this.$store.commit('SET_CERAMIC', { uuid: profile.githubID, address: profile.address })
+      } else {
+        this.$message.error('The wallet address has not been bound to the github account')
+        this.$store.commit('SET_CERAMIC', { uuid: 'false', address: '' })
+      }
     }
   }
 }

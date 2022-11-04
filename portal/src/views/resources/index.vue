@@ -89,8 +89,7 @@ export default {
     },
     handleDelete(ref) {
       const item = ref.data
-
-      deleteZeroAccessResource(item.ID).then(_ => {
+      deleteZeroAccessResource(item.uuid).then(_ => {
         ref.$close()
       }).finally(() => {
         this.handleSearch()

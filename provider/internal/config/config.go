@@ -7,9 +7,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ethereum/go-ethereum/crypto"
-
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
+	"github.com/ethereum/go-ethereum/crypto"
 
 	"github.com/koding/multiconfig"
 )
@@ -196,6 +195,7 @@ type App struct {
 	LocalPort int
 	CertFile  string
 	KeyFile   string
+	HttpListenAddr string
 }
 
 type Mysql struct {

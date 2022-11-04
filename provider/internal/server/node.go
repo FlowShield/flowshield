@@ -3,14 +3,13 @@ package server
 import (
 	"context"
 
-	"github.com/sirupsen/logrus"
-
 	"github.com/cloudslit/cloudslit/provider/internal/bll"
 	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/cloudslit/cloudslit/provider/pkg/p2p"
 	"github.com/cloudslit/cloudslit/provider/pkg/web3/eth"
 	"github.com/cloudslit/cloudslit/provider/pkg/web3/w3s"
+	"github.com/sirupsen/logrus"
 )
 
 func InitNode(ctx context.Context) error {
@@ -28,6 +27,7 @@ func InitNode(ctx context.Context) error {
 	}
 	if config.C.P2p.Enable {
 		// Create a new P2PHost
+		logrus.Infoln("use service discovery id:", config.C.P2p.ServiceDiscoveryID)
 		p2phost := p2p.NewP2P(config.C.P2p.ServiceDiscoveryID)
 		logrus.Infoln("Completed P2P Setup")
 		logrus.Infoln("Please wait for about 30 seconds ...")

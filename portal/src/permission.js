@@ -2,7 +2,7 @@ import router from './router'
 import { EventBus } from '@/utils/event-bus'
 import store from '@/store'
 
-const whiteList = ['login', 'home'] // skip login
+const whiteList = ['login', 'home', 'wallet', 'nodes', 'orders', 'resources'] // skip login
 
 router.beforeEach(async(to, from, next) => {
   EventBus.$emit('app.loading', true)
