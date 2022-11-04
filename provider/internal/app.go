@@ -11,19 +11,11 @@ import (
 	"syscall"
 	"time"
 
-<<<<<<< HEAD
-=======
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-
->>>>>>> main
 	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"github.com/cloudslit/cloudslit/provider/internal/server"
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/cloudslit/cloudslit/provider/pkg/mysql"
-<<<<<<< HEAD
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-=======
->>>>>>> main
 )
 
 type options struct {

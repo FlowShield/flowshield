@@ -3,17 +3,13 @@ package server
 import (
 	"context"
 
-<<<<<<< HEAD
-=======
-	"github.com/sirupsen/logrus"
-
->>>>>>> main
 	"github.com/cloudslit/cloudslit/provider/internal/bll"
 	"github.com/cloudslit/cloudslit/provider/internal/config"
 	"github.com/cloudslit/cloudslit/provider/pkg/logger"
 	"github.com/cloudslit/cloudslit/provider/pkg/p2p"
 	"github.com/cloudslit/cloudslit/provider/pkg/web3/eth"
 	"github.com/cloudslit/cloudslit/provider/pkg/web3/w3s"
+	"github.com/sirupsen/logrus"
 )
 
 func InitNode(ctx context.Context) error {

@@ -7,16 +7,9 @@ import (
 	"strings"
 	"sync"
 
-<<<<<<< HEAD
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
 	"github.com/ethereum/go-ethereum/crypto"
 
-=======
-	"github.com/ethereum/go-ethereum/crypto"
-
-	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
-
->>>>>>> main
 	"github.com/koding/multiconfig"
 )
 
