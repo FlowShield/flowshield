@@ -38,9 +38,9 @@ oauth2:
 p2p:
   enable: true
 #  account: "CS_ACCOUNT"
-  service-discovery-id: "cloudslit/provider"
+  service-discovery-id: "P2P_SERVICE_DISCOVERY_ID"
   service-discovery-mode: "advertise" # advertise or announce
-  service-metadata-topic: "cloudslit_provider_metadata" # advertise or announce
+  service-metadata-topic: "P2P_SERVICE_METADATA_TOPIC" # advertise or announce
 
 web3:
   register: "CS_WEB3_REGIST"

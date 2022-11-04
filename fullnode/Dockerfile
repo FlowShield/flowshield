@@ -1,8 +1,5 @@
 FROM golang:1.17.8-alpine AS builder
 
-ENV GO111MODULE=on \
-    GOPROXY=https://goproxy.cn,direct
-
 WORKDIR /build
 
 COPY . .
