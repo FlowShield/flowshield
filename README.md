@@ -1,3 +1,9 @@
+<p align="center">
+<img 
+    src="https://user-images.githubusercontent.com/34047788/200487286-e0661f79-b54e-4fff-b5de-d8e8139e3961.png" 
+    width="251" border="0" alt="IceFireDB">
+</p>
+
 # CloudSlit - Private retrieval of data
 
 - [CloudSlit - Private retrieval of data](#cloudslit---private-retrieval-of-data)
