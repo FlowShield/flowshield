@@ -29,7 +29,7 @@ const handleErrorMsg = async(error) => {
   }
 }
 
-const contractAddress = '0x9672F063Ccba1e4aC40d31f4c00fdC9dE491aB59'
+const contractAddress = '0x915FE3Fcde2489A2c324cf5733499EED14125b1B'
 
 export const getBalance = async() => {
   const provider = await providerInit()
@@ -166,11 +166,25 @@ export const stake = async(_type) => {
   }
 }
 
+export const withdraw = async(_type) => {
+  const provider = await providerInit()
+  const signer = provider.getSigner()
+  const contract = new ethers.Contract(contractAddress, abi, signer)
+  try {
+    const transaction = await contract.withdraw(_type)
+    await transaction.wait()
+    return 'Withdraw success'
+  } catch (error) {
+    return handleErrorMsg(error)
+  }
+}
+
 export const isDeposit = async(_type) => {
   const provider = await providerInit()
   await provider.send('eth_requestAccounts', [])
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi, signer)
   const stakeStatus = await contract.isDeposit(_type)
+  console.log('stakeStatus: ', stakeStatus)
   return stakeStatus
 }
