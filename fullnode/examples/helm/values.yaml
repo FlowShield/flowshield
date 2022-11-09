@@ -20,7 +20,7 @@ deployment:
         cpu: 1
         memory: 200Mi
     env:
-      DOMAIN: 'https://net.ztalab.xyz'
+      DOMAIN: 'https://dash.cloudslit.xyz'
       ZTA_REDIS_ADDR: 'redis:6379'
       ZTA_MYSQL_HOST: 'mysql'
       ZTA_MYSQL_USER: 'root'
@@ -31,7 +31,7 @@ deployment:
 replicas: 3
 
 ingress:
-  host: net.ztalab.xyz
+  host: dash.cloudslit.xyz
   annotations:
 
 
