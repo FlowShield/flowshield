@@ -45,8 +45,8 @@ Since each CA has a certificate of its own, layers of trust get created through 
 Building cfssl requires a [working Go 1.12+ installation](http://golang.org/doc/install).
 
 ```
-$ git clone git@github.com:ztalab/CA.git
-$ cd CA
+$ git clone git@github.com:CloudSlit/cloudslit.git
+$ cd ca
 $ make
 ```
 
@@ -57,7 +57,7 @@ The resulting binaries will be in the bin folder:
 ```
 $ tree bin
 bin
-├── CA
+├── ca
 ```
 
 ## Configuration reference
