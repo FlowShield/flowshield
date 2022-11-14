@@ -72,30 +72,72 @@
           Connect Your Wallet (DID)
         </v-btn>
       </div>
+      <div class="mt-15">
+        <div>
+          <template>
+            <v-card
+                class="mx-auto"
+            >
+              <v-container fluid>
+                <v-row dense>
+                  <v-col
+                      :cols="12"
+                  >
+                    <v-card  dark>
+                      <v-card-title >
+                        Amount already staked
+                      </v-card-title>
+                      <div class="text--primary" style="text-align: left;padding-left: 50px">
+                        Fullnode : {{ fullnodeStakedCSD }} CSD
+                      </div>
+                      <div class="text--primary" style="text-align: left;padding-left: 50px">
+                        Privoder : {{ privoderStakedCSD }} CSD
+                      </div>
+                      <v-card-actions>
+                        <v-spacer></v-spacer>
+                      </v-card-actions>
+                      <div style="padding-bottom: 20px">
+                        <stakeforme-dialog @on-success="getStakedAmount"/>
+                        <stakeforother-dialog @on-success="getStakedAmount" style="margin-left: 50px"/>
+                      </div>
+                      <div style="padding-bottom: 20px">
+                      </div>
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card>
+          </template>
+        </div>
+      </div>
     </div>
   </div>
 
 </template>
 <script>
 import {
-  getAllOrderTokens,
+  getAllOrderTokens, getDeposit,
   withdrawAllOrderTokens
 } from '@/utils/ethers'
 import store from '@/store'
-// import FormDialog from './components/form-dialog'
+import StakeformeDialog from './components/stakeForMe'
+import StakeforotherDialog from './components/stakeForOther'
 import { updateGithubIdOnCeramic } from '@/utils/ceramic'
 
 export default {
-  components: {},
+  components: { StakeformeDialog, StakeforotherDialog },
   data: () => ({
     address: '',
     withdrawCSD: 0,
+    fullnodeStakedCSD: 0,
+    privoderStakedCSD: 0,
     status: 0,
     color: '',
     bindwalletLoading: false,
     changewalletLoading: false,
     walletLoading: false,
     withdrawLoading: false,
+
     query: {
       name: '',
       page: 1,
@@ -119,6 +161,7 @@ export default {
   created() {
     this.getBind()
     this.getAllOrderTokens()
+    this.getStakedAmount()
   },
   methods: {
     async getBind() {
@@ -158,6 +201,14 @@ export default {
       await withdrawAllOrderTokens()
       await this.getAllOrderTokens()
       this.withdrawLoading = false
+    },
+    async getStakedAmount() {
+      const stakedAmount = await getDeposit()
+      if (stakedAmount.length > 1) {
+        this.fullnodeStakedCSD = stakedAmount[0]
+        this.privoderStakedCSD = stakedAmount[1]
+      }
+      this.withdrawCSD = await getAllOrderTokens()
     }
   }
 }

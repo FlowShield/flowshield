@@ -29,7 +29,7 @@ const handleErrorMsg = async(error) => {
   }
 }
 
-const contractAddress = '0x915FE3Fcde2489A2c324cf5733499EED14125b1B'
+const contractAddress = '0xd997B749EB05C48Ac5cCA9ed06b78fb4EA22A988'
 
 export const getBalance = async() => {
   const provider = await providerInit()
@@ -123,8 +123,12 @@ export const getAllOrderTokens = async() => {
   await provider.send('eth_requestAccounts', [])
   const signer = provider.getSigner()
   const contract = new ethers.Contract(contractAddress, abi, signer)
-  const withdrawCSD = ethers.utils.formatUnits(await contract.getAllOrderTokens())
-  return withdrawCSD
+  try {
+    const withdrawCSD = ethers.utils.formatUnits(await contract.getAllOrderTokens())
+    return withdrawCSD
+  } catch (error) {
+    return 0
+  }
 }
 
 export const withdrawAllOrderTokens = async() => {
@@ -164,6 +168,49 @@ export const stake = async(_type) => {
   } catch (error) {
     return handleErrorMsg(error)
   }
+}
+
+export const stakeAmount = async(_type, amount) => {
+  const provider = await providerInit()
+  const signer = provider.getSigner()
+  console.log(1)
+  const address = await signer.getAddress()
+  console.log(address)
+  const contract = new ethers.Contract(contractAddress, abi, signer)
+  console.log(address)
+  try {
+    const transaction = await contract.stakeAmount(_type, address, amount)
+    console.log(address)
+    await transaction.wait()
+    console.log(address)
+    return 'Stake success'
+  } catch (error) {
+    return handleErrorMsg(error)
+  }
+}
+
+export const stakeAmountForOther = async(_type, address, amount) => {
+  const provider = await providerInit()
+  const signer = provider.getSigner()
+  const contract = new ethers.Contract(contractAddress, abi, signer)
+  try {
+    const transaction = await contract.stakeAmount(_type, address, amount)
+    await transaction.wait()
+    return 'Stake success'
+  } catch (error) {
+    return handleErrorMsg(error)
+  }
+}
+
+export const getDeposit = async(_type) => {
+  const provider = await providerInit()
+  await provider.send('eth_requestAccounts', [])
+  const signer = provider.getSigner()
+  const address = await signer.getAddress()
+  const contract = new ethers.Contract(contractAddress, abi, signer)
+  const stakedAmout = await contract.getDeposit(address)
+  console.log('stakedAmout: ', stakedAmout)
+  return stakedAmout
 }
 
 export const withdraw = async(_type) => {
