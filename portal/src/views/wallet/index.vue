@@ -73,7 +73,7 @@
         </v-btn>
       </div>
       <div class="mt-15">
-        <div>
+        <div v-if="address">
           <template>
             <v-card
                 class="mx-auto"
