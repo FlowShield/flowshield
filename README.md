@@ -4,8 +4,7 @@
     width="251" border="0" alt="CloudSlit">
 </p>
 
-https://user-images.githubusercontent.com/34047788/203346446-6bec3b69-9037-455d-92e4-f5393b3780dc.mp4
-
+https://user-images.githubusercontent.com/34047788/203478456-9f5b3820-cb6a-4add-a8d3-c64aab2424d0.mp4
 
 # CloudSlit-****FVM**** build notes  [(whitepaper)](https://www.cloudslit.xyz/cloudslit_whitepaper/)
 
