@@ -49,6 +49,8 @@ web3:
     token: "CS_CONTRACT_TOKEN"
   w3s:
     token: "CS_W3S_TOKEN"
+    timeout: 10
+    retry-count: 100
   eth:
     url: "https://ropsten.infura.io/v3"
     projectid: "45630f96f9d841679dc200a7c97763d2"

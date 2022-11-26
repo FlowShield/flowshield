@@ -137,18 +137,10 @@ func (a *Pubsub) handleOrder(ctx context.Context, ps *p2p.PubSub, order *schema.
 	if order.Wallet != config.C.Web3.Account {
 		return fmt.Errorf("wallet Abnormal，expect:%s, get:%s", config.C.Web3.Account, order.Wallet)
 	}
-	// 解析配置
-	count := 0
-retry:
-	pc, err := schema.ParserConfig(ctx, order.ServerCid, []byte(config.C.Web3.Account[len(config.C.Web3.Account)-8:]))
+	// 解析 w3s 配置
+	pc, err := a.ParseW3sData(ctx, order)
 	if err != nil {
-		time.Sleep(5 * time.Second)
-		logger.WithErrorStack(ctx, err).Warnf("get w3s data err:%v", err)
-		if count > 10 { // 读取配置10次错误，return
-			return errors.WithStack(err)
-		}
-		count++
-		goto retry
+		return err
 	}
 	// 预制端口
 	port, err := verifyPort(order.Port)
@@ -234,6 +226,24 @@ func (a *Pubsub) nodeHeartBeat(ps *p2p.PubSub, server *schema.NodeInfo) {
 	}
 	str := pub.String()
 	ps.InsertOutbound(str)
+}
+
+func (a *Pubsub) ParseW3sData(ctx context.Context, order *schema.NodeOrder) (*schema.ProviderConfig, error) {
+	cfg := config.C.Web3
+	// 解析配置
+	tryCount := 0
+retry:
+	key := []byte(config.C.Web3.Account[len(cfg.Account)-8:])
+	pc, err := order.ToProviderConfig(ctx, key)
+	if err != nil {
+		tryCount++
+		logger.Warnf("get w3s data err:%v", err)
+		if tryCount > cfg.W3S.RetryCount {
+			return nil, err
+		}
+		goto retry
+	}
+	return pc, nil
 }
 
 func (a *Pubsub) NewServerInfo() *schema.NodeInfo {
