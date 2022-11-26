@@ -11,7 +11,7 @@ LocalAddr = "0.0.0.0"
 # Listening port
 LocalPort = 3091
 # Control end address， "Used to obtain configuration or rule information"
-ControlHost = "https://dash.cloudslit.xyz"
+ControlHost = "https://fvm-testnet.cloudslit.xyz"
 
 # w3s token
 [Web3.W3s]
