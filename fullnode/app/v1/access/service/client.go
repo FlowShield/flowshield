@@ -100,7 +100,7 @@ func AddClient(c *gin.Context, param *mparam.AddClient) (code int, data *mmysql.
 		CaPem:   util.Base64Encode(serverSign.CaPEM),
 		CertPem: util.Base64Encode(serverSign.CertPEM),
 		KeyPem:  util.Base64Encode(serverSign.KeyPEM),
-	}, []byte(node.PeerId[len(node.PeerId)-8:]))
+	}, data.UUID, []byte(node.PeerId[len(node.PeerId)-8:]))
 	if err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY, nil
 	}
@@ -238,7 +238,7 @@ func AcceptClientOrder(c *gin.Context, client *schema.ClientP2P) {
 		CaPem:   util.Base64Encode(clientSign.CaPEM),
 		CertPem: util.Base64Encode(clientSign.CertPEM),
 		KeyPem:  util.Base64Encode(clientSign.KeyPEM),
-	}, []byte(node.PeerId[len(node.PeerId)-8:]))
+	}, info.UUID, []byte(node.PeerId[len(node.PeerId)-8:]))
 	info.Port = client.Port
 	info.ClientCid = cid
 	info.Status = mmysql.Success

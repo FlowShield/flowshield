@@ -10,7 +10,6 @@ import (
 	"github.com/cloudslit/cloudslit/client/pkg/web3/w3s"
 	"net/url"
 	"strings"
-	"time"
 )
 
 type ClientConfig struct {
@@ -110,14 +109,11 @@ type ControlClient struct {
 	ClientCid string `json:"client_cid"`
 }
 
-// ParseConfig 解析客户端配置
-func (a *ControlClient) ParseConfig(ctx context.Context, cid string, key []byte) (*ClientConfig, error) {
-	// 读取w3s数据
-	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-	data, err := w3s.Get(ctx, cid, key)
+// ToClientOrder 解析客户端配置
+func (a *ControlClient) ToClientOrder(ctx context.Context, key []byte) (*ClientConfig, error) {
+	data, err := w3s.Get(ctx, a.ClientCid, a.Uuid, key)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, err
 	}
 	// 解析w3s数据
 	var result ClientConfig

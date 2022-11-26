@@ -54,6 +54,8 @@ web3:
     token: "0x3A35207918FEE0F59a32a1a36B58A758B4F222de"
   w3s:
     token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U"
+    timeout: 10
+    retry-count: 100
   eth:
     url: "https://ropsten.infura.io/v3"
     projectid: "45630f96f9d841679dc200a7c97763d2"
