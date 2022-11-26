@@ -1,31 +1,20 @@
-require('dotenv').config();
-require("@nomiclabs/hardhat-waffle");
-require("@openzeppelin/hardhat-upgrades");
-// Go to https://infura.io/ and create a new project
-// Replace this with your Infura project ID
-const INFURA_PROJECT_ID = "811238fc53164a35a96f841a7a89bea5";
+require("@nomicfoundation/hardhat-toolbox");
+require('hardhat-deploy');
+require('hardhat-deploy-ethers');
+require("./tasks")
+require("dotenv").config()
 
+const PRIVATE_KEY = process.env.PRIVATE_KEY
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-    solidity: "0.8.15",
+    solidity: "0.8.17",
     networks: {
-        ropsten: {
-            url: `https://ropsten.infura.io/v3/${INFURA_PROJECT_ID}`,
-            accounts: [process.env.PRIVATE_KEY]
-        },
-        'godwoken-testnet': {
-            url: `https://godwoken-testnet-v1.ckbapp.dev`,
-            accounts: [process.env.PRIVATE_KEY]
-        },
-        matic: {
-            url: "https://rpc-mumbai.maticvigil.com",
-            accounts: [process.env.PRIVATE_KEY]
+        wallaby: {
+            url: "https://wallaby.node.glif.io/rpc/v0",
+            accounts: [PRIVATE_KEY],
         }
     },
-    etherscan: {
-        apiKey: process.env.POLYGONSCAN_API_KEY
-    },
-    defaultNetwork: "matic",
+    defaultNetwork: "wallaby",
 };

@@ -1,12 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.15;
+pragma solidity ^0.8.17;
 
-import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "./Erc20.sol";
 
-contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgradeable {
+contract CloudSlitDao is ERC20 {
 
     struct userWallet {
         address user;
@@ -19,7 +16,7 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
         uint endTime;
         uint withdrawDuration;
         uint32 duration;
-        uint price;
+        uint amount;
         bool used;
         bool withdraw;
         address payAddress;
@@ -29,31 +26,25 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
     mapping(string => userWallet) userWallets;
 
     //Initialize variables
-    uint256 public _fullnodeDepositAmount;
-    uint256 public _privoderDepositAmount;
+    uint public _fullnodeDepositAmount;
+    uint public _privoderDepositAmount;
     uint32 _durationUnit;
     // // A mapping is a key/value map. Here we store each staked user.
-    mapping(address => uint256) _fullnodeDeposits;
-    mapping(address => uint256) _privoderDeposits;
+    mapping(address => uint) _fullnodeDeposits;
+    mapping(address => uint) _privoderDeposits;
 
     mapping(string=>Order) _orders;
     mapping(address=>string[]) _privoderOrders;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
-        _disableInitializers();
-    }
+        _mint(msg.sender, 100000000 * 10 ** decimals);
 
-    function initialize() initializer public {
-        __ERC20_init("CloudSlit Dao", "CSD");
-        __ERC20Burnable_init();
-        __Ownable_init();
-
-        _mint(msg.sender, 100000000 * 10 ** decimals());
-        _fullnodeDepositAmount = 5000 * 10 ** decimals();
-        _privoderDepositAmount = 1000 * 10 ** decimals();
+        _fullnodeDepositAmount = 5000 * 10 ** decimals;
+        _privoderDepositAmount = 1000 * 10 ** decimals;
         _durationUnit = 1 hours;
     }
+
 
     function getWallet(string memory uuid) external view returns(address, uint8){
         return (userWallets[uuid].user, userWallets[uuid].status);
@@ -111,6 +102,24 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
     // /**
     //  *
     //  */
+    function getDeposit(address walletAddress) external view returns (uint, uint) {
+        return (_fullnodeDeposits[walletAddress], _privoderDeposits[walletAddress]);
+    }
+
+    function stakeAmount(uint8 _type, address walletAddress, uint amount) external {
+        if(_type == 1){
+            require(balanceOf(msg.sender) >= amount, "Not enough CSD");
+            _transfer(msg.sender, address(this), amount);
+            _fullnodeDeposits[walletAddress] += amount;
+        }else if(_type == 2){
+            require(balanceOf(msg.sender) >= amount, "Not enough CSD");
+            _transfer(msg.sender, address(this), amount);
+            _privoderDeposits[walletAddress] += amount;
+        }
+    }
+    // /**
+    //  *
+    //  */
     function stake(uint8 _type) external {
         if(_type == 1){
             require(_fullnodeDeposits[msg.sender] == 0, "Already staked");
@@ -139,15 +148,15 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
         }
     }
 
-    function get_ordersInfo(string memory orderId) public view returns(Order memory){
+    function getOrdersInfo(string memory orderId) public view returns(Order memory){
         return (_orders[orderId]);
     }
 
-    function clientOrder(string memory name, uint32 duration, string memory orderId, uint256 price, address to) external {
+    function clientOrder(string memory name, uint32 duration, string memory orderId, uint amount, address to) external {
         require(!_orders[orderId].used, "Already paid");
-        require(balanceOf(msg.sender) >= price, "Not enough CSD");
-        _transfer(msg.sender, address(this), price);
-        _orders[orderId] = Order(name, block.timestamp, block.timestamp + duration * _durationUnit, 0, duration, price, true, false, msg.sender , to);
+        require(balanceOf(msg.sender) >= amount, "Not enough CSD");
+        _transfer(msg.sender, address(this), amount);
+        _orders[orderId] = Order(name, block.timestamp, block.timestamp + duration * _durationUnit, 0, duration, amount, true, false, msg.sender , to);
         _privoderOrders[to].push(orderId);
     }
 
@@ -155,7 +164,7 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
         return (_orders[orderId].used);
     }
 
-    function get_privoderOrders(address from) public view returns(string[] memory ){
+    function getPrivoderOrders(address from) public view returns(string[] memory ){
         return _privoderOrders[from];
     }
 
@@ -164,39 +173,39 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
             return 0;
         }
         string[] memory orders = _privoderOrders[msg.sender];
-        uint price = 0;
+        uint amount = 0;
         for (uint i=0; i < orders.length; i++){
             if (!_orders[orders[i]].withdraw){
                 if(block.timestamp >= _orders[orders[i]].endTime){
                     uint duration = _orders[orders[i]].duration  - _orders[orders[i]].withdrawDuration;
-                    price += (_orders[orders[i]].price / _orders[orders[i]].duration) * duration;
+                    amount += (_orders[orders[i]].amount / _orders[orders[i]].duration) * duration;
                 }else{
                     uint duration = (block.timestamp - _orders[orders[i]].startTime) / _durationUnit  - _orders[orders[i]].withdrawDuration;
-                    price += (_orders[orders[i]].price / _orders[orders[i]].duration) * duration;
+                    amount += (_orders[orders[i]].amount / _orders[orders[i]].duration) * duration;
                 }
             }
         }
-        return (price);
+        return (amount);
     }
 
     function withdrawAllOrderTokens() external {
         require(_privoderDeposits[msg.sender] != 0, 'Not deposits');
         string[] memory orders = _privoderOrders[msg.sender];
-        uint price = 0;
+        uint amount = 0;
         for (uint i=0; i < orders.length; i++){
             if (!_orders[orders[i]].withdraw){
                 if(block.timestamp >= _orders[orders[i]].endTime){
                     _orders[orders[i]].withdraw = true;
                     uint duration = _orders[orders[i]].duration  - _orders[orders[i]].withdrawDuration;
-                    price += (_orders[orders[i]].price / _orders[orders[i]].duration) * duration;
+                    amount += (_orders[orders[i]].amount / _orders[orders[i]].duration) * duration;
                 }else{
                     uint duration = (block.timestamp - _orders[orders[i]].startTime) / _durationUnit  - _orders[orders[i]].withdrawDuration;
                     _orders[orders[i]].withdrawDuration += duration;
-                    price += (_orders[orders[i]].price / _orders[orders[i]].duration) * duration;
+                    amount += (_orders[orders[i]].amount / _orders[orders[i]].duration) * duration;
                 }
             }
         }
-        _transfer(address(this), msg.sender, price);
+        _transfer(address(this), msg.sender, amount);
     }
 
     function withdrawOrderTokens(string memory orderId) external {
@@ -205,13 +214,13 @@ contract CloudSlitDao is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeab
         if(block.timestamp >= _orders[orderId].endTime){
             _orders[orderId].withdraw = true;
             uint duration = _orders[orderId].duration  - _orders[orderId].withdrawDuration;
-            uint price = (_orders[orderId].price / _orders[orderId].duration) * duration;
-            _transfer(address(this), msg.sender, price);
+            uint amount = (_orders[orderId].amount / _orders[orderId].duration) * duration;
+            _transfer(address(this), msg.sender, amount);
         }else{
             uint duration = (block.timestamp - _orders[orderId].startTime) / _durationUnit  - _orders[orderId].withdrawDuration;
             _orders[orderId].withdrawDuration += duration;
-            uint price = (_orders[orderId].price / _orders[orderId].duration) * duration;
-            _transfer(address(this), msg.sender, price);
+            uint amount = (_orders[orderId].amount / _orders[orderId].duration) * duration;
+            _transfer(address(this), msg.sender, amount);
         }
     }
 }
