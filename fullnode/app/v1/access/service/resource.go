@@ -40,7 +40,7 @@ func AddResource(c *gin.Context, param *mparam.AddResource) (code int) {
 	}
 	// 先存储到w3s
 	account := confer.GlobalConfig().P2P.Account
-	cid, err := w3s.Put(c.Request.Context(), data, []byte(account[len(account)-8:]))
+	cid, err := w3s.Put(c.Request.Context(), data, data.UUID, []byte(account[len(account)-8:]))
 	if err != nil {
 		return pconst.CODE_COMMON_SERVER_BUSY
 	}

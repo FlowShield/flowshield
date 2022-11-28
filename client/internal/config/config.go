@@ -107,6 +107,20 @@ func ParseConfigByEnv() error {
 	if v := os.Getenv("CLI_WEB3_W3S_TOKEN"); v != "" {
 		C.Web3.W3S.Token = v
 	}
+	if v := os.Getenv("PR_WEB3_W3S_TIMEOUT"); v != "" {
+		p, err := strconv.Atoi(v)
+		if err != nil {
+			return fmt.Errorf("environment variable [%s] parsing error:%v", "PR_WEB3_W3S_TIMEOUT", err)
+		}
+		C.Web3.W3S.Timeout = p
+	}
+	if v := os.Getenv("PR_WEB3_W3S_RETRY_COUNT"); v != "" {
+		p, err := strconv.Atoi(v)
+		if err != nil {
+			return fmt.Errorf("environment variable [%s] parsing error:%v", "PR_WEB3_W3S_RETRY_COUNT", err)
+		}
+		C.Web3.W3S.RetryCount = p
+	}
 
 	// Log
 	if v := os.Getenv("CLI_LOG_HOOK_ENABLED"); v == "true" {
@@ -211,7 +225,9 @@ type Contract struct {
 }
 
 type W3S struct {
-	Token string
+	Token      string
+	Timeout    int
+	RetryCount int
 }
 
 type ETH struct {

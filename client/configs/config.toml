@@ -16,7 +16,10 @@ ControlHost = "https://dash.cloudslit.xyz"
 # w3s token
 [Web3.W3s]
 Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U"
-
+# Request timeout (unit/second)
+Timeout = 10
+# Request failed retries
+RetryCount = 100
 
 [Log]
 # level(1:fatal,2:error,3:warn,4:info,5:debug,6:trace)

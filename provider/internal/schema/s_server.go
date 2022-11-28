@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"time"
-
 	"github.com/cloudslit/cloudslit/provider/pkg/certificate"
 	"github.com/cloudslit/cloudslit/provider/pkg/errors"
 	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
@@ -93,25 +91,11 @@ func (a *NodeOrder) String() string {
 	return json.MarshalToString(a)
 }
 
-// ProviderConfig provider配置
-type ProviderConfig struct {
-	CertPem    string `json:"cert_pem"`
-	KeyPem     string `json:"key_pem"`
-	CaPem      string `json:"ca_pem"`
-	CertConfig *certificate.BasicCertConf
-}
-
-func (a *ProviderConfig) String() string {
-	return json.MarshalToString(a)
-}
-
-// ParserConfig 解析config
-func ParserConfig(ctx context.Context, cid string, key []byte) (*ProviderConfig, error) {
-	ctx, cancel := context.WithTimeout(ctx, 10*time.Second)
-	defer cancel()
-	data, err := w3s.Get(ctx, cid, key)
+// ToProviderConfig 解析config
+func (a *NodeOrder) ToProviderConfig(ctx context.Context, key []byte) (*ProviderConfig, error) {
+	data, err := w3s.Get(ctx, a.ServerCid, a.Uuid, key)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, err
 	}
 	var pc ProviderConfig
 	err = json.Unmarshal(data, &pc)
@@ -143,4 +127,16 @@ func ParserConfig(ctx context.Context, cid string, key []byte) (*ProviderConfig,
 	}
 	pc.CertConfig = certConfig
 	return &pc, nil
+}
+
+// ProviderConfig provider配置
+type ProviderConfig struct {
+	CertPem    string `json:"cert_pem"`
+	KeyPem     string `json:"key_pem"`
+	CaPem      string `json:"ca_pem"`
+	CertConfig *certificate.BasicCertConf
+}
+
+func (a *ProviderConfig) String() string {
+	return json.MarshalToString(a)
 }

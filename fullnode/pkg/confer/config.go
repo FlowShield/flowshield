@@ -81,7 +81,9 @@ type Contract struct {
 }
 
 type W3S struct {
-	Token string `mapstructure:"token" json:"token" yaml:"token"`
+	Token      string `mapstructure:"token" json:"token" yaml:"token"`
+	Timeout    int    `mapstructure:"timeout" json:"timeout" yaml:"timeout"`
+	RetryCount int    `mapstructure:"retry-count" json:"retry_count" yaml:"retry-count"`
 }
 
 type ETH struct {

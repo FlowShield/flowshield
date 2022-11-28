@@ -2,43 +2,73 @@ package test
 
 import (
 	"context"
+	"flag"
 	"fmt"
-	"io/fs"
+	"github.com/cloudslit/cloudslit/provider/internal/config"
+	"log"
+	"net/http"
+	"strconv"
 	"testing"
+	"time"
 
-	"github.com/web3-storage/go-w3s-client"
-
-	"github.com/ipfs/go-cid"
+	w3sutil "github.com/cloudslit/cloudslit/provider/pkg/web3/w3s"
 )
 
-var Ws3client, _ = w3s.NewClient(w3s.WithToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U"))
+const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U"
 
-func TestW3S(t *testing.T) {
-	cidObj, err := cid.Decode("bafybeibxn7xd2fhrrabuz5ndhi4zkscwx3a2cvprckjbslxyh5j67myb7y")
-	fmt.Println(cidObj.String(), err)
-	res, err := Ws3client.Get(context.Background(), cidObj)
+var t1 = flag.String("t", "10", "访w3s超时时间")
+
+var httpClient = http.Client{}
+
+func TestW3s(t *testing.T) {
+	flag.Parse()
+	ctx := context.Background()
+	to, _ := strconv.Atoi(*t1)
+	httpClient.Timeout = time.Duration(to) * time.Second
+	cfg := &config.Web3{
+		W3S: config.W3S{
+			Token:      Token,
+			Timeout:    to,
+			RetryCount: 10,
+		},
+	}
+	err := w3sutil.Init(cfg)
 	if err != nil {
-		t.Fatal(err)
+		log.Fatalf("Init err:%v", err)
 	}
-	//all, err := ioutil.ReadAll(res.Body)
-	//if err != nil {
-	//	t.Fatal(err)
-	//}
-	//fmt.Println(string(all))
-	//return
-	f, fsys, err := res.Files()
+	filename := "filename"
+	key := []byte("12345678")
+	content := time.Now().String()
+	cid, err := w3sutil.Put(ctx, content, filename, key)
 	if err != nil {
-		t.Fatal(err)
+		log.Fatalf("Put err:%v", err)
 	}
-	if d, ok := f.(fs.ReadDirFile); ok {
-		ents, _ := d.ReadDir(0)
-		for _, ent := range ents {
-			fmt.Println(ent.Name())
-		}
+	fmt.Printf("https://%v.ipfs.w3s.link/%s\n", cid, filename)
+	fmt.Printf("https://api.web3.storage/car/%v\n", cid)
+	errCount := 0
+	sucCount := 0
+	sumStartTime := time.Now().UnixNano()
+retry:
+	startTime := time.Now().UnixNano()
+	data, err := w3sutil.Get(ctx, cid, filename, key)
+	endTime := time.Now().UnixNano()
+	seconds := float64((endTime - startTime) / 1e9)
+	log.Printf("cost time : %.4f s", seconds)
+	if err != nil {
+		errCount++
+		log.Println("Get err:", err.Error())
+		goto retry
 	}
-	fs.WalkDir(fsys, "/", func(path string, d fs.DirEntry, err error) error {
-		info, _ := d.Info()
-		fmt.Printf("%s (%d bytes)\n", path, info.Size())
-		return err
-	})
+	log.Println(string(data))
+	sumEndTime := time.Now().UnixNano()
+	sumSeconds := float64((sumEndTime - sumStartTime) / 1e9)
+	totalSeconds := fmt.Sprintf("%.4f s", sumSeconds)
+	sucCount++
+	time.Sleep(time.Second)
+	if sucCount >= 3 {
+		log.Println("失败次数:", errCount)
+		log.Println("总花费时间:", totalSeconds)
+		return
+	}
+	goto retry
 }
