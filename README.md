@@ -1,7 +1,7 @@
 <p align="center">
 <img 
     src="https://user-images.githubusercontent.com/34047788/204751094-7ba1ccdd-f2dd-4d3c-b9b5-6698702702b8.png" 
-    width="251" border="0" alt="CloudHole">
+    width="351" border="0" alt="CloudHole">
 </p>
 
 https://user-images.githubusercontent.com/34047788/203478456-9f5b3820-cb6a-4add-a8d3-c64aab2424d0.mp4
