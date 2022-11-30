@@ -26,7 +26,7 @@ https://user-images.githubusercontent.com/34047788/203478456-9f5b3820-cb6a-4add-
 FlowShield aims to build a decentralized web3 privacy data retrieval security network system around the world, and help users recapture privacy security information eroded by giants under web2, so that the current global hot zero-trust security network technology combined with web3 can better help users master their own security privacy data and give users a good experience of privacy data retrieval security network products.
 
 ## Project **FVM** version links
-
+ 
 Link to Github repo: https://github.com/FlowShield/FlowShield/tree/fevm-testnet
 
 **FVM** testnet website: https://fvm-testnet.FlowShield.xyz/
@@ -58,6 +58,7 @@ Provider, as a secure network tunnel provider for decentralized private data ret
 
 Decentralized PKI CA center provides communication authentication function for point-to-point communication between client and miner nodes in FlowShield network. DeCA can perform all the key functions of X.509 PKI standard, that is, register, confirm, revoke and verify mTLS certificates.
 
+FlowShield mainly uses smart contracts to build a decentralized storage engine policy center. Our goal is to establish a private data retrieval platform that can run by itself and be managed by the public. At present, the operation carrier of smart contract mainly considers the virtual machine environment compatible with EVM. First, we choose **FVM** as our decentralized management platform. As the computing layer of the FileCoin storage ecosystem, **FVM** allows us to conduct trusted computing, provide services closer to data storage, and provide users with more reliable data computing credibility.
 
 ![image](https://user-images.githubusercontent.com/34047788/191492613-b5b76237-38bb-468f-b15a-860f67581818.png)
 
@@ -70,13 +71,13 @@ The main functions of smart contracts include:
 1. Pledge and redemption of fullnode node and provider node
 2. Matching and payment of users’ online orders
 3. Withdrawal of benefits by network providers
-
+  
 ## **FVM**'s current work contents
 
 1. Adapting FlowShield fullnode, network provider, smart contracts on fevm test network.
-
+   
 2. Deploy FlowShield-FVM's exclusive website, and let FlowShield platform run on FVM's test network.
-
+   
 3. Upgrade FlowShield provider and fullnode pledge process to adapt to **FVM** test network.
 
 
@@ -92,13 +93,14 @@ Refer to FEVM-Hardhat-Kit https://github.com/filecoin-project/FEVM-Hardhat-Kit
 Then get the f4 address `yarn hardhat get-address`, where f4address is the file currency representation of your Ethereum address.
 
 ```jsx
-➜  contract git:(fevm-testnet) ✗ yarn hardhat get-address
+➜  contract git:(fevm-testnet) ✗ yarn hardhat get-address    
 yarn run v1.22.17
 $ /Users/chengqiang/icode/github/FlowShield/FlowShield/contract/node_modules/.bin/hardhat get-address
 You have both ethereum-waffle and @nomicfoundation/hardhat-chai-matchers installed. They don't work correctly together, so please make sure you only use one.
 
 We recommend you migrate to @nomicfoundation/hardhat-chai-matchers. Learn how to do it here: https://hardhat.org/migrate-from-waffle
-        f4address =  f410fcyr4jy3t7ah2pm6v4rwc64n4kbyixjnjyirzrdq
+
+f4address =  f410fcyr4jy3t7ah2pm6v4rwc64n4kbyixjnjyirzrdq
 Ethereum address: 0x1623c4E373f80fa7B3d5E46c2F71bc50708bA5A9
 ✨  Done in 5.66s.
 ```
@@ -112,7 +114,7 @@ $ /Users/chengqiang/icode/github/FlowShield/FlowShield/contract/node_modules/.bi
 You have both ethereum-waffle and @nomicfoundation/hardhat-chai-matchers installed. They don't work correctly together, so please make sure you only use one.
 
 We recommend you migrate to @nomicfoundation/hardhat-chai-matchers. Learn how to do it here: https://hardhat.org/migrate-from-waffle
-        Compiled 2 Solidity files successfully
+Compiled 2 Solidity files successfully
 Wallet Ethereum Address: 0x1623c4E373f80fa7B3d5E46c2F71bc50708bA5A9
 Wallet f4Address:  f410fcyr4jy3t7ah2pm6v4rwc64n4kbyixjnjyirzrdq
 deploying "FlowShieldDao" (tx: 0xdfa457bbb69b7d317236d6f6665ca34bfba7d971d33da34c52b6c6ba6a054864)...: deployed at 0x7D9208Aa55833A9F5641cD2d7477733D819435eC with 70991164 gas
