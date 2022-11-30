@@ -6,40 +6,40 @@
 
 
 
-# CloudHole - Private retrieval of data
-
-- [CloudHole - Private retrieval of data](#cloudhole---private-retrieval-of-data)
+# FlowShield - Private retrieval of data
+- [FlowShield - Private retrieval of data](#flowshield---private-retrieval-of-data)
 - [inspiration](#inspiration)
 - [Its value](#its-value)
 - [How do we build it?](#how-do-we-build-it)
-  - [Part one:CloudHole-Fullnode(Ful nodes of private data retrieval network based on DAO Tools)](#part-onecloudhole-fullnodeful-nodes-of-private-data-retrieval-network-based-on-dao-tools)
-  - [Part two: CloudHole-Provider(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)](#part-two-cloudhole-providernetwork-miner-a-secure-network-tunnel-provider-for-decentralized-data-private-retrieval)
-  - [Part three:CloudHole-Contracts(support:EVM Chains)](#part-threecloudhole-contractssupportevm-chains)
-  - [Part four:CloudHole-verifier(Decentralized network quality checker)](#part-fourcloudhole-verifierdecentralized-network-quality-checker)
+  - [Part one:FlowShield-Fullnode(Ful nodes of private data retrieval network based on DAO Tools)](#part-oneflowshield-fullnodeful-nodes-of-private-data-retrieval-network-based-on-dao-tools)
+  - [Part two: FlowShield-Provider(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)](#part-two-flowshield-providernetwork-miner-a-secure-network-tunnel-provider-for-decentralized-data-private-retrieval)
+  - [Part three:FlowShield-Contracts(support:EVM Chains)](#part-threeflowshield-contractssupportevm-chains)
+  - [Part four:FlowShield-verifier(Decentralized network quality checker)](#part-fourflowshield-verifierdecentralized-network-quality-checker)
   - [Part five:DeCA(Decentralized PKI CA center)](#part-fivedecadecentralized-pki-ca-center)
-  - [Part six:CloudHole-Client(client for private data retrieval.)](#part-sixcloudhole-clientclient-for-private-data-retrieval)
+  - [Part six:FlowShield-Client(client for private data retrieval.)](#part-sixflowshield-clientclient-for-private-data-retrieval)
 - [Disclaimers](#disclaimers)
 - [Thanks supports](#thanks-supports)
+
 
 # inspiration
 
 At present, the options available for interactive (low-latency) communication with privacy guarantee are very limited, and the solutions developed so far all focus on the traditional web model of single source data publisher, and it has defects in delay and threat models.
 
-CloudHole uses blockchain, web3 and secure network technology of private data retrieval to enhance and improve network security/privacy protection of users' privatization.
+FlowShield uses blockchain, web3 and secure network technology of private data retrieval to enhance and improve network security/privacy protection of users' privatization.
 
-In order to protect the public's network security under web2, a very popular zero-trust security architecture has emerged. Our team has been working on open source products with zero trust security, but we found that although many zero trust network security companies provide zero trust security platforms, they monopolize users' network access nodes and centrally store users' core security profiles. Therefore, we are considering whether we can use web3 technology to realize a secure network for private data retrieval. We designed CloudHole project to provide users with a decentralized secure network platform for private data retrieval, and help users master their own secure data.
+In order to protect the public's network security under web2, a very popular zero-trust security architecture has emerged. Our team has been working on open source products with zero trust security, but we found that although many zero trust network security companies provide zero trust security platforms, they monopolize users' network access nodes and centrally store users' core security profiles. Therefore, we are considering whether we can use web3 technology to realize a secure network for private data retrieval. We designed FlowShield project to provide users with a decentralized secure network platform for private data retrieval, and help users master their own secure data.
 
 # Its value
 
-CloudHole aims to build a decentralized private data retrieval security network system of web3 in the world, and help users recapture the privacy security information eroded by giants under web2, so that the current global hot zero-trust security network technology combined with web3 can better help users master their own security privacy data and give users a good experience of private data retrieval security network products.
+FlowShield aims to build a decentralized private data retrieval security network system of web3 in the world, and help users recapture the privacy security information eroded by giants under web2, so that the current global hot zero-trust security network technology combined with web3 can better help users master their own security privacy data and give users a good experience of private data retrieval security network products.
 
-<img  alt="image" src="https://user-images.githubusercontent.com/34047788/191542695-3d2d6288-8a7e-4f60-b582-954942f4a907.png">
+<img  alt="image" src="https://res.cloudinary.com/malloc/image/upload/v1669810897/FlowShield/flowshield_project_desp_vjzury.png">
 
 # How do we build it?
 
-The design part of CloudHole project includes distributed full-nodes, network miner provider, intelligent contract, network quality checker and network client program. The details are as follows:
+The design part of FlowShield project includes distributed full-nodes, network miner provider, intelligent contract, network quality checker and network client program. The details are as follows:
 
-## Part one:[CloudHole-Fullnode](./fullnode)(Ful nodes of private data retrieval network based on DAO Tools)
+## Part one:[FlowShield-Fullnode](./fullnode)(Ful nodes of private data retrieval network based on DAO Tools)
 
 Anyone can run Fullnode, which hosts the metadata of decentralized network and provides metadata networking and transaction matching platform. It integrates metadata from all providers, and providers use [libp2p-based pubsub](https://github.com/libp2p/go-libp2p) every few seconds to keep heartbeat to Fullnode to prove that they are online.
 
@@ -53,7 +53,7 @@ For all users' and Dao's data, we use Filecoin's web3.storage to store user data
 <img width="1102" alt="image" src="https://user-images.githubusercontent.com/34047788/191491199-61b73816-5538-460c-b0ba-e9b662e8681d.png">
 
 
-## Part two: [CloudHole-Provider](./provider)(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)
+## Part two: [FlowShield-Provider](./provider)(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)
 
 Our nodes are automatically networked through kademlia DHT and IPFS networks of libp2p through peer discovery and routing, and data synchronization among multiple nodes is realized through PubSub function of libp2p.
 
@@ -62,11 +62,11 @@ For all users and Dao data, we use web3.storage of Filecoin to store user data i
 <img width="1120" alt="image" src="https://user-images.githubusercontent.com/34047788/191491394-6dccc868-ed08-483b-9a74-2fcff6a243e2.png">
 
 
-## Part three:[CloudHole-Contracts](./contract)(support:EVM Chains)
+## Part three:[FlowShield-Contracts](./contract)(support:EVM Chains)
 
 We provide a complete smart contract for the decentralized trusted bandwidth market. Our smart contract is deployed on the EVM network, and we provide many methods in the smart contract to ensure a safe trading process and a safe trading environment.
 
-## Part four:[CloudHole-verifier](./verifier)(Decentralized network quality checker)
+## Part four:[FlowShield-verifier](./verifier)(Decentralized network quality checker)
 We provide the verifier component for the decentralized trusted bandwidth market. Anyone can run the network verifier, monitor the network quality of ongoing orders, and detect and punish illegal and bad network providers.
 
 <img width="1428" alt="image" src="https://user-images.githubusercontent.com/34047788/191491491-cde176f0-f01c-4dfe-8d5f-b6f7d8964f35.png">
@@ -81,7 +81,7 @@ Decentralize PKI CA center to provide communication authentication infrastructur
 
 
 
-## Part six:[CloudHole-Client](./client)(client for private data retrieval.)
+## Part six:[FlowShield-Client](./client)(client for private data retrieval.)
 
 A client user connects to a provider to establish a network security tunnel for private data retrieval.
 
