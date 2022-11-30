@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "./Erc20.sol";
+import "./erc20/Erc20.sol";
 
-contract CloudSlitDao is ERC20 {
+contract FlowShieldDao is ERC20 {
 
     struct userWallet {
         address user;
         uint8 status;
     }
 
-    struct Order {
+    struct order {
         string name;
         uint startTime;
         uint endTime;
@@ -33,18 +33,16 @@ contract CloudSlitDao is ERC20 {
     mapping(address => uint) _fullnodeDeposits;
     mapping(address => uint) _privoderDeposits;
 
-    mapping(string=>Order) _orders;
+    mapping(string=>order) _orders;
     mapping(address=>string[]) _privoderOrders;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() {
-        _mint(msg.sender, 100000000 * 10 ** decimals);
-
-        _fullnodeDepositAmount = 5000 * 10 ** decimals;
-        _privoderDepositAmount = 1000 * 10 ** decimals;
+    constructor() ERC20("FlowShield Dao", "FSD") public {
+        _mint(msg.sender, 100000000 * 10 ** decimals());
+        _fullnodeDepositAmount = 5000 * 10 ** decimals();
+        _privoderDepositAmount = 1000 * 10 ** decimals();
         _durationUnit = 1 hours;
     }
-
 
     function getWallet(string memory uuid) external view returns(address, uint8){
         return (userWallets[uuid].user, userWallets[uuid].status);
@@ -148,7 +146,7 @@ contract CloudSlitDao is ERC20 {
         }
     }
 
-    function getOrdersInfo(string memory orderId) public view returns(Order memory){
+    function getOrdersInfo(string memory orderId) public view returns(order memory){
         return (_orders[orderId]);
     }
 
@@ -156,7 +154,7 @@ contract CloudSlitDao is ERC20 {
         require(!_orders[orderId].used, "Already paid");
         require(balanceOf(msg.sender) >= amount, "Not enough CSD");
         _transfer(msg.sender, address(this), amount);
-        _orders[orderId] = Order(name, block.timestamp, block.timestamp + duration * _durationUnit, 0, duration, amount, true, false, msg.sender , to);
+        _orders[orderId] = order(name, block.timestamp, block.timestamp + duration * _durationUnit, 0, duration, amount, true, false, msg.sender , to);
         _privoderOrders[to].push(orderId);
     }
 

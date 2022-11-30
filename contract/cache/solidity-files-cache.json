@@ -1,10 +1,10 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "/Users/chengqiang/icode/github/CloudSlit/cloudslit/contract/contracts/CloudSlitDao.sol": {
-      "lastModificationDate": 1668946962678,
-      "contentHash": "76fb8ed02d86f41287485a30df1d05d8",
-      "sourceName": "contracts/CloudSlitDao.sol",
+    "/Users/chengqiang/icode/github/CloudSlit/cloudslit/contract/contracts/FlowShieldDao.sol": {
+      "lastModificationDate": 1669810018901,
+      "contentHash": "81929d7e16fbf7abb3513ba92cdbd1a7",
+      "sourceName": "contracts/FlowShieldDao.sol",
       "solcConfig": {
         "version": "0.8.17",
         "settings": {
@@ -36,19 +36,65 @@
         }
       },
       "imports": [
-        "./Erc20.sol"
+        "./erc20/Erc20.sol"
       ],
       "versionPragmas": [
         "^0.8.17"
       ],
       "artifacts": [
-        "CloudSlitDao"
+        "FlowShieldDao"
       ]
     },
-    "/Users/chengqiang/icode/github/CloudSlit/cloudslit/contract/contracts/Erc20.sol": {
-      "lastModificationDate": 1667920971524,
-      "contentHash": "dfd6ee8204d0eeaf40b2e403d9b17bdc",
-      "sourceName": "contracts/Erc20.sol",
+    "/Users/chengqiang/icode/github/CloudSlit/cloudslit/contract/contracts/erc20/Erc20.sol": {
+      "lastModificationDate": 1669809188237,
+      "contentHash": "a30e89d486afab32f5245c6779bc9753",
+      "sourceName": "contracts/erc20/Erc20.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol",
+        "./IERC20Metadata.sol",
+        "./Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.17"
+      ],
+      "artifacts": [
+        "ERC20"
+      ]
+    },
+    "/Users/chengqiang/icode/github/CloudSlit/cloudslit/contract/contracts/erc20/IERC20.sol": {
+      "lastModificationDate": 1669809188239,
+      "contentHash": "020f718826122fba2f2c83ff2b7cb2cd",
+      "sourceName": "contracts/erc20/IERC20.sol",
       "solcConfig": {
         "version": "0.8.17",
         "settings": {
@@ -81,10 +127,96 @@
       },
       "imports": [],
       "versionPragmas": [
-        "^0.8.17"
+        "^0.8.0"
       ],
       "artifacts": [
-        "ERC20"
+        "IERC20"
+      ]
+    },
+    "/Users/chengqiang/icode/github/CloudSlit/cloudslit/contract/contracts/erc20/IERC20Metadata.sol": {
+      "lastModificationDate": 1669809188241,
+      "contentHash": "24f186419f9a910c0982e0ea0d379f90",
+      "sourceName": "contracts/erc20/IERC20Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20Metadata"
+      ]
+    },
+    "/Users/chengqiang/icode/github/CloudSlit/cloudslit/contract/contracts/erc20/Context.sol": {
+      "lastModificationDate": 1669809188240,
+      "contentHash": "c4b296fb9a98a645ca52cc72c3fbae06",
+      "sourceName": "contracts/erc20/Context.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata",
+                "devdoc",
+                "userdoc",
+                "storageLayout",
+                "evm.gasEstimates"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          },
+          "metadata": {
+            "useLiteralContent": true
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Context"
       ]
     }
   }

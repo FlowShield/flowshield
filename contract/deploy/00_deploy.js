@@ -47,7 +47,7 @@ module.exports = async ({ deployments }) => {
   console.log("Wallet f4Address: ", f4Address)
 
 
-  await deploy("CloudSlitDao", {
+  await deploy("FlowShieldDao", {
     from: deployer.address,
     args: [],
     // since it's difficult to estimate the gas before f4 address is launched, it's safer to manually set
@@ -59,4 +59,4 @@ module.exports = async ({ deployments }) => {
     log: true,
   });
 };
-module.exports.tags = ["CloudSlitDao"];
+module.exports.tags = ["FlowShieldDao"];

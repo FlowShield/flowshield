@@ -1,5 +1,5 @@
 import * as Web3 from 'web3'
-import * as contractJSON from '../../../contract/artifacts/contracts/CloudSlit.sol/CloudSlit.json'
+import * as contractJSON from '../../../contract/artifacts/contracts/FlowShieldDao.sol/FlowShieldDao.json'
 
 export const paid = 'Paid, payment failed'
 
