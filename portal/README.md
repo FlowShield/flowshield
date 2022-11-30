@@ -25,9 +25,9 @@ npm run build
 ## 😃 Contribute
 
 ### Bug Reports / Feature Requests
-If you want to report a bug or request a new feature. Free feel to open a [new issue](https://github.com/FlowShield/flowshield/pulls).
+If you want to report a bug or request a new feature. Free feel to open a [new issue](https://github.com/FlowShield/FlowShield/pulls).
 
 ### Pull Requests
 
-If you want to modify FlowShield-portal, this guideline may be useful for you [CONTRIBUTING](https://github.com/FlowShield/flowshield/blob/main/portal/CONTRIBUTING.md)
+If you want to modify FlowShield-portal, this guideline may be useful for you [CONTRIBUTING](https://github.com/FlowShield/FlowShield/blob/main/portal/CONTRIBUTING.md)
 
