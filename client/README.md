@@ -1,6 +1,6 @@
-# CloudSlit Client
+# FlowShield Client
 
-This is the cloudslit client program.
+This is the FlowShield client program.
 
 You need to communicate with the whole node through this program to obtain the configuration and zero trust edge calculation rules. Communicate with network providers through this program.
 
@@ -24,7 +24,7 @@ $ ./bin/client
 ```
 
 ## License
-cloudslit-client uses Apache 2.0 license. See [license](LICENSE) directory for details
+FlowShield-client uses Apache 2.0 license. See [license](LICENSE) directory for details
 
 ## Disclaimers
 When you use this software, you have agreed and declared that the author, maintainer and contributor of this software are not responsible for any risks, costs or problems you encounter. If you find a software defect or bug, please submit a patch to help improve!
