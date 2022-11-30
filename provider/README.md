@@ -8,6 +8,9 @@ Currently, websocket traffic transmission is supported.
 
 ## How does it work?
 
+### Scene Introduction
+<img width="1242" alt="image" src="https://user-images.githubusercontent.com/52234994/177236269-03fe1736-66ae-4388-9c3b-3f06f21f3427.png">
+
 ## Getting Started
 
 ### Configuration
