@@ -20,11 +20,11 @@
 <p class="subtitle mt-0 font-weight-regular text-h4">Build a global web3 decentralized private retrieval network for data, building cyber sovereignty</p>
 
     <div class="mt-15">
-      <v-btn x-large color="primary" href="https://dash.flowshield.xyz/" target="_blank">
+      <v-btn x-large color="primary" href="https://www.flowshield.xyz/flowshield_whitepaper" target="_blank">
         <v-icon class="mr-5">mdi-dialpad</v-icon>
         WhitePaper
       </v-btn>
-      <v-btn x-large class="ml-15" href="https://github.com/FlowShield" target="_blank">
+      <v-btn x-large class="ml-15" href="https://github.com/FlowShield/flowshield/tree/main/provider" target="_blank">
         <v-icon class="mr-5">mdi-arrow-up-bold-box-outline</v-icon>
         Deploy miners
       </v-btn>
