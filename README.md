@@ -27,7 +27,7 @@ FlowShield aims to build a decentralized web3 privacy data retrieval security ne
 
 ## Project **FVM** version links
  
-Link to Github repo: https://github.com/FlowShield-project/FlowShield/tree/fevm-testnet
+Link to Github repo: https://github.com/FlowShield/FlowShield/tree/fevm-testnet
 
 **FVM** testnet website: https://fvm-testnet.FlowShield.xyz/
 
