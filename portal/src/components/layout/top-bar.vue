@@ -19,7 +19,7 @@
         </v-btn>
       </div>
       <div class="d-flex align-center">
-        <v-btn href="https://github.com/CloudSlit/cloudslit/tree/main/client" target="_blank" text>
+        <v-btn href="https://github.com/FlowShield/flowshield/tree/main/client" target="_blank" text>
           <span class="font-weight-regular text-capitalize text-caption">Download</span>
         </v-btn>
        <!-- <v-btn href="#" target="_blank" text>
@@ -29,7 +29,7 @@
           <span class="font-weight-regular text-capitalize text-caption">Sign in</span>
         </v-btn>
         <v-btn icon
-               href="https://github.com/CloudSlit/cloudslit"
+               href="https://github.com/FlowShield/flowshield"
                target="_blank"
                :color="$vuetify.theme.dark ? 'white' : 'black'">
           <v-icon>mdi-github</v-icon>

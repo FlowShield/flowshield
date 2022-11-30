@@ -58,6 +58,7 @@ Provider, as a secure network tunnel provider for decentralized private data ret
 
 Decentralized PKI CA center provides communication authentication function for point-to-point communication between client and miner nodes in FlowShield network. DeCA can perform all the key functions of X.509 PKI standard, that is, register, confirm, revoke and verify mTLS certificates.
 
+FlowShield mainly uses smart contracts to build a decentralized storage engine policy center. Our goal is to establish a private data retrieval platform that can run by itself and be managed by the public. At present, the operation carrier of smart contract mainly considers the virtual machine environment compatible with EVM. First, we choose **FVM** as our decentralized management platform. As the computing layer of the FileCoin storage ecosystem, **FVM** allows us to conduct trusted computing, provide services closer to data storage, and provide users with more reliable data computing credibility.
 
 ![image](https://user-images.githubusercontent.com/34047788/191492613-b5b76237-38bb-468f-b15a-860f67581818.png)
 
@@ -98,6 +99,7 @@ $ /Users/chengqiang/icode/github/FlowShield/FlowShield/contract/node_modules/.bi
 You have both ethereum-waffle and @nomicfoundation/hardhat-chai-matchers installed. They don't work correctly together, so please make sure you only use one.
 
 We recommend you migrate to @nomicfoundation/hardhat-chai-matchers. Learn how to do it here: https://hardhat.org/migrate-from-waffle
+
 f4address =  f410fcyr4jy3t7ah2pm6v4rwc64n4kbyixjnjyirzrdq
 Ethereum address: 0x1623c4E373f80fa7B3d5E46c2F71bc50708bA5A9
 ✨  Done in 5.66s.

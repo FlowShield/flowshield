@@ -1,4 +1,4 @@
-const abi = require('../../../contract/artifacts/contracts/CloudSlitDao.sol/CloudSlitDao.json').abi
+const abi = require('../../../contract/artifacts/contracts/FlowShieldDao.sol/FlowShieldDao.json').abi
 const ethers = require('ethers')
 export const OrderPaid = 'Paid, payment failed'
 export const BalanceNotEnough = 'Your balance is insufficient'

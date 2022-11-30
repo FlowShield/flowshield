@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <h1 class="colorful heading text-h1 font-weight-regular mt-10">CloudSlit</h1>
+    <h1 class="colorful heading text-h1 font-weight-regular mt-10">FlowShield</h1>
 <div class="mt-1" >
   <v-container fluid>
     <v-sparkline
@@ -20,11 +20,11 @@
 <p class="subtitle mt-0 font-weight-regular text-h4">Build a global web3 decentralized private retrieval network for data, building cyber sovereignty</p>
 
     <div class="mt-15">
-      <v-btn x-large color="primary" href="https://dash.cloudslit.xyz/" target="_blank">
+      <v-btn x-large color="primary" href="https://www.flowshield.xyz/flowshield_whitepaper" target="_blank">
         <v-icon class="mr-5">mdi-dialpad</v-icon>
         WhitePaper
       </v-btn>
-      <v-btn x-large class="ml-15" href="https://github.com/CloudSlit" target="_blank">
+      <v-btn x-large class="ml-15" href="https://github.com/FlowShield/flowshield/tree/main/provider" target="_blank">
         <v-icon class="mr-5">mdi-arrow-up-bold-box-outline</v-icon>
         Deploy miners
       </v-btn>

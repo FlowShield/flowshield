@@ -27,3 +27,4 @@ pnpm-debug.log*
 
 #env
 .env.development
+.env

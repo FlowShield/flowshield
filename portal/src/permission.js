@@ -6,7 +6,7 @@ const whiteList = ['login', 'home', 'wallet', 'nodes', 'orders', 'resources'] //
 
 router.beforeEach(async(to, from, next) => {
   EventBus.$emit('app.loading', true)
-  document.title = to?.meta?.title || 'CloudSlit Portal'
+  document.title = to?.meta?.title || 'FlowShield Portal'
 
   // goto login if needed
   try {
