@@ -32,6 +32,10 @@ Token = ""
 # wbs3.storage token
 [Web3.W3s]
 Token = ""
+# Request timeout (unit/second)
+Timeout = 10
+# Request failed retries
+RetryCount = 100
 
 # Ethereum information
 [Web3.Eth]

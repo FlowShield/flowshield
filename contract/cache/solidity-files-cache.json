@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/chengqiang/icode/github/CloudSlit/cloudslit/contract/contracts/CloudSlitDao.sol": {
-      "lastModificationDate": 1668437931791,
-      "contentHash": "526cbef4e0a8554e0c006c1dc342a485",
+      "lastModificationDate": 1668946962678,
+      "contentHash": "76fb8ed02d86f41287485a30df1d05d8",
       "sourceName": "contracts/CloudSlitDao.sol",
       "solcConfig": {
         "version": "0.8.17",
@@ -46,7 +46,7 @@
       ]
     },
     "/Users/chengqiang/icode/github/CloudSlit/cloudslit/contract/contracts/Erc20.sol": {
-      "lastModificationDate": 1667919911523,
+      "lastModificationDate": 1667920971524,
       "contentHash": "dfd6ee8204d0eeaf40b2e403d9b17bdc",
       "sourceName": "contracts/Erc20.sol",
       "solcConfig": {

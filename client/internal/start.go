@@ -10,6 +10,7 @@ import (
 	"github.com/cloudslit/cloudslit/client/pkg/errors"
 	"github.com/cloudslit/cloudslit/client/pkg/logger"
 	"github.com/cloudslit/cloudslit/client/pkg/util/json"
+	"time"
 
 	"io/ioutil"
 	"net/http"
@@ -54,10 +55,8 @@ func InitClientServer(ctx context.Context) {
 		if err != nil {
 			logger.Fatalf("load client err:%v", err)
 		}
-	retry:
-		clientConfig, err := client.ParseConfig(ctx, client.ClientCid, []byte(client.PeerId[len(client.PeerId)-8:]))
+		clientConfig, err := up.ParseW3sData(ctx, client)
 		if err != nil {
-			goto retry
 			logger.Fatalf("parse client err:%v", err)
 		}
 		err = bll.NewClient().Listen(ctx, clientConfig)
@@ -66,6 +65,26 @@ func InitClientServer(ctx context.Context) {
 		}
 		fmt.Println("########## start the client proxy #########")
 	}()
+}
+
+func (a *Up) ParseW3sData(ctx context.Context, order *schema.ControlClient) (*schema.ClientConfig, error) {
+	cfg := config.C.Web3
+	// 解析配置
+	tryCount := 0
+retry:
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(cfg.W3S.Timeout)*time.Second)
+	defer cancel()
+	key := []byte(order.PeerId[len(order.PeerId)-8:])
+	clientConfig, err := order.ToClientOrder(ctx, key)
+	if err != nil {
+		tryCount++
+		logger.Warnf("get w3s data err:%v", err)
+		if tryCount > cfg.W3S.RetryCount {
+			return nil, err
+		}
+		goto retry
+	}
+	return clientConfig, nil
 }
 
 // printClients
