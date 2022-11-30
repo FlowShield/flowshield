@@ -1,8 +1,10 @@
 <p align="center">
-<img 
-    src="https://user-images.githubusercontent.com/34047788/204751094-7ba1ccdd-f2dd-4d3c-b9b5-6698702702b8.png" 
-    width="351" border="0" alt="CloudHole">
+<img width="800" alt="image" src="https://user-images.githubusercontent.com/34047788/204796156-c5c9d228-725b-4e14-b8ed-1e705ba19bc5.png">
+
 </p>
+
+
+
 
 # CloudHole - Private retrieval of data
 
