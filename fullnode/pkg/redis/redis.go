@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/go-redis/redis/v8"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
 )
 
 var Client *redis.Client

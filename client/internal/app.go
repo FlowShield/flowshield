@@ -3,9 +3,9 @@ package internal
 import (
 	"context"
 	"crypto/tls"
-	"github.com/cloudslit/cloudslit/client/internal/config"
-	"github.com/cloudslit/cloudslit/client/pkg/logger"
-	"github.com/cloudslit/cloudslit/client/pkg/web3/w3s"
+	"github.com/flowshield/flowshield/client/internal/config"
+	"github.com/flowshield/flowshield/client/pkg/logger"
+	"github.com/flowshield/flowshield/client/pkg/web3/w3s"
 	"net/http"
 	"os"
 	"os/signal"

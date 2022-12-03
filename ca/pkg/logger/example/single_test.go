@@ -1,8 +1,8 @@
 package example
 
 import (
-	"github.com/cloudslit/cloudslit/ca/pkg/logger"
-	"github.com/cloudslit/cloudslit/ca/pkg/logger/redis_hook"
+	"github.com/flowshield/flowshield/ca/pkg/logger"
+	"github.com/flowshield/flowshield/ca/pkg/logger/redis_hook"
 	"go.uber.org/zap/zapcore"
 	"log"
 )

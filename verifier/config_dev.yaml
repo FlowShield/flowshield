@@ -1,7 +1,7 @@
 #APP ENV
 app:
   env: "release" # dev,release
-  sysname: "CloudSLit"
+  sysname: "FlowShield"
   port: 80
 
 #Mysql

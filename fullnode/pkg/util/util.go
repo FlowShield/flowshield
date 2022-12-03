@@ -11,7 +11,7 @@ import (
 
 	"github.com/go-resty/resty/v2"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/model/mmysql"
+	"github.com/flowshield/flowshield/fullnode/app/v1/user/model/mmysql"
 
 	"github.com/gin-gonic/gin"
 )

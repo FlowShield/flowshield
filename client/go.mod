@@ -1,4 +1,4 @@
-module github.com/cloudslit/cloudslit/client
+module github.com/flowshield/flowshield/client
 
 go 1.16
 

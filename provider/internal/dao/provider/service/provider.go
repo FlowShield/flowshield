@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/cloudslit/cloudslit/provider/internal/dao/provider/dao"
-	"github.com/cloudslit/cloudslit/provider/internal/dao/provider/model"
+	"github.com/flowshield/flowshield/provider/internal/dao/provider/dao"
+	"github.com/flowshield/flowshield/provider/internal/dao/provider/model"
 )
 
 func ListProvider(param *model.Provider) (model.Providers, error) {

@@ -6,8 +6,8 @@ import (
 
 	"github.com/urfave/cli/v2"
 
-	"github.com/cloudslit/cloudslit/provider/internal"
-	"github.com/cloudslit/cloudslit/provider/pkg/logger"
+	"github.com/flowshield/flowshield/provider/internal"
+	"github.com/flowshield/flowshield/provider/pkg/logger"
 )
 
 var VERSION = "0.0.0"

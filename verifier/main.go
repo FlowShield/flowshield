@@ -7,9 +7,9 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/cloudslit/cloudslit/verifier/verify"
+	"github.com/flowshield/flowshield/verifier/verify"
 
-	"github.com/cloudslit/cloudslit/verifier/server"
+	"github.com/flowshield/flowshield/verifier/server"
 	"github.com/urfave/cli"
 	_ "go.uber.org/automaxprocs"
 )

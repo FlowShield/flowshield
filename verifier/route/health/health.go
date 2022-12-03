@@ -1,7 +1,7 @@
 package health
 
 import (
-	v1 "github.com/cloudslit/cloudslit/verifier/app/v1/node/controller"
+	v1 "github.com/flowshield/flowshield/verifier/app/v1/node/controller"
 	"github.com/gin-gonic/gin"
 )
 

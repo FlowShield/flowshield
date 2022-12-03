@@ -1,10 +1,10 @@
 package route
 
 import (
-	"github.com/cloudslit/cloudslit/verifier/app/base/controller"
-	"github.com/cloudslit/cloudslit/verifier/pconst"
-	"github.com/cloudslit/cloudslit/verifier/pkg/confer"
-	"github.com/cloudslit/cloudslit/verifier/route/health"
+	"github.com/flowshield/flowshield/verifier/app/base/controller"
+	"github.com/flowshield/flowshield/verifier/pconst"
+	"github.com/flowshield/flowshield/verifier/pkg/confer"
+	"github.com/flowshield/flowshield/verifier/route/health"
 	"github.com/gin-gonic/gin"
 )
 

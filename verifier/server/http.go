@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/cloudslit/cloudslit/verifier/pkg/confer"
-	"github.com/cloudslit/cloudslit/verifier/pkg/gin"
-	"github.com/cloudslit/cloudslit/verifier/pkg/middle"
-	"github.com/cloudslit/cloudslit/verifier/route"
+	"github.com/flowshield/flowshield/verifier/pkg/confer"
+	"github.com/flowshield/flowshield/verifier/pkg/gin"
+	"github.com/flowshield/flowshield/verifier/pkg/middle"
+	"github.com/flowshield/flowshield/verifier/route"
 )
 
 func RunHTTP() {

@@ -11,14 +11,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cloudslit/cloudslit/provider/internal/config"
-	"github.com/cloudslit/cloudslit/provider/internal/dao/provider/model"
-	"github.com/cloudslit/cloudslit/provider/internal/dao/provider/service"
-	"github.com/cloudslit/cloudslit/provider/internal/schema"
-	"github.com/cloudslit/cloudslit/provider/pkg/errors"
-	"github.com/cloudslit/cloudslit/provider/pkg/logger"
-	"github.com/cloudslit/cloudslit/provider/pkg/p2p"
-	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
+	"github.com/flowshield/flowshield/provider/internal/config"
+	"github.com/flowshield/flowshield/provider/internal/dao/provider/model"
+	"github.com/flowshield/flowshield/provider/internal/dao/provider/service"
+	"github.com/flowshield/flowshield/provider/internal/schema"
+	"github.com/flowshield/flowshield/provider/pkg/errors"
+	"github.com/flowshield/flowshield/provider/pkg/logger"
+	"github.com/flowshield/flowshield/provider/pkg/p2p"
+	"github.com/flowshield/flowshield/provider/pkg/util/json"
 )
 
 // Pubsub

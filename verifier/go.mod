@@ -1,4 +1,4 @@
-module github.com/cloudslit/cloudslit/verifier
+module github.com/flowshield/flowshield/verifier
 
 go 1.18
 

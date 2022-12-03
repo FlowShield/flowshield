@@ -2,7 +2,7 @@ package logger
 
 import (
 	"fmt"
-	"github.com/cloudslit/cloudslit/ca/pkg/logger/redis_hook"
+	"github.com/flowshield/flowshield/ca/pkg/logger/redis_hook"
 	jsoniter "github.com/json-iterator/go"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

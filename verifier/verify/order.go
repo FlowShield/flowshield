@@ -6,11 +6,11 @@ import (
 	"net"
 	"time"
 
-	"github.com/cloudslit/cloudslit/verifier/pkg/logger"
+	"github.com/flowshield/flowshield/verifier/pkg/logger"
 
 	"gorm.io/gorm"
 
-	"github.com/cloudslit/cloudslit/verifier/pkg/mysql"
+	"github.com/flowshield/flowshield/verifier/pkg/mysql"
 )
 
 type OrderMysql struct {

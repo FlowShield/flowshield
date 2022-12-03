@@ -4,13 +4,13 @@ import (
 	"context"
 	"errors"
 
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/contract"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/pkg/contract"
+	"github.com/flowshield/flowshield/fullnode/pkg/logger"
 )
 
 const (
@@ -19,13 +19,13 @@ const (
 	Provider = 2
 )
 
-type CloudSlit struct {
+type FlowShield struct {
 	Client   *ethclient.Client
 	Instance *contract.Slit
 	Auth     *bind.TransactOpts
 }
 
-var CS *CloudSlit
+var CS *FlowShield
 
 func InitETH(cfg *confer.Web3) error {
 	ctx := context.Background()
@@ -47,7 +47,7 @@ func InitETH(cfg *confer.Web3) error {
 	if err != nil {
 		return err
 	}
-	CS = &CloudSlit{
+	CS = &FlowShield{
 		Client:   client,
 		Instance: instance,
 		Auth:     auth,
@@ -55,7 +55,7 @@ func InitETH(cfg *confer.Web3) error {
 	return CS.stack(ctx)
 }
 
-func (c *CloudSlit) stack(ctx context.Context) error {
+func (c *FlowShield) stack(ctx context.Context) error {
 	logger.Infof("checking if stacked or not...")
 	isDeposit, err := c.Instance.IsDeposit(&bind.CallOpts{
 		From: c.Auth.From,

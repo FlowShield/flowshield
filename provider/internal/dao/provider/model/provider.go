@@ -1,6 +1,6 @@
 package model
 
-import "github.com/cloudslit/cloudslit/provider/internal/schema"
+import "github.com/flowshield/flowshield/provider/internal/schema"
 
 type Providers []*Provider
 

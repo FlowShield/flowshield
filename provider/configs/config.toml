@@ -15,9 +15,9 @@ HttpListenAddr = "0.0.0.0:15091"
 # p2p config
 [P2p]
 Enable = true
-ServiceDiscoveryID = "cloudslit/provider"
+ServiceDiscoveryID = "flowshield/provider"
 ServiceDiscoveryMode = "advertise" # advertise or announce
-ServiceMetadataTopic = "cloudslit_provider_metadata"
+ServiceMetadataTopic = "flowshield_provider_metadata"
 
 [Web3]
 # Wallet account private key

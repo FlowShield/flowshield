@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
-	"github.com/cloudslit/cloudslit/client/internal"
-	"github.com/cloudslit/cloudslit/client/pkg/logger"
+	"github.com/flowshield/flowshield/client/internal"
+	"github.com/flowshield/flowshield/client/pkg/logger"
 	"github.com/urfave/cli/v2"
 	"os"
 )

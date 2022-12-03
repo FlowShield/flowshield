@@ -1,14 +1,14 @@
 package route
 
 import (
-	"github.com/cloudslit/cloudslit/fullnode/app/base/controller"
-	v1 "github.com/cloudslit/cloudslit/fullnode/app/v1/controlplane/controller"
-	"github.com/cloudslit/cloudslit/fullnode/pconst"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
-	"github.com/cloudslit/cloudslit/fullnode/route/access"
-	"github.com/cloudslit/cloudslit/fullnode/route/controlplane"
-	"github.com/cloudslit/cloudslit/fullnode/route/node"
-	"github.com/cloudslit/cloudslit/fullnode/route/user"
+	"github.com/flowshield/flowshield/fullnode/app/base/controller"
+	v1 "github.com/flowshield/flowshield/fullnode/app/v1/controlplane/controller"
+	"github.com/flowshield/flowshield/fullnode/pconst"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/route/access"
+	"github.com/flowshield/flowshield/fullnode/route/controlplane"
+	"github.com/flowshield/flowshield/fullnode/route/node"
+	"github.com/flowshield/flowshield/fullnode/route/user"
 
 	"github.com/gin-gonic/gin"
 )

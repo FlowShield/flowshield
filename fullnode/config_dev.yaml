@@ -1,7 +1,7 @@
 #APP ENV
 app:
   env: "dev" # dev,release
-  sysname: "CloudSLit"
+  sysname: "FlowShield"
   port: 80
   domain: http://192.168.2.80:9534
 
@@ -43,9 +43,9 @@ oauth2:
 p2p:
   enable: false
 #  account: "0x828233e3908fB45d40baC6B2F19F8A239ab7ae7d"
-  service-discovery-id: "cloudslit/provider"
+  service-discovery-id: "flowshield/provider"
   service-discovery-mode: "advertise" # advertise or announce
-  service-metadata-topic: "cloudslit_provider_metadata" # advertise or announce
+  service-metadata-topic: "flowshield_provider_metadata" # advertise or announce
 
 web3:
   register: "false"

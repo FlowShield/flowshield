@@ -1,8 +1,8 @@
 package user
 
 import (
-	v1 "github.com/cloudslit/cloudslit/fullnode/app/v1/user/controller"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/middle"
+	v1 "github.com/flowshield/flowshield/fullnode/app/v1/user/controller"
+	"github.com/flowshield/flowshield/fullnode/pkg/middle"
 	"github.com/gin-gonic/gin"
 )
 
