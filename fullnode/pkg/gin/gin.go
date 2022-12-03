@@ -12,7 +12,7 @@ import (
 
 	"github.com/DeanThompson/ginpprof"
 	"github.com/gin-gonic/gin"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
 )
 
 type OnShutdownF struct {

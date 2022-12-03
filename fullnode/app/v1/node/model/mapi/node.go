@@ -1,8 +1,8 @@
 package mapi
 
 import (
-	"github.com/cloudslit/cloudslit/fullnode/app/base/mapi"
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/node/model/mmysql"
+	"github.com/flowshield/flowshield/fullnode/app/base/mapi"
+	"github.com/flowshield/flowshield/fullnode/app/v1/node/model/mmysql"
 )
 
 type NodeList struct {

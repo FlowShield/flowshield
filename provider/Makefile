@@ -31,7 +31,7 @@ release:
 ################################################################################
 .PHONY: format
 format: modtidy
-	gofumpt -l -w . && goimports -local github.com/cloudslit/ -w $(shell find ./ -type f -name '*.go' -not -path "./test")
+	gofumpt -l -w . && goimports -local github.com/flowshield/ -w $(shell find ./ -type f -name '*.go' -not -path "./test")
 
 .PHONY: modtidy
 modtidy:

@@ -1,7 +1,7 @@
 package mparam
 
 import (
-	"github.com/cloudslit/cloudslit/fullnode/app/base/mdb"
+	"github.com/flowshield/flowshield/fullnode/app/base/mdb"
 )
 
 type ListNode struct {

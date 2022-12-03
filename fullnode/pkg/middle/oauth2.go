@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/model/mmysql"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/app/v1/user/model/mmysql"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 )

@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/gin"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/middle"
-	"github.com/cloudslit/cloudslit/fullnode/route"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/pkg/gin"
+	"github.com/flowshield/flowshield/fullnode/pkg/middle"
+	"github.com/flowshield/flowshield/fullnode/route"
 
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"

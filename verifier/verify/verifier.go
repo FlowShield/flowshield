@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cloudslit/cloudslit/verifier/pkg/recover"
+	"github.com/flowshield/flowshield/verifier/pkg/recover"
 )
 
 var VerObj = NewVerifier(&Options{Often: 30})

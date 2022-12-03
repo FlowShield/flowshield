@@ -2,7 +2,7 @@ package controlplane
 
 import (
 	"github.com/gin-gonic/gin"
-	v1 "github.com/cloudslit/cloudslit/fullnode/app/v1/controlplane/controller"
+	v1 "github.com/flowshield/flowshield/fullnode/app/v1/controlplane/controller"
 )
 
 func APIControlPlane(parentRoute gin.IRouter) {

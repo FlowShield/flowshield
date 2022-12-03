@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/node/model/mparam"
+	"github.com/flowshield/flowshield/fullnode/app/v1/node/model/mparam"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/node/model/mmysql"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/mysql"
+	"github.com/flowshield/flowshield/fullnode/app/v1/node/model/mmysql"
+	"github.com/flowshield/flowshield/fullnode/pkg/logger"
+	"github.com/flowshield/flowshield/fullnode/pkg/mysql"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )

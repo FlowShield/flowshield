@@ -1,6 +1,6 @@
 package schema
 
-import "github.com/cloudslit/cloudslit/client/pkg/util/json"
+import "github.com/flowshield/flowshield/client/pkg/util/json"
 
 type ServerType string
 

@@ -3,8 +3,8 @@ package mparam
 import (
 	"time"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/base/mdb"
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mmysql"
+	"github.com/flowshield/flowshield/fullnode/app/base/mdb"
+	"github.com/flowshield/flowshield/fullnode/app/v1/access/model/mmysql"
 )
 
 type ClientList struct {

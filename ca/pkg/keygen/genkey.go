@@ -13,12 +13,12 @@ import (
 	"strings"
 	"time"
 
-	cf_csr "github.com/cloudslit/cfssl/csr"
-	"github.com/cloudslit/cfssl/helpers"
+	cf_csr "github.com/flowshield/cfssl/csr"
+	"github.com/flowshield/cfssl/helpers"
 
-	"github.com/cloudslit/cloudslit/ca/pkg/pkiutil"
-	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
-	"github.com/cloudslit/cloudslit/ca/util"
+	"github.com/flowshield/flowshield/ca/pkg/pkiutil"
+	"github.com/flowshield/flowshield/ca/pkg/spiffe"
+	"github.com/flowshield/flowshield/ca/util"
 )
 
 type SupportedSignatureAlgorithms string

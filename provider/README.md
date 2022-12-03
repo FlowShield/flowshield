@@ -1,4 +1,4 @@
-# Cloudslit Provider
+# FlowShield Provider
 
 As a service network provider program, miners can deploy network services through this program to obtain rewards.
 
@@ -17,7 +17,7 @@ Currently, websocket traffic transmission is supported.
 
 In the configs directory, the user stores the project configuration file with the file name: config.toml, which can be modified according to your own needs
 
-During deployment, you can refer to our current [deployment example](https://github.com/CloudSlit/cloudslit/tree/main/deploy/provider) and modify the corresponding configuration
+During deployment, you can refer to our current [deployment example](https://github.com/FlowShield/flowshield/tree/main/deploy/provider) and modify the corresponding configuration
 
 
 ### Quickstart
@@ -27,7 +27,7 @@ $ ./bin/provider -c ./configs/config.toml
 ```
 
 ## License
-Cloudslit-Provider uses Apache 2.0 license. See [license](LICENSE) directory for details
+FlowShield-Provider uses Apache 2.0 license. See [license](LICENSE) directory for details
 
 ## Disclaimers
 When you use this software, you have agreed and declared that the author, maintainer and contributor of this software are not responsible for any risks, costs or problems you encounter. If you find a software defect or bug, please submit a patch to help improve!

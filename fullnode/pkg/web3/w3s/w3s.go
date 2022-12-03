@@ -14,7 +14,7 @@ import (
 
 	"github.com/web3-storage/go-w3s-client"
 
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
 	"github.com/ipfs/go-cid"
 	"github.com/wumansgy/goEncrypt"
 )

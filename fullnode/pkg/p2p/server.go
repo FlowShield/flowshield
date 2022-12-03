@@ -1,8 +1,8 @@
 package p2p
 
 import (
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/pkg/logger"
 )
 
 var pubSubObj *PubSub

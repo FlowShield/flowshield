@@ -2,10 +2,10 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/cloudslit/cloudslit/fullnode/app/base/controller"
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/node/model/mparam"
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/node/service"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/response"
+	"github.com/flowshield/flowshield/fullnode/app/base/controller"
+	"github.com/flowshield/flowshield/fullnode/app/v1/node/model/mparam"
+	"github.com/flowshield/flowshield/fullnode/app/v1/node/service"
+	"github.com/flowshield/flowshield/fullnode/pkg/response"
 )
 
 // @Summary ListNode

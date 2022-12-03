@@ -4,13 +4,13 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/cloudslit/cloudslit/provider/internal/config"
-	"github.com/cloudslit/cloudslit/provider/pkg/logger"
+	"github.com/flowshield/flowshield/provider/internal/config"
+	"github.com/flowshield/flowshield/provider/pkg/logger"
 
 	"github.com/sirupsen/logrus"
 
-	loggerhook "github.com/cloudslit/cloudslit/provider/pkg/logger/hook"
-	loggerredishook "github.com/cloudslit/cloudslit/provider/pkg/logger/hook/redis"
+	loggerhook "github.com/flowshield/flowshield/provider/pkg/logger/hook"
+	loggerredishook "github.com/flowshield/flowshield/provider/pkg/logger/hook/redis"
 )
 
 // InitLogger initialize the log module

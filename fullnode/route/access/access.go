@@ -3,10 +3,10 @@ package access
 import (
 	"net/http"
 
-	v1 "github.com/cloudslit/cloudslit/fullnode/app/v1/access/controller"
-	"github.com/cloudslit/cloudslit/fullnode/pconst"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/middle"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
+	v1 "github.com/flowshield/flowshield/fullnode/app/v1/access/controller"
+	"github.com/flowshield/flowshield/fullnode/pconst"
+	"github.com/flowshield/flowshield/fullnode/pkg/middle"
+	"github.com/flowshield/flowshield/fullnode/pkg/util"
 
 	"github.com/gin-gonic/gin"
 )

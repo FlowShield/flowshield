@@ -1,9 +1,9 @@
 package controller
 
 import (
+	"github.com/flowshield/flowshield/fullnode/pconst"
+	"github.com/flowshield/flowshield/fullnode/pkg/logger"
 	"github.com/gin-gonic/gin"
-	"github.com/cloudslit/cloudslit/fullnode/pconst"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
 )
 
 type Res struct {

@@ -7,16 +7,16 @@ import (
 	"os"
 	"time"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/controlplane/model/mparam"
+	"github.com/flowshield/flowshield/fullnode/app/v1/controlplane/model/mparam"
 
 	"github.com/gin-gonic/contrib/sessions"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/controlplane/dao/redis"
+	"github.com/flowshield/flowshield/fullnode/app/v1/controlplane/dao/redis"
 
-	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
+	"github.com/flowshield/flowshield/fullnode/pkg/util"
 
-	"github.com/cloudslit/cloudslit/fullnode/pconst"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/pconst"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,14 +1,14 @@
 # Fullnode
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  [![GoDoc](https://godoc.org/github.com/cloudflare/cfssl?status.svg)](https://github.com/CloudSlit/cloudslit/tree/main/fullnode)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  [![GoDoc](https://godoc.org/github.com/cloudflare/cfssl?status.svg)](https://github.com/FlowShield/flowshield/tree/main/fullnode)
 
-Fullnode is a Dao of [Provider](https://github.com/CloudSlit/cloudslit/tree/main/provider).It shows all Provider node that connects together using P2P networking.And provides users a convenient way to build their own network tunnel.
+Fullnode is a Dao of [Provider](https://github.com/FlowShield/flowshield/tree/main/provider).It shows all Provider node that connects together using P2P networking.And provides users a convenient way to build their own network tunnel.
 
 Every Fullnode needs to deposit a few tokens to become a Dao.After that, other Provider node can join this Dao by PubSub a same topic.Also these nodes will report some metadata including public network IP,wallet,contry and so on.
 
 People can choose any one or two Provider nodes to build their own network tunnel by paying a few tokens.The Provider nodes which been selected will get rewards.
 
-When all things come up,Enjoy CloudSlit.
+When all things come up,Enjoy FlowShield.
 
 ## Features
 
@@ -39,7 +39,7 @@ just pay attention to `nginx.conf` and `docker-compose.yaml`
 ...
 listen 80 default_server;
 
-server_name dash.cloudslit.xyz;  #here is your domain
+server_name dash.flowshield.xyz;  #here is your domain
 
 root /usr/share/nginx/html;
 index index.html;
@@ -56,8 +56,8 @@ CS_CONTRACT_TOKEN: 'contract address'
 CS_W3S_TOKEN: 'apply from https://web3.storage'
 ~~~
 
-This will also install [CA](https://github.com/CloudSlit/cloudslit/tree/main/ca) and [Portal](https://github.com/CloudSlit/cloudslit/tree/main/portal)
+This will also install [CA](https://github.com/FlowShield/flowshield/tree/main/ca) and [Portal](https://github.com/FlowShield/flowshield/tree/main/portal)
 
 ## License
 
-Fullnode source code is available under the Apache 2.0 [License](https://github.com/CloudSlit/cloudslit/blob/main/fullnode/LICENSE).
+Fullnode source code is available under the Apache 2.0 [License](https://github.com/FlowShield/flowshield/blob/main/fullnode/LICENSE).
