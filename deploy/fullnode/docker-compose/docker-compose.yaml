@@ -10,7 +10,7 @@ services:
       - redis-data:/data
 
   flowshield-ca-tls:
-    image: zhangshuainbb/flowshield-ca:v0.0.2
+    image: zhangshuainbb/flowshield-ca:v0.0.1
     command: [ "./ca", "tls" ]
     ports:
       - "8081:8081"

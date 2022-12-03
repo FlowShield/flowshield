@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   provider:
-    image: zhangshuainbb/flowshield-provider:v0.0.13
+    image: zhangshuainbb/flowshield-provider:v0.0.1
     network_mode: host
     restart: always
     environment:
