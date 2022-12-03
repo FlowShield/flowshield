@@ -7,11 +7,11 @@ import (
 	"os"
 	"strings"
 
-	cfssl_config "github.com/cloudslit/cfssl/config"
+	cfssl_config "github.com/flowshield/cfssl/config"
 	"github.com/spf13/viper"
 
-	"github.com/cloudslit/cloudslit/ca/core"
-	"github.com/cloudslit/cloudslit/ca/core/config"
+	"github.com/flowshield/flowshield/ca/core"
+	"github.com/flowshield/flowshield/ca/core/config"
 )
 
 const (

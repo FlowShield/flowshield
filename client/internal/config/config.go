@@ -3,9 +3,9 @@ package config
 import (
 	"bufio"
 	"fmt"
-	"github.com/cloudslit/cloudslit/client/configs"
-	"github.com/cloudslit/cloudslit/client/pkg/util"
-	"github.com/cloudslit/cloudslit/client/pkg/util/json"
+	"github.com/flowshield/flowshield/client/configs"
+	"github.com/flowshield/flowshield/client/pkg/util"
+	"github.com/flowshield/flowshield/client/pkg/util/json"
 	"net/http"
 	"os"
 	"strconv"

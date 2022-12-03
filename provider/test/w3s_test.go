@@ -4,14 +4,14 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"github.com/cloudslit/cloudslit/provider/internal/config"
+	"github.com/flowshield/flowshield/provider/internal/config"
 	"log"
 	"net/http"
 	"strconv"
 	"testing"
 	"time"
 
-	w3sutil "github.com/cloudslit/cloudslit/provider/pkg/web3/w3s"
+	w3sutil "github.com/flowshield/flowshield/provider/pkg/web3/w3s"
 )
 
 const Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDU4MUJkZEVGNTA3MDlmZjIzQzEwN0Q5YUU2NEVlMjc5M0IyMzk3NWMiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NTY2NDc2MDM2MjUsIm5hbWUiOiJjbG91ZHNsaXQifQ.7iUZuCDn1SNn7CxuR_kdAWf9_PfpuJlqPmy7ZdB2x9U"

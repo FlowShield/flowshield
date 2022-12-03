@@ -1,8 +1,8 @@
 package internal
 
 import (
-	"github.com/cloudslit/cloudslit/client/internal/config"
-	"github.com/cloudslit/cloudslit/client/pkg/util/uuid"
+	"github.com/flowshield/flowshield/client/internal/config"
+	"github.com/flowshield/flowshield/client/pkg/util/uuid"
 )
 
 // InitMachine initialize the machine id

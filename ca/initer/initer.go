@@ -1,13 +1,13 @@
 package initer
 
 import (
-	"github.com/cloudslit/cloudslit/ca/ca/keymanager"
-	"github.com/cloudslit/cloudslit/ca/core"
-	"github.com/cloudslit/cloudslit/ca/pkg/logger"
+	"github.com/flowshield/flowshield/ca/ca/keymanager"
+	"github.com/flowshield/flowshield/ca/core"
+	"github.com/flowshield/flowshield/ca/pkg/logger"
 	"github.com/urfave/cli"
 	"log"
 	// ...
-	_ "github.com/cloudslit/cloudslit/ca/util"
+	_ "github.com/flowshield/flowshield/ca/util"
 )
 
 // Init Initialization

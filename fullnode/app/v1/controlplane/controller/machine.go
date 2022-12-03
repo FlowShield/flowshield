@@ -2,10 +2,10 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/cloudslit/cloudslit/fullnode/app/base/controller"
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/controlplane/model/mparam"
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/controlplane/service"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/response"
+	"github.com/flowshield/flowshield/fullnode/app/base/controller"
+	"github.com/flowshield/flowshield/fullnode/app/v1/controlplane/model/mparam"
+	"github.com/flowshield/flowshield/fullnode/app/v1/controlplane/service"
+	"github.com/flowshield/flowshield/fullnode/pkg/response"
 )
 
 // @Summary LoginUrl

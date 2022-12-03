@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/cloudslit/cloudslit/client/pkg/errors"
+	"github.com/flowshield/flowshield/client/pkg/errors"
 	"io"
 	"io/fs"
 	"io/ioutil"
@@ -13,7 +13,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/cloudslit/cloudslit/client/internal/config"
+	"github.com/flowshield/flowshield/client/internal/config"
 
 	"github.com/ipfs/go-cid"
 	"github.com/web3-storage/go-w3s-client"

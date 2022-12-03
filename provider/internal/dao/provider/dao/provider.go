@@ -7,8 +7,8 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/cloudslit/cloudslit/provider/internal/dao/provider/model"
-	"github.com/cloudslit/cloudslit/provider/pkg/mysql"
+	"github.com/flowshield/flowshield/provider/internal/dao/provider/model"
+	"github.com/flowshield/flowshield/provider/pkg/mysql"
 )
 
 type Provider struct {

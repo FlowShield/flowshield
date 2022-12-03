@@ -7,7 +7,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
+	"github.com/flowshield/flowshield/provider/pkg/util/json"
 	"github.com/ethereum/go-ethereum/crypto"
 
 	"github.com/koding/multiconfig"

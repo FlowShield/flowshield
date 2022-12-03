@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/cloudslit/cloudslit/ca/pkg/memorycacher"
+	"github.com/flowshield/flowshield/ca/pkg/memorycacher"
 	"github.com/gin-gonic/gin"
 )
 

@@ -2,8 +2,8 @@ package keyprovider
 
 import (
 	"fmt"
-	"github.com/cloudslit/cloudslit/ca/pkg/keygen"
-	"github.com/cloudslit/cloudslit/ca/pkg/spiffe"
+	"github.com/flowshield/flowshield/ca/pkg/keygen"
+	"github.com/flowshield/flowshield/ca/pkg/spiffe"
 	"testing"
 )
 

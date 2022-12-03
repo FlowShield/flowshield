@@ -1,13 +1,13 @@
 package server
 
 import (
-	"github.com/cloudslit/cloudslit/fullnode/agent"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/mysql"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/redis"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/eth"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/web3/w3s"
+	"github.com/flowshield/flowshield/fullnode/agent"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/pkg/logger"
+	"github.com/flowshield/flowshield/fullnode/pkg/mysql"
+	"github.com/flowshield/flowshield/fullnode/pkg/redis"
+	"github.com/flowshield/flowshield/fullnode/pkg/web3/eth"
+	"github.com/flowshield/flowshield/fullnode/pkg/web3/w3s"
 	"github.com/urfave/cli"
 )
 

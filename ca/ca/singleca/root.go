@@ -6,19 +6,19 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cloudslit/cfssl/cli"
+	"github.com/flowshield/cfssl/cli"
 	// ...
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 	"github.com/jmoiron/sqlx"
 	// ...
-	_ "github.com/cloudslit/cfssl/cli/ocspsign"
-	"github.com/cloudslit/cfssl/ocsp"
-	"github.com/cloudslit/cfssl/signer"
-	"github.com/cloudslit/cfssl/signer/local"
+	_ "github.com/flowshield/cfssl/cli/ocspsign"
+	"github.com/flowshield/cfssl/ocsp"
+	"github.com/flowshield/cfssl/signer"
+	"github.com/flowshield/cfssl/signer/local"
 
-	"github.com/cloudslit/cloudslit/ca/ca/keymanager"
-	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/flowshield/flowshield/ca/ca/keymanager"
+	"github.com/flowshield/flowshield/ca/core"
 )
 
 var (

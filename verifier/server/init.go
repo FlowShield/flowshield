@@ -1,9 +1,9 @@
 package server
 
 import (
-	"github.com/cloudslit/cloudslit/verifier/pkg/confer"
-	"github.com/cloudslit/cloudslit/verifier/pkg/logger"
-	"github.com/cloudslit/cloudslit/verifier/pkg/mysql"
+	"github.com/flowshield/flowshield/verifier/pkg/confer"
+	"github.com/flowshield/flowshield/verifier/pkg/logger"
+	"github.com/flowshield/flowshield/verifier/pkg/mysql"
 	"github.com/urfave/cli"
 )
 

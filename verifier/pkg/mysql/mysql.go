@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/cloudslit/cloudslit/verifier/pkg/confer"
+	"github.com/flowshield/flowshield/verifier/pkg/confer"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
