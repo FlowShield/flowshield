@@ -1,7 +1,7 @@
 package config
 
 import (
-	cfssl_config "github.com/cloudslit/cfssl/config"
+	cfssl_config "github.com/flowshield/cfssl/config"
 )
 
 const (

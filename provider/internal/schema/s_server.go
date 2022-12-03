@@ -4,10 +4,10 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"github.com/cloudslit/cloudslit/provider/pkg/certificate"
-	"github.com/cloudslit/cloudslit/provider/pkg/errors"
-	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
-	"github.com/cloudslit/cloudslit/provider/pkg/web3/w3s"
+	"github.com/flowshield/flowshield/provider/pkg/certificate"
+	"github.com/flowshield/flowshield/provider/pkg/errors"
+	"github.com/flowshield/flowshield/provider/pkg/util/json"
+	"github.com/flowshield/flowshield/provider/pkg/web3/w3s"
 )
 
 type NodeType string

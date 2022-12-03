@@ -1,6 +1,6 @@
 package mparam
 
-import "github.com/cloudslit/cloudslit/fullnode/app/base/mdb"
+import "github.com/flowshield/flowshield/fullnode/app/base/mdb"
 
 type ResourceList struct {
 	mdb.Paginate

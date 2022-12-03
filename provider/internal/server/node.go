@@ -3,12 +3,12 @@ package server
 import (
 	"context"
 
-	"github.com/cloudslit/cloudslit/provider/internal/bll"
-	"github.com/cloudslit/cloudslit/provider/internal/config"
-	"github.com/cloudslit/cloudslit/provider/pkg/logger"
-	"github.com/cloudslit/cloudslit/provider/pkg/p2p"
-	"github.com/cloudslit/cloudslit/provider/pkg/web3/eth"
-	"github.com/cloudslit/cloudslit/provider/pkg/web3/w3s"
+	"github.com/flowshield/flowshield/provider/internal/bll"
+	"github.com/flowshield/flowshield/provider/internal/config"
+	"github.com/flowshield/flowshield/provider/pkg/logger"
+	"github.com/flowshield/flowshield/provider/pkg/p2p"
+	"github.com/flowshield/flowshield/provider/pkg/web3/eth"
+	"github.com/flowshield/flowshield/provider/pkg/web3/w3s"
 	"github.com/sirupsen/logrus"
 )
 

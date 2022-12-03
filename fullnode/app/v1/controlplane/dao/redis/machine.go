@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
+	"github.com/flowshield/flowshield/fullnode/pkg/logger"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
-	redisclient "github.com/cloudslit/cloudslit/fullnode/pkg/redis"
+	redisclient "github.com/flowshield/flowshield/fullnode/pkg/redis"
 )
 
 type Machine struct {

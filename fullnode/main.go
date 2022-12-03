@@ -3,8 +3,8 @@ package main
 import (
 	"os"
 
-	_ "github.com/cloudslit/cloudslit/fullnode/docs"
-	"github.com/cloudslit/cloudslit/fullnode/server"
+	_ "github.com/flowshield/flowshield/fullnode/docs"
+	"github.com/flowshield/flowshield/fullnode/server"
 	"github.com/urfave/cli"
 	_ "go.uber.org/automaxprocs"
 )

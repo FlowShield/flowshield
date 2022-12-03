@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
-	"github.com/cloudslit/cloudslit/ca/cmd"
-	"github.com/cloudslit/cloudslit/ca/initer"
-	"github.com/cloudslit/cloudslit/ca/pkg/logger"
+	"github.com/flowshield/flowshield/ca/cmd"
+	"github.com/flowshield/flowshield/ca/initer"
+	"github.com/flowshield/flowshield/ca/pkg/logger"
 	"github.com/urfave/cli"
 	"os"
 )

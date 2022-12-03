@@ -1,9 +1,9 @@
-module github.com/cloudslit/cloudslit/ca
+module github.com/flowshield/flowshield/ca
 
 go 1.16
 
 require (
-	github.com/cloudslit/cfssl v0.0.1
+	github.com/flowshield/cfssl v0.0.3
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/garyburd/redigo v1.6.3
 	github.com/gin-gonic/gin v1.6.3

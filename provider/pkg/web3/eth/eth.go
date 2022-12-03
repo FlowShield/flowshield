@@ -4,7 +4,7 @@ import (
 	"context"
 	"math/big"
 
-	"github.com/cloudslit/cloudslit/provider/internal/config"
+	"github.com/flowshield/flowshield/provider/internal/config"
 
 	"github.com/ethereum/go-ethereum/common"
 

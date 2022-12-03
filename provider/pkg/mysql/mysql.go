@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/cloudslit/cloudslit/provider/internal/config"
+	"github.com/flowshield/flowshield/provider/internal/config"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

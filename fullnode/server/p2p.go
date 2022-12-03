@@ -3,12 +3,12 @@ package server
 import (
 	"encoding/json"
 
-	service2 "github.com/cloudslit/cloudslit/fullnode/app/v1/access/service"
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/node/service"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/p2p"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/schema"
+	service2 "github.com/flowshield/flowshield/fullnode/app/v1/access/service"
+	"github.com/flowshield/flowshield/fullnode/app/v1/node/service"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/pkg/logger"
+	"github.com/flowshield/flowshield/fullnode/pkg/p2p"
+	"github.com/flowshield/flowshield/fullnode/pkg/schema"
 	"github.com/tidwall/gjson"
 )
 

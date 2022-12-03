@@ -12,8 +12,8 @@ import (
 	"net"
 	"time"
 
-	"github.com/cloudslit/cloudslit/provider/pkg/util"
-	"github.com/cloudslit/cloudslit/provider/pkg/util/json"
+	"github.com/flowshield/flowshield/provider/pkg/util"
+	"github.com/flowshield/flowshield/provider/pkg/util/json"
 )
 
 const (

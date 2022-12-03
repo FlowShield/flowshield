@@ -3,8 +3,8 @@ package core
 import (
 	"context"
 
-	"github.com/cloudslit/cloudslit/ca/core/config"
-	"github.com/cloudslit/cloudslit/ca/pkg/logger"
+	"github.com/flowshield/flowshield/ca/core/config"
+	"github.com/flowshield/flowshield/ca/pkg/logger"
 	"gorm.io/gorm"
 )
 

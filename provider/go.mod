@@ -1,4 +1,4 @@
-module github.com/cloudslit/cloudslit/provider
+module github.com/flowshield/flowshield/provider
 
 go 1.17
 

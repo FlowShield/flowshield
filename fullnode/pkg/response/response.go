@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/cloudslit/cloudslit/fullnode/pconst"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
+	"github.com/flowshield/flowshield/fullnode/pconst"
+	"github.com/flowshield/flowshield/fullnode/pkg/util"
 
 	"github.com/gin-gonic/gin"
 )

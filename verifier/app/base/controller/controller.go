@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"github.com/cloudslit/cloudslit/verifier/pconst"
-	"github.com/cloudslit/cloudslit/verifier/pkg/logger"
+	"github.com/flowshield/flowshield/verifier/pconst"
+	"github.com/flowshield/flowshield/verifier/pkg/logger"
 	"github.com/gin-gonic/gin"
 )
 
