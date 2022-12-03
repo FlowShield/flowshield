@@ -1,13 +1,13 @@
 package initer
 
 import (
-	"github.com/cloudslit/cloudslit/ca/pkg/logger/redis_hook"
+	"github.com/flowshield/flowshield/ca/pkg/logger/redis_hook"
 	"log"
 
-	"github.com/cloudslit/cloudslit/ca/pkg/logger"
+	"github.com/flowshield/flowshield/ca/pkg/logger"
 	"go.uber.org/zap/zapcore"
 
-	"github.com/cloudslit/cloudslit/ca/core"
+	"github.com/flowshield/flowshield/ca/core"
 )
 
 func initLogger(config *core.Config) {

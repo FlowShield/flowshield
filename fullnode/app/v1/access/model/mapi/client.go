@@ -1,7 +1,7 @@
 package mapi
 
 import (
-	"github.com/cloudslit/cloudslit/fullnode/app/base/mapi"
+	"github.com/flowshield/flowshield/fullnode/app/base/mapi"
 )
 
 type ClientList struct {

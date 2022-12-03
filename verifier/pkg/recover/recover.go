@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"runtime"
 
-	"github.com/cloudslit/cloudslit/verifier/pkg/logger"
+	"github.com/flowshield/flowshield/verifier/pkg/logger"
 )
 
 var (

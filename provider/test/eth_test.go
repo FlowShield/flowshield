@@ -12,7 +12,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 
-	"github.com/cloudslit/cloudslit/provider/pkg/contract"
+	"github.com/flowshield/flowshield/provider/pkg/contract"
 )
 
 var (

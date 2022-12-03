@@ -45,7 +45,7 @@ Since each CA has a certificate of its own, layers of trust get created through 
 Building cfssl requires a [working Go 1.12+ installation](http://golang.org/doc/install).
 
 ```
-$ git clone git@github.com:CloudSlit/cloudslit.git
+$ git clone git@github.com:FlowShield/flowshield.git
 $ cd ca
 $ make
 ```
@@ -105,10 +105,10 @@ Start command：`CA api`，Default listening port 8080
 ### SDK Installation
 
 ```
-$ go get github.com/cloudslit/cloudslit/casdk
+$ go get github.com/flowshield/flowshield/casdk
 ```
 
 The classic usage of the CA SDK is that the client and the server use the certificate issued by the CA center for encrypted communication. The following is the usage of the sdk between the client and the server.
 
-See：[Demo](https://github.com/cloudslit/cloudslit/casdk/tree/master/caclient/examples)
+See：[Demo](https://github.com/flowshield/flowshield/casdk/tree/master/caclient/examples)
 

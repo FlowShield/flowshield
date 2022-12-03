@@ -5,11 +5,11 @@ import (
 	"runtime/debug"
 	"time"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/model/mmysql"
+	"github.com/flowshield/flowshield/fullnode/app/v1/user/model/mmysql"
 
-	mysqlUser "github.com/cloudslit/cloudslit/fullnode/app/v1/user/dao/mysql"
-	serviceUser "github.com/cloudslit/cloudslit/fullnode/app/v1/user/service"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
+	mysqlUser "github.com/flowshield/flowshield/fullnode/app/v1/user/dao/mysql"
+	serviceUser "github.com/flowshield/flowshield/fullnode/app/v1/user/service"
+	"github.com/flowshield/flowshield/fullnode/pkg/logger"
 )
 
 // SyncUserBindStatus 每30秒轮循未绑定的用户，判断是否已绑定

@@ -1,10 +1,10 @@
 package v1
 
 import (
-	"github.com/cloudslit/cloudslit/verifier/app/base/controller"
-	"github.com/cloudslit/cloudslit/verifier/app/v1/node/model/mparam"
-	"github.com/cloudslit/cloudslit/verifier/app/v1/node/service"
-	"github.com/cloudslit/cloudslit/verifier/pkg/response"
+	"github.com/flowshield/flowshield/verifier/app/base/controller"
+	"github.com/flowshield/flowshield/verifier/app/v1/node/model/mparam"
+	"github.com/flowshield/flowshield/verifier/app/v1/node/service"
+	"github.com/flowshield/flowshield/verifier/pkg/response"
 	"github.com/gin-gonic/gin"
 )
 

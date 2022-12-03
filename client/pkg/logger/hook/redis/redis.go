@@ -2,7 +2,7 @@ package redis
 
 import (
 	"fmt"
-	"github.com/cloudslit/cloudslit/client/pkg/util/json"
+	"github.com/flowshield/flowshield/client/pkg/util/json"
 
 	"github.com/go-redis/redis"
 	"github.com/sirupsen/logrus"

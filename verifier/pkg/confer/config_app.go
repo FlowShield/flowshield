@@ -1,6 +1,6 @@
 package confer
 
-import "github.com/cloudslit/cloudslit/verifier/pkg/util"
+import "github.com/flowshield/flowshield/verifier/pkg/util"
 
 func ConfigAppGetString(key string, defaultConfig string) string {
 	config := ConfigAppGet(key)

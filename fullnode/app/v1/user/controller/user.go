@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/user/service"
-	"github.com/cloudslit/cloudslit/fullnode/pconst"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/response"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
+	"github.com/flowshield/flowshield/fullnode/app/v1/user/service"
+	"github.com/flowshield/flowshield/fullnode/pconst"
+	"github.com/flowshield/flowshield/fullnode/pkg/response"
+	"github.com/flowshield/flowshield/fullnode/pkg/util"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
 )

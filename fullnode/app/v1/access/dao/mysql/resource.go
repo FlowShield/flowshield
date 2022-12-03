@@ -4,12 +4,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/cloudslit/cloudslit/fullnode/pkg/util"
+	"github.com/flowshield/flowshield/fullnode/pkg/util"
 
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mmysql"
-	"github.com/cloudslit/cloudslit/fullnode/app/v1/access/model/mparam"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/mysql"
+	"github.com/flowshield/flowshield/fullnode/app/v1/access/model/mmysql"
+	"github.com/flowshield/flowshield/fullnode/app/v1/access/model/mparam"
+	"github.com/flowshield/flowshield/fullnode/pkg/logger"
+	"github.com/flowshield/flowshield/fullnode/pkg/mysql"
 
 	"github.com/gin-gonic/gin"
 

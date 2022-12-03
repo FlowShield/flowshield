@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/cloudslit/cloudslit/verifier/app/v1/node/model/mparam"
-	"github.com/cloudslit/cloudslit/verifier/verify"
+	"github.com/flowshield/flowshield/verifier/app/v1/node/model/mparam"
+	"github.com/flowshield/flowshield/verifier/verify"
 	"github.com/gin-gonic/gin"
 )
 

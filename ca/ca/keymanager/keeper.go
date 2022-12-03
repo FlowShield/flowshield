@@ -7,9 +7,9 @@ import (
 	"math"
 	"time"
 
-	"github.com/cloudslit/cfssl/helpers"
-	"github.com/cloudslit/cloudslit/ca/pkg/logger"
-	"github.com/cloudslit/cloudslit/ca/pkg/memorycacher"
+	"github.com/flowshield/cfssl/helpers"
+	"github.com/flowshield/flowshield/ca/pkg/logger"
+	"github.com/flowshield/flowshield/ca/pkg/memorycacher"
 )
 
 // Keeper ...

@@ -7,13 +7,13 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cloudslit/casdk/caclient"
-	"github.com/cloudslit/casdk/keygen"
-	"github.com/cloudslit/casdk/pkg/attrmgr"
-	"github.com/cloudslit/casdk/pkg/spiffe"
-	"github.com/cloudslit/cfssl/helpers"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/confer"
-	"github.com/cloudslit/cloudslit/fullnode/pkg/logger"
+	"github.com/flowshield/casdk/caclient"
+	"github.com/flowshield/casdk/keygen"
+	"github.com/flowshield/casdk/pkg/attrmgr"
+	"github.com/flowshield/casdk/pkg/spiffe"
+	"github.com/flowshield/cfssl/helpers"
+	"github.com/flowshield/flowshield/fullnode/pkg/confer"
+	"github.com/flowshield/flowshield/fullnode/pkg/logger"
 	"github.com/gin-gonic/gin"
 )
 
@@ -74,7 +74,7 @@ func ApplySign(c *gin.Context, attrs map[string]interface{}, uniqueID, cn, host 
 		TTL:  duration,
 	}, []pkix.Extension{ext} /* 注入扩展字段 */)
 	// get cert
-	certPEMBytes, err := mgr.SignPEM(csrPEM, uniqueID)
+	certPEMBytes, err := mgr.SignPEM(csrPEM, nil)
 	if err != nil {
 		logger.Errorf(c, "mgr.SignPEM() err : %v", err)
 		return
