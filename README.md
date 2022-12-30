@@ -33,7 +33,11 @@ In order to protect the public's network security under web2, a very popular zer
 
 FlowShield aims to build a decentralized private data retrieval security network system of web3 in the world, and help users recapture the privacy security information eroded by giants under web2, so that the current global hot zero-trust security network technology combined with web3 can better help users master their own security privacy data and give users a good experience of private data retrieval security network products.
 
-<img  alt="image" src="https://res.cloudinary.com/malloc/image/upload/v1669810897/FlowShield/flowshield_project_desp_vjzury.png">
+<p align="center">
+
+<img  alt="image" src="https://user-images.githubusercontent.com/34047788/204788311-9db29be8-ac90-4bff-9a39-6f9126ba22c7.png">
+    <b>Build a global web3 decentralized private retrieval of data security network，Building Cyber  Sovereignty.</b>
+</p>
 
 # How do we build it?
 
