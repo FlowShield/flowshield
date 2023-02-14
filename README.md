@@ -16,6 +16,7 @@
   - [Part three:FlowShield-Contracts(support:EVM Chains)](#part-threeflowshield-contractssupportevm-chains)
   - [Part four:FlowShield-verifier(Decentralized network quality checker)](#part-fourflowshield-verifierdecentralized-network-quality-checker)
   - [Part five:DeCA(Decentralized PKI CA center)](#part-fivedecadecentralized-pki-ca-center)
+    - [More documentation on DeCA](#more-documentation-on-deca)
   - [Part six:FlowShield-Client(client for private data retrieval.)](#part-sixflowshield-clientclient-for-private-data-retrieval)
 - [Disclaimers](#disclaimers)
 - [Thanks supports](#thanks-supports)
@@ -81,7 +82,11 @@ We provide the verifier component for the decentralized trusted bandwidth market
 
 Decentralize PKI CA center to provide communication authentication infrastructure for Dao point-to-point communication.
 
+DeCA has advantages at every stage of the PKI life cycle. It makes the autonomous control of online identity possible, and provides a simple and more powerful SSL certificate. In use, it can help entities finally store encrypted data by degrading public key management to security decentralization.
+
 <img width="1363" alt="image" src="https://user-images.githubusercontent.com/34047788/191492613-b5b76237-38bb-468f-b15a-860f67581818.png">
+
+### [More documentation on DeCA](https://www.flowshield.xyz/flowshield_docs/cloudslit/deca/architecture/)
 
 
 
