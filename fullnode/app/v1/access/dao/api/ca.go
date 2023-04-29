@@ -65,8 +65,8 @@ func ApplySign(c *gin.Context, attrs map[string]interface{}, uniqueID, cn, host 
 	})
 	// gen csr
 	csrPEM, _ := keygen.GenCustomExtendCSR(keyPEMBytes, &spiffe.IDGIdentity{
-		SiteID:    os.Getenv("IDG_SITEUID"), /* Site 标识 */
-		ClusterID: os.Getenv("IDG_CLUSTERUID"),
+		SiteID:    os.Getenv("SITEUID"), /* Site 标识 */
+		ClusterID: os.Getenv("CLUSTERUID"),
 		UniqueID:  uniqueID,
 	}, &keygen.CertOptions{ /* 通常为固定值 */
 		CN:   cn,
