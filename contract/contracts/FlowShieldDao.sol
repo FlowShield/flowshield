@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "./erc20/Erc20.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract FlowShieldDao is ERC20 {
+contract FlowShieldDao is ERC20, Ownable {
 
     struct userWallet {
         address user;
@@ -36,8 +37,7 @@ contract FlowShieldDao is ERC20 {
     mapping(string=>order) _orders;
     mapping(address=>string[]) _privoderOrders;
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() ERC20("FlowShield Dao", "FSD") public {
+    constructor() ERC20("FlowShield Dao", "FSD") {
         _mint(msg.sender, 100000000 * 10 ** decimals());
         _fullnodeDepositAmount = 5000 * 10 ** decimals();
         _privoderDepositAmount = 1000 * 10 ** decimals();
@@ -107,11 +107,11 @@ contract FlowShieldDao is ERC20 {
     function stakeAmount(uint8 _type, address walletAddress, uint amount) external {
         if(_type == 1){
             require(balanceOf(msg.sender) >= amount, "Not enough CSD");
-            _transfer(msg.sender, address(this), amount);
+            transfer(address(this), amount);
             _fullnodeDeposits[walletAddress] += amount;
         }else if(_type == 2){
             require(balanceOf(msg.sender) >= amount, "Not enough CSD");
-            _transfer(msg.sender, address(this), amount);
+            transfer(address(this), amount);
             _privoderDeposits[walletAddress] += amount;
         }
     }
@@ -122,12 +122,12 @@ contract FlowShieldDao is ERC20 {
         if(_type == 1){
             require(_fullnodeDeposits[msg.sender] == 0, "Already staked");
             require(balanceOf(msg.sender) >= _fullnodeDepositAmount, "Not enough CSD");
-            _transfer(msg.sender, address(this), _fullnodeDepositAmount);
+            transfer(address(this), _fullnodeDepositAmount);
             _fullnodeDeposits[msg.sender] += _fullnodeDepositAmount;
         }else if(_type == 2){
             require(_privoderDeposits[msg.sender] == 0, "Already staked");
             require(balanceOf(msg.sender) >= _privoderDepositAmount, "Not enough CSD");
-            _transfer(msg.sender, address(this), _privoderDepositAmount);
+            transfer(address(this), _privoderDepositAmount);
             _privoderDeposits[msg.sender] += _privoderDepositAmount;
         }
     }
@@ -137,13 +137,17 @@ contract FlowShieldDao is ERC20 {
     function withdraw(uint8 _type) external {
         if(_type == 1){
             require(_fullnodeDeposits[msg.sender] > 0);
-            _transfer(address(this), msg.sender, _fullnodeDeposits[msg.sender]);
+            transferFrom(address(this), msg.sender, _fullnodeDeposits[msg.sender]);
             delete _fullnodeDeposits[msg.sender];
         }else if(_type == 2){
             require(_privoderDeposits[msg.sender] > 0);
-            _transfer(address(this), msg.sender, _privoderDeposits[msg.sender]);
+            transferFrom(address(this), msg.sender, _privoderDeposits[msg.sender]);
             delete _privoderDeposits[msg.sender];
         }
+    }
+
+    function checkOrder(string memory orderId) public view returns(bool) {
+        return (_orders[orderId].used);
     }
 
     function getOrdersInfo(string memory orderId) public view returns(order memory){
@@ -153,13 +157,9 @@ contract FlowShieldDao is ERC20 {
     function clientOrder(string memory name, uint32 duration, string memory orderId, uint amount, address to) external {
         require(!_orders[orderId].used, "Already paid");
         require(balanceOf(msg.sender) >= amount, "Not enough CSD");
-        _transfer(msg.sender, address(this), amount);
+        transfer(address(this), amount);
         _orders[orderId] = order(name, block.timestamp, block.timestamp + duration * _durationUnit, 0, duration, amount, true, false, msg.sender , to);
         _privoderOrders[to].push(orderId);
-    }
-
-    function checkOrder(string memory orderId) public view returns(bool) {
-        return (_orders[orderId].used);
     }
 
     function getPrivoderOrders(address from) public view returns(string[] memory ){
@@ -203,7 +203,7 @@ contract FlowShieldDao is ERC20 {
                 }
             }
         }
-        _transfer(address(this), msg.sender, amount);
+        transferFrom(address(this), msg.sender, amount);
     }
 
     function withdrawOrderTokens(string memory orderId) external {
@@ -213,12 +213,12 @@ contract FlowShieldDao is ERC20 {
             _orders[orderId].withdraw = true;
             uint duration = _orders[orderId].duration  - _orders[orderId].withdrawDuration;
             uint amount = (_orders[orderId].amount / _orders[orderId].duration) * duration;
-            _transfer(address(this), msg.sender, amount);
+            transferFrom(address(this), msg.sender, amount);
         }else{
             uint duration = (block.timestamp - _orders[orderId].startTime) / _durationUnit  - _orders[orderId].withdrawDuration;
             _orders[orderId].withdrawDuration += duration;
             uint amount = (_orders[orderId].amount / _orders[orderId].duration) * duration;
-            _transfer(address(this), msg.sender, amount);
+            transferFrom(address(this), msg.sender, amount);
         }
     }
 }
