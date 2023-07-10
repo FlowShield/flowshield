@@ -8,7 +8,7 @@
 
 # FlowShield - Private retrieval of data
 - [FlowShield - Private retrieval of data](#flowshield---private-retrieval-of-data)
-- [inspiration](#inspiration)
+- [Inspiration](#inspiration)
 - [Its value](#its-value)
 - [How do we build it?](#how-do-we-build-it)
   - [Part one:FlowShield-Fullnode(Ful nodes of private data retrieval network based on DAO Tools)](#part-oneflowshield-fullnodeful-nodes-of-private-data-retrieval-network-based-on-dao-tools)
@@ -22,7 +22,7 @@
 - [Thanks supports](#thanks-supports)
 
 
-# inspiration
+# Inspiration
 
 At present, the options available for interactive (low-latency) communication with privacy guarantee are very limited, and the solutions developed so far all focus on the traditional web model of single source data publisher, and it has defects in delay and threat models.
 
