@@ -94,10 +94,6 @@ DeCA has advantages at every stage of the PKI life cycle. It makes the autonomou
 
 A client user connects to a provider to establish a network security tunnel for private data retrieval.
 
-# Disclaimers
-When you use this software, you have agreed and declared that the author, maintainer and contributor of this software will not be responsible for any risks, costs or problems you encounter. If you find software defects or bugs, please submit patches to help improve!
-
-
 # Thanks supports
 
 <table>
@@ -108,4 +104,7 @@ When you use this software, you have agreed and declared that the author, mainta
      <td align="center"><a href="https://www.nervos.org/"><img src="https://user-images.githubusercontent.com/34047788/188373709-4c6caff6-be9f-497a-9bc3-88e6ae7195ac.png" width="100px;" alt="Nervos"/><br /><sub><b>Nervos</b></sub></a></td>
   </tr>
 </table>
+
+# Disclaimers
+When you use this software, you have agreed and declared that the author, maintainer and contributor of this software will not be responsible for any risks, costs or problems you encounter. If you find software defects or bugs, please submit patches to help improve!
 
