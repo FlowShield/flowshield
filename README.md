@@ -1,15 +1,15 @@
 <p align="center">
-<img width="800" alt="image" src="https://user-images.githubusercontent.com/34047788/204796156-c5c9d228-725b-4e14-b8ed-1e705ba19bc5.png">
+<img width="50%" alt="image" src="https://user-images.githubusercontent.com/34047788/204796156-c5c9d228-725b-4e14-b8ed-1e705ba19bc5.png">
+</p>
 
+<p align="center">
+
+<img width="1787" alt="image" src="https://github.com/FlowShield/flowshield/assets/34047788/12665f45-c67f-46a8-b82d-7749429f216d">
+<b> Build a global web3 decentralized private retrieval of data security network，Building Cyber  Sovereignty.</b>
 </p>
 
 # Our mission
-<p align="center">
 
-<img  alt="image" src="https://user-images.githubusercontent.com/34047788/204788311-9db29be8-ac90-4bff-9a39-6f9126ba22c7.png" width="80%">
-
-<b> Build a global web3 decentralized private retrieval of data security network，Building Cyber  Sovereignty.</b>
-</p>
 
 In the field of new generation network security communications, the FlowShield project is leading a revolution. With the rapid development of the digital age, we are facing more and more network security threats and privacy issues. Traditional secure communications solutions are no longer able to meet the growing demands, so we need an innovative approach to protect our communications and data.
 
