@@ -39,29 +39,31 @@ Network provider nodes are automatically networked through the IPFS network of k
 # III. Smart Contracts
 
 We provide a complete smart contract for the decentralized trusted bandwidth market. Our smart contract is deployed on the EVM network, and we provide many methods in the smart contract to ensure a safe trading process and a safe trading environment.
+<p align="center">
+<img width="90%" alt="image" src="https://github.com/FlowShield/flowshield/assets/34047788/46bf15d2-143f-4ec7-b2ab-5eebad0fd9ed">
+</p>
 
 # IV. Network Verifier
 
-We provide the verifier component for the decentralized trusted bandwidth market. Anyone can run the network verifier, monitor the network quality of ongoing orders, and detect and punish illegal and bad network providers.
+We provide the validator component of a decentralized trusted bandwidth marketplace. Validators can monitor the network quality of orders, detect and punish bad network providers, and ensure the fairness, reliability and security of transactions. We are committed to building a healthy and developing market that allows users to participate with confidence and enjoy high-quality bandwidth services.
+
 <p align="center">
 <img width="90%" alt="image" src="https://user-images.githubusercontent.com/34047788/191491491-cde176f0-f01c-4dfe-8d5f-b6f7d8964f35.png">
 </p>
 
 # V. DeCA 
 
+DeCA decentralizes the PKI infrastructure and provides point-to-point communication identity and authentication capabilities for each node in the network. It implements autonomous identity control and provides simple and powerful PKI control capabilities. Through decentralized authentication and key management, DeCA ensures the confidentiality and integrity of communications. FlowShield network participants have autonomous control over their online identities and receive higher levels of authentication and encryption protection. Build a trusted point-to-point communication network through DeCA, improve the security of data and communication, and enhance the reliability and security of the FlowShield network.
 
-Decentralize PKI CA center to provide communication authentication infrastructure for Dao point-to-point communication.
-
-DeCA has advantages at every stage of the PKI life cycle. It makes the autonomous control of online identity possible, and provides a simple and more powerful SSL certificate. In use, it can help entities finally store encrypted data by degrading public key management to security decentralization.
 <p align="center">
-<img width="90%" alt="image" src="https://user-images.githubusercontent.com/34047788/191492613-b5b76237-38bb-468f-b15a-860f67581818.png">
+<img width="90%" alt="image" src="https://github.com/FlowShield/flowshield/assets/34047788/5009269e-0aa1-4ba6-a2f7-96bd31d27350">
 </p>
 
 ### [More documentation on DeCA](https://www.flowshield.xyz/flowshield_docs/cloudslit/deca/architecture/)
 
 # VI. Access Client
 
-A client user connects to a provider to establish a network security tunnel for private data retrieval.
+The client user establishes a connection with the provider through network access and establishes a secure network tunnel for retrieval of private data. Ensure the security and privacy of data transmission through authentication and encryption technologies.
 
 <p align="center">
 <img width="90%" alt="image" src="https://github.com/FlowShield/flowshield/assets/34047788/ae7acdc6-a130-4540-b043-eb7547b6afa8">
