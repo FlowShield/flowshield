@@ -3,42 +3,19 @@
 
 </p>
 
-
-
-
-# FlowShield - Private retrieval of data
-- [FlowShield - Private retrieval of data](#flowshield---private-retrieval-of-data)
-- [Inspiration](#inspiration)
-- [Its value](#its-value)
-- [How do we build it?](#how-do-we-build-it)
-  - [Part one:FlowShield-Fullnode(Ful nodes of private data retrieval network based on DAO Tools)](#part-oneflowshield-fullnodeful-nodes-of-private-data-retrieval-network-based-on-dao-tools)
-  - [Part two: FlowShield-Provider(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)](#part-two-flowshield-providernetwork-miner-a-secure-network-tunnel-provider-for-decentralized-data-private-retrieval)
-  - [Part three:FlowShield-Contracts(support:EVM Chains)](#part-threeflowshield-contractssupportevm-chains)
-  - [Part four:FlowShield-verifier(Decentralized network quality checker)](#part-fourflowshield-verifierdecentralized-network-quality-checker)
-  - [Part five:DeCA(Decentralized PKI CA center)](#part-fivedecadecentralized-pki-ca-center)
-    - [More documentation on DeCA](#more-documentation-on-deca)
-  - [Part six:FlowShield-Client(client for private data retrieval.)](#part-sixflowshield-clientclient-for-private-data-retrieval)
-- [Disclaimers](#disclaimers)
-- [Thanks supports](#thanks-supports)
-
-
-# Inspiration
-
-At present, the options available for interactive (low-latency) communication with privacy guarantee are very limited, and the solutions developed so far all focus on the traditional web model of single source data publisher, and it has defects in delay and threat models.
-
-FlowShield uses blockchain, web3 and secure network technology of private data retrieval to enhance and improve network security/privacy protection of users' privatization.
-
-In order to protect the public's network security under web2, a very popular zero-trust security architecture has emerged. Our team has been working on open source products with zero trust security, but we found that although many zero trust network security companies provide zero trust security platforms, they monopolize users' network access nodes and centrally store users' core security profiles. Therefore, we are considering whether we can use web3 technology to realize a secure network for private data retrieval. We designed FlowShield project to provide users with a decentralized secure network platform for private data retrieval, and help users master their own secure data.
-
-# Its value
-
-FlowShield aims to build a decentralized private data retrieval security network system of web3 in the world, and help users recapture the privacy security information eroded by giants under web2, so that the current global hot zero-trust security network technology combined with web3 can better help users master their own security privacy data and give users a good experience of private data retrieval security network products.
-
+# Our mission
 <p align="center">
 
-<img  alt="image" src="https://user-images.githubusercontent.com/34047788/204788311-9db29be8-ac90-4bff-9a39-6f9126ba22c7.png">
-    <b>Build a global web3 decentralized private retrieval of data security network，Building Cyber  Sovereignty.</b>
+<img  alt="image" src="https://user-images.githubusercontent.com/34047788/204788311-9db29be8-ac90-4bff-9a39-6f9126ba22c7.png" width="80%">
+
+<b> Build a global web3 decentralized private retrieval of data security network，Building Cyber  Sovereignty.</b>
 </p>
+
+In the field of new generation network security communications, the FlowShield project is leading a revolution. With the rapid development of the digital age, we are facing more and more network security threats and privacy issues. Traditional secure communications solutions are no longer able to meet the growing demands, so we need an innovative approach to protect our communications and data.
+
+FlowShield adopts a series of cutting-edge technologies, such as blockchain, encryption algorithms and secure network architecture, to provide a strong guarantee for the new generation of network secure communication. Through decentralized design, FlowShield breaks the traditional centralized model and makes communication more secure and reliable. Each participant can jointly build and maintain this network, contributing to the security of the entire ecosystem.
+
+FlowShield not only focuses on data encryption and transmission security, but also on privacy protection. The project is committed to protecting the personal privacy of users and preventing their sensitive information from being misused or leaked. Through an anonymized and decentralized approach, FlowShield ensures that users’ identities and communication content are protected to the greatest extent possible, allowing them to have greater autonomy and control in the digital world.
 
 # How do we build it?
 
