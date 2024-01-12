@@ -21,11 +21,7 @@ FlowShield not only focuses on data encryption and transmission security, but al
 
 # I. Dao Node
 
-Anyone can run Fullnode, which hosts the metadata of decentralized network and provides metadata networking and transaction matching platform. It integrates metadata from all providers, and providers use [libp2p-based pubsub](https://github.com/libp2p/go-libp2p) every few seconds to keep heartbeat to Fullnode to prove that they are online.
-
-Users can find resources and nodes to build their own secure anonymous network tunnel. They only need to pay some tokens, and the provider nodes can get these tokens as rewards.
-
-For all users' and Dao's data, we use Filecoin's web3.storage to store user data in a decentralized way.
+Fullnode is a node open to everyone to participate. It carries the metadata of the distributed network and provides a metadata network and transaction matching platform. Fullnode ensures the online status of providers by integrating the metadata of individual providers and maintaining a heartbeat connection with the provider using the libp2p-based pubsub protocol. Users can use Fullnode to find resources and nodes, build their own secure and anonymous network tunnels, and be rewarded by paying tokens to provider nodes. At the same time, Fullnode uses Filecoin's web3.storage technology to store user and Dao data in a distributed manner to ensure data security and reliability.
 
 <img width="1425" alt="image" src="https://user-images.githubusercontent.com/34047788/191491783-840a042d-4f39-4247-ae74-86e9278ebb4f.png">
 
