@@ -10,16 +10,15 @@
 
 # Our mission
 
-
 In the field of new generation network security communications, the FlowShield project is leading a revolution. With the rapid development of the digital age, we are facing more and more network security threats and privacy issues. Traditional secure communications solutions are no longer able to meet the growing demands, so we need an innovative approach to protect our communications and data.
 
 FlowShield adopts a series of cutting-edge technologies, such as blockchain, encryption algorithms and secure network architecture, to provide a strong guarantee for the new generation of network secure communication. Through decentralized design, FlowShield breaks the traditional centralized model and makes communication more secure and reliable. Each participant can jointly build and maintain this network, contributing to the security of the entire ecosystem.
+
 <p align="center">
 <img width="80%" alt="image" src="https://github.com/FlowShield/flowshield/assets/34047788/6d065375-f580-4d41-adee-2312529a2473">
 </p>
+
 FlowShield not only focuses on data encryption and transmission security, but also on privacy protection. The project is committed to protecting the personal privacy of users and preventing their sensitive information from being misused or leaked. Through an anonymized and decentralized approach, FlowShield ensures that users’ identities and communication content are protected to the greatest extent possible, allowing them to have greater autonomy and control in the digital world.
-
-
 
 # I. Dao Node
 
