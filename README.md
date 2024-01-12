@@ -17,11 +17,9 @@ FlowShield adopts a series of cutting-edge technologies, such as blockchain, enc
 
 FlowShield not only focuses on data encryption and transmission security, but also on privacy protection. The project is committed to protecting the personal privacy of users and preventing their sensitive information from being misused or leaked. Through an anonymized and decentralized approach, FlowShield ensures that users’ identities and communication content are protected to the greatest extent possible, allowing them to have greater autonomy and control in the digital world.
 
-# How do we build it?
 
-The design part of FlowShield project includes distributed full-nodes, network miner provider, intelligent contract, network quality checker and network client program. The details are as follows:
 
-## Part one:[FlowShield-Fullnode](./fullnode)(Ful nodes of private data retrieval network based on DAO Tools)
+# I. Dao Node
 
 Anyone can run Fullnode, which hosts the metadata of decentralized network and provides metadata networking and transaction matching platform. It integrates metadata from all providers, and providers use [libp2p-based pubsub](https://github.com/libp2p/go-libp2p) every few seconds to keep heartbeat to Fullnode to prove that they are online.
 
@@ -35,7 +33,7 @@ For all users' and Dao's data, we use Filecoin's web3.storage to store user data
 <img width="1102" alt="image" src="https://user-images.githubusercontent.com/34047788/191491199-61b73816-5538-460c-b0ba-e9b662e8681d.png">
 
 
-## Part two: [FlowShield-Provider](./provider)(Network Miner, a Secure Network Tunnel Provider for Decentralized Data Private Retrieval)
+# II. Network Provider
 
 Our nodes are automatically networked through kademlia DHT and IPFS networks of libp2p through peer discovery and routing, and data synchronization among multiple nodes is realized through PubSub function of libp2p.
 
@@ -44,17 +42,18 @@ For all users and Dao data, we use web3.storage of Filecoin to store user data i
 <img width="1120" alt="image" src="https://user-images.githubusercontent.com/34047788/191491394-6dccc868-ed08-483b-9a74-2fcff6a243e2.png">
 
 
-## Part three:[FlowShield-Contracts](./contract)(support:EVM Chains)
+# III. Smart Contracts
 
 We provide a complete smart contract for the decentralized trusted bandwidth market. Our smart contract is deployed on the EVM network, and we provide many methods in the smart contract to ensure a safe trading process and a safe trading environment.
 
-## Part four:[FlowShield-verifier](./verifier)(Decentralized network quality checker)
+# IV. Network Verifier
+
 We provide the verifier component for the decentralized trusted bandwidth market. Anyone can run the network verifier, monitor the network quality of ongoing orders, and detect and punish illegal and bad network providers.
 
 <img width="1428" alt="image" src="https://user-images.githubusercontent.com/34047788/191491491-cde176f0-f01c-4dfe-8d5f-b6f7d8964f35.png">
 
 
-## Part five:[DeCA](./ca)(Decentralized PKI CA center)
+# V. DeCA 
 
 
 Decentralize PKI CA center to provide communication authentication infrastructure for Dao point-to-point communication.
@@ -65,9 +64,7 @@ DeCA has advantages at every stage of the PKI life cycle. It makes the autonomou
 
 ### [More documentation on DeCA](https://www.flowshield.xyz/flowshield_docs/cloudslit/deca/architecture/)
 
-
-
-## Part six:[FlowShield-Client](./client)(client for private data retrieval.)
+# VI. Access Client
 
 A client user connects to a provider to establish a network security tunnel for private data retrieval.
 
@@ -84,4 +81,3 @@ When you use this software, you have agreed and declared that the author, mainta
      <td align="center"><a href="https://www.nervos.org/"><img src="https://user-images.githubusercontent.com/34047788/188373709-4c6caff6-be9f-497a-9bc3-88e6ae7195ac.png" width="100px;" alt="Nervos"/><br /><sub><b>Nervos</b></sub></a></td>
   </tr>
 </table>
-
