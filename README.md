@@ -72,7 +72,7 @@ The client user establishes a connection with the provider through network acces
 # Disclaimers
 When you use this software, you have agreed and declared that the author, maintainer and contributor of this software will not be responsible for any risks, costs or problems you encounter. If you find software defects or bugs, please submit patches to help improve!
 
-# Thanks supports
+# Ecological partners
 
 <table>
   <tr>
