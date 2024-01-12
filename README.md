@@ -26,13 +26,12 @@ Fullnode is a node open to everyone to participate. It carries the metadata of t
 
 <p align="center">
 <img width="90%" alt="image" src="https://user-images.githubusercontent.com/34047788/191491199-61b73816-5538-460c-b0ba-e9b662e8681d.png">
-</p
+</p>
 
 # II. Network Provider
 
-Our nodes are automatically networked through kademlia DHT and IPFS networks of libp2p through peer discovery and routing, and data synchronization among multiple nodes is realized through PubSub function of libp2p.
+Network provider nodes are automatically networked through the IPFS network of kademlia DHT and libp2p, and use peer discovery and routing functions to achieve fast communication and data synchronization. Using the PubSub function of libp2p, data can be efficiently published and subscribed between multiple nodes.
 
-For all users and Dao data, we use web3.storage of Filecoin to store user data in a decentralized way.
 <p align="center">
 <img width="90%" alt="image" src="https://user-images.githubusercontent.com/34047788/191491394-6dccc868-ed08-483b-9a74-2fcff6a243e2.png">
 </p>
