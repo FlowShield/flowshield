@@ -109,13 +109,13 @@ type ControlClient struct {
 	ClientCid string `json:"client_cid"`
 }
 
-// ToClientOrder 解析客户端配置
+// ToClientOrder 
 func (a *ControlClient) ToClientOrder(ctx context.Context, key []byte) (*ClientConfig, error) {
 	data, err := w3s.Get(ctx, a.ClientCid, a.Uuid, key)
 	if err != nil {
 		return nil, err
 	}
-	// 解析w3s数据
+	// Parse w3s data
 	var result ClientConfig
 	err = json.Unmarshal(data, &result)
 	if err != nil {
@@ -136,15 +136,15 @@ func (a *ControlClient) ToClientOrder(ctx context.Context, key []byte) (*ClientC
 	result.CaPem = string(capem)
 	result.CertPem = string(certpem)
 	result.KeyPem = string(keypem)
-	// 解析证书attr
+	// Parse certificate attr
 	certConfig, attr, err := certificate.LoadCert([]byte(result.CertPem))
 	if err != nil {
 		return nil, err
 	}
 	if certConfig.Type != certificate.TypeClient {
-		return nil, fmt.Errorf("证书类型错误，预期：%s, get:%s", certificate.TypeClient, certConfig.Type)
+		return nil, fmt.Errorf("Wrong certificate type, expected:%s, get:%s", certificate.TypeClient, certConfig.Type)
 	}
-	// 加载server 和target信息
+	// Load server and target information
 	_, err = result.LoadServerTarget(attr)
 	if err != nil {
 		return nil, err

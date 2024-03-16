@@ -5,6 +5,12 @@ import (
 	"context"
 	"crypto/tls"
 	"crypto/x509"
+	"net"
+	"net/http"
+	"net/http/httputil"
+	"strconv"
+	"strings"
+
 	"github.com/flowshield/flowshield/client/internal/config"
 	"github.com/flowshield/flowshield/client/internal/contextx"
 	"github.com/flowshield/flowshield/client/internal/schema"
@@ -13,11 +19,6 @@ import (
 	"github.com/flowshield/flowshield/client/pkg/recover"
 	"github.com/flowshield/flowshield/client/pkg/util/trace"
 	"github.com/xtaci/smux"
-	"net"
-	"net/http"
-	"net/http/httputil"
-	"strconv"
-	"strings"
 )
 
 type Client struct{}
@@ -77,14 +78,14 @@ func (a *Client) GetDialMtlsConfig(client *schema.ClientConfig) (*tls.Config, er
 	if err != nil {
 		return nil, err
 	}
-	// 加载ca证书
+	// Load ca certificate
 	pool := x509.NewCertPool()
 	pool.AppendCertsFromPEM([]byte(client.CaPem))
 	tlsc := &tls.Config{
 		MinVersion:   tls.VersionTLS13,
-		Certificates: []tls.Certificate{cert}, // 客户端证书
-		ServerName:   client.Server.Host,      // 服务端证书通用名称
-		RootCAs:      pool,                    // 服务器证书所属ca
+		Certificates: []tls.Certificate{cert}, // client certificate
+		ServerName:   client.Server.Host,      // Server certificate common name
+		RootCAs:      pool,                    // The server certificate belongs to ca
 	}
 	return tlsc, err
 }
@@ -127,7 +128,7 @@ func (a *Client) handleConn(ctx context.Context, clientConn net.Conn, client *sc
 		return
 	}
 	defer serverConn.Close()
-	// 多路复用
+	// Multiplexing
 	//Setup client side of smux
 	session, err := smux.Client(serverConn, nil)
 	if err != nil {

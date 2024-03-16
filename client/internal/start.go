@@ -4,13 +4,14 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/flowshield/flowshield/client/internal/bll"
 	"github.com/flowshield/flowshield/client/internal/config"
 	"github.com/flowshield/flowshield/client/internal/schema"
 	"github.com/flowshield/flowshield/client/pkg/errors"
 	"github.com/flowshield/flowshield/client/pkg/logger"
 	"github.com/flowshield/flowshield/client/pkg/util/json"
-	"time"
 
 	"io/ioutil"
 	"net/http"
@@ -18,7 +19,7 @@ import (
 	"strconv"
 )
 
-// 登录状态
+// Login status
 type State int
 
 const (
@@ -69,7 +70,7 @@ func InitClientServer(ctx context.Context) {
 
 func (a *Up) ParseW3sData(ctx context.Context, order *schema.ControlClient) (*schema.ClientConfig, error) {
 	cfg := config.C.Web3
-	// 解析配置
+	// Parse configuration
 	tryCount := 0
 retry:
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(cfg.W3S.Timeout)*time.Second)

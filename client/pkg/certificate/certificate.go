@@ -62,7 +62,7 @@ func LoadCert(certData []byte) (*BasicCertConf, []byte, error) {
 	return basicConf, []byte(str), nil
 }
 
-// 自签证书
+//self-signed certificate
 func InitSelfCert() error {
 	max := new(big.Int).Lsh(big.NewInt(1), 128)
 	serialNumber, err := rand.Int(rand.Reader, max)

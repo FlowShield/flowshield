@@ -14,7 +14,7 @@ import (
 )
 
 // @Summary ResourceList
-// @Description 获取ZTA的resource
+// @Description Get ZTA resources
 // @Tags ZTA
 // @Produce  json
 // @Success 200 {object} controller.Res
@@ -31,11 +31,11 @@ func ResourceList(c *gin.Context) {
 }
 
 // @Summary AddResource
-// @Description 新增ZTA的resource
+// @Description Added ZTA resources
 // @Tags ZTA
 // @Accept  json
 // @Produce  json
-// @Param Resource body mparam.AddResource true "新增ZTA的resource"
+// @Param Resource body mparam.AddResource true "Added ZTA resources"
 // @Success 200 {object} controller.Res
 // @Router /access/resource [post]
 func AddResource(c *gin.Context) {
@@ -46,7 +46,7 @@ func AddResource(c *gin.Context) {
 		return
 	}
 	if len(param.Type) > 0 && param.Type == "cidr" {
-		// 判断是不是纯IP格式
+		// Determine whether it is pure IP format
 		if strings.Contains(param.Host, "/") {
 			if !util.IsCIDR(param.Host) {
 				response.UtilResponseReturnJsonFailed(c, pconst.CODE_COMMON_PARAMS_INCOMPLETE)
@@ -64,11 +64,11 @@ func AddResource(c *gin.Context) {
 }
 
 //// @Summary EditResource
-//// @Description 修改ZTA的resource
+//// @Description Modify ZTA resources
 //// @Tags ZTA
 //// @Accept  json
 //// @Produce  json
-//// @Param Resource body mparam.EditResource true "修改ZTA的resource"
+//// @Param Resource body mparam.EditResource true "Modify ZTA resources"
 //// @Success 200 {object} controller.Res
 //// @Router /access/resource [put]
 //func EditResource(c *gin.Context) {
@@ -79,7 +79,7 @@ func AddResource(c *gin.Context) {
 //		return
 //	}
 //	if len(param.Type) > 0 && param.Type == "cidr" {
-//		// 判断是不是纯IP格式
+//		// Determine whether it is pure IP format
 //		if strings.Contains(param.Host, "/") {
 //			if !util.IsCIDR(param.Host) {
 //				response.UtilResponseReturnJsonFailed(c, pconst.CODE_COMMON_PARAMS_INCOMPLETE)
@@ -97,10 +97,10 @@ func AddResource(c *gin.Context) {
 //}
 
 // @Summary DelResource
-// @Description 删除ZTA的resource
+// @Description Delete ZTA resources
 // @Tags ZTA
 // @Produce  json
-// @Param id path int true "主键ID"
+// @Param id path int true "Primary key ID"
 // @Success 200 {object} controller.Res
 // @Router /access/resource/{uuid} [delete]
 func DelResource(c *gin.Context) {

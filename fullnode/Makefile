@@ -5,19 +5,19 @@ PROG=bin/fullnode
 
 SRCS=.
 
-# 安装目录
+# installation
 INSTALL_PREFIX=/usr/local/fullnode
 
-# 配置安装的目录
+# Configure the installation directory
 CONF_INSTALL_PREFIX=/usr/local/fullnode
 
 # git commit hash
 COMMIT_HASH=$(shell git rev-parse --short HEAD || echo "GitNotFound")
 
-# 编译日期
+# Compilation date
 BUILD_DATE=$(shell date '+%Y-%m-%d %H:%M:%S')
 
-# 编译条件
+# Compilation conditions
 CFLAGS = -ldflags "-s -w -X \"main.BuildVersion=${COMMIT_HASH}\" -X \"main.BuildDate=$(BUILD_DATE)\""
 
 all:
@@ -26,14 +26,14 @@ all:
 	fi
 	GOPROXY=$(GOPROXY) CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build  $(CFLAGS) -o $(PROG) $(SRCS)
 
-# 编译race版本
+# Compile race version
 race:
 	if [ ! -d "./bin/" ]; then \
     	mkdir bin; \
     	fi
 	go build $(CFLAGS) -race -o $(PROG) $(SRCS)
 
-# release 版本
+# release version
 RELEASE_DATE = $(shell date '+%Y%m%d%H%M%S')
 RELEASE_VERSION = $(shell git rev-parse --short HEAD || echo "GitNotFound")
 RELEASE_DIR=release_bin

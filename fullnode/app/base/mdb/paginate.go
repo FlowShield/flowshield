@@ -1,14 +1,14 @@
 package mdb
 
 type Paginate struct {
-	Page     int `json:"page" form:"page,default=1"`            // 分页号
-	LimitNum int `json:"limit_num" form:"limit_num,default=10"` // 每页限制数量
-	Offset   int // 计算获取offset
+	Page     int `json:"page" form:"page,default=1"`            // page number
+	LimitNum int `json:"limit_num" form:"limit_num,default=10"` // limit number of page
+	Offset   int // Calculate and obtain offset
 }
 
 func (p *Paginate) Init() {
 	if p.LimitNum == 0 {
-		p.LimitNum = 10 // 默认一页10条
+		p.LimitNum = 10 // Default is 10 items per page
 	}
 	if p.Page == 0 {
 		p.Page = 1

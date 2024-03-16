@@ -75,7 +75,7 @@ func GetByW3sLink(cid string, filename string, key []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	data, err := goEncrypt.DesCbcDecrypt(body, key[:], nil) // 解密得到密文,可以自己传入初始化向量,如果不传就使用默认的初始化向量,8字节
+	data, err := goEncrypt.DesCbcDecrypt(body, key[:], nil) // To decrypt the ciphertext, you can pass in the initialization vector yourself. If not, use the default initialization vector, which is 8 bytes.
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +111,7 @@ func GetByW3sClient(ctx context.Context, cidStr string, key []byte) (data []byte
 	if err != nil {
 		return nil, err
 	}
-	data, err = goEncrypt.DesCbcDecrypt(data, key[:], nil) // 解密得到密文,可以自己传入初始化向量,如果不传就使用默认的初始化向量,8字节
+	data, err = goEncrypt.DesCbcDecrypt(data, key[:], nil) // To decrypt the ciphertext, you can pass in the initialization vector yourself. If not, use the default initialization vector, which is 8 bytes.
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func dataToFile(data interface{}, filename string, key []byte) (file *os.File, e
 	if err != nil {
 		return
 	}
-	// 对数据进行加密
+	// Encrypt data
 	cryptText, err := goEncrypt.DesCbcEncrypt(jsonByes, key[:], nil)
 	if err != nil {
 		return

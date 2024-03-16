@@ -9,7 +9,7 @@ import (
 )
 
 // @Summary ClientList
-// @Description 获取ZTA的client
+// @Description Get ZTA client
 // @Tags ZTA
 // @Produce  json
 // @Success 200 {object} controller.Res
@@ -26,11 +26,11 @@ func ClientList(c *gin.Context) {
 }
 
 // @Summary AddClient
-// @Description 新增ZTA的client
+// @Description Added ZTA client
 // @Tags ZTA
 // @Accept  json
 // @Produce  json
-// @Param Client body mparam.AddClient true "新增ZTA的client"
+// @Param Client body mparam.AddClient true "Added ZTA client"
 // @Success 200 {object} controller.Res
 // @Router /access/client [post]
 func AddClient(c *gin.Context) {
@@ -45,11 +45,11 @@ func AddClient(c *gin.Context) {
 }
 
 //// @Summary EditClient
-//// @Description 修改ZTA的client
+//// @Description Modify ZTA client
 //// @Tags ZTA
 //// @Accept  json
 //// @Produce  json
-//// @Param Client body mparam.EditClient true "修改ZTA的client"
+//// @Param Client body mparam.EditClient true "Modify ZTA client"
 //// @Success 200 {object} controller.Res
 //// @Router /access/client [put]
 //func EditClient(c *gin.Context) {
@@ -64,7 +64,7 @@ func AddClient(c *gin.Context) {
 //}
 //
 //// @Summary DelClient
-//// @Description 删除ZTA的client
+//// @Description Delete ZTA client
 //// @Tags ZTA
 //// @Produce  json
 //// @Param uuid path string true "uuid"
@@ -76,11 +76,11 @@ func AddClient(c *gin.Context) {
 //}
 
 // @Summary NotifyClient
-// @Description 接收client订单状态改变的通知
+// @Description Receive notifications of client order status changes
 // @Tags ZTA
 // @Accept  json
 // @Produce  json
-// @Param NotifyClient body mparam.NotifyClient true "接收client订单状态改变的通知"
+// @Param NotifyClient body mparam.NotifyClient true "Receive notifications of client order status changes"
 // @Success 200 {object} controller.Res
 // @Router /access/client/notify [post]
 func NotifyClient(c *gin.Context) {
