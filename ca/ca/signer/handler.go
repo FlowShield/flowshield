@@ -2,6 +2,11 @@ package signer
 
 import (
 	"encoding/json"
+	"io/ioutil"
+	"math/big"
+	"net/http"
+	"time"
+
 	"github.com/flowshield/cfssl/api"
 	"github.com/flowshield/cfssl/auth"
 	"github.com/flowshield/cfssl/bundler"
@@ -11,10 +16,6 @@ import (
 	"github.com/flowshield/cfssl/log"
 	"github.com/flowshield/cfssl/signer"
 	"github.com/flowshield/flowshield/ca/pkg/attrmgr"
-	"io/ioutil"
-	"math/big"
-	"net/http"
-	"time"
 )
 
 // NoBundlerMessage is used to alert the user that the server does not have a bundler initialized.
@@ -312,7 +313,7 @@ func (h *AuthHandler) Handle(w http.ResponseWriter, r *http.Request) error {
 	return api.SendResponse(w, result)
 }
 
-// 添加过期时间
+// Add expiration time
 func genExpiryByCsr(sr *signer.SignRequest, profile *config.SigningProfile) error {
 	csr, err := helpers.ParseCSRPEM([]byte(sr.Request))
 	if err != nil {

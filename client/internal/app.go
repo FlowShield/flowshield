@@ -3,14 +3,15 @@ package internal
 import (
 	"context"
 	"crypto/tls"
-	"github.com/flowshield/flowshield/client/internal/config"
-	"github.com/flowshield/flowshield/client/pkg/logger"
-	"github.com/flowshield/flowshield/client/pkg/web3/w3s"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"github.com/flowshield/flowshield/client/internal/config"
+	"github.com/flowshield/flowshield/client/pkg/logger"
+	"github.com/flowshield/flowshield/client/pkg/web3/w3s"
 )
 
 type options struct {
@@ -83,7 +84,7 @@ func InitHttpClient() {
 	}
 }
 
-// Run 运行服务
+// Run service
 func Run(ctx context.Context, opts ...Option) error {
 	state := 1
 	sc := make(chan os.Signal, 1)
@@ -96,7 +97,7 @@ func Run(ctx context.Context, opts ...Option) error {
 EXIT:
 	for {
 		sig := <-sc
-		logger.WithContext(ctx).Infof("接收到信号[%s]", sig.String())
+		logger.WithContext(ctx).Infof("signal received[%s]", sig.String())
 		switch sig {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
 			state = 0
@@ -108,7 +109,7 @@ EXIT:
 	}
 
 	cleanFunc()
-	logger.WithContext(ctx).Infof("服务退出")
+	logger.WithContext(ctx).Infof("Service exit")
 	time.Sleep(time.Second)
 	os.Exit(state)
 	return nil

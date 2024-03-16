@@ -27,14 +27,14 @@ type I struct {
 	HttpClient *http.Client
 }
 
-// 读取内置配置文件并创建
+// Read the built-in configuration file and create
 func createConfigFile(path string) error {
 	ok, err := util.PathExists(path)
 	if err != nil {
 		return err
 	}
 	if !ok {
-		f, err := os.Create(path) //创建文件
+		f, err := os.Create(path) //create file
 		if err != nil {
 			return err
 		}
@@ -56,7 +56,7 @@ func createConfigFile(path string) error {
 func MustLoad(fpaths ...string) error {
 	if len(fpaths) <= 0 || fpaths[0] == "" {
 		fpaths[0] = "config.toml"
-		// 无配置文件，读取默认配置文件
+		// No configuration file, read the default configuration file
 		err := createConfigFile(fpaths[0])
 		if err != nil {
 			return err
