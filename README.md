@@ -1,85 +1,106 @@
 <p align="center">
-<img width="600" alt="image" src="https://user-images.githubusercontent.com/34047788/204796156-c5c9d228-725b-4e14-b8ed-1e705ba19bc5.png">
+  <img width="600" alt="FlowShield Logo" src="https://user-images.githubusercontent.com/34047788/204796156-c5c9d228-725b-4e14-b8ed-1e705ba19bc5.png">
 </p>
 
 <p align="center">
-
-<img width="1787" alt="image" src="https://github.com/FlowShield/flowshield/assets/34047788/12665f45-c67f-46a8-b82d-7749429f216d">
-<b> Build a global web3 decentralized private retrieval of data security network，Building Cyber  Sovereignty.</b>
+  <img width="1787" alt="FlowShield Banner" src="https://github.com/FlowShield/flowshield/assets/34047788/12665f45-c67f-46a8-b82d-7749429f216d">
+  <b>Build a global web3 decentralized private retrieval of data security network, Building Cyber Sovereignty.</b>
 </p>
 
-# Our mission
+# Our Mission
 
-In the field of new generation network security communications, the FlowShield project is leading a revolution. With the rapid development of the digital age, we are facing more and more network security threats and privacy issues. Traditional secure communications solutions are no longer able to meet the growing demands, so we need an innovative approach to protect our communications and data.
+In the realm of next-generation network security communications, the FlowShield project is spearheading a revolution. As the digital age advances rapidly, we face increasing network security threats and privacy issues. Traditional secure communications solutions can no longer meet the growing demands, necessitating an innovative approach to protect our communications and data.
 
-FlowShield adopts a series of cutting-edge technologies, such as blockchain, encryption algorithms and secure network architecture, to provide a strong guarantee for the new generation of network secure communication. Through decentralized design, FlowShield breaks the traditional centralized model and makes communication more secure and reliable. Each participant can jointly build and maintain this network, contributing to the security of the entire ecosystem.
+FlowShield employs cutting-edge technologies, such as blockchain, advanced encryption algorithms, and secure network architecture, to provide robust guarantees for next-generation network secure communication. By adopting a decentralized design, FlowShield transcends the traditional centralized model, enhancing communication security and reliability. Each participant plays a role in building and maintaining this network, contributing to the security of the entire ecosystem.
 
 <p align="center">
-<img width="80%" alt="image" src="https://github.com/FlowShield/flowshield/assets/34047788/6d065375-f580-4d41-adee-2312529a2473">
+  <img width="80%" alt="FlowShield Diagram" src="https://github.com/FlowShield/flowshield/assets/34047788/6d065375-f580-4d41-adee-2312529a2473">
 </p>
 
-FlowShield not only focuses on data encryption and transmission security, but also on privacy protection. The project is committed to protecting the personal privacy of users and preventing their sensitive information from being misused or leaked. Through an anonymized and decentralized approach, FlowShield ensures that users’ identities and communication content are protected to the greatest extent possible, allowing them to have greater autonomy and control in the digital world.
+FlowShield not only emphasizes data encryption and transmission security but also prioritizes privacy protection. The project is dedicated to safeguarding users' personal privacy, preventing misuse or leakage of sensitive information. Through anonymized and decentralized approaches, FlowShield ensures the utmost protection of users' identities and communication content, granting them greater autonomy and control in the digital world.
 
-# I. Dao Node
+# Components
 
-Fullnode is a node open to everyone to participate. It carries the metadata of the distributed network and provides a metadata network and transaction matching platform. Fullnode ensures the online status of providers by integrating the metadata of individual providers and maintaining a heartbeat connection with the provider using the libp2p-based pubsub protocol. Users can use Fullnode to find resources and nodes, build their own secure and anonymous network tunnels, and be rewarded by paying tokens to provider nodes. At the same time, Fullnode uses Filecoin's web3.storage technology to store user and Dao data in a distributed manner to ensure data security and reliability.
+## I. DAO Node
+
+Fullnode is accessible to everyone for participation. It carries the metadata of the distributed network and provides a metadata network and transaction matching platform. Fullnode ensures the online status of providers by integrating their metadata and maintaining a heartbeat connection using the libp2p-based pubsub protocol. Users can leverage Fullnode to find resources and nodes, build their secure and anonymous network tunnels, and receive rewards by paying tokens to provider nodes. Fullnode also uses Filecoin's web3.storage technology to store user and DAO data in a distributed manner, ensuring data security and reliability.
 
 <p align="center">
-<img width="90%" alt="image" src="https://user-images.githubusercontent.com/34047788/191491199-61b73816-5538-460c-b0ba-e9b662e8681d.png">
+  <img width="90%" alt="DAO Node" src="https://user-images.githubusercontent.com/34047788/191491199-61b73816-5538-460c-b0ba-e9b662e8681d.png">
 </p>
 
-# II. Network Provider
+## II. Network Provider
 
-Network provider nodes are automatically networked through the IPFS network of kademlia DHT and libp2p, and use peer discovery and routing functions to achieve fast communication and data synchronization. Using the PubSub function of libp2p, data can be efficiently published and subscribed between multiple nodes.
+Network provider nodes are automatically networked through the IPFS network of Kademlia DHT and libp2p, utilizing peer discovery and routing functions for fast communication and data synchronization. Using the PubSub function of libp2p, data can be efficiently published and subscribed to between multiple nodes.
 
 <p align="center">
-<img width="90%" alt="image" src="https://user-images.githubusercontent.com/34047788/191491394-6dccc868-ed08-483b-9a74-2fcff6a243e2.png">
+  <img width="90%" alt="Network Provider" src="https://user-images.githubusercontent.com/34047788/191491394-6dccc868-ed08-483b-9a74-2fcff6a243e2.png">
 </p>
 
-# III. Smart Contracts
+## III. Smart Contracts
 
-We provide a complete smart contract for the decentralized trusted bandwidth market. Our smart contract is deployed on the EVM network, and we provide many methods in the smart contract to ensure a safe trading process and a safe trading environment.
+We provide comprehensive smart contracts for the decentralized trusted bandwidth market. Our smart contracts are deployed on the EVM network, offering numerous methods to ensure a secure trading process and environment.
+
 <p align="center">
-<img width="90%" alt="image" src="https://github.com/FlowShield/flowshield/assets/34047788/46bf15d2-143f-4ec7-b2ab-5eebad0fd9ed">
+  <img width="90%" alt="Smart Contracts" src="https://github.com/FlowShield/flowshield/assets/34047788/46bf15d2-143f-4ec7-b2ab-5eebad0fd9ed">
 </p>
 
-# IV. Network Verifier
+## IV. Network Verifier
 
-We provide the validator component of a decentralized trusted bandwidth marketplace. Validators can monitor the network quality of orders, detect and punish bad network providers, and ensure the fairness, reliability and security of transactions. We are committed to building a healthy and developing market that allows users to participate with confidence and enjoy high-quality bandwidth services.
+The validator component of our decentralized trusted bandwidth marketplace monitors network quality, detects and penalizes malicious network providers, and ensures the fairness, reliability, and security of transactions. Our commitment is to build a healthy and thriving market, allowing users to participate with confidence and enjoy high-quality bandwidth services.
 
 <p align="center">
-<img width="90%" alt="image" src="https://user-images.githubusercontent.com/34047788/191491491-cde176f0-f01c-4dfe-8d5f-b6f7d8964f35.png">
+  <img width="90%" alt="Network Verifier" src="https://user-images.githubusercontent.com/34047788/191491491-cde176f0-f01c-4dfe-8d5f-b6f7d8964f35.png">
 </p>
 
-# V. DeCA 
+## V. DeCA 
 
-DeCA decentralizes the PKI infrastructure and provides point-to-point communication identity and authentication capabilities for each node in the network. It implements autonomous identity control and provides simple and powerful PKI control capabilities. Through decentralized authentication and key management, DeCA ensures the confidentiality and integrity of communications. FlowShield network participants have autonomous control over their online identities and receive higher levels of authentication and encryption protection. Build a trusted point-to-point communication network through DeCA, improve the security of data and communication, and enhance the reliability and security of the FlowShield network.
+DeCA decentralizes the PKI infrastructure, providing point-to-point communication identity and authentication capabilities for each network node. It implements autonomous identity control and offers simple yet powerful PKI control capabilities. Through decentralized authentication and key management, DeCA ensures the confidentiality and integrity of communications. FlowShield network participants have autonomous control over their online identities, receiving enhanced authentication and encryption protection. Build a trusted point-to-point communication network through DeCA to improve data and communication security, and enhance the reliability and security of the FlowShield network.
 
 <p align="center">
-<img width="90%" alt="image" src="https://github.com/FlowShield/flowshield/assets/34047788/5009269e-0aa1-4ba6-a2f7-96bd31d27350">
+  <img width="90%" alt="DeCA" src="https://github.com/FlowShield/flowshield/assets/34047788/5009269e-0aa1-4ba6-a2f7-96bd31d27350">
 </p>
 
 ### [More documentation on DeCA](https://www.flowshield.xyz/flowshield_docs/cloudslit/deca/architecture/)
 
-# VI. Access Client
+## VI. Access Client
 
-The client user establishes a connection with the provider through network access and establishes a secure network tunnel for retrieval of private data. Ensure the security and privacy of data transmission through authentication and encryption technologies.
+The client user establishes a connection with the provider through network access, creating a secure network tunnel for private data retrieval. Authentication and encryption technologies ensure the security and privacy of data transmission.
 
 <p align="center">
-<img width="90%" alt="image" src="https://github.com/FlowShield/flowshield/assets/34047788/ae7acdc6-a130-4540-b043-eb7547b6afa8">
+  <img width="90%" alt="Access Client" src="https://github.com/FlowShield/flowshield/assets/34047788/ae7acdc6-a130-4540-b043-eb7547b6afa8">
 </p>
 
+# Future Upgrades
+
+### I. Decentralized Network Support
+
+We plan to integrate support for decentralized network NATS, enabling robust and scalable real-time messaging.
+
+### II. DPKI Infrastructure Upgrade
+
+Enhancements to our Decentralized Public Key Infrastructure (DPKI) to provide even more secure and efficient key management.
+
+### III. Integration with Decentralized Immutable Database
+
+Nodes will incorporate decentralized immutable databases to ensure data integrity and tamper resistance.
+
+### IV. WASM Compute Capabilities
+
+DAO and miner nodes will be enhanced with WebAssembly (WASM) compute capabilities, facilitating more efficient and versatile computation.
+
 # Disclaimers
-When you use this software, you have agreed and declared that the author, maintainer and contributor of this software will not be responsible for any risks, costs or problems you encounter. If you find software defects or bugs, please submit patches to help improve!
 
-# Ecological partners
+By using this software, you agree and declare that the author, maintainer, and contributor of this software will not be responsible for any risks, costs, or problems you encounter. If you find software defects or bugs, please submit patches to help improve!
 
-<table>
+# Ecological Partners
+
+<table align="center">
   <tr>
     <td align="center"><a href="https://protocol.ai/"><img src="https://user-images.githubusercontent.com/34047788/188373221-4819fd05-ef2f-4e53-b784-dcfffe9c018c.png" width="100px;" alt="Protocol Labs"/><br /><sub><b>Protocol Labs</b></sub></a></td>
     <td align="center"><a href="https://filecoin.io/"><img src="https://user-images.githubusercontent.com/34047788/188373584-e245e0bb-8a3c-4773-a741-17e4023bde65.png" width="100px;" alt="Filecoin"/><br /><sub><b>Filecoin</b></sub></a></td>
-     <td align="center"><a href="https://fvm.filecoin.io/"><img src="https://user-images.githubusercontent.com/34047788/220075045-48286b37-b708-4ecf-94f5-064c55e79fa3.png" width="110px;" alt="FVM"/><br /><sub><b>FVM</b></sub></a></td>
-     <td align="center"><a href="https://www.nervos.org/"><img src="https://user-images.githubusercontent.com/34047788/188373709-4c6caff6-be9f-497a-9bc3-88e6ae7195ac.png" width="100px;" alt="Nervos"/><br /><sub><b>Nervos</b></sub></a></td>
-  <td align="center"><a href="https://libp2p.io/"><img src="https://github.com/IceFireDB/.github/assets/34047788/36e39958-76ad-4b3a-96e1-1614e87ac1a3" width="100px;" alt="libp2p"/><br /><sub><b>libp2p</b></sub></a></td>  
+    <td align="center"><a href="https://fvm.filecoin.io/"><img src="https://user-images.githubusercontent.com/34047788/220075045-48286b37-b708-4ecf-94f5-064c55e79fa3.png" width="110px;" alt="FVM"/><br /><sub><b>FVM</b></sub></a></td>
+    <td align="center"><a href="https://www.nervos.org/"><img src="https://user-images.githubusercontent.com/34047788/188373709-4c6caff6-be9f-497a-9bc3-88e6ae7195ac.png" width="100px;" alt="Nervos"/><br /><sub><b>Nervos</b></sub></a></td>
+    <td align="center"><a href="https://libp2p.io/"><img src="https://github.com/IceFireDB/.github/assets/34047788/36e39958-76ad-4b3a-96e1-1614e87ac1a3" width="100px;" alt="libp2p"/><br /><sub><b>libp2p</b></sub></a></td>
   </tr>
 </table>
