@@ -23,7 +23,7 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/urfave/cli/v2 v2.27.2
 	github.com/web3-storage/go-w3s-client v0.0.6
-	github.com/wumansgy/goEncrypt v1.0.0
+	github.com/wumansgy/goEncrypt v1.1.0
 	github.com/xtaci/smux v2.0.1+incompatible
 	gorm.io/driver/mysql v1.3.3
 	gorm.io/gorm v1.23.4
