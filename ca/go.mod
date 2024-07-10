@@ -28,7 +28,7 @@ require (
 	github.com/spiffe/go-spiffe/v2 v2.0.0-beta.4
 	github.com/ugorji/go v1.1.13 // indirect
 	github.com/urfave/cli v1.22.15
-	go.uber.org/zap v1.17.0
+	go.uber.org/zap v1.27.0
 	golang.org/x/crypto v0.0.0-20201117144127-c1f2f97bffc9 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gorm.io/gorm v1.25.10
