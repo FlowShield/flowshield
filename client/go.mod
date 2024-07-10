@@ -8,7 +8,7 @@ require (
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/google/uuid v1.3.0
-	github.com/ipfs/go-cid v0.3.2
+	github.com/ipfs/go-cid v0.4.1
 	github.com/jinzhu/copier v0.0.0-20190924061706-b57f9002281a
 	github.com/json-iterator/go v1.1.12
 	github.com/koding/multiconfig v0.0.0-20171124222453-69c27309b2d7
