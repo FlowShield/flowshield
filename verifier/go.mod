@@ -9,7 +9,7 @@ require (
 	github.com/urfave/cli v1.22.9
 	go.uber.org/automaxprocs v1.5.3
 	go.uber.org/zap v1.23.0
-	gopkg.in/natefinch/lumberjack.v2 v2.0.0
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.7
