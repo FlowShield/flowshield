@@ -20,7 +20,7 @@ require (
 	github.com/multiformats/go-multihash v0.2.0
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.12.2
-	github.com/sirupsen/logrus v1.8.1
+	github.com/sirupsen/logrus v1.9.3
 	github.com/urfave/cli/v2 v2.27.2
 	github.com/web3-storage/go-w3s-client v0.0.6
 	github.com/wumansgy/goEncrypt v1.0.0
