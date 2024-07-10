@@ -18,5 +18,5 @@ require (
 	github.com/urfave/cli/v2 v2.27.2
 	github.com/web3-storage/go-w3s-client v0.0.7
 	github.com/wumansgy/goEncrypt v1.0.0
-	github.com/xtaci/smux v1.5.16
+	github.com/xtaci/smux v2.0.1+incompatible
 )
