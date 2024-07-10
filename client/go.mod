@@ -15,7 +15,7 @@ require (
 	github.com/onsi/gomega v1.19.0 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.3
-	github.com/urfave/cli/v2 v2.14.1
+	github.com/urfave/cli/v2 v2.27.2
 	github.com/web3-storage/go-w3s-client v0.0.7
 	github.com/wumansgy/goEncrypt v1.0.0
 	github.com/xtaci/smux v1.5.16
