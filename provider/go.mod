@@ -17,7 +17,7 @@ require (
 	github.com/libp2p/go-libp2p-pubsub v0.7.1-0.20220701163738-60cf38003244
 	github.com/mr-tron/base58 v1.2.0
 	github.com/multiformats/go-multiaddr v0.6.0
-	github.com/multiformats/go-multihash v0.2.0
+	github.com/multiformats/go-multihash v0.2.3
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.12.2
 	github.com/sirupsen/logrus v1.8.1
