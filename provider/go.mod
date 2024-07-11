@@ -26,7 +26,7 @@ require (
 	github.com/wumansgy/goEncrypt v1.0.0
 	github.com/xtaci/smux v2.0.1+incompatible
 	gorm.io/driver/mysql v1.5.7
-	gorm.io/gorm v1.25.7
+	gorm.io/gorm v1.25.10
 )
 
 require (
