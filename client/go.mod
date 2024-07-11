@@ -3,7 +3,7 @@ module github.com/flowshield/flowshield/client
 go 1.16
 
 require (
-	github.com/LyricTian/queue v1.2.0
+	github.com/LyricTian/queue v1.3.0
 	github.com/fatih/camelcase v1.0.0 // indirect
 	github.com/fatih/structs v1.1.0 // indirect
 	github.com/go-redis/redis v6.15.9+incompatible
