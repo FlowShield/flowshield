@@ -6,12 +6,12 @@ require (
 	github.com/flowshield/cfssl v0.0.3
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/garyburd/redigo v1.6.3
-	github.com/gin-gonic/gin v1.6.3
+	github.com/gin-gonic/gin v1.10.0
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/google/certificate-transparency-go v1.1.2-0.20210728111105-5f7e9ba4be3d // indirect
 	github.com/gorilla/mux v1.8.1
 	github.com/jmoiron/sqlx v1.4.0
-	github.com/json-iterator/go v1.1.11
+	github.com/json-iterator/go v1.1.12
 	github.com/kisielk/sqlstruct v0.0.0-20201105191214-5f3e10d3ab46 // indirect
 	github.com/mattn/go-colorable v0.1.6 // indirect
 	github.com/mattn/go-runewidth v0.0.10 // indirect
@@ -27,7 +27,6 @@ require (
 	github.com/ugorji/go v1.1.13 // indirect
 	github.com/urfave/cli v1.22.15
 	go.uber.org/zap v1.17.0
-	golang.org/x/crypto v0.0.0-20201117144127-c1f2f97bffc9 // indirect
 	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
 	gorm.io/gorm v1.25.10
 )
