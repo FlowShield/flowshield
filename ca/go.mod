@@ -5,7 +5,7 @@ go 1.16
 require (
 	github.com/flowshield/cfssl v0.0.3
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
-	github.com/garyburd/redigo v1.6.3
+	github.com/garyburd/redigo v1.6.4
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-sql-driver/mysql v1.8.1
 	github.com/google/certificate-transparency-go v1.1.2-0.20210728111105-5f7e9ba4be3d // indirect
