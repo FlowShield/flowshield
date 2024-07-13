@@ -3,7 +3,7 @@ module github.com/flowshield/flowshield/provider
 go 1.17
 
 require (
-	github.com/LyricTian/queue v1.2.0
+	github.com/LyricTian/queue v1.3.0
 	github.com/ethereum/go-ethereum v1.10.20
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/google/uuid v1.3.0
