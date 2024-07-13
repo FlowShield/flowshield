@@ -6,7 +6,7 @@ require (
 	github.com/LyricTian/queue v1.3.0
 	github.com/ethereum/go-ethereum v1.10.20
 	github.com/go-redis/redis v6.15.9+incompatible
-	github.com/google/uuid v1.3.0
+	github.com/google/uuid v1.6.0
 	github.com/ipfs/go-cid v0.4.1
 	github.com/jinzhu/copier v0.4.0
 	github.com/json-iterator/go v1.1.12
