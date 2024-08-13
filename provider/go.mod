@@ -21,7 +21,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.12.2
 	github.com/sirupsen/logrus v1.9.3
-	github.com/urfave/cli/v2 v2.27.3
+	github.com/urfave/cli/v2 v2.27.4
 	github.com/web3-storage/go-w3s-client v0.0.6
 	github.com/wumansgy/goEncrypt v1.0.0
 	github.com/xtaci/smux v2.0.1+incompatible
